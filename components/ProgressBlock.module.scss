@@ -1,0 +1,45 @@
+.container {
+  width: 100%;
+  max-width: 100%;
+  background: #000;
+  color: #fff;
+  padding: 24px;
+}
+
+.progress {
+  width: 100%;
+  height: 4px;
+  display: flex;
+}
+
+.unit {
+  height: 100%;
+  width: 0px;
+  background: #fff;
+}
+
+.top {
+  margin-top: 24px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.bottom {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Mono";
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+}
+
+.bottomLeft {
+  flex-shrink: 0;
+}
+
+.bottomRight {
+  min-width: 10%;
+  width: 100%;
+  text-align: right;
+}

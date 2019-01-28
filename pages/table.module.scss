@@ -1,0 +1,60 @@
+.table {
+  width: 100%;
+  font-size: 0.85rem;
+  font-family: "Mono";
+  background: var(--main-background-table);
+  color: var(--main-background-table-text-color);
+  table-layout: fixed;
+}
+
+.tbody {
+}
+
+.tr {
+  background: var(--main-background-table-cell);
+}
+
+.th {
+  padding: 8px 8px 8px 14px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 400;
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.td {
+  padding: 8px 8px 8px 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tdcta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1px;
+  transition: 200ms ease all;
+  background: #fff;
+}
+
+.cta {
+  display: block;
+  padding: 8px 8px 8px 14px;
+  transition: 200ms ease all;
+  color: var(--main-background-table-text-color);
+  text-decoration: none;
+  cursor: pointer;
+  height: 100%;
+
+  &:visited {
+    color: var(--main-background-table-text-color);
+  }
+
+  &:hover {
+    color: var(--main-background-input);
+    background: var(--main-primary);
+  }
+}

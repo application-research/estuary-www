@@ -1,0 +1,65 @@
+@keyframes spin {
+  from {
+    transform: translateZ(-114px) rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: translateZ(-114px) rotateX(-360deg) rotateY(360deg);
+  }
+}
+
+.scene {
+  font-family: "Mono";
+  text-transform: uppercase;
+  width: 288px;
+  height: 288px;
+  perspective: 600px;
+}
+
+.cube {
+  width: 288px;
+  height: 288px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-114px) rotateY(45deg) rotateX(90deg);
+  transition: transform 1s;
+  animation: spin 10000ms linear infinite;
+}
+
+.face {
+  position: absolute;
+  width: 288px;
+  height: 288px;
+  font-size: 36px;
+  padding: 24px;
+  font-weight: bold;
+  color: var(--main-text);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-background-input);
+  background: rgba(0, 0, 0, 0.8);
+
+  &:hover {
+    background: var(--main-primary);
+  }
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(144px);
+}
+.right {
+  transform: rotateY(90deg) translateZ(144px);
+}
+.back {
+  transform: rotateY(180deg) translateZ(144px);
+}
+.left {
+  transform: rotateY(-90deg) translateZ(144px);
+}
+.top {
+  transform: rotateX(90deg) translateZ(144px);
+}
+.bottom {
+  transform: rotateX(-90deg) translateZ(144px);
+}

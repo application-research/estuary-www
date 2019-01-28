@@ -1,0 +1,158 @@
+.formAside {
+  margin-top: 8px;
+  color: #8d8d8d;
+  line-height: 1.5;
+  font-size: 0.8rem;
+}
+
+.deals {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background: var(--main-background-table);
+}
+
+.empty {
+  padding: 16px 8px 16px 15px;
+  font-size: 12px;
+  font-family: "Mono";
+  color: var(--main-input-background);
+}
+
+.actions {
+  margin-top: 24px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 128px 24px 24px 24px;
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto 0 auto;
+
+  @media (max-width: 920px) {
+    padding: 88px 24px 24px 24px;
+    display: block;
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.image {
+  flex-shrink: 0;
+  max-width: 488px;
+  width: 100%;
+
+  @media (max-width: 920px) {
+    max-width: 320px;
+    display: block;
+  }
+}
+
+.chart {
+  display: block;
+  width: 100%;
+}
+
+.right {
+  min-width: 10%;
+  width: 100%;
+  padding-left: 48px;
+
+  @media (max-width: 920px) {
+    margin-top: 48px;
+    padding-left: 0px;
+  }
+}
+
+.item {
+  padding: 16px;
+  max-width: 488px;
+  margin-bottom: 2px;
+  background: #ffffff;
+}
+
+.top {
+  margin-top: 24px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 288px;
+}
+
+.bottom {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Mono";
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+}
+
+.bottomLeft {
+  flex-shrink: 0;
+}
+
+.bottomRight {
+  min-width: 10%;
+  width: 100%;
+  text-align: right;
+}
+
+.subrow {
+  max-width: 1024px;
+  padding: 0 12px 0 12px;
+  margin: 96px auto 48px auto;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  @media (max-width: 920px) {
+    display: block;
+  }
+}
+
+.block {
+  width: 25%;
+  margin-bottom: 48px;
+  padding: 0 12px 0 12px;
+
+  @media (max-width: 920px) {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+}
+
+.blockTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.blockParagraph {
+  margin-top: 8px;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.link {
+  margin: 0 12px 0 12px;
+  cursor: pointer;
+  transition: 200ms ease all;
+  color: var(--main-text);
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:visited {
+    color: var(--main-text);
+  }
+}

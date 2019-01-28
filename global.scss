@@ -1,0 +1,186 @@
+@font-face {
+  font-family: "Mono";
+  src: url("https://next-s3-public.s3-us-west-2.amazonaws.com/mono.woff") format("woff");
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+img {
+  display: block;
+}
+
+html,
+body {
+  --main-background: #e7e7e7;
+  --main-background-foreground: #d7d7d7;
+  --main-background-input: #ffffff;
+
+  --main-background-table: rgba(0, 0, 0, 0.04);
+  --main-background-table-text-color: #000000;
+  --main-background-table-cell: #f2f2f2;
+  --main-background-navigation-admin: #f2f4f8;
+  --main-background-navigation-hover: #f4f4f4;
+
+  --main-text: #000000;
+  --main-text-details: #8d8d8d;
+  --main-primary: rgba(0, 2, 255, 1);
+
+  --main-border-input: rgba(0, 0, 0, 0.4);
+  --main-border: rgba(0, 0, 0, 0.2);
+
+  --main-button-background: #171414;
+  --main-button-text: #ffffff;
+  --main-button-background-secondary: #ffffff;
+  --main-button-text-secondary: #171414;
+
+  /* Requested */
+  --status-0: #726e6e;
+  /* Ongoing */
+  --status-1: #ee5396;
+  /* Transfer Finished */
+  --status-2: #8a3ffc;
+  /* ResponderCompleted */
+  --status-3: #3ddbd9;
+  /* Finalizing, transfer is done. */
+  --status-4: #78a9ff;
+  --status-5: #4589ff;
+  /* Completed means the data transfer is completed successfully */
+  --status-6: #0f62fe;
+  /* Failing */
+  --status-6-failed: #da1e28;
+  --status-7: #da1e28;
+  /* Failed */
+  --status-8: #da1e28;
+  --status-9: #a2a9b0;
+  --status-10: #697077;
+  --status-11: #c6c6c6;
+  --status-12: #c6c6c6;
+  --status-13: #c6c6c6;
+  --status-14: #ff7eb6;
+  --status-15: #f1c21b;
+  --status-16: #ff832b;
+  --status-success: #24a148;
+  --status-success-bright: #bfff00;
+  --status-error: #da1e28;
+
+  font-family: -apple-system, BlinkMacSystemFont, helvetica neue, helvetica, sans-serif;
+  background: var(--main-background);
+  color: var(--main-text);
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  font-variant-numeric: tabular-nums;
+  scrollbar-width: none;
+  font-size: 18px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    font-size: 12px;
+  }
+}

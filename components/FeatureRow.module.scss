@@ -1,0 +1,34 @@
+.r {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 16px 8px 16px;
+  max-width: 288px;
+}
+
+.rl {
+  flex-shrink: 0;
+  height: 32px;
+  width: 32px;
+  background: #393939;
+}
+
+.rr {
+  padding-left: 4px;
+  min-width: 10%;
+  width: 100%;
+  transition: 200ms ease all;
+}
+
+.rtext {
+  font-size: 14px;
+  padding: 4px 24px 4px 24px;
+}
+
+.rbar {
+  width: 100%;
+  height: 1px;
+  background: #393939;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}

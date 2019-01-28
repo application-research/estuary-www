@@ -1,30 +1,20 @@
-# next-express-emotion
+![Post](https://user-images.githubusercontent.com/310223/116985054-d5576d00-ac80-11eb-85c0-abacdbdbfc47.png)
 
-If you like the following:
+# Estuary WWW
 
-- [NextJS + Custom Express](https://github.com/zeit/next.js/)
-- [Emotion CSS-in-JS](https://github.com/emotion-js/emotion)
+A website that can communicate to any [Estuary](https://github.com/application-research/estuary) node. You can make Filecoin storage deals with an Estuary node.
 
-You may like my prototyping setup, it is designed to be small and simple. There are 8 dependencies. I like to write my own styles so if you need a style library you will need to add your own.
+## Development
 
-### Setup
-
-Make sure NodeJS version 10+ is installed on your machine. Then run.
+Make sure NodeJS 10+ is installed. Then run:
 
 ```sh
 npm install
 npm run dev
 ```
 
-### Deploy To Production
-
-You can use my [Render](https://render.com/i/internet-gift-from-jim) invite. Other services such as [Heroku](https://heroku.com) and [Now V1](https://now.sh) are fine too.
-
-```sh
-npm run build
-npm run start
-```
+Now view localhost:8080 in your browser.
 
 ## Questions?
 
-Feel free to slang any feels to [@wwwjim](https://twitter.com/wwwjim).
+Twitter: [@wwwjim](https://twitter.com/wwwjim).

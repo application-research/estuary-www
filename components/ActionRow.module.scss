@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  background: var(--main-background-foreground);
+  margin-top: 2px;
+  padding: 8px 24px 8px 24px;
+  font-family: "Mono";
+  font-size: 12px;
+}
+
+.action {
+  transition: 200ms ease all;
+  background: var(--main-background-input);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--main-primary);
+    color: var(--main-background-input);
+  }
+}

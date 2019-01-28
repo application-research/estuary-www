@@ -1,0 +1,15 @@
+@keyframes animation-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border: 2px solid #fff;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: animation-spin 1s ease-in-out infinite;
+}

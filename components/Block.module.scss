@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  padding: 24px;
+}
+
+.top {
+  margin-top: 24px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.bottom {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Mono";
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+}
+
+.bottomLeft {
+  flex-shrink: 0;
+}
+
+.bottomRight {
+  min-width: 10%;
+  width: 100%;
+  text-align: right;
+  transition: 200ms ease all;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-primary);
+  }
+}
