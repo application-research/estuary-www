@@ -95,7 +95,6 @@ export default class UploadFileContainer extends React.Component {
     };
 
     xhr.upload.onload = async () => {
-      alert(`Upload finished successfully.`);
       this.setState({ mode: 1 });
       startTime = null;
       secondsElapsed = 0;

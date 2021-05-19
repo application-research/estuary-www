@@ -38,10 +38,8 @@ export async function getServerSideProps(context) {
 export default class UploadPage extends React.Component {
   state = {};
 
-  async componentDidMount() {
-    // Estimates are returning 500.
-    // const response = await R.get("/deals/estimate");
-    // console.log(response);
+  componentWillUnmount() {
+    window.onbeforeunload = null;
   }
 
   _handleUploadFile = () => {
@@ -64,6 +62,10 @@ export default class UploadPage extends React.Component {
       bytesPerSecond: response.bytesPerSecond,
       secondsRemaining: response.secondsRemaining,
     });
+
+    window.onbeforeunload = function () {
+      return "An upload is in progress, are you sure you want to navigate away?";
+    };
   };
 
   _handleUploadFinished = ({ cid }) => {
@@ -78,6 +80,8 @@ export default class UploadPage extends React.Component {
       bytesPerSecond: 0,
       secondsRemaining: 0,
     });
+
+    window.onbeforeunload = null;
   };
 
   render() {
