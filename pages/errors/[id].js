@@ -34,7 +34,7 @@ function DealErrorPage(props) {
     const response = await R.get(`/content/failures/${props.id}`);
 
     if (response && response.length) {
-      return setState({ logs: response.reverse() });
+      return setState({ logs: response });
     }
 
     alert("No failure logs for this data.");
