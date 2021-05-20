@@ -20,16 +20,6 @@
   }
 }
 
-.marketing {
-  width: 100%;
-  padding: 16px;
-  max-width: 488px;
-
-  @media (max-width: 568px) {
-    max-width: none;
-  }
-}
-
 .cardHeading {
   padding: 24px;
   opacity: 0.6;
@@ -42,55 +32,23 @@
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
 
   a {
-    color: var(--main-input-background);
+    color: var(--main-text);
 
     &:visited {
-      color: var(--main-input-background);
+      color: var(--main-text);
     }
 
     &:hover {
-      color: var(--main-input-background);
+      color: var(--main-text);
     }
   }
 }
 
 .top {
+  color: var(--main-text);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px 4px 0px 0px;
-}
-
-.bottom {
-  padding: 16px;
-  background: #222;
-  border-radius: 0px 0px 4px 4px;
-
-  @media (max-width: 1024px) {
-    min-height: auto;
-  }
-}
-
-.detail {
-  font-family: "Mono";
-  overflow-wrap: break-word;
-  font-size: 12px;
-  line-height: 1.225;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.detailLeft {
-  flex-shrink: 0;
-  color: var(--main-text-details);
-  width: 100px;
-}
-
-.detailRight {
-  padding-left: 0px;
-  min-width: 10%;
-  width: 100%;
-  color: var(--main-background-input);
 }

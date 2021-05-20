@@ -71,7 +71,7 @@ class ContentStatus extends React.Component {
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
               <th className={tstyles.th}>Name</th>
-              <th className={tstyles.th} style={{ width: "96px" }}>
+              <th className={tstyles.th} style={{ width: "120px" }}>
                 Content ID
               </th>
               <th className={tstyles.th} style={{ width: "116px" }}>
@@ -99,9 +99,11 @@ class ContentStatus extends React.Component {
               <th className={tstyles.th} style={{ width: "96px" }}>
                 On chain
               </th>
-              <th className={tstyles.th} style={{ width: "96px" }}>
-                Total errors
-              </th>
+              {failuresCount ? (
+                <th className={tstyles.th} style={{ width: "96px" }}>
+                  Total errors
+                </th>
+              ) : null}
             </tr>
             <tr className={tstyles.tr}>
               <td className={tstyles.td}>{deals ? deals.length : 0}</td>
@@ -110,13 +112,13 @@ class ContentStatus extends React.Component {
 
               <td className={tstyles.td}>{onChain.length}</td>
 
-              <td className={tstyles.tdcta}>
-                {failuresCount ? (
+              {failuresCount ? (
+                <td className={tstyles.tdcta}>
                   <a href={`/errors/${this.props.id}`} className={tstyles.cta}>
                     {failuresCount}
                   </a>
-                ) : null}
-              </td>
+                </td>
+              ) : null}
             </tr>
           </tbody>
         </table>
