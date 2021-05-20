@@ -195,6 +195,23 @@ function DealPage(props) {
                 </tr>
               </tbody>
             </table>
+
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Total cost</th>
+                </tr>
+
+                <tr className={tstyles.tr}>
+                  <td className={tstyles.td}>
+                    {U.inFIL(
+                      state.deal.StoragePricePerEpoch *
+                        (state.deal.EndEpoch - state.deal.SectorStartEpoch)
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </React.Fragment>
         ) : null}
       </AuthenticatedLayout>
