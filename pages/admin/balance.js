@@ -86,8 +86,8 @@ function AdminBalancePage(props) {
       url="https://estuary.tech/admin/balance"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_BALANCE" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_BALANCE" viewer={props.viewer} />}
       >
         <SingleColumnLayout>
           <H2>Manage Balance</H2>

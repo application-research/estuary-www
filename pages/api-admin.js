@@ -54,8 +54,8 @@ function APIPage(props) {
       url="https://estuary.tech/api"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="TEMPLATE" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="API" viewer={props.viewer} />}
       >
         <div>
           <SingleColumnLayout>

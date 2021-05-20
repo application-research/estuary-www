@@ -58,8 +58,8 @@ function AdminAnalyticsPage(props) {
       url="https://estuary.tech/admin/analytics"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_ANALYTICS" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_ANALYTICS" viewer={props.viewer} />}
       >
         <SingleColumnLayout>
           <EmptyStatePlaceholder>Coming soon</EmptyStatePlaceholder>

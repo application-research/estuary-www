@@ -43,7 +43,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-function AdminInvitePage(props) {
+function AdminInvitesPage(props) {
   const [state, setState] = React.useState({ invites: [] });
 
   React.useEffect(async () => {
@@ -59,8 +59,8 @@ function AdminInvitePage(props) {
       url="https://estuary.tech/admin/invite"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_INVITE" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_INVITES" viewer={props.viewer} />}
       >
         <div>
           <SingleColumnLayout>
@@ -127,4 +127,4 @@ function AdminInvitePage(props) {
   );
 }
 
-export default AdminInvitePage;
+export default AdminInvitesPage;

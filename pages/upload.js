@@ -95,7 +95,7 @@ export default class UploadPage extends React.Component {
       >
         <AuthenticatedLayout
           navigation={<Navigation isAuthenticated />}
-          sidebar={<AuthenticatedSidebar viewer={this.props.viewer} />}
+          sidebar={<AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />}
         >
           <SingleColumnLayout>
             <H2>Upload data</H2>

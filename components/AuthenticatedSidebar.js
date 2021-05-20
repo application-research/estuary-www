@@ -9,13 +9,25 @@ function AuthenticatedLayout(props) {
   return (
     <nav className={styles.container}>
       <div className={styles.title}>Estuary</div>
-      <a className={styles.item} href="/upload">
+      <a
+        className={styles.item}
+        href="/upload"
+        style={props.active === "UPLOAD" ? { color: `var(--main-primary)` } : null}
+      >
         Upload
       </a>
-      <a className={styles.item} href="/deals">
+      <a
+        className={styles.item}
+        href="/deals"
+        style={props.active === "DEALS" ? { color: `var(--main-primary)` } : null}
+      >
         Deals
       </a>
-      <a className={styles.item} href="/api-admin">
+      <a
+        className={styles.item}
+        href="/api-admin"
+        style={props.active === "API" ? { color: `var(--main-primary)` } : null}
+      >
         API
       </a>
       <span
@@ -30,38 +42,66 @@ function AuthenticatedLayout(props) {
       </span>
 
       <div className={styles.title}>Collections</div>
-      <a className={styles.item} href="/home">
+      <a
+        className={styles.item}
+        href="/home"
+        style={props.active === "FILES" ? { color: `var(--main-primary)` } : null}
+      >
         Files
       </a>
 
       <div className={styles.title}>Admin</div>
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/stats">
+        <a
+          className={styles.item}
+          href="/admin/stats"
+          style={props.active === "ADMIN_STATS" ? { color: `var(--main-primary)` } : null}
+        >
           System
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/balance">
+        <a
+          className={styles.item}
+          href="/admin/balance"
+          style={props.active === "ADMIN_BALANCE" ? { color: `var(--main-primary)` } : null}
+        >
           Balance
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/miners">
+        <a
+          className={styles.item}
+          href="/admin/miners"
+          style={props.active === "ADMIN_MINERS" ? { color: `var(--main-primary)` } : null}
+        >
           Miners
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/content">
+        <a
+          className={styles.item}
+          href="/admin/content"
+          style={props.active === "ADMIN_CONTENT" ? { color: `var(--main-primary)` } : null}
+        >
           Content
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/users">
+        <a
+          className={styles.item}
+          href="/admin/users"
+          style={props.active === "ADMIN_USERS" ? { color: `var(--main-primary)` } : null}
+        >
           Users
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/invite">
+        <a
+          className={styles.item}
+          href="/admin/invites"
+          style={props.active === "ADMIN_INVITES" ? { color: `var(--main-primary)` } : null}
+        >
           Invites
         </a>
       ) : null}

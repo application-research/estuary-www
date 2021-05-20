@@ -155,8 +155,8 @@ export default class Dashboard extends React.Component {
         url="https://estuary.tech/deals"
       >
         <AuthenticatedLayout
-          navigation={<Navigation isAuthenticated active="DEALS" />}
-          sidebar={<AuthenticatedSidebar viewer={this.props.viewer} />}
+          navigation={<Navigation isAuthenticated />}
+          sidebar={<AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />}
         >
           <div>{statusElements}</div>
         </AuthenticatedLayout>

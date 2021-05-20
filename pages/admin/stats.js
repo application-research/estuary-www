@@ -63,8 +63,8 @@ function AdminStatsPage(props) {
       url="https://estuary.tech/stats"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_STATS" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_STATS" viewer={props.viewer} />}
       >
         <SingleColumnLayout>
           <H2>Stats</H2>

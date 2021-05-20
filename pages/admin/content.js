@@ -75,8 +75,8 @@ function AdminContentPage(props) {
       url="https://estuary.tech/admin/content"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_CONTENT" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />}
       >
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

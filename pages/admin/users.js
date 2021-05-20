@@ -59,8 +59,8 @@ function AdminUsersPage(props) {
       url="https://estuary.tech/admin/users"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_USER" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_USERS" viewer={props.viewer} />}
       >
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

@@ -56,8 +56,8 @@ function HomePage(props) {
       url="https://estuary.tech/home"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="DASHBOARD" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="FILES" viewer={props.viewer} />}
       >
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

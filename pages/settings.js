@@ -39,8 +39,8 @@ function SettingsPage(props) {
       url="https://estuary.tech/settings"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="SETTINGS" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="SETTINGS" viewer={props.viewer} />}
       >
         <SingleColumnLayout>
           <EmptyStatePlaceholder>Coming soon</EmptyStatePlaceholder>

@@ -85,8 +85,8 @@ function AdminMinersPage(props) {
       url="https://estuary.tech/admin/miners"
     >
       <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="ADMIN_MINERS" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
+        navigation={<Navigation isAuthenticated />}
+        sidebar={<AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />}
       >
         <div>
           <GridSection>
