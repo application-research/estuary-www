@@ -112,7 +112,7 @@ function IndexPage(props) {
         {state.miners.map((each, index) => {
           if (each.suspended) {
             return (
-              <div className={S.fa}>
+              <div className={S.fa} key={each.addr}>
                 <div className={S.fcol4}>
                   <span className={S.flink} style={{ background: `var(--status-error)` }}>
                     {each.addr} suspended
