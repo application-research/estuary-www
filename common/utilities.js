@@ -3,8 +3,13 @@ import { FilecoinNumber, Converter } from "@glif/filecoin-number";
 import * as Cookies from "~/vendor/cookie-cutter";
 import * as C from "~/common/constants";
 
-export const delay = (ms) =>
-  new Promise((resolve) => window.setTimeout(resolve, ms));
+export const toDateSinceEpoch = (epoch) => {
+  const d = new Date(1000 * (epoch * 30 + 1598306400));
+
+  return toDate(d);
+};
+
+export const delay = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 export const pluralize = (text, count) => {
   return count > 1 || count === 0 ? `${text}s` : text;

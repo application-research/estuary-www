@@ -47,8 +47,12 @@ const ProgressCard = ({ deal, transfer, chain, marketing }) => {
         <div className={styles.top} style={topStyle}>
           {transfer ? (
             <p className={styles.cardHeading}>
-              {message} ({transfer.status}) ⇄{" "}
-              <a href={`/miners/stats/${deal.miner}`}>{deal.miner}</a>
+              {deal && deal.dealId ? (
+                <a href={`/deals/${deal.dealId}`}>Deal: {message}</a>
+              ) : (
+                message
+              )}{" "}
+              ({transfer.status}) ⇄ <a href={`/miners/stats/${deal.miner}`}>{deal.miner}</a>
             </p>
           ) : (
             <p className={styles.cardHeading}>NoTransferAndFail ⇄ {deal.miner}</p>
