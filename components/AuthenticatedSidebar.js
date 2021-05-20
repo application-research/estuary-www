@@ -8,9 +8,7 @@ import * as C from "~/common/constants";
 function AuthenticatedLayout(props) {
   return (
     <nav className={styles.container}>
-      <a className={styles.item} href="/home">
-        Files
-      </a>
+      <div className={styles.title}>Estuary</div>
       <a className={styles.item} href="/upload">
         Upload
       </a>
@@ -20,40 +18,6 @@ function AuthenticatedLayout(props) {
       <a className={styles.item} href="/api-admin">
         API
       </a>
-      <a className={styles.item} href="/settings">
-        Settings
-      </a>
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/stats">
-          Admin ➝ System
-        </a>
-      ) : null}
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/analytics">
-          Admin ➝ Analytics
-        </a>
-      ) : null}
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/balance">
-          Admin ➝ Balance
-        </a>
-      ) : null}
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/miners">
-          Admin ➝ Miners
-        </a>
-      ) : null}
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/content">
-          Admin ➝ Content
-        </a>
-      ) : null}
-      {props.viewer.perms >= 10 ? (
-        <a className={styles.adminItem} href="/admin/invite">
-          Admin ➝ Invites
-        </a>
-      ) : null}
-
       <span
         className={styles.item}
         onClick={async () => {
@@ -64,6 +28,43 @@ function AuthenticatedLayout(props) {
       >
         Sign out
       </span>
+
+      <div className={styles.title}>Collections</div>
+      <a className={styles.item} href="/home">
+        Files
+      </a>
+
+      <div className={styles.title}>Admin</div>
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/stats">
+          System
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/balance">
+          Balance
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/miners">
+          Miners
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/content">
+          Content
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/users">
+          Users
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/invite">
+          Invites
+        </a>
+      ) : null}
     </nav>
   );
 }

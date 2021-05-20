@@ -3,13 +3,21 @@
   width: 100%;
 }
 
+.title {
+  display: block;
+  padding: 4px 16px 4px 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 24px;
+  color: var(--main-text-details);
+}
+
 .item {
   display: block;
   width: 100%;
-  padding: 8px 16px 8px 16px;
+  padding: 6px 16px 6px 16px;
   display: flex;
   align-items: center;
-  min-height: 48px;
   font-weight: 500;
   text-decoration: none;
   transition: 200ms ease all;
@@ -22,7 +30,7 @@
   }
 
   &:hover {
-    background: var(--main-background-navigation-hover);
+    color: var(--main-primary);
   }
 
   &:last-child {
@@ -33,10 +41,9 @@
 .adminItem {
   display: block;
   width: 100%;
-  padding: 8px 16px 8px 16px;
+  padding: 6px 16px 6px 16px;
   display: flex;
   align-items: center;
-  min-height: 48px;
   font-weight: 500;
   text-decoration: none;
   transition: 200ms ease all;
@@ -50,6 +57,5 @@
   }
 
   &:hover {
-    background: var(--main-background-navigation-hover);
   }
 }

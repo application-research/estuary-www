@@ -13,7 +13,7 @@
 
 .sidebar {
   width: 100%;
-  max-width: 188px;
+  max-width: 156px;
   flex-shrink: 0;
   height: 100%;
   border-right: 1px solid var(--main-border);
@@ -31,7 +31,7 @@
   }
 
   @media (max-width: 960px) {
-    max-width: 148px;
+    max-width: 108px;
   }
 }
 
