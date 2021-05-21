@@ -17,7 +17,7 @@ const ProgressCard = ({ deal, transfer, chain, marketing }) => {
       }
     }
 
-    if (chain && chain.sectorStartEpoch) {
+    if (chain && chain.sectorStartEpoch && chain.sectorStartEpoch > 0) {
       message = `ActiveOnChain`;
     }
   }
