@@ -50,7 +50,7 @@ function AuthenticatedLayout(props) {
         Files
       </a>
 
-      <div className={styles.title}>Admin</div>
+      {props.viewer.perms >= 10 ? <div className={styles.title}>Admin</div> : null}
       {props.viewer.perms >= 10 ? (
         <a
           className={styles.item}
