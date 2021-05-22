@@ -28,7 +28,7 @@ function AuthenticatedLayout(props) {
         href="/api-admin"
         style={props.active === "API" ? { color: `var(--main-primary)` } : null}
       >
-        API
+        API keys
       </a>
       <span
         className={styles.item}

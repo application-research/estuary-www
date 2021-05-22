@@ -101,10 +101,10 @@ function AdminInvitesPage(props) {
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
                 <th className={tstyles.th}>Estuary invite key</th>
-                <th className={tstyles.th} style={{ width: "136px" }}>
+                <th className={tstyles.th} style={{ width: "144px" }}>
                   Creator
                 </th>
-                <th className={tstyles.th} style={{ width: "136px" }}>
+                <th className={tstyles.th} style={{ width: "144px" }}>
                   Recipient
                 </th>
               </tr>
