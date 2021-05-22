@@ -71,10 +71,10 @@ class ContentStatus extends React.Component {
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
               <th className={tstyles.th}>Name</th>
-              <th className={tstyles.th} style={{ width: "120px" }}>
+              <th className={tstyles.th} style={{ width: "148px" }}>
                 Content ID
               </th>
-              <th className={tstyles.th} style={{ width: "116px" }}>
+              <th className={tstyles.th} style={{ width: "148px" }}>
                 Size
               </th>
             </tr>

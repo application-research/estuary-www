@@ -166,10 +166,14 @@ body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   font-variant-numeric: tabular-nums;
   scrollbar-width: none;
-  font-size: 18px;
+  font-size: 24px;
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (max-width: 1880px) {
+    font-size: 18px;
   }
 
   @media (max-width: 1248px) {
