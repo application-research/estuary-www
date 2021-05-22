@@ -62,34 +62,36 @@ function AdminUsersPage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="ADMIN_USERS" viewer={props.viewer} />}
       >
-        <table className={tstyles.table}>
-          <tbody className={tstyles.tbody}>
-            <tr className={tstyles.tr}>
-              <th className={tstyles.th} style={{ width: "96px" }}>
-                id
-              </th>
-              <th className={tstyles.th}>Username</th>
-              <th className={tstyles.th} style={{ width: "136px" }}>
-                Space
-              </th>
-              <th className={tstyles.th} style={{ width: "136px" }}>
-                Files
-              </th>
-            </tr>
-            {state.users && state.users.length
-              ? state.users.map((data, index) => {
-                  return (
-                    <tr className={tstyles.tr} key={data.username}>
-                      <td className={tstyles.td}>{data.id}</td>
-                      <td className={tstyles.td}>{data.username}</td>
-                      <td className={tstyles.td}>{U.bytesToSize(data.spaceUsed)}</td>
-                      <td className={tstyles.td}>{data.numFiles}</td>
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </table>
+        <div className={styles.group}>
+          <table className={tstyles.table}>
+            <tbody className={tstyles.tbody}>
+              <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: "96px" }}>
+                  id
+                </th>
+                <th className={tstyles.th}>Username</th>
+                <th className={tstyles.th} style={{ width: "136px" }}>
+                  Space
+                </th>
+                <th className={tstyles.th} style={{ width: "136px" }}>
+                  Files
+                </th>
+              </tr>
+              {state.users && state.users.length
+                ? state.users.map((data, index) => {
+                    return (
+                      <tr className={tstyles.tr} key={data.username}>
+                        <td className={tstyles.td}>{data.id}</td>
+                        <td className={tstyles.td}>{data.username}</td>
+                        <td className={tstyles.td}>{U.bytesToSize(data.spaceUsed)}</td>
+                        <td className={tstyles.td}>{data.numFiles}</td>
+                      </tr>
+                    );
+                  })
+                : null}
+            </tbody>
+          </table>
+        </div>
       </AuthenticatedLayout>
     </Page>
   );

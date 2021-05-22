@@ -1,12 +1,12 @@
 .container {
   max-width: 488px;
   width: 100%;
-  padding: 64px;
+  padding: 16px 64px 48px 0px;
   display: inline-flex;
   flex-direction: column;
 
   @media (max-width: 768px) {
     max-width: none;
-    padding: 24px;
+    padding: 16px;
   }
 }

@@ -88,7 +88,7 @@ function AdminMinersPage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />}
       >
-        <div>
+        <div className={styles.group}>
           <GridSection>
             <H2>Manage miners</H2>
             <P style={{ marginTop: 8 }}>

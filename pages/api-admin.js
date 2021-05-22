@@ -76,43 +76,45 @@ function APIPage(props) {
             </div>
           </SingleColumnLayout>
 
-          <table className={tstyles.table}>
-            <tbody className={tstyles.tbody}>
-              <tr className={tstyles.tr}>
-                <th className={tstyles.th}>Key</th>
-                <th className={tstyles.th} style={{ width: "136px" }}>
-                  Options
-                </th>
-              </tr>
-              {state.keys && state.keys.length
-                ? state.keys.map((k, index) => {
-                    return (
-                      <tr key={k.token} className={tstyles.tr}>
-                        <td className={tstyles.td}>{k.token}</td>
-                        <td
-                          className={tstyles.tdcta}
-                          onClick={async () => {
-                            const confirm = window.confirm(
-                              "Are you sure you want to delete this key?"
-                            );
+          <div className={styles.group}>
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Key</th>
+                  <th className={tstyles.th} style={{ width: "136px" }}>
+                    Options
+                  </th>
+                </tr>
+                {state.keys && state.keys.length
+                  ? state.keys.map((k, index) => {
+                      return (
+                        <tr key={k.token} className={tstyles.tr}>
+                          <td className={tstyles.td}>{k.token}</td>
+                          <td
+                            className={tstyles.tdcta}
+                            onClick={async () => {
+                              const confirm = window.confirm(
+                                "Are you sure you want to delete this key?"
+                              );
 
-                            const response = await R.del(`/user/api-keys/${k.token}`);
+                              const response = await R.del(`/user/api-keys/${k.token}`);
 
-                            const keys = await R.get("/user/api-keys");
+                              const keys = await R.get("/user/api-keys");
 
-                            if (keys && !keys.error) {
-                              setState({ keys });
-                            }
-                          }}
-                        >
-                          <span className={tstyles.cta}>Revoke</span>
-                        </td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
+                              if (keys && !keys.error) {
+                                setState({ keys });
+                              }
+                            }}
+                          >
+                            <span className={tstyles.cta}>Revoke</span>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
         </div>
       </AuthenticatedLayout>
     </Page>

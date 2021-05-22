@@ -59,39 +59,41 @@ function HomePage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="FILES" viewer={props.viewer} />}
       >
-        <table className={tstyles.table}>
-          <tbody className={tstyles.tbody}>
-            <tr className={tstyles.tr}>
-              <th className={tstyles.th} style={{ width: "30%" }}>
-                Name
-              </th>
-              <th className={tstyles.th}>Retrieval link</th>
-              <th className={tstyles.th} style={{ width: "104px" }}>
-                Requests
-              </th>
-              <th className={tstyles.th} style={{ width: "120px" }}>
-                Bandwidth
-              </th>
-            </tr>
-            {state.files && state.files.length
-              ? state.files.map((data, index) => {
-                  const fileURL = `https://dweb.link/ipfs/${data.cid["/"]}`;
-                  return (
-                    <tr key={`${data.cid["/"]}-${index}`} className={tstyles.tr}>
-                      <td className={tstyles.td}>{data.file}</td>
-                      <td className={tstyles.tdcta}>
-                        <a href={fileURL} target="_blank" className={tstyles.cta}>
-                          {fileURL}
-                        </a>
-                      </td>
-                      <td className={tstyles.td}>{data.totalRequests}</td>
-                      <td className={tstyles.td}>{U.bytesToSize(data.bwUsed)}</td>
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </table>
+        <div className={styles.group}>
+          <table className={tstyles.table}>
+            <tbody className={tstyles.tbody}>
+              <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: "30%" }}>
+                  Name
+                </th>
+                <th className={tstyles.th}>Retrieval link</th>
+                <th className={tstyles.th} style={{ width: "104px" }}>
+                  Requests
+                </th>
+                <th className={tstyles.th} style={{ width: "120px" }}>
+                  Bandwidth
+                </th>
+              </tr>
+              {state.files && state.files.length
+                ? state.files.map((data, index) => {
+                    const fileURL = `https://dweb.link/ipfs/${data.cid["/"]}`;
+                    return (
+                      <tr key={`${data.cid["/"]}-${index}`} className={tstyles.tr}>
+                        <td className={tstyles.td}>{data.file}</td>
+                        <td className={tstyles.tdcta}>
+                          <a href={fileURL} target="_blank" className={tstyles.cta}>
+                            {fileURL}
+                          </a>
+                        </td>
+                        <td className={tstyles.td}>{data.totalRequests}</td>
+                        <td className={tstyles.td}>{U.bytesToSize(data.bwUsed)}</td>
+                      </tr>
+                    );
+                  })
+                : null}
+            </tbody>
+          </table>
+        </div>
 
         {state.files && !state.files.length ? (
           <SingleColumnLayout>

@@ -78,78 +78,80 @@ function AdminContentPage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />}
       >
-        <table className={tstyles.table}>
-          <tbody className={tstyles.tbody}>
-            <tr className={tstyles.tr}>
-              <th className={tstyles.th} style={{ width: "30%" }}>
-                name
-              </th>
-              <th className={tstyles.th}>cid</th>
-              <th className={tstyles.th} style={{ width: "128px" }}>
-                active
-              </th>
-              <th className={tstyles.th} style={{ width: "128px" }}>
-                replication
-              </th>
-              <th className={tstyles.th} style={{ width: "128px" }}>
-                size
-              </th>
-              <th className={tstyles.th} style={{ width: "104px" }}>
-                options
-              </th>
-            </tr>
-            {state.content && state.content.length
-              ? state.content.map((data, index) => {
-                  const fileURL = `https://dweb.link/ipfs/${data.cid}`;
-                  return (
-                    <tr className={tstyles.tr}>
-                      <td className={tstyles.td}>{data.name}</td>
-                      <td className={tstyles.tdcta}>
-                        <a href={fileURL} target="_blank" className={tstyles.cta}>
-                          {fileURL}
-                        </a>
-                      </td>
-                      <td className={tstyles.td}>{String(data.active)}</td>
-                      <td className={tstyles.td}>{data.replication} times</td>
-                      <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
-                      {!props.offloaded ? (
+        <div className={styles.group}>
+          <table className={tstyles.table}>
+            <tbody className={tstyles.tbody}>
+              <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: "30%" }}>
+                  name
+                </th>
+                <th className={tstyles.th}>cid</th>
+                <th className={tstyles.th} style={{ width: "128px" }}>
+                  active
+                </th>
+                <th className={tstyles.th} style={{ width: "128px" }}>
+                  replication
+                </th>
+                <th className={tstyles.th} style={{ width: "128px" }}>
+                  size
+                </th>
+                <th className={tstyles.th} style={{ width: "104px" }}>
+                  options
+                </th>
+              </tr>
+              {state.content && state.content.length
+                ? state.content.map((data, index) => {
+                    const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                    return (
+                      <tr className={tstyles.tr}>
+                        <td className={tstyles.td}>{data.name}</td>
                         <td className={tstyles.tdcta}>
-                          <span
-                            className={tstyles.cta}
-                            onClick={async () => {
-                              const confirm = window.confirm(
-                                "Are you sure you want to delete this data?"
-                              );
-
-                              if (!confirm) {
-                                return;
-                              }
-
-                              const response = await R.post(`/admin/cm/offload/${data.id}`, {});
-
-                              if (response && response.error) {
-                                return alert(response.error);
-                              }
-
-                              const content = await R.get("/admin/cm/offload/candidates");
-
-                              if (content && content.error) {
-                                return alert(content.error);
-                              }
-
-                              setState({ ...state, content });
-                            }}
-                          >
-                            Offload
-                          </span>
+                          <a href={fileURL} target="_blank" className={tstyles.cta}>
+                            {fileURL}
+                          </a>
                         </td>
-                      ) : null}
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </table>
+                        <td className={tstyles.td}>{String(data.active)}</td>
+                        <td className={tstyles.td}>{data.replication} times</td>
+                        <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
+                        {!props.offloaded ? (
+                          <td className={tstyles.tdcta}>
+                            <span
+                              className={tstyles.cta}
+                              onClick={async () => {
+                                const confirm = window.confirm(
+                                  "Are you sure you want to delete this data?"
+                                );
+
+                                if (!confirm) {
+                                  return;
+                                }
+
+                                const response = await R.post(`/admin/cm/offload/${data.id}`, {});
+
+                                if (response && response.error) {
+                                  return alert(response.error);
+                                }
+
+                                const content = await R.get("/admin/cm/offload/candidates");
+
+                                if (content && content.error) {
+                                  return alert(content.error);
+                                }
+
+                                setState({ ...state, content });
+                              }}
+                            >
+                              Offload
+                            </span>
+                          </td>
+                        ) : null}
+                      </tr>
+                    );
+                  })
+                : null}
+            </tbody>
+          </table>
+        </div>
       </AuthenticatedLayout>
     </Page>
   );

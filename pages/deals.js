@@ -66,7 +66,7 @@ class ContentStatus extends React.Component {
     );
 
     return (
-      <React.Fragment>
+      <div className={styles.group}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
@@ -91,7 +91,7 @@ class ContentStatus extends React.Component {
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
               <th className={tstyles.th} style={{ width: "80px" }}>
-                Total deals
+                Deals
               </th>
               <th className={tstyles.th} style={{ width: "88px" }}>
                 Active
@@ -108,9 +108,13 @@ class ContentStatus extends React.Component {
             <tr className={tstyles.tr}>
               <td className={tstyles.td}>{deals ? deals.length : 0}</td>
 
-              <td className={tstyles.td}>{active.length}</td>
+              <td className={tstyles.td}>
+                {active.length} / {deals ? deals.length : 0}
+              </td>
 
-              <td className={tstyles.td}>{onChain.length}</td>
+              <td className={tstyles.td}>
+                {onChain.length} / {deals ? deals.length : 0}
+              </td>
 
               {failuresCount ? (
                 <td className={tstyles.tdcta}>
@@ -123,7 +127,7 @@ class ContentStatus extends React.Component {
           </tbody>
         </table>
         <div className={styles.deals}>{dealElements}</div>
-      </React.Fragment>
+      </div>
     );
   }
 }

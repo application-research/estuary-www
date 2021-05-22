@@ -62,7 +62,7 @@ function AdminInvitesPage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="ADMIN_INVITES" viewer={props.viewer} />}
       >
-        <div>
+        <div className={styles.group}>
           <SingleColumnLayout>
             <H2>Create Invite</H2>
             <P style={{ marginTop: 8 }}>
