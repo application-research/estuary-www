@@ -1,9 +1,13 @@
 .container {
   max-width: 488px;
   width: 100%;
-  padding: 16px 64px 48px 0px;
+  padding: 88px 64px 48px 24px;
   display: inline-flex;
   flex-direction: column;
+
+  @media (max-width: 1024px) {
+    padding: 24px;
+  }
 
   @media (max-width: 768px) {
     max-width: none;

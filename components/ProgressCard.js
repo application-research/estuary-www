@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "~/common/utilities";
 import * as C from "~/common/constants";
 
-const ProgressCard = ({ deal, transfer, chain, marketing }) => {
+const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
   const isOnChain = deal.dealId > 0;
 
   let message = `DealOnChain`;
@@ -41,14 +41,22 @@ const ProgressCard = ({ deal, transfer, chain, marketing }) => {
     }
   }
 
+  let minerURL = null;
+  if (deal && deal.dealId) {
+    minerURL = `/errors/${contentId}`;
+    if (message !== "FailAfterTransfer") {
+      minerURL = `/deals/${deal.dealId}`;
+    }
+  }
+
   return (
     <div className={U.classNames(marketing ? styles.marketing : styles.card)}>
       <div className={styles.container}>
         <div className={styles.top} style={topStyle}>
           {transfer ? (
             <p className={styles.cardHeading}>
-              {deal && deal.dealId ? <a href={`/deals/${deal.dealId}`}>{message}</a> : message} (
-              {transfer.status}) ⇄ <a href={`/miners/stats/${deal.miner}`}>{deal.miner}</a>
+              {minerURL ? <a href={minerURL}>{message}</a> : message} ({transfer.status}) ⇄{" "}
+              <a href={`/miners/stats/${deal.miner}`}>{deal.miner}</a>
             </p>
           ) : (
             <p className={styles.cardHeading}>NoTransferAndFail ⇄ {deal.miner}</p>

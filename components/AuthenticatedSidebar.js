@@ -8,7 +8,9 @@ import * as C from "~/common/constants";
 function AuthenticatedLayout(props) {
   return (
     <nav className={styles.container}>
-      <div className={styles.title}>Estuary</div>
+      <div className={styles.title} style={{ marginTop: 40 }}>
+        Estuary
+      </div>
       <a
         className={styles.item}
         href="/upload"

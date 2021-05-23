@@ -9,6 +9,7 @@ import * as R from "~/common/requests";
 import ProgressCard from "~/components/ProgressCard";
 import Navigation from "~/components/Navigation";
 import Page from "~/components/Page";
+import LoaderSpinner from "~/components/LoaderSpinner";
 import AuthenticatedLayout from "~/components/AuthenticatedLayout";
 import AuthenticatedSidebar from "~/components/AuthenticatedSidebar";
 
@@ -32,6 +33,7 @@ export async function getServerSideProps(context) {
 const ContentDeal = (props) => (
   <ProgressCard
     key={props.data.ID}
+    contentId={props.contentId}
     deal={props.data.deal}
     chain={props.data.onChainState}
     transfer={props.data.transfer}
@@ -54,75 +56,46 @@ class ContentStatus extends React.Component {
 
   render() {
     let { content, deals, failuresCount } = this.state.status;
-    let onChain = deals ? deals.filter((deal) => deal.deal.dealId > 0) : [];
-    let active = deals
-      ? deals.filter((d) => d.onChainState && d.onChainState.sectorStartEpoch)
-      : [];
 
-    let dealElements = deals ? (
-      deals.map((deal, index) => <ContentDeal key={`${deal.ID}-${index}`} data={deal} />)
-    ) : (
-      <div className={styles.empty}>Processing...</div>
-    );
+    let dealElements =
+      deals && deals.length ? (
+        deals.map((deal, index) => (
+          <ContentDeal key={`${deal.ID}-${index}`} data={deal} contentId={this.props.id} />
+        ))
+      ) : (
+        <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
+      );
+
+    const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
 
     return (
       <div className={styles.group}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
-              <th className={tstyles.th}>Name</th>
-              <th className={tstyles.th} style={{ width: "148px" }}>
-                Content ID
+              <th className={tstyles.th} style={{ width: "25%" }}>
+                Name
               </th>
-              <th className={tstyles.th} style={{ width: "148px" }}>
+              <th className={tstyles.th}>Retrieval CID</th>
+              <th className={tstyles.th} style={{ width: "8%" }}>
+                ID
+              </th>
+              <th className={tstyles.th} style={{ width: "12%" }}>
                 Size
               </th>
             </tr>
             <tr className={tstyles.tr}>
               <td className={tstyles.td}>{content ? content.name : "Loading..."}</td>
 
+              <td className={tstyles.tdcta}>
+                <a className={tstyles.cta} href={retrievalURL}>
+                  {retrievalURL}
+                </a>
+              </td>
+
               <td className={tstyles.td}>{this.props.id}</td>
 
               <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className={tstyles.table}>
-          <tbody className={tstyles.tbody}>
-            <tr className={tstyles.tr}>
-              <th className={tstyles.th} style={{ width: "80px" }}>
-                Deals
-              </th>
-              <th className={tstyles.th} style={{ width: "88px" }}>
-                Active
-              </th>
-              <th className={tstyles.th} style={{ width: "96px" }}>
-                On chain
-              </th>
-              {failuresCount ? (
-                <th className={tstyles.th} style={{ width: "96px" }}>
-                  Total errors
-                </th>
-              ) : null}
-            </tr>
-            <tr className={tstyles.tr}>
-              <td className={tstyles.td}>{deals ? deals.length : 0}</td>
-
-              <td className={tstyles.td}>
-                {active.length} / {deals ? deals.length : 0}
-              </td>
-
-              <td className={tstyles.td}>
-                {onChain.length} / {deals ? deals.length : 0}
-              </td>
-
-              {failuresCount ? (
-                <td className={tstyles.tdcta}>
-                  <a href={`/errors/${this.props.id}`} className={tstyles.cta}>
-                    {failuresCount}
-                  </a>
-                </td>
-              ) : null}
             </tr>
           </tbody>
         </table>
@@ -148,9 +121,9 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const statusElements = this.state.entities
-      .map((s, index) => <ContentStatus id={s.id} key={s.id} />)
-      .reverse();
+    const statusElements = this.state.entities.length
+      ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} />).reverse()
+      : null;
 
     return (
       <Page

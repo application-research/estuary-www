@@ -19,10 +19,12 @@
 }
 
 .empty {
-  padding: 16px 8px 16px 15px;
-  font-size: 12px;
+  padding: 8px 8px 8px 14px;
+  font-size: 0.85rem;
   font-family: "Mono";
-  color: var(--main-input-background);
+  margin: 2px;
+  background: var(--main-background-table);
+  color: var(--main-background-table-text-color);
 }
 
 .actions {
