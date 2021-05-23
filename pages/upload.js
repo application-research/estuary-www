@@ -42,7 +42,13 @@ export default class UploadPage extends React.Component {
     window.onbeforeunload = null;
   }
 
-  _handleUploadFile = () => {
+  _handleClearState = (state) => {
+    return this.setState({
+      ...state,
+    });
+  };
+
+  _handleUploadFile = (options) => {
     this.setState({
       loaded: 0,
       total: 0,
@@ -50,6 +56,7 @@ export default class UploadPage extends React.Component {
       secondsElapsed: 0,
       bytesPerSecond: 0,
       secondsRemaining: 0,
+      staging: options && options.staging,
     });
   };
 
@@ -85,7 +92,47 @@ export default class UploadPage extends React.Component {
   };
 
   render() {
-    console.log(this.props.viewer);
+    let endStateElement;
+    if (!U.isEmpty(this.state.cid)) {
+      endStateElement = (
+        <React.Fragment>
+          <H2 style={{ marginTop: 48 }}>Success</H2>
+          <P style={{ marginTop: 8 }}>
+            Your data has been uploaded. Estuary will now make Filecoin Storage Deals on your behalf
+            to ensure proper storage.
+          </P>
+
+          <Block
+            style={{ marginTop: 24 }}
+            label="Your retrieval URL"
+            custom="➝ Go see Filecoin storage miner status."
+            onCustomClick={() => {
+              window.location.href = "/deals";
+            }}
+          >
+            https://dweb.link/ipfs/{this.state.cid}
+          </Block>
+
+          <ActionRow>You can retrieve your data in a few minutes.</ActionRow>
+        </React.Fragment>
+      );
+
+      if (this.state.staging) {
+        endStateElement = (
+          <React.Fragment>
+            <H2 style={{ marginTop: 48 }}>Added to staging</H2>
+            <P style={{ marginTop: 8 }}>
+              Your data has been uploaded. Once you add over 4 GB of data to your staging area,
+              Estuary will start automatically making deals on your behalf.
+            </P>
+
+            <Block style={{ marginTop: 24 }} label="Your retrieval URL">
+              https://dweb.link/ipfs/{this.state.cid}
+            </Block>
+          </React.Fragment>
+        );
+      }
+    }
 
     return (
       <Page
@@ -107,6 +154,7 @@ export default class UploadPage extends React.Component {
               onProgress={this._handleProgress}
               onUploadFinished={this._handleUploadFinished}
               onUploadFile={this._handleUploadFile}
+              onClearState={this._handleClearState}
               uploadFinished={this.state.loaded > 0 && this.state.loaded === this.state.total}
               viewer={this.props.viewer}
             >
@@ -122,28 +170,7 @@ export default class UploadPage extends React.Component {
               ) : null}
             </UploadFileContainer>
 
-            {!U.isEmpty(this.state.cid) ? (
-              <React.Fragment>
-                <H2 style={{ marginTop: 48 }}>Success</H2>
-                <P style={{ marginTop: 8 }}>
-                  Your data has been uploaded. Estuary will now make Filecoin Storage Deals on your
-                  behalf to ensure proper storage.
-                </P>
-
-                <Block
-                  style={{ marginTop: 24 }}
-                  label="Your retrieval URL"
-                  custom="➝ Go see Filecoin storage miner status."
-                  onCustomClick={() => {
-                    window.location.href = "/deals";
-                  }}
-                >
-                  https://dweb.link/ipfs/{this.state.cid}
-                </Block>
-
-                <ActionRow>You can retrieve your data in a few minutes.</ActionRow>
-              </React.Fragment>
-            ) : null}
+            {endStateElement}
           </SingleColumnLayout>
         </AuthenticatedLayout>
       </Page>

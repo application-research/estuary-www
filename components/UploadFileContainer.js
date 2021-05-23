@@ -28,7 +28,12 @@ export default class UploadFileContainer extends React.Component {
   }
 
   doFileUpload = async (file, filename) => {
-    this.setState({ mode: 4 });
+    this.setState({ mode: 4, staging: false });
+
+    if (file.size < this.props.viewer.settings.fileStagingThreshold) {
+      this.setState({ data: { file, filename, estimate: 0, price: 0 }, mode: 4, staging: true });
+      return await this.upload();
+    }
 
     const response = await R.post("/deals/estimate", {
       size: file.size,
@@ -66,7 +71,7 @@ export default class UploadFileContainer extends React.Component {
     console.log(formData);
 
     this.setState({ mode: 4 });
-    this.props.onUploadFile();
+    this.props.onUploadFile({ staging: this.state.staging });
 
     // TODO(jim):
     // We really don't need to be making this requests from the client
@@ -166,12 +171,14 @@ export default class UploadFileContainer extends React.Component {
   handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.onClearState({ staging: false, cid: null });
     this.setState({ mode: 3 });
   };
 
   handleDragIn = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.onClearState({ staging: false, cid: null });
     this.setState({ mode: 3 });
   };
 
