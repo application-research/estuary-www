@@ -131,34 +131,34 @@ body {
   --main-button-text-secondary: #171414;
 
   /* Requested */
-  --status-0: #726e6e;
+  --status-0: rgba(0, 62, 255, 0.1);
   /* Ongoing */
-  --status-1: #ee5396;
+  --status-1: rgba(0, 62, 255, 0.2);
   /* Transfer Finished */
-  --status-2: #8a3ffc;
+  --status-2: rgba(0, 62, 255, 0.3);
   /* ResponderCompleted */
-  --status-3: #3ddbd9;
+  --status-3: rgba(0, 62, 255, 0.4);
   /* Finalizing, transfer is done. */
-  --status-4: #78a9ff;
-  --status-5: #4589ff;
+  --status-4: rgba(0, 62, 255, 0.5);
+  --status-5: rgba(0, 62, 255, 0.6);
   /* Completed means the data transfer is completed successfully */
-  --status-6: #0f62fe;
+  --status-6: rgba(0, 62, 255, 0.7);
   /* Failing */
-  --status-6-failed: #da1e28;
-  --status-7: #da1e28;
+  --status-6-failed: rgba(255, 0, 0, 0.3);
+  --status-7: rgba(255, 0, 0, 0.4);
   /* Failed */
-  --status-8: #da1e28;
-  --status-9: #a2a9b0;
-  --status-10: #697077;
-  --status-11: #c6c6c6;
-  --status-12: #c6c6c6;
-  --status-13: #c6c6c6;
-  --status-14: #ff7eb6;
-  --status-15: #f1c21b;
-  --status-16: #ff832b;
-  --status-success: #24a148;
-  --status-success-bright: #7cfc00;
-  --status-error: #da1e28;
+  --status-8: rgba(255, 216, 0, 0.9);
+  --status-9: rgba(255, 216, 0, 0.8);
+  --status-10: rgba(255, 216, 0, 0.7);
+  --status-11: rgba(255, 216, 0, 0.6);
+  --status-12: rgba(255, 216, 0, 0.5);
+  --status-13: rgba(255, 216, 0, 0.4);
+  --status-14: rgba(255, 216, 0, 0.3);
+  --status-15: rgba(255, 216, 0, 0.2);
+  --status-16: rgba(255, 216, 0, 0.1);
+  --status-success: rgba(12, 255, 0, 0.4);
+  --status-success-bright: rgba(12, 255, 0, 1);
+  --status-error: rgba(255, 0, 0, 0.5);
 
   font-family: -apple-system, BlinkMacSystemFont, helvetica neue, helvetica, sans-serif;
   background: var(--main-background);

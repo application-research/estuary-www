@@ -40,9 +40,61 @@ const ContentDeal = (props) => (
   />
 );
 
+export const ContentCard = ({ content, deals, id }) => {
+  console.log(content);
+  console.log(deals);
+  console.log(id);
+
+  let dealElements =
+    deals && deals.length ? (
+      deals.map((d, index) => <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} />)
+    ) : (
+      <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
+    );
+
+  const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
+
+  return (
+    <div className={styles.group}>
+      <table className={tstyles.table}>
+        <tbody className={tstyles.tbody}>
+          <tr className={tstyles.tr}>
+            <th className={tstyles.th} style={{ width: "25%" }}>
+              Name
+            </th>
+            <th className={tstyles.th} style={{ width: "50%" }}>
+              Retrieval CID
+            </th>
+            <th className={tstyles.th} style={{ width: "12.5%" }}>
+              ID
+            </th>
+            <th className={tstyles.th} style={{ width: "12.5%" }}>
+              Size
+            </th>
+          </tr>
+          <tr className={tstyles.tr}>
+            <td className={tstyles.td}>{content ? content.name : "Loading..."}</td>
+
+            <td className={tstyles.tdcta}>
+              <a className={tstyles.cta} href={retrievalURL} target="_blank">
+                {retrievalURL}
+              </a>
+            </td>
+
+            <td className={tstyles.td}>{id}</td>
+
+            <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className={styles.deals}>{dealElements}</div>
+    </div>
+  );
+};
+
 class ContentStatus extends React.Component {
   state = {
-    status: {},
+    status: null,
   };
 
   async componentDidMount() {
@@ -55,53 +107,7 @@ class ContentStatus extends React.Component {
   }
 
   render() {
-    let { content, deals, failuresCount } = this.state.status;
-
-    let dealElements =
-      deals && deals.length ? (
-        deals.map((deal, index) => (
-          <ContentDeal key={`${deal.ID}-${index}`} data={deal} contentId={this.props.id} />
-        ))
-      ) : (
-        <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
-      );
-
-    const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
-
-    return (
-      <div className={styles.group}>
-        <table className={tstyles.table}>
-          <tbody className={tstyles.tbody}>
-            <tr className={tstyles.tr}>
-              <th className={tstyles.th} style={{ width: "25%" }}>
-                Name
-              </th>
-              <th className={tstyles.th}>Retrieval CID</th>
-              <th className={tstyles.th} style={{ width: "8%" }}>
-                ID
-              </th>
-              <th className={tstyles.th} style={{ width: "12%" }}>
-                Size
-              </th>
-            </tr>
-            <tr className={tstyles.tr}>
-              <td className={tstyles.td}>{content ? content.name : "Loading..."}</td>
-
-              <td className={tstyles.tdcta}>
-                <a className={tstyles.cta} href={retrievalURL}>
-                  {retrievalURL}
-                </a>
-              </td>
-
-              <td className={tstyles.td}>{this.props.id}</td>
-
-              <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className={styles.deals}>{dealElements}</div>
-      </div>
-    );
+    return <ContentCard id={this.props.id} {...this.state.status} />;
   }
 }
 
