@@ -27,6 +27,13 @@ function AuthenticatedLayout(props) {
       </a>
       <a
         className={styles.item}
+        href="/staging"
+        style={props.active === "STAGING" ? { color: `var(--main-primary)` } : null}
+      >
+        Staging
+      </a>
+      <a
+        className={styles.item}
         href="/api-admin"
         style={props.active === "API" ? { color: `var(--main-primary)` } : null}
       >
