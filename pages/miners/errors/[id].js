@@ -25,7 +25,7 @@ function MinerErrorPage(props) {
     const response = await R.get(`/public/miners/failures/${props.id}`);
 
     if (response && response.length) {
-      return setState({ logs: response.reverse() });
+      return setState({ logs: response });
     }
 
     alert("No error logs for this miner.");

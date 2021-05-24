@@ -27,7 +27,7 @@ function MinerDealsPage(props) {
     console.log(response);
 
     if (response && response.length) {
-      return setState({ logs: response.reverse() });
+      return setState({ logs: response });
     }
 
     alert("No deal history for this miner.");
