@@ -87,19 +87,6 @@ function IndexPage(props) {
         </div>
       </div>
 
-      <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
-        <div className={S.rl}>
-          <div className={S.rtext}>
-            Run your own Estuary Node and help others retrieve from Filecoin.
-          </div>
-          <FeatureRow>Source code is open source</FeatureRow>
-          <FeatureRow>Documentation coming soon</FeatureRow>
-        </div>
-        <div className={S.rr}>
-          <MarketingGraph />
-        </div>
-      </div>
-
       <footer className={S.f}>
         <div className={S.fa}>
           <div className={S.fcol4}>

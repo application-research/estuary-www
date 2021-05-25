@@ -40,7 +40,7 @@ const ContentDeal = (props) => (
   />
 );
 
-export const ContentCard = ({ content, deals, id, groups }) => {
+export const ContentCard = ({ content, deals, id, groups = {} }) => {
   let dealElements =
     deals && deals.length ? (
       deals.map((d, index) => <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} />)
