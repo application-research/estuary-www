@@ -1,6 +1,6 @@
 .single {
   width: 100%;
-  max-width: 640px;
+  max-width: 768px;
   padding: 0 0 24px 0;
 }
 
@@ -16,7 +16,8 @@
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  padding: 48px;
+  max-width: 1280px;
+  padding: 48px 0px 48px 0px;
 }
 
 .drop {

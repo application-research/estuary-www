@@ -49,18 +49,22 @@ function IndexPage(props) {
 
       <div className={S.h}>
         <div className={S.ht}>
-          <H1 style={{ maxWidth: "768px" }}>Automated Filecoin storage deals</H1>
-          <P style={{ marginTop: 16, maxWidth: "768px", fontSize: "1.15rem" }}>
+          <H1 style={{ maxWidth: "768px", fontWeight: 800 }}>Automated Filecoin storage</H1>
+          <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
             Use any browser and our API to store and retrieve data from the Filecoin Network.
           </P>
           <div className={S.actions}>
             <Button
-              style={{ background: `var(--main-primary)`, margin: "0 16px 0 0" }}
               onClick={() => alert("Coming soon")}
+              style={{
+                background: `var(--main-primary)`,
+                margin: "0 16px 0 0",
+                fontSize: "24px",
+                padding: "16px 24px 16px 24px",
+              }}
             >
-              Request invite
-            </Button>{" "}
-            <Button onClick={() => alert("Coming soon")}>View documentation</Button>
+              Learn more
+            </Button>
           </div>
           <img
             className={S.hbimg}
@@ -71,10 +75,10 @@ function IndexPage(props) {
 
       <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
         <div className={S.rl}>
-          <div className={S.rtext}>Upload your data to the Filecoin Network.</div>
+          <div className={S.rtext}>Upload your data to the Filecoin Network</div>
           <FeatureRow>No minimum size</FeatureRow>
           <FeatureRow>Upload through web or through CLI</FeatureRow>
-          <FeatureRow>Deal cost estimation</FeatureRow>
+          <FeatureRow>On demand Filecoin cost estimation</FeatureRow>
         </div>
         <div className={S.rr}>
           <MarketingUpload
@@ -90,8 +94,8 @@ function IndexPage(props) {
 
       <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
         <div className={S.rl}>
-          <div className={S.rtext}>Your data is always available and accessible.</div>
-          <FeatureRow>Data can always be retrieved from Filecoin</FeatureRow>
+          <div className={S.rtext}>Get the status of your data</div>
+          <FeatureRow>Pins are always restored from Filecoin</FeatureRow>
           <FeatureRow>Automated replication and repair</FeatureRow>
         </div>
         <div className={S.rr}>
