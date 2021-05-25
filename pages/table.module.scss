@@ -1,13 +1,24 @@
 .table {
   width: 100%;
-  font-size: 0.85rem;
-  font-family: "Mono";
   background: var(--main-background-table);
   color: var(--main-background-table-text-color);
   table-layout: fixed;
+  font-size: 16px;
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+  }
 }
 
 .tbody {
+  font-size: 0.85em;
 }
 
 .tr {
@@ -20,7 +31,8 @@
   text-transform: uppercase;
   letter-spacing: 0.4px;
   font-weight: 400;
-  font-size: 0.75rem;
+  font-size: 0.85em;
+  font-family: "Mono";
   overflow: hidden;
   text-overflow: ellipsis;
   background: rgba(0, 0, 0, 0.1);

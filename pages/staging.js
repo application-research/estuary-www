@@ -44,7 +44,7 @@ function StagingPage(props) {
       return;
     }
 
-    setState({ files });
+    setState({ files: files[0].contents });
   }, []);
 
   console.log(props.viewer);
@@ -59,7 +59,48 @@ function StagingPage(props) {
         navigation={<Navigation isAuthenticated />}
         sidebar={<AuthenticatedSidebar active="FILES" viewer={props.viewer} />}
       >
-        WIP
+        <SingleColumnLayout>
+          <H2>Staging zone</H2>
+          <P style={{ marginTop: 8 }}>
+            Data that is listed here will be aggregated into a single Filecoin deal within a few
+            hours.
+          </P>
+        </SingleColumnLayout>
+        <div className={styles.group}>
+          <table className={tstyles.table}>
+            <tbody className={tstyles.tbody}>
+              <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: "30%" }}>
+                  Name
+                </th>
+                <th className={tstyles.th}>Retrieval link</th>
+                <th className={tstyles.th} style={{ width: "104px" }}>
+                  Size
+                </th>
+                <th className={tstyles.th} style={{ width: "120px" }}>
+                  User ID
+                </th>
+              </tr>
+              {state.files && state.files.length
+                ? state.files.map((data, index) => {
+                    const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                    return (
+                      <tr key={`${data.cid["/"]}-${index}`} className={tstyles.tr}>
+                        <td className={tstyles.td}>{data.name}</td>
+                        <td className={tstyles.tdcta}>
+                          <a href={fileURL} target="_blank" className={tstyles.cta}>
+                            {fileURL}
+                          </a>
+                        </td>
+                        <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
+                        <td className={tstyles.td}>{data.userId}</td>
+                      </tr>
+                    );
+                  })
+                : null}
+            </tbody>
+          </table>
+        </div>
       </AuthenticatedLayout>
     </Page>
   );

@@ -16,14 +16,25 @@
   flex-wrap: wrap;
   width: 100%;
   background: var(--main-background-table);
+  font-size: 16px;
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+  }
 }
 
 .empty {
   padding: 8px 14px 8px 14px;
   display: block;
   width: 100%;
-  font-size: 0.85rem;
-  font-family: "Mono";
+  font-size: 0.85em;
   margin: 2px;
   background: var(--main-background-table);
   color: var(--main-background-table-text-color);

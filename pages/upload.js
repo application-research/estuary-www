@@ -122,11 +122,18 @@ export default class UploadPage extends React.Component {
           <React.Fragment>
             <H2 style={{ marginTop: 48 }}>Added to staging</H2>
             <P style={{ marginTop: 8 }}>
-              Your data has been uploaded. Once you add over 4 GB of data to your staging area,
-              Estuary will start automatically making deals on your behalf.
+              Your data has been uploaded. In a few hours deals will be made for all files you have
+              uploaded under 4 GB.
             </P>
 
-            <Block style={{ marginTop: 24 }} label="Your retrieval URL">
+            <Block
+              style={{ marginTop: 24 }}
+              label="Your retrieval URL"
+              custom="➝ View staging area."
+              onCustomClick={() => {
+                window.location.href = "/staging";
+              }}
+            >
               https://dweb.link/ipfs/{this.state.cid}
             </Block>
           </React.Fragment>
@@ -147,7 +154,8 @@ export default class UploadPage extends React.Component {
           <SingleColumnLayout>
             <H2>Upload data</H2>
             <P style={{ marginTop: 8 }}>
-              Add your public data to Estuary so anyone can retrieve it anytime.
+              Add your public data to Estuary so anyone can retrieve it anytime. If you upload any
+              files under 4 GB, we will aggregate your files into a single deal.
             </P>
 
             <UploadFileContainer

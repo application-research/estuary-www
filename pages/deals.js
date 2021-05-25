@@ -90,7 +90,9 @@ export const ContentCard = ({ content, deals, id, groups }) => {
 
             <td className={tstyles.td}>{id}</td>
 
-            <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
+            <td className={tstyles.td}>
+              {content ? U.bytesToSize(content.size, 2) : null} {name === "/" ? "(Total)" : null}
+            </td>
           </tr>
           {subfiles.map((each) => {
             const subRetrievalURL = each ? `https://dweb.link/ipfs/${each.cid}` : null;
@@ -157,7 +159,7 @@ export default class Dashboard extends React.Component {
         continue;
       }
 
-      if (item.aggregatedIn) {
+      if (item.aggregatedIn && item.aggregatedIn > 0) {
         if (!groups[item.aggregatedIn]) {
           groups[item.aggregatedIn] = [];
         }

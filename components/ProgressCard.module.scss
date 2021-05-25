@@ -2,17 +2,23 @@
   max-width: 25%;
   width: 100%;
   padding: 2px;
+  font-size: 16px;
 
   @media (max-width: 1664px) {
     max-width: 25%;
   }
 
   @media (max-width: 1440px) {
-    max-width: 33.33%;
+    max-width: 33.33;
   }
 
   @media (max-width: 1248px) {
     max-width: 50%;
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
   }
 
   @media (max-width: 960px) {
@@ -44,6 +50,6 @@
   color: var(--main-text);
   width: 100%;
   padding: 8px 8px 8px 14px;
-  font-size: 12px;
-  font-family: "Mono";
+  font-size: 0.85em;
+  font-weight: 600;
 }
