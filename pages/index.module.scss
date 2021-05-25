@@ -1,38 +1,27 @@
 .h {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-  height: calc(100vh - 48px);
+  background: var(--main-background);
+}
+
+.actions {
+  margin-top: 24px;
 }
 
 .ht {
-  height: 100%;
-  width: 100%;
-  min-height: 10%;
-  min-width: 10%;
-  background-image: url("https://next-s3-public.s3-us-west-2.amazonaws.com/image-hero.png");
-  background-position: 50% 50%;
-  background-size: cover;
-  display: flex;
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 88px 24px 48px 24px;
 }
 
-.hb {
-  font-size: 2.5rem;
-  padding: 16px;
-  flex-shrink: 0;
+.hbimg {
   width: 100%;
-  background: #ffffff;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-
-  @media (max-width: 864px) {
-    display: block;
-  }
+  max-width: 1280px;
 }
 
 .htext {

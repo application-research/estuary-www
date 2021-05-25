@@ -8,6 +8,7 @@ import * as R from "~/common/requests";
 import Page from "~/components/Page";
 import Navigation from "~/components/Navigation";
 import Card from "~/components/Card";
+import Button from "~/components/Button";
 import FeatureRow from "~/components/FeatureRow";
 import MarketingCube from "~/components/MarketingCube";
 
@@ -47,19 +48,32 @@ function IndexPage(props) {
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <div className={S.h}>
-        <div className={S.ht}></div>
-        <div className={S.hb}>
-          Use our Estuary Node to store and retrieve your data from the Filecoin Network.
+        <div className={S.ht}>
+          <H1 style={{ maxWidth: "768px" }}>Automated Filecoin storage deals</H1>
+          <P style={{ marginTop: 16, maxWidth: "768px", fontSize: "1.15rem" }}>
+            Use any browser and our API to store and retrieve data from the Filecoin Network.
+          </P>
+          <div className={S.actions}>
+            <Button
+              style={{ background: `var(--main-primary)`, margin: "0 16px 0 0" }}
+              onClick={() => alert("Coming soon")}
+            >
+              Request invite
+            </Button>{" "}
+            <Button onClick={() => alert("Coming soon")}>View documentation</Button>
+          </div>
+          <img
+            className={S.hbimg}
+            src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-marketing-hero.png"
+          />
         </div>
       </div>
 
       <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
         <div className={S.rl}>
-          <div className={S.rtext}>
-            Drag and drop, or click to upload data directly to the Filecoin Network.
-          </div>
+          <div className={S.rtext}>Upload your data to the Filecoin Network.</div>
           <FeatureRow>No minimum size</FeatureRow>
-          <FeatureRow>32 GB maximum size</FeatureRow>
+          <FeatureRow>Upload through web or through CLI</FeatureRow>
           <FeatureRow>Deal cost estimation</FeatureRow>
         </div>
         <div className={S.rr}>
@@ -76,11 +90,9 @@ function IndexPage(props) {
 
       <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
         <div className={S.rl}>
-          <div className={S.rtext}>
-            Estuary nodes retrieve on your behalf. Your data is always pinned and accessible.
-          </div>
-          <FeatureRow>IPFS pin restoration from Filecoin</FeatureRow>
-          <FeatureRow>Estuary Nodes handle replication and repair</FeatureRow>
+          <div className={S.rtext}>Your data is always available and accessible.</div>
+          <FeatureRow>Data can always be retrieved from Filecoin</FeatureRow>
+          <FeatureRow>Automated replication and repair</FeatureRow>
         </div>
         <div className={S.rr}>
           <MarketingProgress />
