@@ -40,7 +40,7 @@ const ContentDeal = (props) => (
   />
 );
 
-export const ContentCard = ({ content, deals, id }) => {
+export const ContentCard = ({ content, deals, id, groups }) => {
   let dealElements =
     deals && deals.length ? (
       deals.map((d, index) => <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} />)
@@ -49,6 +49,17 @@ export const ContentCard = ({ content, deals, id }) => {
     );
 
   const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
+
+  let name = "...";
+  if (content && content.name) {
+    name = content.name;
+  }
+  if (name === "aggregate") {
+    name = "/";
+  }
+
+  const subfiles = groups[id] ? groups[id] : [];
+  console.log({ subfiles });
 
   return (
     <div className={styles.group}>
@@ -69,7 +80,7 @@ export const ContentCard = ({ content, deals, id }) => {
             </th>
           </tr>
           <tr className={tstyles.tr}>
-            <td className={tstyles.td}>{content ? content.name : "Loading..."}</td>
+            <td className={tstyles.td}>{name}</td>
 
             <td className={tstyles.tdcta}>
               <a className={tstyles.cta} href={retrievalURL} target="_blank">
@@ -81,6 +92,25 @@ export const ContentCard = ({ content, deals, id }) => {
 
             <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
           </tr>
+          {subfiles.map((each) => {
+            const subRetrievalURL = each ? `https://dweb.link/ipfs/${each.cid}` : null;
+
+            return (
+              <tr className={tstyles.tr} key={each.id}>
+                <td className={tstyles.td}>{each.name}</td>
+
+                <td className={tstyles.tdcta}>
+                  <a className={tstyles.cta} href={retrievalURL} target="_blank">
+                    {subRetrievalURL}
+                  </a>
+                </td>
+
+                <td className={tstyles.td}>{each.id}</td>
+
+                <td className={tstyles.td}>{each ? U.bytesToSize(each.size, 2) : null}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className={styles.deals}>{dealElements}</div>
@@ -103,7 +133,7 @@ class ContentStatus extends React.Component {
   }
 
   render() {
-    return <ContentCard id={this.props.id} {...this.state.status} />;
+    return <ContentCard id={this.props.id} {...this.state.status} groups={this.props.groups} />;
   }
 }
 
@@ -119,12 +149,32 @@ export default class Dashboard extends React.Component {
       return;
     }
 
-    this.setState({ entities });
+    const groups = {};
+    const list = [];
+    for (let item of entities) {
+      if (!item.aggregatedIn) {
+        list.push(item);
+        continue;
+      }
+
+      if (item.aggregatedIn) {
+        if (!groups[item.aggregatedIn]) {
+          groups[item.aggregatedIn] = [];
+        }
+
+        groups[item.aggregatedIn].push(item);
+        continue;
+      }
+    }
+
+    this.setState({ entities: list, groups });
   }
 
   render() {
     const statusElements = this.state.entities.length
-      ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} />).reverse()
+      ? this.state.entities
+          .map((s, index) => <ContentStatus id={s.id} key={s.id} groups={this.state.groups} />)
+          .reverse()
       : null;
 
     return (
