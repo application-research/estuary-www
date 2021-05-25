@@ -44,6 +44,10 @@ function StagingPage(props) {
       return;
     }
 
+    if (!files.length) {
+      return;
+    }
+
     setState({ files: files[0].contents });
   }, []);
 
@@ -62,9 +66,14 @@ function StagingPage(props) {
         <SingleColumnLayout>
           <H2>Staging zone</H2>
           <P style={{ marginTop: 8 }}>
-            Data that is listed here will be aggregated into a single Filecoin deal within a few
-            hours.
+            When you upload data under the size of{" "}
+            {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged
+            here. After a few hours a storage deal will be made.
           </P>
+
+          <div className={styles.actions}>
+            <Button href="/upload">Upload data</Button>
+          </div>
         </SingleColumnLayout>
         <div className={styles.group}>
           <table className={tstyles.table}>

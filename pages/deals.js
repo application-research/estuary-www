@@ -10,8 +10,12 @@ import ProgressCard from "~/components/ProgressCard";
 import Navigation from "~/components/Navigation";
 import Page from "~/components/Page";
 import LoaderSpinner from "~/components/LoaderSpinner";
+import SingleColumnLayout from "~/components/SingleColumnLayout";
 import AuthenticatedLayout from "~/components/AuthenticatedLayout";
 import AuthenticatedSidebar from "~/components/AuthenticatedSidebar";
+import Button from "~/components/Button";
+
+import { H1, H2, H3, P } from "~/components/Typography";
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -189,6 +193,17 @@ export default class Dashboard extends React.Component {
           navigation={<Navigation isAuthenticated />}
           sidebar={<AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />}
         >
+          <SingleColumnLayout>
+            <H2>Deals</H2>
+            <P style={{ marginTop: 8 }}>
+              All of your Filecoin deals and logs will appear here. Deals are automated and made on
+              your behalf.
+            </P>
+
+            <div className={styles.actions}>
+              <Button href="/upload">Upload data</Button>
+            </div>
+          </SingleColumnLayout>
           <div>{statusElements}</div>
         </AuthenticatedLayout>
       </Page>

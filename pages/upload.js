@@ -123,7 +123,7 @@ export default class UploadPage extends React.Component {
             <H2 style={{ marginTop: 48 }}>Added to staging</H2>
             <P style={{ marginTop: 8 }}>
               Your data has been uploaded. In a few hours deals will be made for all files you have
-              uploaded under 4 GB.
+              uploaded under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}.
             </P>
 
             <Block
@@ -155,7 +155,8 @@ export default class UploadPage extends React.Component {
             <H2>Upload data</H2>
             <P style={{ marginTop: 8 }}>
               Add your public data to Estuary so anyone can retrieve it anytime. If you upload any
-              files under 4 GB, we will aggregate your files into a single deal.
+              files under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}, we will
+              aggregate your files into a single deal.
             </P>
 
             <UploadFileContainer
