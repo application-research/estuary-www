@@ -77,7 +77,7 @@ function IndexPage(props) {
         <div className={S.rl}>
           <div className={S.rtext}>Upload your data to the Filecoin Network</div>
           <FeatureRow>No minimum size</FeatureRow>
-          <FeatureRow>Upload through web or through CLI</FeatureRow>
+          <FeatureRow>Upload with browser or CLI</FeatureRow>
           <FeatureRow>On demand Filecoin cost estimation</FeatureRow>
         </div>
         <div className={S.rr}>

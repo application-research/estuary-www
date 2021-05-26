@@ -149,7 +149,7 @@ export default class Dashboard extends React.Component {
   };
 
   async componentDidMount() {
-    const entities = await R.get(`/content/list`);
+    const entities = await R.get(`/content/deals`);
     if (!entities || entities.error) {
       console.log(entities.error);
       return;
