@@ -3,6 +3,7 @@ import tstyles from "~/pages/table.module.scss";
 
 import * as React from "react";
 import * as U from "~/common/utilities";
+import * as C from "~/common/constants";
 import * as R from "~/common/requests";
 
 import ProgressCard from "~/components/ProgressCard";
@@ -13,6 +14,7 @@ import AuthenticatedSidebar from "~/components/AuthenticatedSidebar";
 import EmptyStatePlaceholder from "~/components/EmptyStatePlaceholder";
 import SingleColumnLayout from "~/components/SingleColumnLayout";
 import Button from "~/components/Button";
+import Cookie from "js-cookie";
 
 import { H1, H2, H3, P } from "~/components/Typography";
 
@@ -34,6 +36,8 @@ export async function getServerSideProps(context) {
 }
 
 function APIPage(props) {
+  const viewerToken = Cookie.get(C.auth);
+  console.log(viewerToken);
   const [state, setState] = React.useState({ keys: [], loading: false });
 
   React.useEffect(async () => {
@@ -67,8 +71,13 @@ function APIPage(props) {
                 loading={state.loading ? state.loading : undefined}
                 onClick={async () => {
                   setState({ ...state, loading: true });
-                  const request = R.post(`/user/api-keys`, {});
-                  setState({ ...state, loading: false });
+                  const request = await R.post(`/user/api-keys`, {});
+
+                  const keys = await R.get("/user/api-keys");
+                  if (keys && !keys.error) {
+                    setState({ ...state, loading: false, keys });
+                    return;
+                  }
                 }}
               >
                 Create a key
@@ -89,7 +98,12 @@ function APIPage(props) {
                   ? state.keys.map((k, index) => {
                       return (
                         <tr key={k.token} className={tstyles.tr}>
-                          <td className={tstyles.td}>{k.token}</td>
+                          <td className={tstyles.td}>
+                            {k.token}{" "}
+                            {viewerToken === k.token ? (
+                              <strong>(current browser session)</strong>
+                            ) : null}
+                          </td>
                           <td
                             className={tstyles.tdcta}
                             onClick={async () => {
@@ -98,9 +112,12 @@ function APIPage(props) {
                               );
 
                               const response = await R.del(`/user/api-keys/${k.token}`);
+                              if (viewerToken === k.token) {
+                                window.location.href = "/";
+                                return;
+                              }
 
                               const keys = await R.get("/user/api-keys");
-
                               if (keys && !keys.error) {
                                 setState({ keys });
                               }

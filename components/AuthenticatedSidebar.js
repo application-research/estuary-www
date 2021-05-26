@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import * as React from "react";
 import * as U from "~/common/utilities";
 import * as C from "~/common/constants";
+import * as R from "~/common/requests";
 
 function AuthenticatedLayout(props) {
   return (
@@ -49,8 +50,9 @@ function AuthenticatedLayout(props) {
       <span
         className={styles.item}
         onClick={async () => {
+          const token = Cookies.get(C.auth);
+          const response = await R.del(`/user/api-keys/${token}`);
           Cookies.remove(C.auth);
-          await U.delay(200);
           window.location.href = "/";
         }}
       >
