@@ -106,7 +106,7 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
                 <td className={tstyles.td}>{each.name}</td>
 
                 <td className={tstyles.tdcta}>
-                  <a className={tstyles.cta} href={retrievalURL} target="_blank">
+                  <a className={tstyles.cta} href={subRetrievalURL} target="_blank">
                     {subRetrievalURL}
                   </a>
                 </td>
