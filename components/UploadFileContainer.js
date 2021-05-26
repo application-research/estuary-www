@@ -220,8 +220,23 @@ export default class UploadFileContainer extends React.Component {
 
     let cta = (
       <div className={styles.actions}>
-        <Button htmlFor="FILE_UPLOAD_TARGET" type="file">
+        <Button
+          htmlFor="FILE_UPLOAD_TARGET"
+          type="file"
+          style={{ marginRight: 24, marginBottom: 24 }}
+        >
           Upload a file
+        </Button>
+
+        <Button
+          style={{
+            marginBottom: 24,
+            background: "var(--main-button-background-secondary)",
+            color: "var(--main-button-text-secondary)",
+          }}
+          href="/upload-cid"
+        >
+          Use a CID instead
         </Button>
       </div>
     );

@@ -107,6 +107,7 @@ function AdminMinersPage(props) {
 
             <div className={styles.actions}>
               <Button
+                style={{ marginRight: 24, marginBottom: 24 }}
                 loading={state.loading ? state.loading : undefined}
                 onClick={async () => {
                   if (U.isEmpty(state.miner)) {
@@ -124,7 +125,8 @@ function AdminMinersPage(props) {
 
               <Button
                 style={{
-                  marginLeft: 24,
+                  marginRight: 24,
+                  marginBottom: 24,
                   background: "var(--main-button-background-secondary)",
                   color: "var(--main-button-text-secondary)",
                 }}
@@ -145,7 +147,7 @@ function AdminMinersPage(props) {
 
               <Button
                 style={{
-                  marginLeft: 24,
+                  marginBottom: 24,
                   background: "var(--main-button-background-secondary)",
                   color: "var(--main-button-text-secondary)",
                 }}

@@ -20,6 +20,13 @@ function AuthenticatedLayout(props) {
       </a>
       <a
         className={styles.item}
+        href="/upload-cid"
+        style={props.active === "UPLOAD_CID" ? { color: `var(--main-primary)` } : null}
+      >
+        Upload CID
+      </a>
+      <a
+        className={styles.item}
         href="/deals"
         style={props.active === "DEALS" ? { color: `var(--main-primary)` } : null}
       >
