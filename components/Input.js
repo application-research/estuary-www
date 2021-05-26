@@ -34,9 +34,8 @@ export default class Input extends React.Component {
   };
 
   _handleChange = (e) => {
-    if (!U.isEmpty(this.props.pattern) && !U.isEmpty(e.target.value)) {
-      const TestRegex = new RegExp(this.props.pattern);
-      if (!TestRegex.test(e.target.value)) {
+    if (this.props.pattern && !U.isEmpty(e.target.value)) {
+      if (!this.props.pattern.test(e.target.value)) {
         e.preventDefault();
         return;
       }

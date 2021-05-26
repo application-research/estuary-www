@@ -64,7 +64,7 @@ async function handleRegister(state) {
     method: "POST",
     body: JSON.stringify({
       passwordHash: passwordHash,
-      username: state.username,
+      username: state.username.toLowerCase(),
       inviteCode: state.inviteCode,
     }),
     headers: {
@@ -118,8 +118,9 @@ function SignUpPage(props) {
           style={{ marginTop: 8 }}
           placeholder="Type in your desired username"
           name="username"
+          pattern={C.regex.username}
           value={state.username}
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
         />
         <aside className={styles.formAside}>
           Requirements: 1-32 characters or digits, no symbols allowed
