@@ -2,9 +2,10 @@
   max-width: 25%;
   width: 100%;
   padding: 2px;
-  font-size: 14px;
+  font-size: 18px;
 
   @media (max-width: 1664px) {
+    font-size: 16px;
     max-width: 25%;
   }
 
@@ -51,5 +52,10 @@
   width: 100%;
   padding: 8px 8px 8px 14px;
   font-size: 0.85em;
-  font-weight: 600;
+  font-weight: 400;
+  min-height: 56px;
+
+  @media (max-width: 1024px) {
+    min-height: 32px;
+  }
 }

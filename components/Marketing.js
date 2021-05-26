@@ -76,7 +76,7 @@ export function MarketingProgress(props) {
         deals={[
           {
             deal: {
-              miner: miner,
+              miner: `f02620`,
               content: 46,
               ID: dealId + 1,
               dealId: onChainDealId,
@@ -92,7 +92,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f023971`,
               content: 46,
               ID: dealId + 2,
               dealId: onChainDealId,
@@ -108,7 +108,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f022142`,
               content: 46,
               ID: dealId + 3,
               dealId: onChainDealId,
@@ -124,7 +124,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f019551`,
               content: 46,
               ID: dealId + 22,
               dealId: onChainDealId,
@@ -140,7 +140,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f01240`,
               content: 46,
               ID: dealId + 4,
               dealId: onChainDealId,
@@ -155,7 +155,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f01247`,
               content: 46,
               ID: dealId + 5,
               failed: false,
@@ -168,7 +168,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f01278`,
               content: 46,
               ID: dealId + 6,
               failed: false,
@@ -181,7 +181,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f071624`,
               content: 46,
               ID: dealId + 7,
               failed: false,
@@ -194,7 +194,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f0135078`,
               content: 46,
               ID: dealId + 8,
               failed: false,
@@ -207,7 +207,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f022352`,
               content: 46,
               ID: dealId + 9,
               failed: false,
@@ -220,7 +220,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f014768`,
               content: 46,
               ID: dealId + 10,
               failed: false,
@@ -233,7 +233,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f02606`,
               content: 46,
               ID: dealId + 11,
               failed: true,
@@ -246,7 +246,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f019100`,
               content: 46,
               ID: dealId + 12,
               failed: true,
@@ -259,7 +259,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f019041`,
               content: 46,
               ID: dealId + 13,
               failed: true,
@@ -272,7 +272,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f023467`,
               content: 46,
               ID: dealId + 14,
               failed: true,
@@ -285,7 +285,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f01276`,
               content: 46,
               ID: dealId + 15,
               failed: true,
@@ -298,7 +298,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f02401`,
               content: 46,
               ID: dealId + 16,
               failed: true,
@@ -311,7 +311,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f02387`,
               content: 46,
               ID: dealId + 17,
               failed: true,
@@ -324,7 +324,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f019104`,
               content: 46,
               ID: dealId + 18,
               failed: true,
@@ -337,7 +337,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f099608`,
               content: 46,
               ID: dealId + 19,
               failed: true,
@@ -350,7 +350,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f062353`,
               content: 46,
               ID: dealId + 20,
               failed: true,
@@ -363,7 +363,7 @@ export function MarketingProgress(props) {
           },
           {
             deal: {
-              miner: miner,
+              miner: `f066596`,
               content: 46,
               ID: dealId + 21,
               failed: true,
