@@ -89,134 +89,143 @@ function AdminMinersPage(props) {
         sidebar={<AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />}
       >
         <div className={styles.group}>
-          <GridSection>
-            <H2>Manage miners</H2>
-            <P style={{ marginTop: 8 }}>
-              Add, remove or reinstate any miner you would like to make deals with using Estuary's
-              escrow.
-            </P>
+          <div className={styles.grid}>
+            <GridSection>
+              <H2>Manage miners</H2>
+              <P style={{ marginTop: 8 }}>
+                Add, remove or reinstate any miner you would like to make deals with using Estuary's
+                escrow.
+              </P>
 
-            <H3 style={{ marginTop: 24 }}>Add Miner by ID</H3>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="ex: f0100"
-              value={state.miner}
-              name="miner"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            />
+              <H3 style={{ marginTop: 24 }}>Add Miner by ID</H3>
+              <Input
+                style={{ marginTop: 8 }}
+                placeholder="ex: f0100"
+                value={state.miner}
+                name="miner"
+                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+              />
 
-            <div className={styles.actions}>
-              <Button
-                style={{ marginRight: 24, marginBottom: 24 }}
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  if (U.isEmpty(state.miner)) {
-                    alert("Please provide a miner.");
-                    return;
-                  }
+              <div className={styles.actions}>
+                <Button
+                  style={{ marginRight: 24, marginBottom: 24 }}
+                  loading={state.loading ? state.loading : undefined}
+                  onClick={async () => {
+                    if (U.isEmpty(state.miner)) {
+                      alert("Please provide a miner.");
+                      return;
+                    }
 
-                  setState({ ...state, loading: true });
-                  const request = R.post(`/admin/miners/add/${state.miner}`, {});
-                  setState({ ...state, miner: "", loading: false });
-                }}
-              >
-                Add
-              </Button>
+                    setState({ ...state, loading: true });
+                    const request = R.post(`/admin/miners/add/${state.miner}`, {});
+                    setState({ ...state, miner: "", loading: false });
+                  }}
+                >
+                  Add
+                </Button>
 
-              <Button
-                style={{
-                  marginRight: 24,
-                  marginBottom: 24,
-                  background: "var(--main-button-background-secondary)",
-                  color: "var(--main-button-text-secondary)",
-                }}
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  if (U.isEmpty(state.miner)) {
-                    alert("Please provide a miner.");
-                    return;
-                  }
+                <Button
+                  style={{
+                    marginRight: 24,
+                    marginBottom: 24,
+                    background: "var(--main-button-background-secondary)",
+                    color: "var(--main-button-text-secondary)",
+                  }}
+                  loading={state.loading ? state.loading : undefined}
+                  onClick={async () => {
+                    if (U.isEmpty(state.miner)) {
+                      alert("Please provide a miner.");
+                      return;
+                    }
 
-                  setState({ ...state, loading: true });
-                  const request = R.post(`/admin/miners/rm/${state.miner}`, {});
-                  setState({ ...state, miner: "", loading: false });
-                }}
-              >
-                Remove
-              </Button>
+                    setState({ ...state, loading: true });
+                    const request = R.post(`/admin/miners/rm/${state.miner}`, {});
+                    setState({ ...state, miner: "", loading: false });
+                  }}
+                >
+                  Remove
+                </Button>
 
-              <Button
-                style={{
-                  marginBottom: 24,
-                  background: "var(--main-button-background-secondary)",
-                  color: "var(--main-button-text-secondary)",
-                }}
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  if (U.isEmpty(state.miner)) {
-                    alert("Please provide a miner.");
-                    return;
-                  }
+                <Button
+                  style={{
+                    marginBottom: 24,
+                    background: "var(--main-button-background-secondary)",
+                    color: "var(--main-button-text-secondary)",
+                  }}
+                  loading={state.loading ? state.loading : undefined}
+                  onClick={async () => {
+                    if (U.isEmpty(state.miner)) {
+                      alert("Please provide a miner.");
+                      return;
+                    }
 
-                  setState({ ...state, loading: true });
-                  const request = R.put(`/admin/miners/unsuspend/${state.miner}`, {});
-                  setState({ ...state, miner: "", loading: false });
-                }}
-              >
-                Reinstate
-              </Button>
-            </div>
-          </GridSection>
+                    setState({ ...state, loading: true });
+                    const request = R.put(`/admin/miners/unsuspend/${state.miner}`, {});
+                    setState({ ...state, miner: "", loading: false });
+                  }}
+                >
+                  Reinstate
+                </Button>
+              </div>
+            </GridSection>
 
-          <GridSection>
-            <H2>Suspend miner</H2>
-            <P style={{ marginTop: 8 }}>
-              You can suspend a miner. Your Estuary node will no longer make deals with this miner.
-            </P>
+            <GridSection>
+              <H2>Suspend miner</H2>
+              <P style={{ marginTop: 8 }}>
+                You can suspend a miner. Your Estuary node will no longer make deals with this
+                miner.
+              </P>
 
-            <H3 style={{ marginTop: 24 }}>Miner</H3>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="ex: f0100"
-              value={state.suspend_miner}
-              name="suspend_miner"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            />
-            <H3 style={{ marginTop: 8 }}>Reason</H3>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="ex: miner ask is too high."
-              value={state.reason}
-              name="reason"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            />
+              <H3 style={{ marginTop: 24 }}>Miner</H3>
+              <Input
+                style={{ marginTop: 8 }}
+                placeholder="ex: f0100"
+                value={state.suspend_miner}
+                name="suspend_miner"
+                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+              />
+              <H3 style={{ marginTop: 8 }}>Reason</H3>
+              <Input
+                style={{ marginTop: 8 }}
+                placeholder="ex: miner ask is too high."
+                value={state.reason}
+                name="reason"
+                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+              />
 
-            <div className={styles.actions}>
-              <Button
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  if (U.isEmpty(state.suspend_miner)) {
-                    alert("Please provide a miner to suspend.");
-                    return;
-                  }
+              <div className={styles.actions}>
+                <Button
+                  loading={state.loading ? state.loading : undefined}
+                  onClick={async () => {
+                    if (U.isEmpty(state.suspend_miner)) {
+                      alert("Please provide a miner to suspend.");
+                      return;
+                    }
 
-                  setState({ ...state, loading: true });
-                  const request = R.post(`/admin/miners/suspend/${state.suspend_miner}`, {
-                    reason: state.reason,
-                  });
+                    setState({ ...state, loading: true });
+                    const request = R.post(`/admin/miners/suspend/${state.suspend_miner}`, {
+                      reason: state.reason,
+                    });
 
-                  if (request && request.error) {
-                    alert(request.error);
-                    return;
-                  }
+                    if (request && request.error) {
+                      alert(request.error);
+                      return;
+                    }
 
-                  setState({ ...state, miner: "", suspend_miner: "", reason: "", loading: false });
-                }}
-              >
-                Suspend {state.suspend_miner}
-              </Button>
-            </div>
-          </GridSection>
+                    setState({
+                      ...state,
+                      miner: "",
+                      suspend_miner: "",
+                      reason: "",
+                      loading: false,
+                    });
+                  }}
+                >
+                  Suspend {state.suspend_miner}
+                </Button>
+              </div>
+            </GridSection>
+          </div>
 
           <MinerTable miners={state.miners} />
         </div>

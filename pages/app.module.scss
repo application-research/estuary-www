@@ -43,6 +43,9 @@
 }
 
 .actions {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
   margin-top: 24px;
 }
 
@@ -57,6 +60,16 @@
 
   @media (max-width: 920px) {
     padding: 88px 24px 24px 24px;
+    display: block;
+  }
+}
+
+.grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  @media (max-width: 800px) {
     display: block;
   }
 }

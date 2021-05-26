@@ -7,6 +7,7 @@ import * as R from "~/common/requests";
 
 import Navigation from "~/components/Navigation";
 import Page from "~/components/Page";
+import ActionRow from "~/components/ActionRow";
 import AuthenticatedLayout from "~/components/AuthenticatedLayout";
 import AuthenticatedSidebar from "~/components/AuthenticatedSidebar";
 import SingleColumnLayout from "~/components/SingleColumnLayout";
@@ -89,6 +90,12 @@ function UploadCIDPage(props) {
                 onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
                 onSubmit={async () => {
                   setState({ ...state, loading: true });
+
+                  if (U.isEmpty(state.cid)) {
+                    alert("You must provide a CID");
+                    return setState({ ...state, loading: false });
+                  }
+
                   const response = await R.post(`/content/add-ipfs`, {
                     name: state.filename,
                     root: state.cid,
@@ -102,12 +109,33 @@ function UploadCIDPage(props) {
                 }}
               />
 
+              <H3 style={{ marginTop: 24 }}>Default deal settings</H3>
+              <div style={{ maxWidth: "568px" }}>
+                <ActionRow style={{ marginTop: 12 }}>
+                  Replicated across {props.viewer.settings.replication} miners.
+                </ActionRow>
+                <ActionRow>
+                  Stored for {props.viewer.settings.dealDuration} filecoin-epochs (
+                  {((props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
+                </ActionRow>
+                {props.viewer.settings.verified ? (
+                  <ActionRow>This deal is verified.</ActionRow>
+                ) : (
+                  <ActionRow>This deal is not verified.</ActionRow>
+                )}
+              </div>
+
               <div className={styles.actions}>
                 <Button
                   loading={state.loading ? state.loading : undefined}
                   style={{ marginRight: 24, marginBottom: 24 }}
                   onClick={async () => {
                     setState({ ...state, loading: true });
+                    if (U.isEmpty(state.cid)) {
+                      alert("You must provide a CID");
+                      return setState({ ...state, loading: false });
+                    }
+
                     const response = await R.post(`/content/add-ipfs`, {
                       name: state.filename,
                       root: state.cid,
@@ -144,6 +172,7 @@ function UploadCIDPage(props) {
               <P style={{ marginTop: 8 }}>
                 The content address will now be stored on the Filecoin Network shortly.
               </P>
+
               <div className={styles.actions}>
                 <Button
                   style={{ marginRight: 24, marginBottom: 24 }}

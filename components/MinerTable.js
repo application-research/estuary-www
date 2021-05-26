@@ -89,13 +89,9 @@ export default class MinerTable extends React.Component {
               };
 
               return (
-                <tr className={styles.tr} key={`${miner.miner}-${index}`}>
+                <tr className={styles.tr} key={`${miner.miner}-${index}`} style={suspended}>
                   <td className={styles.tdcta}>
-                    <a
-                      className={styles.cta}
-                      style={suspended}
-                      href={`/miners/stats/${miner.addr}`}
-                    >
+                    <a className={styles.cta} href={`/miners/stats/${miner.addr}`}>
                       {miner.addr}
                     </a>
                   </td>
