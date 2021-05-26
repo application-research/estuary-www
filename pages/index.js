@@ -73,7 +73,7 @@ function IndexPage(props) {
         </div>
       </div>
 
-      <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
+      <div className={S.r}>
         <div className={S.rl}>
           <div className={S.rtext}>Upload your data to the Filecoin Network</div>
           <FeatureRow>No minimum size</FeatureRow>
@@ -92,7 +92,7 @@ function IndexPage(props) {
         </div>
       </div>
 
-      <div className={S.r} style={{ borderTop: `#ececec 1px solid` }}>
+      <div className={S.r}>
         <div className={S.rl}>
           <div className={S.rtext}>Get the status of your data</div>
           <FeatureRow>Pins are always restored from Filecoin</FeatureRow>
