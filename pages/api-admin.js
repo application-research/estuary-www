@@ -104,26 +104,28 @@ function APIPage(props) {
                               <strong>(current browser session)</strong>
                             ) : null}
                           </td>
-                          <td
-                            className={tstyles.tdcta}
-                            onClick={async () => {
-                              const confirm = window.confirm(
-                                "Are you sure you want to delete this key?"
-                              );
+                          <td className={tstyles.td}>
+                            <button
+                              onClick={async () => {
+                                const confirm = window.confirm(
+                                  "Are you sure you want to delete this key?"
+                                );
 
-                              const response = await R.del(`/user/api-keys/${k.token}`);
-                              if (viewerToken === k.token) {
-                                window.location.href = "/";
-                                return;
-                              }
+                                const response = await R.del(`/user/api-keys/${k.token}`);
+                                if (viewerToken === k.token) {
+                                  window.location.href = "/";
+                                  return;
+                                }
 
-                              const keys = await R.get("/user/api-keys");
-                              if (keys && !keys.error) {
-                                setState({ keys });
-                              }
-                            }}
-                          >
-                            <span className={tstyles.cta}>Revoke</span>
+                                const keys = await R.get("/user/api-keys");
+                                if (keys && !keys.error) {
+                                  setState({ keys });
+                                }
+                              }}
+                              className={tstyles.tdbutton}
+                            >
+                              Revoke
+                            </button>
                           </td>
                         </tr>
                       );

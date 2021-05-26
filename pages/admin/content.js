@@ -114,9 +114,9 @@ function AdminContentPage(props) {
                         <td className={tstyles.td}>{data.replication} times</td>
                         <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
                         {!props.offloaded ? (
-                          <td className={tstyles.tdcta}>
-                            <span
-                              className={tstyles.cta}
+                          <td className={tstyles.td}>
+                            <button
+                              className={tstyles.tdbutton}
                               onClick={async () => {
                                 const confirm = window.confirm(
                                   "Are you sure you want to delete this data?"
@@ -142,7 +142,7 @@ function AdminContentPage(props) {
                               }}
                             >
                               Offload
-                            </span>
+                            </button>
                           </td>
                         ) : null}
                       </tr>
