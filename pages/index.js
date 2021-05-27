@@ -11,6 +11,7 @@ import Card from "~/components/Card";
 import Button from "~/components/Button";
 import FeatureRow from "~/components/FeatureRow";
 import MarketingCube from "~/components/MarketingCube";
+import SingleColumnLayout from "~/components/SingleColumnLayout";
 
 import { H1, H2, H3, P } from "~/components/Typography";
 import { MarketingUpload, MarketingProgress, MarketingGraph } from "~/components/Marketing";
@@ -39,19 +40,18 @@ function IndexPage(props) {
     setState({ miners });
   }, []);
 
+  const description =
+    "Use any browser and our API to store public data on the Filecoin Network and retrieve it from anywhere, anytime.";
+
   return (
-    <Page
-      title="Estuary"
-      description="Use our Estuary Node to store and retrieve your data from the Filecoin Network."
-      url="https://estuary.tech"
-    >
+    <Page title="Estuary" description={description} url="https://estuary.tech">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <div className={S.h}>
         <div className={S.ht}>
-          <H1 style={{ maxWidth: "768px", fontWeight: 800 }}>Automated Filecoin storage</H1>
+          <H1 style={{ maxWidth: "768px", fontWeight: 800 }}>Automated storage with Filecoin</H1>
           <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
-            Use any browser and our API to store and retrieve data from the Filecoin Network.
+            {description}
           </P>
           <div className={S.actions}>
             <Button
@@ -75,7 +75,7 @@ function IndexPage(props) {
 
       <div className={S.r}>
         <div className={S.rl}>
-          <div className={S.rtext}>Upload your data to the Filecoin Network</div>
+          <div className={S.rtext}>Upload your public data to the Filecoin Network</div>
           <FeatureRow>No minimum size</FeatureRow>
           <FeatureRow>Upload with browser or CLI</FeatureRow>
           <FeatureRow>On demand Filecoin cost estimation</FeatureRow>
@@ -94,14 +94,22 @@ function IndexPage(props) {
 
       <div className={S.r}>
         <div className={S.rl}>
-          <div className={S.rtext}>Get the status of your data</div>
-          <FeatureRow>Pins are always restored from Filecoin</FeatureRow>
-          <FeatureRow>Automated replication and repair</FeatureRow>
+          <div className={S.rtext}>Know exactly which miners are preserving your data.</div>
+          <FeatureRow>More guarantee your data will be perserved for a long time</FeatureRow>
+          <FeatureRow>Automated global miner replication and repair</FeatureRow>
         </div>
         <div className={S.rr}>
           <MarketingProgress />
         </div>
       </div>
+
+      <SingleColumnLayout style={{ textAlign: "center" }}>
+        <H2 style={{ margin: "0 auto 0 auto" }}>Open source, public logs</H2>
+        <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
+          Logs from your Filecoin miner are public so we can help debug and triage issues with the
+          Filecoin Network.
+        </P>
+      </SingleColumnLayout>
 
       <footer className={S.f}>
         <div className={S.fa}>
