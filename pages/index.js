@@ -55,7 +55,8 @@ function IndexPage(props) {
           </P>
           <div className={S.actions}>
             <Button
-              onClick={() => alert("Coming soon")}
+              href="https://docs.estuary.tech"
+              target="_blank"
               style={{
                 background: `var(--main-primary)`,
                 margin: "0 16px 0 0",

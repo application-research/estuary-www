@@ -68,6 +68,10 @@ function APIPage(props) {
 
             <div className={styles.actions}>
               <Button
+                style={{
+                  marginBottom: 24,
+                  marginRight: 24,
+                }}
                 loading={state.loading ? state.loading : undefined}
                 onClick={async () => {
                   setState({ ...state, loading: true });
@@ -81,6 +85,17 @@ function APIPage(props) {
                 }}
               >
                 Create a key
+              </Button>
+
+              <Button
+                style={{
+                  marginBottom: 24,
+                  background: "var(--main-button-background-secondary)",
+                  color: "var(--main-button-text-secondary)",
+                }}
+                href="https://docs.estuary.tech"
+              >
+                Read docs
               </Button>
             </div>
           </SingleColumnLayout>

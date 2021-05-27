@@ -166,6 +166,19 @@
   }
 }
 
+.titleSection {
+  padding: 8px 8px 8px 14px;
+  margin: 2px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 11px;
+  font-family: "Mono";
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .blockTitle {
   font-weight: 600;
   font-size: 0.9rem;
