@@ -76,10 +76,22 @@ function IndexPage(props) {
 
       <div className={S.r}>
         <div className={S.rl}>
-          <div className={S.rtext}>Upload your public data to the Filecoin Network</div>
-          <FeatureRow>No minimum size</FeatureRow>
-          <FeatureRow>Upload with browser or CLI</FeatureRow>
-          <FeatureRow>On demand Filecoin cost estimation</FeatureRow>
+          <div className={S.rtext}>Upload data</div>
+          <FeatureRow>
+            <strong>No minimum size</strong>. Upload the data you want, Estuary Nodes will figure
+            out the rules for you.
+          </FeatureRow>
+          <FeatureRow>
+            <strong>Many viable options.</strong> Tired of browsers? Use the command line, or an{" "}
+            <a href="https://docs.estuary.tech" target="_blank">
+              API
+            </a>{" "}
+            in your own application or website.
+          </FeatureRow>
+          <FeatureRow>
+            <strong>Global storage.</strong>You no longer have to worry about finding the perfect
+            miner.
+          </FeatureRow>
         </div>
         <div className={S.rr}>
           <MarketingUpload
@@ -95,9 +107,15 @@ function IndexPage(props) {
 
       <div className={S.r}>
         <div className={S.rl}>
-          <div className={S.rtext}>Know exactly which miners are preserving your data.</div>
-          <FeatureRow>More guarantee your data will be perserved for a long time</FeatureRow>
-          <FeatureRow>Automated global miner replication and repair</FeatureRow>
+          <div className={S.rtext}>All about the details</div>
+          <FeatureRow>
+            <strong>Reliability</strong>. Estuary Nodes have automation algorithms that make sure
+            your data is replicated and stored on the network.
+          </FeatureRow>
+          <FeatureRow>
+            <strong>A lot of information</strong>. Logs, status updates, and deal data. Know
+            everything about the resilence of your storage so you can make better promises.
+          </FeatureRow>
         </div>
         <div className={S.rr}>
           <MarketingProgress />

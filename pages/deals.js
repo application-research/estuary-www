@@ -119,7 +119,7 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
           })}
         </tbody>
       </table>
-      <div className={styles.titleSection}>Miners recipients of your data</div>
+      <div className={styles.titleSection}>Supporting Miners</div>
       <div className={styles.deals}>{dealElements}</div>
     </div>
   );
