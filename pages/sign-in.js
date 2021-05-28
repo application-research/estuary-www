@@ -131,6 +131,17 @@ function SignInPage(props) {
           >
             Sign in
           </Button>
+          <Button
+            style={{
+              width: "100%",
+              marginTop: 12,
+              background: "var(--main-button-background-secondary)",
+              color: "var(--main-button-text-secondary)",
+            }}
+            href="/sign-up"
+          >
+            Create an account instead
+          </Button>
         </div>
       </SingleColumnLayout>
     </Page>

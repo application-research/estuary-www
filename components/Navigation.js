@@ -27,9 +27,13 @@ const Navigation = (props) => {
           ) : null}
           {props.isAuthenticated && props.active === "INDEX" ? (
             <a href="/home" className={styles.item}>
-              ➝ Return home
+              ➝ Your files
             </a>
           ) : null}
+
+          <a href="https://docs.estuary.tech" className={styles.item}>
+            ➝ Documentation
+          </a>
         </div>
       </nav>
     </div>

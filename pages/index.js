@@ -135,7 +135,9 @@ function IndexPage(props) {
             <span className={S.flink}>Index</span>
           </div>
           <div className={S.fcolfull}>
-            <span className={S.flink}>All of the miners that store data from Estuary.</span>
+            <span className={S.flink}>
+              All of the miners that store data from this Estuary node.
+            </span>
           </div>
         </div>
         {state.miners.map((each, index) => {

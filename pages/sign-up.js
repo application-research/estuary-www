@@ -160,6 +160,13 @@ function SignUpPage(props) {
             }
           }}
         />
+        <aside className={styles.formAside}>
+          Need an invite key?{" "}
+          <a href="https://docs.estuary.tech" target="_blank">
+            Learn how to get one.
+          </a>
+          .
+        </aside>
 
         <div className={styles.actions}>
           <Button
@@ -179,6 +186,17 @@ function SignUpPage(props) {
             }}
           >
             Sign up
+          </Button>
+          <Button
+            style={{
+              width: "100%",
+              marginTop: 12,
+              background: "var(--main-button-background-secondary)",
+              color: "var(--main-button-text-secondary)",
+            }}
+            href="/sign-in"
+          >
+            Sign in instead
           </Button>
         </div>
       </SingleColumnLayout>

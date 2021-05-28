@@ -47,9 +47,6 @@ function AuthenticatedLayout(props) {
       >
         API keys
       </a>
-      <a className={styles.item} href="https://docs.estuary.tech" target="_blank">
-        Docs
-      </a>
       <span
         className={styles.item}
         onClick={async () => {
