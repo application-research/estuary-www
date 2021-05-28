@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
 }
 
 function IndexPage(props) {
-  const [state, setState] = React.useState({ miners: [] });
+  const [state, setState] = React.useState({ miners: [], totalStorage: 0, totalFiles: 0 });
   React.useEffect(async () => {
     /*
     const response = await R.get("/health");
@@ -33,11 +33,13 @@ function IndexPage(props) {
     */
 
     const miners = await R.get("/public/miners");
-    if (miners && miners.error) {
-      return setState({ miners: [] });
+    const stats = await R.get("/public/stats");
+
+    if ((miners && miners.error) || (stats && stats.error)) {
+      return setState({ miners: [], totalStorage: 0, totalFiles: 0 });
     }
 
-    setState({ miners });
+    setState({ miners, ...stats });
   }, []);
 
   const description =
@@ -74,9 +76,28 @@ function IndexPage(props) {
         </div>
       </div>
 
+      <div className={S.stats}>
+        <div className={S.sc}>
+          <div className={S.scn}>{state.totalFiles}</div>
+          <div className={S.scl}>Files stored</div>
+        </div>
+        <div className={S.sc}>
+          <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
+          <div className={S.scl}>Total storage</div>
+        </div>
+      </div>
+
+      <SingleColumnLayout style={{ textAlign: "center", marginBottom: 24 }}>
+        <H2 style={{ margin: "0 auto 0 auto" }}>Features</H2>
+        <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
+          Estuary makes using Filecoin easy while showing a lot of useful information about where
+          your data is stored.
+        </P>
+      </SingleColumnLayout>
+
       <div className={S.r}>
         <div className={S.rl}>
-          <div className={S.rtext}>Upload data</div>
+          <div className={S.rtext}>Upload public data</div>
           <FeatureRow>
             <strong>No minimum size</strong>. Upload the data you want, Estuary Nodes will figure
             out the rules for you.

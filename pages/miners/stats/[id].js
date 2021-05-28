@@ -97,6 +97,12 @@ function MinerStatsPage(props) {
                   {state.errorCount} errors
                 </Block>
 
+                {state.version ? (
+                  <Block style={{ marginTop: 2 }} label="Filecoin version">
+                    {state.version}
+                  </Block>
+                ) : null}
+
                 {state.verifiedPrice ? (
                   <Block style={{ marginTop: 2 }} label="Verified price">
                     {U.inFIL(state.verifiedPrice)}
