@@ -187,7 +187,10 @@ a.flink {
 
 .flink {
   display: block;
-  padding: 15px;
+  padding: 0 15px 0 15px;
+  display: flex;
+  align-items: center;
+  height: 56px;
   background: #393939;
   color: #ffffff;
   transition: 200ms ease all;
@@ -201,7 +204,10 @@ a.flink {
 .fcta {
   display: block;
   font-size: 1.225rem;
-  padding: 16px;
+  padding: 0 16px 0 16px;
+  height: 56px;
+  display: flex;
+  align-items: center;
   color: #ffffff;
   text-decoration: none;
   transition: 200ms ease all;

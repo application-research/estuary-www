@@ -41,28 +41,37 @@ const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
     }
   }
 
-  let minerURL = null;
-  if (deal && deal.dealId) {
-    minerURL = `/errors/${contentId}`;
-    if (message !== "FailAfterTransfer") {
-      minerURL = `/deals/${deal.dealId}`;
-    }
-  }
+  const minerStatsURL = `/miners/stats/${deal.miner}`;
+  const dealErrorURL = `/errors/${contentId}`;
+  const dealURL = deal ? `/deals/${deal.ID}` : null;
+  const receiptURL = deal && deal.dealId ? `/receipts/${deal.dealId}` : null;
+  const proposalURL = deal && deal.propCid ? `/proposals/${deal.propCid}` : null;
 
   return (
     <div className={U.classNames(marketing ? styles.marketing : styles.card)}>
       <div className={styles.container}>
-        <div className={styles.top} style={topStyle}>
-          {transfer ? (
-            <p className={styles.cardHeading}>
-              <a style={{ fontWeight: 700 }} href={`/miners/stats/${deal.miner}`}>
-                {deal.miner}
-              </a>{" "}
-              ⇄ {minerURL ? <a href={minerURL}>{message}</a> : message}
-            </p>
-          ) : (
-            <p className={styles.cardHeading}>NoTransferAndFail ⇄ {deal.miner}</p>
-          )}
+        <div className={styles.items} style={topStyle}>
+          <a className={styles.title} href={minerStatsURL} target="_blank">
+            {deal.miner}
+          </a>
+          <div className={styles.plain} style={{ textTransform: "none" }}>
+            {message}
+          </div>
+          {dealURL ? (
+            <a className={styles.item} href={dealURL}>
+              → Status
+            </a>
+          ) : null}
+          {proposalURL ? (
+            <a className={styles.item} href={proposalURL}>
+              → Proposal receipt
+            </a>
+          ) : null}
+          {receiptURL ? (
+            <a className={styles.item} href={receiptURL}>
+              → Filecoin deal receipt
+            </a>
+          ) : null}
         </div>
       </div>
     </div>

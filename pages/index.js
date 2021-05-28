@@ -82,15 +82,14 @@ function IndexPage(props) {
             out the rules for you.
           </FeatureRow>
           <FeatureRow>
-            <strong>Many viable options.</strong> Tired of browsers? Use the command line, or an{" "}
+            <strong>Many options.</strong> Tired of browsers? Use the command line, or an{" "}
             <a href="https://docs.estuary.tech" target="_blank">
               API
             </a>{" "}
             in your own application or website.
           </FeatureRow>
           <FeatureRow>
-            <strong>Global storage.</strong>You no longer have to worry about finding the perfect
-            miner.
+            <strong>Global access.</strong> Retrieve your data from any IPFS gateway.
           </FeatureRow>
         </div>
         <div className={S.rr}>
@@ -113,7 +112,7 @@ function IndexPage(props) {
             your data is replicated and stored on the network.
           </FeatureRow>
           <FeatureRow>
-            <strong>A lot of information</strong>. Logs, status updates, and deal data. Know
+            <strong>A ton of information</strong>. Logs, status updates, and deal data. Know
             everything about the resilence of your storage so you can make better promises.
           </FeatureRow>
         </div>

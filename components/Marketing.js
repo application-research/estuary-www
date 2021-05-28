@@ -55,6 +55,7 @@ export function MarketingProgress(props) {
   const onChainDealId = 1856854;
   const contentId = 46;
   const miner = "f8399";
+  const propCID = "bafyreidlpuvqumuic27njeij63sx3qlrmfcz4bphcpfuciaogwlpogx33i";
 
   return (
     <div className={styles.cards}>
@@ -80,6 +81,7 @@ export function MarketingProgress(props) {
               content: 46,
               ID: dealId + 1,
               dealId: onChainDealId,
+              propCid: propCID,
               failed: false,
             },
             onChainState: { lastUpdatedEpoch: 780614, sectorStartEpoch: 725661, slashEpoch: -1 },
@@ -96,6 +98,7 @@ export function MarketingProgress(props) {
               content: 46,
               ID: dealId + 2,
               dealId: onChainDealId,
+              propCid: propCID,
               failed: false,
             },
             onChainState: { lastUpdatedEpoch: 780614, sectorStartEpoch: 725661, slashEpoch: -1 },
@@ -112,6 +115,7 @@ export function MarketingProgress(props) {
               content: 46,
               ID: dealId + 3,
               dealId: onChainDealId,
+              propCid: propCID,
               failed: false,
             },
             onChainState: { lastUpdatedEpoch: 780614, sectorStartEpoch: 725661, slashEpoch: -1 },
@@ -128,6 +132,7 @@ export function MarketingProgress(props) {
               content: 46,
               ID: dealId + 22,
               dealId: onChainDealId,
+              propCid: propCID,
               failed: false,
             },
             onChainState: { lastUpdatedEpoch: 780614, sectorStartEpoch: 725661, slashEpoch: -1 },
@@ -144,6 +149,7 @@ export function MarketingProgress(props) {
               content: 46,
               ID: dealId + 4,
               dealId: onChainDealId,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -158,6 +164,7 @@ export function MarketingProgress(props) {
               miner: `f01247`,
               content: 46,
               ID: dealId + 5,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -171,6 +178,7 @@ export function MarketingProgress(props) {
               miner: `f01278`,
               content: 46,
               ID: dealId + 6,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -184,6 +192,7 @@ export function MarketingProgress(props) {
               miner: `f071624`,
               content: 46,
               ID: dealId + 7,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -197,6 +206,7 @@ export function MarketingProgress(props) {
               miner: `f0135078`,
               content: 46,
               ID: dealId + 8,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -210,6 +220,7 @@ export function MarketingProgress(props) {
               miner: `f022352`,
               content: 46,
               ID: dealId + 9,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -223,6 +234,7 @@ export function MarketingProgress(props) {
               miner: `f014768`,
               content: 46,
               ID: dealId + 10,
+              propCid: propCID,
               failed: false,
             },
             transfer: {
@@ -236,6 +248,7 @@ export function MarketingProgress(props) {
               miner: `f02606`,
               content: 46,
               ID: dealId + 11,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -249,6 +262,7 @@ export function MarketingProgress(props) {
               miner: `f019100`,
               content: 46,
               ID: dealId + 12,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -262,6 +276,7 @@ export function MarketingProgress(props) {
               miner: `f019041`,
               content: 46,
               ID: dealId + 13,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -275,6 +290,7 @@ export function MarketingProgress(props) {
               miner: `f023467`,
               content: 46,
               ID: dealId + 14,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -288,6 +304,7 @@ export function MarketingProgress(props) {
               miner: `f01276`,
               content: 46,
               ID: dealId + 15,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -301,6 +318,7 @@ export function MarketingProgress(props) {
               miner: `f02401`,
               content: 46,
               ID: dealId + 16,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -314,6 +332,7 @@ export function MarketingProgress(props) {
               miner: `f02387`,
               content: 46,
               ID: dealId + 17,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -327,6 +346,7 @@ export function MarketingProgress(props) {
               miner: `f019104`,
               content: 46,
               ID: dealId + 18,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -340,6 +360,7 @@ export function MarketingProgress(props) {
               miner: `f099608`,
               content: 46,
               ID: dealId + 19,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -353,6 +374,7 @@ export function MarketingProgress(props) {
               miner: `f062353`,
               content: 46,
               ID: dealId + 20,
+              propCid: propCID,
               failed: true,
             },
             transfer: {
@@ -366,6 +388,7 @@ export function MarketingProgress(props) {
               miner: `f066596`,
               content: 46,
               ID: dealId + 21,
+              propCid: propCID,
               failed: true,
             },
             transfer: {

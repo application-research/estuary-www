@@ -62,8 +62,8 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
     name = "/";
   }
 
+  const dealErrorURL = `/errors/${id}`;
   const subfiles = groups[id] ? groups[id] : [];
-  console.log({ subfiles });
 
   return (
     <div className={styles.group}>
@@ -119,7 +119,12 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
           })}
         </tbody>
       </table>
-      <div className={styles.titleSection}>Supporting Miners</div>
+      <div className={styles.titleSection}>
+        Supporting Miners{" "}
+        <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
+          (view logs)
+        </a>
+      </div>
       <div className={styles.deals}>{dealElements}</div>
     </div>
   );
