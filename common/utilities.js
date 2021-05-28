@@ -42,6 +42,26 @@ export function inFIL(number = 0) {
   return candidate;
 }
 
+export function inUSDPrice(number = 0, price = 0) {
+  const filecoinNumber = new FilecoinNumber(`${number}`, "attofil");
+  const inFil = filecoinNumber.toFil();
+
+  if (!isEmpty(price)) {
+    let usd = Number(inFil) * Number(price);
+    if (usd >= 0.0000001) {
+      usd = `$${usd.toFixed(7)} USD`;
+    } else if (number > 0) {
+      usd = `~$${usd.toFixed(2)} USD`;
+    } else {
+      usd = `$0.00 USD`;
+    }
+
+    return `${formatAsFilecoin(inFil)} ⇄ ${usd}`;
+  }
+
+  return `${formatAsFilecoin(inFil)}`;
+}
+
 export const getViewerFromHeader = async (headers) => {
   try {
     const token = Cookies.get(headers, C.auth);

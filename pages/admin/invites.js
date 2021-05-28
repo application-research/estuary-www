@@ -79,7 +79,14 @@ function AdminInvitesPage(props) {
               onSubmit={async () => {
                 setState({ ...state, loading: true });
                 await R.post(`/admin/invite/${state.key}`, {});
-                setState({ ...state, loading: false, key: false });
+                const response = await R.get("/admin/invites");
+                console.log(response);
+                setState({
+                  ...state,
+                  loading: false,
+                  key: "",
+                  invites: response && response.length ? response : [],
+                });
               }}
             />
 
@@ -89,7 +96,14 @@ function AdminInvitesPage(props) {
                 onClick={async () => {
                   setState({ ...state, loading: true });
                   await R.post(`/admin/invite/${state.key}`, {});
-                  setState({ ...state, loading: false, key: false });
+                  const response = await R.get("/admin/invites");
+                  console.log(response);
+                  setState({
+                    ...state,
+                    loading: false,
+                    key: "",
+                    invites: response && response.length ? response : [],
+                  });
                 }}
               >
                 Create invite

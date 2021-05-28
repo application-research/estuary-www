@@ -27,16 +27,20 @@ function MinerStatsPage(props) {
 
   React.useEffect(async () => {
     const response = await R.get(`/public/miners/stats/${props.id}`);
-    console.log(response);
     const ask = await R.get(`/public/miners/storage/query/${props.id}`);
-    console.log(ask);
+    const iexResponse = await fetch(
+      "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
+    );
+    const iex = await iexResponse.json();
 
     if (response && response.error) {
       return setState({ loading: 2 });
     }
 
-    setState({ ...state, ...response, ...ask, loading: 3 });
+    setState({ ...state, ...response, ...ask, iex, loading: 3 });
   }, []);
+
+  console.log(state);
 
   return (
     <Page
@@ -105,13 +109,13 @@ function MinerStatsPage(props) {
 
                 {state.verifiedPrice ? (
                   <Block style={{ marginTop: 2 }} label="Verified price">
-                    {U.inFIL(state.verifiedPrice)}
+                    {U.inUSDPrice(state.verifiedPrice, state.iex.price)}
                   </Block>
                 ) : null}
 
                 {state.price ? (
                   <Block style={{ marginTop: 2 }} label="Price">
-                    {U.inFIL(state.price)}
+                    {U.inUSDPrice(state.price, state.iex.price)}
                   </Block>
                 ) : null}
 
