@@ -32,6 +32,7 @@ export default class UploadFileContainer extends React.Component {
 
     if (file.size < this.props.viewer.settings.fileStagingThreshold) {
       this.setState({ data: { file, filename, estimate: 0, price: 0 }, mode: 4, staging: true });
+      await U.delay(1000);
       return await this.upload();
     }
 
@@ -133,6 +134,7 @@ export default class UploadFileContainer extends React.Component {
   };
 
   handleSelectFile = (e) => {
+    e.persist();
     console.log("select file: ", e.target);
     if (e.target.files.length == 0) {
       return;
