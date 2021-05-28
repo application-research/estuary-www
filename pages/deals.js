@@ -45,6 +45,8 @@ const ContentDeal = (props) => (
 );
 
 export const ContentCard = ({ content, deals, id, groups = {} }) => {
+  const [state, setState] = React.useState({ showFiles: false });
+
   let dealElements =
     deals && deals.length ? (
       deals.map((d, index) => <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} />)
@@ -64,6 +66,9 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
 
   const dealErrorURL = `/errors/${id}`;
   const subfiles = groups[id] ? groups[id] : [];
+  const renderable = subfiles.slice(0, 2);
+  const hiddenCount = subfiles.length - renderable.length;
+  const renderArray = state.showFiles ? subfiles : renderable;
 
   return (
     <div className={styles.group}>
@@ -98,7 +103,7 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
               {content ? U.bytesToSize(content.size, 2) : null} {name === "/" ? "(Total)" : null}
             </td>
           </tr>
-          {subfiles.map((each) => {
+          {renderArray.map((each) => {
             const subRetrievalURL = each ? `https://dweb.link/ipfs/${each.cid}` : null;
 
             return (
@@ -119,8 +124,32 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
           })}
         </tbody>
       </table>
+      {hiddenCount > 0 ? (
+        <div className={styles.titleSection}>
+          {!state.showFiles
+            ? `${hiddenCount} ${U.pluralize("file", hiddenCount)} were not shown`
+            : `Showing all ${subfiles.length} ${U.pluralize("file", subfiles.length)}`}{" "}
+          {!state.showFiles ? (
+            <span
+              style={{ color: `var(--main-text)`, textDecoration: "underline", cursor: "pointer" }}
+              target="_blank"
+              onClick={() => setState({ showFiles: !state.showFiles })}
+            >
+              (show files)
+            </span>
+          ) : (
+            <span
+              style={{ color: `var(--main-text)`, textDecoration: "underline", cursor: "pointer" }}
+              target="_blank"
+              onClick={() => setState({ showFiles: !state.showFiles })}
+            >
+              (hide files)
+            </span>
+          )}
+        </div>
+      ) : null}
       <div className={styles.titleSection}>
-        Storage Provider Deals{" "}
+        {dealElements.length} Storage provider {U.pluralize("deal", dealElements.length)}{" "}
         <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
         </a>

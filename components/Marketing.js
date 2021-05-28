@@ -5,7 +5,7 @@ import * as U from "~/common/utilities";
 import * as C from "~/common/constants";
 
 import ActionRow from "~/components/ActionRow";
-import { ContentCard } from "~/pages/deals.js";
+import { ContentCard } from "~/pages/deals";
 
 export function MarketingGraph(props) {
   return (
