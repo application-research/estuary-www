@@ -120,7 +120,7 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
         </tbody>
       </table>
       <div className={styles.titleSection}>
-        Supporting Miners{" "}
+        Storage Provider Deals{" "}
         <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
         </a>
