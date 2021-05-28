@@ -66,7 +66,7 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
 
   const dealErrorURL = `/errors/${id}`;
   const subfiles = groups[id] ? groups[id] : [];
-  const renderable = subfiles.slice(0, 2);
+  const renderable = subfiles.slice(0, 9);
   const hiddenCount = subfiles.length - renderable.length;
   const renderArray = state.showFiles ? subfiles : renderable;
 
