@@ -10,8 +10,15 @@ function AuthenticatedLayout(props) {
   return (
     <nav className={styles.container}>
       <div className={styles.title} style={{ marginTop: 40 }}>
-        Estuary
+        Home
       </div>
+      <a
+        className={styles.item}
+        href="/home"
+        style={props.active === "FILES" ? { color: `var(--main-primary)` } : null}
+      >
+        Files
+      </a>
       <a
         className={styles.item}
         href="/upload"
@@ -26,13 +33,8 @@ function AuthenticatedLayout(props) {
       >
         Upload CID
       </a>
-      <a
-        className={styles.item}
-        href="/deals"
-        style={props.active === "DEALS" ? { color: `var(--main-primary)` } : null}
-      >
-        Deals
-      </a>
+
+      <div className={styles.title}>Developers</div>
       <a
         className={styles.item}
         href="/staging"
@@ -42,10 +44,22 @@ function AuthenticatedLayout(props) {
       </a>
       <a
         className={styles.item}
+        href="/deals"
+        style={props.active === "DEALS" ? { color: `var(--main-primary)` } : null}
+      >
+        Deals
+      </a>
+      <a
+        className={styles.item}
         href="/api-admin"
         style={props.active === "API" ? { color: `var(--main-primary)` } : null}
       >
         API keys
+      </a>
+
+      <div className={styles.title}>Settings</div>
+      <a className={styles.item} href="https://docs.estuary.tech/feedback" target="_blank">
+        Feedback
       </a>
       <span
         className={styles.item}
@@ -58,15 +72,6 @@ function AuthenticatedLayout(props) {
       >
         Sign out
       </span>
-
-      <div className={styles.title}>Collections</div>
-      <a
-        className={styles.item}
-        href="/home"
-        style={props.active === "FILES" ? { color: `var(--main-primary)` } : null}
-      >
-        Files
-      </a>
 
       {props.viewer.perms >= 10 ? <div className={styles.title}>Admin</div> : null}
       {props.viewer.perms >= 10 ? (
