@@ -125,6 +125,9 @@ function APIPage(props) {
                                 const confirm = window.confirm(
                                   "Are you sure you want to delete this key?"
                                 );
+                                if (!confirm) {
+                                  return;
+                                }
 
                                 const response = await R.del(`/user/api-keys/${k.token}`);
                                 if (viewerToken === k.token) {
