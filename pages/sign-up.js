@@ -136,7 +136,7 @@ function SignUpPage(props) {
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
         <aside className={styles.formAside}>
-          Requirements: at least 8 characers, must use at least one letter and number.
+          Requirements: at least 8 characters, must use at least one letter and number.
         </aside>
 
         <H3 style={{ marginTop: 24 }}>Invite code</H3>
