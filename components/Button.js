@@ -8,10 +8,7 @@ import LoaderSpinner from "~/components/LoaderSpinner";
 const Button = (props) => {
   if (props.loading) {
     return (
-      <button
-        className={U.classNames(styles.button, styles.loading)}
-        style={props.style}
-      >
+      <button className={U.classNames(styles.button, styles.loading)} style={props.style}>
         <LoaderSpinner />
       </button>
     );
@@ -31,19 +28,12 @@ const Button = (props) => {
   }
 
   if (!U.isEmpty(props.href)) {
-    return (
-      <a
-        href={props.href}
-        className={styles.button}
-        children={props.children}
-        {...props}
-      />
-    );
+    return <a href={props.href} className={styles.button} children={props.children} {...props} />;
   }
 
   return (
     <button
-      {...props}
+      style={props.style}
       className={styles.button}
       onClick={props.onClick}
       children={props.children}
