@@ -85,6 +85,10 @@ function IndexPage(props) {
           <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
           <div className={S.scl}>Total storage</div>
         </div>
+        <div className={S.sc}>
+          <div className={S.scn}>{state.dealsOnChain}</div>
+          <div className={S.scl}>Deals on chain</div>
+        </div>
       </div>
 
       <SingleColumnLayout style={{ textAlign: "center", marginBottom: 24 }}>
@@ -183,7 +187,7 @@ function IndexPage(props) {
             <div className={S.fam} key={each.addr}>
               <div className={S.fcol4}>
                 <a className={S.flink} href={`/miners/stats/${each.addr}`}>
-                  {`${index}`.padStart(4, 0)}
+                  {`${index}`.padStart(4, 0)} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
                 </a>
               </div>
               <div className={S.fcol4}>

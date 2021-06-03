@@ -27,24 +27,32 @@ function MinerStatsPage(props) {
 
   React.useEffect(async () => {
     const response = await R.get(`/public/miners/stats/${props.id}`);
-    const ask = await R.get(`/public/miners/storage/query/${props.id}`);
-    const iexResponse = await fetch(
-      "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
-    );
-    const iex = await iexResponse.json();
+    let iex;
+    try {
+      const iexResponse = await fetch(
+        "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
+      );
+      iex = await iexResponse.json();
+    } catch (e) {
+      console.log(e);
+    }
 
     if (response && response.error) {
       return setState({ loading: 2 });
     }
 
-    setState({ ...state, ...response, ...ask, iex, loading: 3 });
+    const next = { ...state, ...response, iex, loading: 3 };
+    setState(next);
+
+    const ask = await R.get(`/public/miners/storage/query/${props.id}`);
+    setState({ ...next, ...ask });
   }, []);
 
-  console.log(state);
+  console.log("state", state);
 
   return (
     <Page
-      title="Estuary: Public: Miner: Stats"
+      title={`Estuary: Public: Miner: ${props.id}`}
       description={`Stats for Miner: ${props.id}`}
       url={`https://estuary.tech/miners/stats/${props.id}`}
     >
@@ -54,7 +62,9 @@ function MinerStatsPage(props) {
       >
         {state.loading > 1 ? (
           <SingleColumnLayout>
-            <H2>{props.id}</H2>
+            <H2>
+              {props.id} {U.isEmpty(state.name) ? null : `— ${state.name}`}
+            </H2>
             {state.usedByEstuary ? (
               <P style={{ marginTop: 8, marginBottom: 24 }}>This miner is used by Estuary.</P>
             ) : (
@@ -66,10 +76,23 @@ function MinerStatsPage(props) {
 
             {state.loading === 3 ? (
               <React.Fragment>
+                {state.error ? (
+                  <Block
+                    style={{
+                      marginTop: 2,
+                      background: `var(--status-error)`,
+                      color: `var(--main-background-input)`,
+                    }}
+                    label="Ask error"
+                  >
+                    {state.error}
+                  </Block>
+                ) : null}
+
                 {state.suspended ? (
                   <Block
                     style={{
-                      marginTop: 24,
+                      marginTop: 2,
                       background: `var(--status-error)`,
                       color: `var(--main-background-input)`,
                     }}

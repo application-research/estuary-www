@@ -57,6 +57,10 @@ function AuthenticatedLayout(props) {
         API keys
       </a>
 
+      <div className={styles.title}>Settings</div>
+      {/* <a className={styles.item} href="/settings">
+        Account
+      </a> */}
       <a className={styles.item} href="https://docs.estuary.tech/feedback" target="_blank">
         Feedback
       </a>
