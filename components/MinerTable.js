@@ -2,6 +2,7 @@ import styles from "~/pages/table.module.scss";
 
 import * as React from "react";
 import * as C from "~/common/constants";
+import * as U from "~/common/utilities";
 
 export default class MinerTable extends React.Component {
   static defaultProps = {
@@ -29,7 +30,7 @@ export default class MinerTable extends React.Component {
                 <tr className={styles.tr} key={`${miner.miner}-${index}`}>
                   <td className={styles.tdcta}>
                     <a className={styles.cta} href={`/miners/stats/${miner.addr}`}>
-                      {miner.addr}
+                      {miner.addr} {!U.isEmpty(miner.name) ? `(${miner.name})` : ""}
                     </a>
                   </td>
 
