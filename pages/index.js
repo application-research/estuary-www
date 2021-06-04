@@ -161,7 +161,7 @@ function IndexPage(props) {
       <div className={S.stats}>
         <div className={S.sc}>
           <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : null}</div>
-          <div className={S.scl}>Files stored</div>
+          <div className={S.scl}>Total files</div>
         </div>
         <div className={S.sc}>
           <div className={S.scn}>{state.dealsOnChain}</div>
@@ -169,12 +169,12 @@ function IndexPage(props) {
         </div>
         <div className={S.sc}>
           <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
-          <div className={S.scl}>Total storage</div>
+          <div className={S.scl}>Total pinned data</div>
         </div>
         {graph.dealsSealedBytes ? (
           <div className={S.sc}>
             <div className={S.scn}>{U.bytesToSize(graph.dealsSealedBytes)}</div>
-            <div className={S.scl}>Sealed storage</div>
+            <div className={S.scl}>Total sealed storage</div>
           </div>
         ) : null}
       </div>
