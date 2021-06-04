@@ -3,6 +3,7 @@ import styles from "@pages/app.module.scss";
 import * as React from "react";
 import * as U from "@common/utilities";
 import * as R from "@common/requests";
+import * as Crypto from "@common/crypto";
 
 import ProgressCard from "@components/ProgressCard";
 import Navigation from "@components/Navigation";
@@ -14,7 +15,7 @@ import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
 import Input from "@components/Input";
 import Button from "@components/Button";
 
-import { H1, H2, H3, P } from "~/components/Typography";
+import { H1, H2, H3, P } from "@components/Typography";
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,6 +35,8 @@ export async function getServerSideProps(context) {
 }
 
 const onSubmit = async (event, state, setState) => {
+  setState({ ...state, loading: true });
+
   if (U.isEmpty(state.new)) {
     alert("Please provide a new password");
     return setState({ ...state, loading: false });
@@ -58,7 +61,23 @@ const onSubmit = async (event, state, setState) => {
 
   let newPasswordHash = await Crypto.attemptHashWithSalt(state.new);
 
-  const response = await R.put("/user/password", { newPasswordHash: newPasswordHash });
+  let response;
+  try {
+    response = await R.put("/user/password", { newPasswordHash: newPasswordHash });
+    await U.delay(1000);
+
+    if (response.error) {
+      alert(response.error);
+      return setState({ ...state, new: "", confirm: "", loading: false });
+    }
+  } catch (e) {
+    console.log(e);
+    alert("Something went wrong");
+    return setState({ ...state, new: "", confirm: "", loading: false });
+  }
+
+  alert("Your password has been changed.");
+  return setState({ ...state, new: "", confirm: "", loading: false });
 };
 
 function SettingsPage(props) {
@@ -90,6 +109,7 @@ function SettingsPage(props) {
             style={{ marginTop: 8 }}
             placeholder="Pick something memorable"
             name="new"
+            value={state.new}
             type="password"
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
           />
@@ -102,6 +122,7 @@ function SettingsPage(props) {
             style={{ marginTop: 8 }}
             placeholder="Pick something memorable"
             name="confirm"
+            value={state.confirm}
             type="password"
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
             onSubmit={(e) => onSubmit(e, { ...state }, setState)}

@@ -58,9 +58,9 @@ function AuthenticatedLayout(props) {
       </a>
 
       <div className={styles.title}>Settings</div>
-      {/* <a className={styles.item} href="/settings">
+      <a className={styles.item} href="/settings">
         Account
-      </a> */}
+      </a>
       <a className={styles.item} href="https://docs.estuary.tech/feedback" target="_blank">
         Feedback
       </a>

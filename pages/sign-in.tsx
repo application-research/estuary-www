@@ -3,6 +3,7 @@ import styles from "@pages/app.module.scss";
 import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
+import * as R from "@common/requests";
 import * as Crypto from "@common/crypto";
 
 import Cookies from "js-cookie";
@@ -12,7 +13,7 @@ import SingleColumnLayout from "@components/SingleColumnLayout";
 import Input from "@components/Input";
 import Button from "@components/Button";
 
-import { H1, H2, H3, P } from "~/components/Typography";
+import { H1, H2, H3, P } from "@components/Typography";
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -44,7 +45,8 @@ async function handleSignIn(state) {
     return { error: "Your username must be 1-48 characters or digits." };
   }
 
-  state.passwordHash = await Crypto.attemptHash(state.password);
+  // NOTE(jim) We've added a new scheme to keep things safe for users.
+  state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
   let r = await fetch(`${C.api.host}/login`, {
     method: "POST",
@@ -55,7 +57,45 @@ async function handleSignIn(state) {
   });
 
   if (r.status !== 200) {
-    return { error: "Failed to authenticate" };
+    // NOTE(jim): We don't know the users password ever so we can't do anything on their
+    // behalf, but if they were authenticated using the old method, we can do one more retry.
+    const retryHash = await Crypto.attemptHash(state.password);
+
+    let retry = await fetch(`${C.api.host}/login`, {
+      method: "POST",
+      body: JSON.stringify({ passwordHash: retryHash, username: state.username }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (retry.status !== 200) {
+      return { error: "Failed to authenticate" };
+    }
+
+    const retryJSON = await retry.json();
+    if (retryJSON.error) {
+      return retryJSON;
+    }
+
+    if (!retryJSON.token) {
+      return { error: "Failed to authenticate" };
+    }
+
+    console.log("Authenticated using legacy scheme.");
+
+    Cookies.set(C.auth, retryJSON.token);
+
+    console.log("Attempting legacy scheme revision on your behalf");
+
+    try {
+      const response = await R.put("/user/password", { newPasswordHash: state.passwordHash });
+    } catch (e) {
+      console.log("Failure:", e);
+    }
+
+    window.location.href = "/home";
+    return;
   }
 
   const j = await r.json();
@@ -67,6 +107,7 @@ async function handleSignIn(state) {
     return { error: "Failed to authenticate" };
   }
 
+  console.log("Authenticated using advanced scheme.");
   Cookies.set(C.auth, j.token);
   window.location.href = "/home";
   return;

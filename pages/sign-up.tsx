@@ -43,8 +43,6 @@ async function handleRegister(state) {
     };
   }
 
-  let passwordHash = await Crypto.attemptHash(state.password);
-
   if (U.isEmpty(state.username)) {
     return { error: "Please provide a username." };
   }
@@ -59,6 +57,8 @@ async function handleRegister(state) {
         "Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.",
     };
   }
+
+  let passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
   let r = await fetch(`${C.api.host}/register`, {
     method: "POST",
@@ -136,7 +136,7 @@ function SignUpPage(props) {
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
         <aside className={styles.formAside}>
-          Requirements: at least 8 characers, must use at least one letter and number.
+          Requirements: at least 8 characters, must use at least one letter and number.
         </aside>
 
         <H3 style={{ marginTop: 24 }}>Invite code</H3>

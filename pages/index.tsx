@@ -238,11 +238,23 @@ function IndexPage(props) {
       </div>
 
       <SingleColumnLayout style={{ textAlign: "center" }}>
-        <H2 style={{ margin: "0 auto 0 auto" }}>Open source, public logs</H2>
+        <H2 style={{ margin: "0 auto 0 auto" }}>Open source code and public logs</H2>
         <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
           Logs from your Filecoin miner are public so we can help debug and triage issues with the
           Filecoin Network.
         </P>
+
+        <div className={S.actions}>
+          <Button
+            href="https://docs.estuary.tech/feedback"
+            target="_blank"
+            style={{
+              background: `var(--main-primary)`,
+            }}
+          >
+            Give us feedback
+          </Button>
+        </div>
       </SingleColumnLayout>
 
       {graph.data ? (
