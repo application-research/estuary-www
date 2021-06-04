@@ -1,9 +1,10 @@
 .button {
   background-color: var(--main-button-background);
   color: var(--main-button-text);
-  letter-spacing: 0.1px;
+  letter-spacing: 0.3px;
   box-sizing: border-box;
-  border-radius: 4px;
+  text-transform: uppercase;
+  border-radius: 2px;
   outline: 0;
   border: 0;
   min-height: 40px;
@@ -11,8 +12,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.825rem;
-  font-weight: 600;
+  font-size: 0.785rem;
+  font-weight: 500;
   overflow-wrap: break-word;
   user-select: none;
   cursor: pointer;
