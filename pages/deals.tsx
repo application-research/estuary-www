@@ -44,7 +44,7 @@ const ContentDeal = (props) => (
   />
 );
 
-export const ContentCard = ({ content, deals, id, groups = {} }) => {
+export const ContentCard = ({ content, deals, id, root }) => {
   const [state, setState] = React.useState({ showFiles: false });
 
   let dealElements =
@@ -64,11 +64,9 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
     name = "/";
   }
 
+  console.log("root", root);
+
   const dealErrorURL = `/errors/${id}`;
-  const subfiles = groups[id] ? groups[id] : [];
-  const renderable = subfiles.slice(0, 9);
-  const hiddenCount = subfiles.length - renderable.length;
-  const renderArray = state.showFiles ? subfiles : renderable;
 
   return (
     <div className={styles.group}>
@@ -99,53 +97,14 @@ export const ContentCard = ({ content, deals, id, groups = {} }) => {
 
             <td className={tstyles.td}>{id}</td>
 
-            <td className={tstyles.td}>
-              {content ? U.bytesToSize(content.size, 2) : null} {name === "/" ? "(Total)" : null}
-            </td>
+            <td className={tstyles.td}>{content ? U.bytesToSize(content.size, 2) : null}</td>
           </tr>
-          {renderArray.map((each) => {
-            const subRetrievalURL = each ? `https://dweb.link/ipfs/${each.cid}` : null;
-
-            return (
-              <tr className={tstyles.tr} key={each.id}>
-                <td className={tstyles.td}>{each.name}</td>
-
-                <td className={tstyles.tdcta}>
-                  <a className={tstyles.cta} href={subRetrievalURL} target="_blank">
-                    {subRetrievalURL}
-                  </a>
-                </td>
-
-                <td className={tstyles.td}>{each.id}</td>
-
-                <td className={tstyles.td}>{each ? U.bytesToSize(each.size, 2) : null}</td>
-              </tr>
-            );
-          })}
         </tbody>
       </table>
-      {hiddenCount > 0 ? (
+      {root && root.aggregatedFiles > 1 ? (
         <div className={styles.titleSection}>
-          {!state.showFiles
-            ? `${hiddenCount} ${U.pluralize("file", hiddenCount)} were not shown`
-            : `Showing all ${subfiles.length} ${U.pluralize("file", subfiles.length)}`}{" "}
-          {!state.showFiles ? (
-            <span
-              style={{ color: `var(--main-text)`, textDecoration: "underline", cursor: "pointer" }}
-              target="_blank"
-              onClick={() => setState({ showFiles: !state.showFiles })}
-            >
-              (show files)
-            </span>
-          ) : (
-            <span
-              style={{ color: `var(--main-text)`, textDecoration: "underline", cursor: "pointer" }}
-              target="_blank"
-              onClick={() => setState({ showFiles: !state.showFiles })}
-            >
-              (hide files)
-            </span>
-          )}
+          This deal has {root.aggregatedFiles} additional{" "}
+          {U.pluralize("file", root.aggregatedFiles)}
         </div>
       ) : null}
       <div className={styles.titleSection}>
@@ -174,7 +133,7 @@ class ContentStatus extends React.Component {
   }
 
   render() {
-    return <ContentCard id={this.props.id} {...this.state.status} groups={this.props.groups} />;
+    return <ContentCard id={this.props.id} {...this.state.status} root={this.props.root} />;
   }
 }
 
@@ -190,31 +149,13 @@ export default class Dashboard extends React.Component {
       return;
     }
 
-    const groups = {};
-    const list = [];
-    for (let item of entities) {
-      if (!item.aggregatedIn) {
-        list.push(item);
-        continue;
-      }
-
-      if (item.aggregatedIn && item.aggregatedIn > 0) {
-        if (!groups[item.aggregatedIn]) {
-          groups[item.aggregatedIn] = [];
-        }
-
-        groups[item.aggregatedIn].push(item);
-        continue;
-      }
-    }
-
-    this.setState({ entities: list, groups });
+    this.setState({ entities });
   }
 
   render() {
     const statusElements = this.state.entities.length
       ? this.state.entities
-          .map((s, index) => <ContentStatus id={s.id} key={s.id} groups={this.state.groups} />)
+          .map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />)
           .reverse()
       : null;
 

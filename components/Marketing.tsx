@@ -61,6 +61,7 @@ export function MarketingProgress(props) {
     <div className={styles.cards}>
       <ContentCard
         id={contentId}
+        root={{ aggregatedFiles: "12238" }}
         content={{
           active: true,
           aggregate: false,
@@ -68,7 +69,7 @@ export function MarketingProgress(props) {
           cid: CID,
           description: "",
           id: contentId,
-          name: "large-tree-5.mp4",
+          name: "/",
           offloaded: false,
           replication: 6,
           size: size,
