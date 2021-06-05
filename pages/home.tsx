@@ -71,26 +71,31 @@ function HomePage(props: any) {
                   Name
                 </th>
                 <th className={tstyles.th}>Retrieval link</th>
-                <th className={tstyles.th} style={{ width: "104px" }}>
-                  Requests
-                </th>
                 <th className={tstyles.th} style={{ width: "120px" }}>
-                  Bandwidth
+                  Files
                 </th>
               </tr>
               {state.files && state.files.length
                 ? state.files.map((data, index) => {
                     const fileURL = `https://dweb.link/ipfs/${data.cid["/"]}`;
+
+                    let name = "...";
+                    if (data && data.file) {
+                      name = data.file;
+                    }
+                    if (name === "aggregate") {
+                      name = "/";
+                    }
+
                     return (
                       <tr key={`${data.cid["/"]}-${index}`} className={tstyles.tr}>
-                        <td className={tstyles.td}>{data.file}</td>
+                        <td className={tstyles.td}>{name}</td>
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>
                             {fileURL}
                           </a>
                         </td>
-                        <td className={tstyles.td}>{data.totalRequests}</td>
-                        <td className={tstyles.td}>{U.bytesToSize(data.bwUsed)}</td>
+                        <td className={tstyles.td}>{data.aggregatedFiles + 1}</td>
                       </tr>
                     );
                   })

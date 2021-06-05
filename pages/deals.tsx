@@ -65,8 +65,6 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
     name = "/";
   }
 
-  console.log("root", root);
-
   const dealErrorURL = `/errors/${id}`;
 
   return (
@@ -155,9 +153,7 @@ export default class Dashboard extends React.Component<any> {
 
   render() {
     const statusElements = this.state.entities.length
-      ? this.state.entities
-          .map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />)
-          .reverse()
+      ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />)
       : null;
 
     return (
