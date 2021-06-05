@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 import * as C from "@common/constants";
 
-export const get = async (route) => {
+export const get = async (route): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
@@ -36,7 +36,7 @@ export const get = async (route) => {
   }
 };
 
-export const post = async (route, payload) => {
+export const post = async (route, payload): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
@@ -71,7 +71,7 @@ export const post = async (route, payload) => {
   }
 };
 
-export const put = async (route, payload) => {
+export const put = async (route, payload): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
@@ -106,7 +106,7 @@ export const put = async (route, payload) => {
   }
 };
 
-export const del = async (route, payload) => {
+export const del = async (route: string, payload?: object): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 

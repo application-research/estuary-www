@@ -18,17 +18,21 @@ export async function getServerSideProps(context) {
   };
 }
 
-function MinerErrorPage(props) {
+function MinerErrorPage(props: any) {
   const [state, setState] = React.useState({ logs: [] });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/public/miners/failures/${props.id}`);
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/public/miners/failures/${props.id}`);
 
-    if (response && response.length) {
-      return setState({ logs: response });
-    }
+      if (response && response.length) {
+        return setState({ logs: response });
+      }
 
-    alert("No error logs for this miner.");
+      alert("No error logs for this miner.");
+    };
+
+    run();
   }, []);
 
   return (

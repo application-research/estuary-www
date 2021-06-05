@@ -41,23 +41,32 @@ function useWindowSize() {
   return size;
 }
 
-function IndexPage(props) {
+function IndexPage(props: any) {
   const [width, height] = useWindowSize();
-  const [state, setState] = React.useState({ miners: [], totalStorage: 0, totalFiles: 0 });
-  const [graph, setGraph] = React.useState({ data: null });
+  const [state, setState] = React.useState({
+    miners: [],
+    totalStorage: 0,
+    totalFiles: 0,
+    dealsOnChain: 0,
+  });
+  const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
-  React.useEffect(async () => {
-    const miners = await R.get("/public/miners");
-    const stats = await R.get("/public/stats");
+  React.useEffect(() => {
+    const run = async () => {
+      const miners = await R.get("/public/miners");
+      const stats = await R.get("/public/stats");
 
-    if ((miners && miners.error) || (stats && stats.error)) {
-      return setState({ miners: [], totalStorage: 0, totalFiles: 0 });
-    }
+      if ((miners && miners.error) || (stats && stats.error)) {
+        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
+      }
 
-    setState({ ...state, miners, ...stats });
+      setState({ ...state, miners, ...stats });
+    };
+
+    run();
   }, []);
 
-  React.useEffect(async () => {
+  React.useEffect(() => {
     const load = async () => {
       const data = await R.get("/public/metrics/deals-on-chain");
 
@@ -320,11 +329,13 @@ function IndexPage(props) {
             );
           }
 
+          const indexValue = U.pad(index, 4);
+
           return (
             <div className={S.fam} key={each.addr}>
               <div className={S.fcol4}>
                 <a className={S.flink} href={`/miners/stats/${each.addr}`}>
-                  {`${index}`.padStart(4, 0)} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
+                  {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
                 </a>
               </div>
               <div className={S.fcol4}>

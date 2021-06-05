@@ -27,17 +27,21 @@ export async function getServerSideProps(context) {
   };
 }
 
-function DealErrorPage(props) {
+function DealErrorPage(props: any) {
   const [state, setState] = React.useState({ logs: [] });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/content/failures/${props.id}`);
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/content/failures/${props.id}`);
 
-    if (response && response.length) {
-      return setState({ logs: response });
-    }
+      if (response && response.length) {
+        return setState({ logs: response });
+      }
 
-    alert("No failure logs for this data.");
+      alert("No failure logs for this data.");
+    };
+
+    run();
   }, []);
 
   return (

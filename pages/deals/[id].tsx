@@ -27,15 +27,19 @@ export async function getServerSideProps(context) {
   };
 }
 
-function DealPage(props) {
-  const [state, setState] = React.useState({ deal: null });
+function DealPage(props: any) {
+  const [state, setState] = React.useState({ deal: null, transfer: null, onChainState: null });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/deals/status/${props.id}`);
-    console.log(response);
-    if (response && !response.error) {
-      setState({ ...response });
-    }
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/deals/status/${props.id}`);
+      console.log(response);
+      if (response && !response.error) {
+        setState({ ...response });
+      }
+    };
+
+    run();
   }, []);
 
   let fileURL;

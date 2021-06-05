@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Head from "next/head";
 
-export default class IndexPage extends React.Component {
+export default class IndexPage extends React.Component<any> {
   render() {
     const title = this.props.title;
     const description = this.props.description;

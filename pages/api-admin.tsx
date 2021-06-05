@@ -35,20 +35,22 @@ export async function getServerSideProps(context) {
   };
 }
 
-function APIPage(props) {
+function APIPage(props: any) {
   const viewerToken = Cookie.get(C.auth);
   console.log(viewerToken);
   const [state, setState] = React.useState({ keys: [], loading: false });
 
-  React.useEffect(async () => {
-    // TODO(why)
-    // Response throws instead of returning an empty array.
-    const response = await R.get("/user/api-keys");
-    console.log(response);
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get("/user/api-keys");
+      console.log(response);
 
-    if (response && !response.error) {
-      setState({ keys: response });
-    }
+      if (response && !response.error) {
+        setState({ ...state, keys: response });
+      }
+    };
+
+    run();
   }, []);
 
   return (
@@ -137,7 +139,7 @@ function APIPage(props) {
 
                                 const keys = await R.get("/user/api-keys");
                                 if (keys && !keys.error) {
-                                  setState({ keys });
+                                  setState({ ...state, keys });
                                 }
                               }}
                               className={tstyles.tdbutton}

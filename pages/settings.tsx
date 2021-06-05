@@ -80,7 +80,7 @@ const onSubmit = async (event, state, setState) => {
   return setState({ ...state, new: "", confirm: "", loading: false });
 };
 
-function SettingsPage(props) {
+function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: "", new: "", confirm: "" });
 
   return (

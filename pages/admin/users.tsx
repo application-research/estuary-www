@@ -43,13 +43,17 @@ export async function getServerSideProps(context) {
 function AdminUsersPage(props) {
   const [state, setState] = React.useState({ users: [] });
 
-  React.useEffect(async () => {
-    const response = await R.get("/admin/users");
-    if (response && response.error) {
-      return;
-    }
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get("/admin/users");
+      if (response && response.error) {
+        return;
+      }
 
-    setState({ users: response });
+      setState({ users: response });
+    };
+
+    run();
   }, []);
 
   return (

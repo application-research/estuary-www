@@ -11,7 +11,7 @@ import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
 import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
 import SingleColumnLayout from "@components/SingleColumnLayout";
 
-function ErrorPage(props) {
+function ErrorPage(props: any) {
   return (
     <Page title="Estuary: 404" description="This page does not exist." url="https://estuary.tech">
       <AuthenticatedLayout

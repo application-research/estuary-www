@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-function UploadCIDPage(props) {
+function UploadCIDPage(props: any) {
   const [state, setState] = React.useState({
     success: false,
     loading: false,

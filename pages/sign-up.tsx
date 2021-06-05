@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-async function handleRegister(state) {
+async function handleRegister(state: any) {
   if (U.isEmpty(state.password)) {
     return { error: "Please provide a valid password." };
   }
@@ -92,7 +92,7 @@ async function handleRegister(state) {
   return;
 }
 
-function SignUpPage(props) {
+function SignUpPage(props: any) {
   const [state, setState] = React.useState({
     inviteCode: "",
     username: "",

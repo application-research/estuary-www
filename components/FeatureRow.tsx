@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-function FeatureRow(props) {
+function FeatureRow(props: any) {
   return <div className={styles.rtext}>{props.children}</div>;
 }
 

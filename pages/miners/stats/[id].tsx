@@ -22,30 +22,49 @@ export async function getServerSideProps(context) {
   };
 }
 
-function MinerStatsPage(props) {
-  const [state, setState] = React.useState({ loading: 1 });
+function MinerStatsPage(props: any) {
+  const [state, setState] = React.useState({
+    loading: 1,
+    iex: null,
+    name: null,
+    error: null,
+    suspendedReason: null,
+    dealCount: null,
+    errorCount: null,
+    version: null,
+    verifiedPrice: null,
+    usedByEstuary: null,
+    suspended: null,
+    price: null,
+    maxPieceSize: null,
+    minPieceSize: null,
+  });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/public/miners/stats/${props.id}`);
-    let iex;
-    try {
-      const iexResponse = await fetch(
-        "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
-      );
-      iex = await iexResponse.json();
-    } catch (e) {
-      console.log(e);
-    }
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/public/miners/stats/${props.id}`);
+      let iex;
+      try {
+        const iexResponse = await fetch(
+          "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
+        );
+        iex = await iexResponse.json();
+      } catch (e) {
+        console.log(e);
+      }
 
-    if (response && response.error) {
-      return setState({ loading: 2 });
-    }
+      if (response && response.error) {
+        return setState({ ...state, loading: 2 });
+      }
 
-    const next = { ...state, ...response, iex, loading: 3 };
-    setState(next);
+      const next = { ...state, ...response, iex, loading: 3 };
+      setState(next);
 
-    const ask = await R.get(`/public/miners/storage/query/${props.id}`);
-    setState({ ...next, ...ask });
+      const ask = await R.get(`/public/miners/storage/query/${props.id}`);
+      setState({ ...next, ...ask });
+    };
+
+    run();
   }, []);
 
   console.log("state", state);

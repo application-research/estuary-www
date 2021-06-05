@@ -4,7 +4,7 @@ import * as React from "react";
 import * as C from "@common/constants";
 import * as U from "@common/utilities";
 
-export default class MinerTable extends React.Component {
+export default class MinerTable extends React.Component<any> {
   static defaultProps = {
     miners: [],
   };

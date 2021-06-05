@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-function Card(props) {
+function Card(props: any) {
   return (
     <React.Fragment>
       <div className={styles.container} style={props.style}>

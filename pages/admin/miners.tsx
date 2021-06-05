@@ -50,32 +50,37 @@ function AdminMinersPage(props) {
     suspend_miner: "",
     miner: "",
     reason: "",
+    miners: null,
   });
 
-  React.useEffect(async () => {
-    let map = {};
-    const response = await R.get("/admin/miners/stats");
+  React.useEffect(() => {
+    const run = async () => {
+      let map = {};
+      const response = await R.get("/admin/miners/stats");
 
-    for (let m of response) {
-      map[m.miner] = m;
-    }
-
-    console.log(map);
-
-    const list = await R.get("/public/miners");
-
-    const miners = list.map((each) => {
-      if (map[each.addr]) {
-        return {
-          ...each,
-          ...map[each.addr],
-        };
+      for (let m of response) {
+        map[m.miner] = m;
       }
 
-      return each;
-    });
+      console.log(map);
 
-    setState({ ...state, miners });
+      const list = await R.get("/public/miners");
+
+      const miners = list.map((each) => {
+        if (map[each.addr]) {
+          return {
+            ...each,
+            ...map[each.addr],
+          };
+        }
+
+        return each;
+      });
+
+      setState({ ...state, miners });
+    };
+
+    run();
   }, []);
 
   return (
@@ -203,7 +208,7 @@ function AdminMinersPage(props) {
                     }
 
                     setState({ ...state, loading: true });
-                    const request = R.post(`/admin/miners/suspend/${state.suspend_miner}`, {
+                    const request = await R.post(`/admin/miners/suspend/${state.suspend_miner}`, {
                       reason: state.reason,
                     });
 
@@ -227,7 +232,7 @@ function AdminMinersPage(props) {
             </GridSection>
           </div>
 
-          <MinerTable miners={state.miners} />
+          {state.miners ? <MinerTable miners={state.miners} /> : null}
         </div>
       </AuthenticatedLayout>
     </Page>

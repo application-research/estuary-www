@@ -43,13 +43,17 @@ export async function getServerSideProps(context) {
   };
 }
 
-function AdminInvitesPage(props) {
-  const [state, setState] = React.useState({ invites: [] });
+function AdminInvitesPage(props: any) {
+  const [state, setState] = React.useState({ invites: [], key: "", loading: false });
 
-  React.useEffect(async () => {
-    const response = await R.get("/admin/invites");
-    console.log(response);
-    setState({ ...state, invites: response && response.length ? response : [] });
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get("/admin/invites");
+      console.log(response);
+      setState({ ...state, invites: response && response.length ? response : [] });
+    };
+
+    run();
   }, []);
 
   return (

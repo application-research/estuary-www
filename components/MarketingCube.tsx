@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-function MarketingCube(props) {
+function MarketingCube(props: any) {
   return (
     <a className={styles.scene} href="/sign-up">
       <div className={styles.cube}>

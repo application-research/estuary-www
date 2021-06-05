@@ -33,18 +33,22 @@ export async function getServerSideProps(context) {
   };
 }
 
-function HomePage(props) {
+function HomePage(props: any) {
   const [state, setState] = React.useState({ files: null });
 
-  React.useEffect(async () => {
-    const files = await R.get("/content/stats");
-    console.log(files);
+  React.useEffect(() => {
+    const run = async () => {
+      const files = await R.get("/content/stats");
+      console.log(files);
 
-    if (!files || files.error) {
-      return;
-    }
+      if (!files || files.error) {
+        return;
+      }
 
-    setState({ files });
+      setState({ files });
+    };
+
+    run();
   }, []);
 
   console.log(props.viewer);

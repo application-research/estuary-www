@@ -10,16 +10,17 @@ import Button from "@components/Button";
 import ActionRow from "@components/ActionRow";
 import Cookies from "js-cookie";
 
-export default class UploadFileContainer extends React.Component {
+export default class UploadFileContainer extends React.Component<any> {
   state = {
     mode: 1,
     data: null,
+    staging: false,
   };
 
-  dropRef = React.createRef();
+  dropRef = React.createRef<any>();
 
   componentDidMount() {
-    let ref = this.dropRef.current;
+    let ref = this.dropRef.current as Element;
 
     ref.addEventListener("dragenter", this.handleDragIn);
     ref.addEventListener("dragleave", this.handleDragOut);
@@ -113,7 +114,7 @@ export default class UploadFileContainer extends React.Component {
       secondsElapsed = 0;
     };
 
-    xhr.onloadend = (event) => {
+    xhr.onloadend = (event: any) => {
       console.log(event);
       if (event.target && event.target.status === 200 && event.target.response) {
         let json = {};

@@ -6,7 +6,7 @@ import * as U from "@common/utilities";
 import * as C from "@common/constants";
 import * as R from "@common/requests";
 
-function AuthenticatedLayout(props) {
+function AuthenticatedLayout(props: any) {
   return (
     <nav className={styles.container}>
       <div className={styles.title} style={{ marginTop: 40 }}>

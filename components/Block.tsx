@@ -6,7 +6,7 @@ import * as C from "@common/constants";
 
 import ActionRow from "@components/ActionRow";
 
-function Block(props) {
+function Block(props: any) {
   return (
     <React.Fragment>
       <div className={styles.container} style={props.style}>

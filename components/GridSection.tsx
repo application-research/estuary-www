@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-function GridSection(props) {
+function GridSection(props: any) {
   return <section className={styles.container} style={props.style} {...props} />;
 }
 

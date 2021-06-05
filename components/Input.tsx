@@ -3,15 +3,10 @@ import styles from "@components/Input.module.scss";
 import * as React from "react";
 import * as U from "@common/utilities";
 
-export default class Input extends React.Component {
-  _unit;
+export default class Input extends React.Component<any> {
   _input;
 
   componentDidMount = () => {
-    if (this.props.unit) {
-      this._input.style.paddingRight = `${this._unit.offsetWidth + 48}px`;
-    }
-
     if (this.props.autoFocus) {
       this._input.focus();
     }

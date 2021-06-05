@@ -3,6 +3,12 @@ import { FilecoinNumber, Converter } from "@glif/filecoin-number";
 import * as Cookies from "@vendor/cookie-cutter";
 import * as C from "@common/constants";
 
+export const pad = (num: number, size: number): any => {
+  let s = num + "";
+  while (s.length < size) s = "0" + s;
+  return s;
+};
+
 export const toDateSinceEpoch = (epoch) => {
   const d = new Date(1000 * (epoch * 30 + 1598306400));
 
@@ -48,15 +54,17 @@ export function inUSDPrice(number = 0, price = 0) {
 
   if (!isEmpty(price)) {
     let usd = Number(inFil) * Number(price);
-    if (usd >= 0.0000001) {
-      usd = `$${usd.toFixed(7)} USD`;
-    } else if (number > 0) {
-      usd = `~$${usd.toFixed(2)} USD`;
-    } else {
-      usd = `$0.00 USD`;
+    let copy = `$0.00 USD`;
+
+    if (number > 0) {
+      copy = `~$${usd.toFixed(2)} USD`;
     }
 
-    return `${formatAsFilecoin(inFil)} ⇄ ${usd}`;
+    if (usd >= 0.0000001) {
+      copy = `$${usd.toFixed(7)} USD`;
+    }
+
+    return `${formatAsFilecoin(inFil)} ⇄ ${copy}`;
   }
 
   return `${formatAsFilecoin(inFil)}`;
@@ -138,7 +146,9 @@ export const isEmpty = (string) => {
   return !string.trim();
 };
 
-export function classNames() {
+const hasOwn = {}.hasOwnProperty;
+
+export function classNames(...args: any[]) {
   var classes = [];
 
   for (var i = 0; i < arguments.length; i++) {

@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-const Navigation = (props) => {
+const Navigation = (props: any) => {
   return (
     <div className={styles.navigation}>
       <nav className={styles.container} style={props.style}>

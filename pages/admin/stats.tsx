@@ -41,19 +41,23 @@ export async function getServerSideProps(context) {
 }
 
 function AdminStatsPage(props) {
-  const [state, setState] = React.useState({});
+  const [state, setState] = React.useState({ bstoreFree: null, bstoreSize: null });
 
-  React.useEffect(async () => {
+  React.useEffect(() => {
     // TODO(why): Content stats can't be serialized to JSON.
     // const response = await R.get("/content/stats");
-    const response = {};
-    const disk = await R.get("/admin/disk-info");
-    if (disk.error) {
-      console.log(disk.error);
-      return;
-    }
+    const run = async () => {
+      const response = {};
+      const disk = await R.get("/admin/disk-info");
+      if (disk.error) {
+        console.log(disk.error);
+        return;
+      }
 
-    setState({ ...state, ...response, ...disk });
+      setState({ ...state, ...response, ...disk });
+    };
+
+    run();
   }, []);
 
   return (

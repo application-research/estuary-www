@@ -27,15 +27,19 @@ export async function getServerSideProps(context) {
   };
 }
 
-function ProposalPage(props) {
+function ProposalPage(props: any) {
   const [state, setState] = React.useState({ deal: null });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/deals/proposal/${props.cid}`);
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/deals/proposal/${props.cid}`);
 
-    if (response && !response.error) {
-      setState({ deal: { ...response.Proposal, ...response.State } });
-    }
+      if (response && !response.error) {
+        setState({ deal: { ...response.Proposal, ...response.State } });
+      }
+    };
+
+    run();
   }, []);
 
   let fileURL;

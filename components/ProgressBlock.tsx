@@ -4,7 +4,7 @@ import * as React from "react";
 import * as U from "@common/utilities";
 import * as C from "@common/constants";
 
-export default class ProgressBlock extends React.Component {
+export default class ProgressBlock extends React.Component<any> {
   static defaultProps = {
     loaded: 0,
     total: 100,
@@ -24,7 +24,7 @@ export default class ProgressBlock extends React.Component {
         </div>
         <div className={styles.bottom}>
           <div className={styles.bottomLeft}>
-            {U.bytesToSize(this.props.loaded)} Loaded ({Math.floor(this.props.secondsRemaining, 2)}{" "}
+            {U.bytesToSize(this.props.loaded)} Loaded ({Math.floor(this.props.secondsRemaining)}{" "}
             {U.pluralize("second", this.props.secondsRemaining)} remaining at{" "}
             {U.bytesToSize(this.props.bytesPerSecond)} per second)
           </div>

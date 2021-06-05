@@ -43,29 +43,22 @@ export async function getServerSideProps(context) {
   };
 }
 
-function AdminContentPage(props) {
+function AdminContentPage(props: any) {
   const [state, setState] = React.useState({ loading: false, content: [] });
 
-  React.useEffect(async () => {
-    const response = await R.get("/admin/cm/offload/candidates");
-    console.log(response);
-    /*
-    active: true
-    cid: "QmbKDuc7QgdvpMNJrpotWPqECaGHJbrKifLMe8N4E9Jx9E"
-    description: ""
-    id: 10
-    name: "Tencent_AILab_ChineseEmbedding.tar.gz"
-    offloaded: false
-    replication: 6
-    size: 6780552629
-    userId: 5
-    */
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get("/admin/cm/offload/candidates");
+      console.log(response);
 
-    if (response && response.error) {
-      return;
-    }
+      if (response && response.error) {
+        return;
+      }
 
-    setState({ ...state, content: response });
+      setState({ ...state, content: response });
+    };
+
+    run();
   }, []);
 
   return (

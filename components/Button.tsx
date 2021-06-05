@@ -5,7 +5,7 @@ import styles from "@components/Button.module.scss";
 
 import LoaderSpinner from "@components/LoaderSpinner";
 
-const Button = (props) => {
+const Button = (props: any) => {
   if (props.loading) {
     return (
       <button className={U.classNames(styles.button, styles.loading)} style={props.style}>
@@ -21,7 +21,6 @@ const Button = (props) => {
         onClick={props.onClick}
         children={props.children}
         htmlFor={props.htmlFor}
-        type={props.type}
         style={props.style}
       />
     );

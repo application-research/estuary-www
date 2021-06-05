@@ -2,7 +2,7 @@ import styles from "@components/AuthenticatedLayout.module.scss";
 
 import * as React from "react";
 
-function AuthenticatedLayout(props) {
+function AuthenticatedLayout(props: any) {
   return (
     <React.Fragment>
       <nav className={styles.navigation}>{props.navigation}</nav>

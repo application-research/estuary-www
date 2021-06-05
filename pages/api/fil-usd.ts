@@ -1,6 +1,6 @@
 import * as S from "@common/server";
 
-export default async function getPrice(req, res) {
+export default async function getPrice(req: any, res: any) {
   await S.cors(req, res);
 
   let json;

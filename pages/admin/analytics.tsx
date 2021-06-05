@@ -39,16 +39,19 @@ export async function getServerSideProps(context) {
   };
 }
 
-function AdminAnalyticsPage(props) {
-  React.useEffect(async () => {
-    // {"1":{"numDeals":10,"numConfirmed":10,"numFailed":4,"totalSpending":"71040000000000000","confirmedSpending":"71040000000000000"},"10":{"numDeals":6,"numConfirmed":0,"numFailed":8,"totalSpending":"704000000000000000","confirmedSpending":"0"},"13":{"numDeals":6,"numConfirmed":0,"numFailed":11,"totalSpending":"39000000000000000","confirmedSpending":"0"},"14":{"numDeals":6,"numConfirmed":0,"numFailed":9,"totalSpending":"39000000000000000","confirmedSpending":"0"},"15":{"numDeals":2,"numConfirmed":0,"numFailed":2,"totalSpending":"3750000000000000","confirmedSpending":"0"},"2":{"numDeals":10,"numConfirmed":10,"numFailed":32,"totalSpending":"2415040000000000000","confirmedSpending":"2415040000000000000"},"3":{"numDeals":10,"numConfirmed":10,"numFailed":26,"totalSpending":"2575040000000000000","confirmedSpending":"2575040000000000000"},"4":{"numDeals":10,"numConfirmed":10,"numFailed":11,"totalSpending":"60470000000000000","confirmedSpending":"60470000000000000"},"6":{"numDeals":0,"numConfirmed":0,"numFailed":1,"totalSpending":"0","confirmedSpending":"0"},"7":{"numDeals":10,"numConfirmed":10,"numFailed":11,"totalSpending":"17500000000000000","confirmedSpending":"17500000000000000"},"8":{"numDeals":10,"numConfirmed":10,"numFailed":0,"totalSpending":"29375000000000","confirmedSpending":"29375000000000"}}
-    const response = await R.get("/admin/dealstats");
-    if (response.error) {
-      console.log(response.error);
-      return;
-    }
+function AdminAnalyticsPage(props: any) {
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get("/admin/dealstats");
+      if (response.error) {
+        console.log(response.error);
+        return;
+      }
 
-    console.log(response);
+      console.log(response);
+    };
+
+    run();
   }, []);
 
   return (

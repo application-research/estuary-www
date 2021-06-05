@@ -18,19 +18,23 @@ export async function getServerSideProps(context) {
   };
 }
 
-function MinerDealsPage(props) {
+function MinerDealsPage(props: any) {
   const [state, setState] = React.useState({ logs: [] });
 
-  React.useEffect(async () => {
-    const response = await R.get(`/public/miners/deals/${props.id}`);
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get(`/public/miners/deals/${props.id}`);
 
-    console.log(response);
+      console.log(response);
 
-    if (response && response.length) {
-      return setState({ logs: response });
-    }
+      if (response && response.length) {
+        return setState({ logs: response });
+      }
 
-    alert("No deal history for this miner.");
+      alert("No deal history for this miner.");
+    };
+
+    run();
   }, []);
 
   return (

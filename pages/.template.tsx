@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-function TemplatePage(props) {
+function TemplatePage(props: any) {
   return (
     <Page
       title="Estuary: Template"

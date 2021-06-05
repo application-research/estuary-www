@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-async function handleSignIn(state) {
+async function handleSignIn(state: any) {
   if (U.isEmpty(state.username)) {
     return { error: "Please provide a username." };
   }
@@ -113,8 +113,8 @@ async function handleSignIn(state) {
   return;
 }
 
-function SignInPage(props) {
-  const [state, setState] = React.useState({ loading: false });
+function SignInPage(props: any) {
+  const [state, setState] = React.useState({ loading: false, username: "", password: "" });
 
   return (
     <Page

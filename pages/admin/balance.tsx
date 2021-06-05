@@ -73,10 +73,23 @@ export async function getServerSideProps(context) {
 }
 
 function AdminBalancePage(props) {
-  const [state, setState] = React.useState({ amount: 0, loading: false });
+  const [state, setState] = React.useState({
+    amount: 0,
+    loading: false,
+    account: null,
+    balance: null,
+    verifiedClientBalance: null,
+    marketAvailable: null,
+    marketEscrow: null,
+    marketLocked: null,
+  });
 
-  React.useEffect(async () => {
-    getBalance(state, setState);
+  React.useEffect(() => {
+    const run = async () => {
+      getBalance(state, setState);
+    };
+
+    run();
   }, []);
 
   return (

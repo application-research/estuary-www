@@ -36,19 +36,23 @@ export async function getServerSideProps(context) {
 function StagingPage(props) {
   const [state, setState] = React.useState({ files: null });
 
-  React.useEffect(async () => {
-    const files = await R.get("/content/staging-zones");
-    console.log(files);
+  React.useEffect(() => {
+    const run = async () => {
+      const files = await R.get("/content/staging-zones");
+      console.log(files);
 
-    if (!files || files.error) {
-      return;
-    }
+      if (!files || files.error) {
+        return;
+      }
 
-    if (!files.length) {
-      return;
-    }
+      if (!files.length) {
+        return;
+      }
 
-    setState({ files: files[0].contents });
+      setState({ files: files[0].contents });
+    };
+
+    run();
   }, []);
 
   console.log(props.viewer);

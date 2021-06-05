@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as d3 from "d3";
 
-const MultilineChart = ({ data = [], dimensions = {} }) => {
+const MultilineChart = (options: any) => {
+  const { data = [], dimensions = {} } = options;
   const svgRef = React.useRef(null);
   const { width, height, margin = {} } = dimensions;
   const svgWidth = width + margin.left + margin.right;

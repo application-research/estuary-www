@@ -34,17 +34,18 @@ export async function getServerSideProps(context) {
   };
 }
 
-const ContentDeal = (props) => (
+const ContentDeal = (props: any) => (
   <ProgressCard
     key={props.data.ID}
     contentId={props.contentId}
     deal={props.data.deal}
     chain={props.data.onChainState}
     transfer={props.data.transfer}
+    marketing={false}
   />
 );
 
-export const ContentCard = ({ content, deals, id, root }) => {
+export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
   const [state, setState] = React.useState({ showFiles: false });
 
   let dealElements =
@@ -118,7 +119,7 @@ export const ContentCard = ({ content, deals, id, root }) => {
   );
 };
 
-class ContentStatus extends React.Component {
+class ContentStatus extends React.Component<any> {
   state = {
     status: null,
   };
@@ -137,7 +138,7 @@ class ContentStatus extends React.Component {
   }
 }
 
-export default class Dashboard extends React.Component {
+export default class Dashboard extends React.Component<any> {
   state = {
     entities: [],
   };

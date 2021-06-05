@@ -7,7 +7,7 @@ import * as C from "@common/constants";
 import ActionRow from "@components/ActionRow";
 import { ContentCard } from "@pages/deals";
 
-export function MarketingGraph(props) {
+export function MarketingGraph(props: any) {
   return (
     <img
       src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-diagram-3.png"
@@ -16,7 +16,7 @@ export function MarketingGraph(props) {
   );
 }
 
-export function MarketingUpload(props) {
+export function MarketingUpload(props: any) {
   return (
     <div className={styles.single}>
       <div className={styles.drop}>
@@ -48,7 +48,7 @@ export function MarketingUpload(props) {
   );
 }
 
-export function MarketingProgress(props) {
+export function MarketingProgress(props: any) {
   const CID = "QmVm49v9w7LVx99zEzftuhYCptg86i4PjUq2ZbmrkefjGZ";
   const size = 292619370;
   const dealId = 520;

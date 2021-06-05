@@ -35,20 +35,28 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default class UploadPage extends React.Component {
-  state = {};
+export default class UploadPage extends React.Component<any> {
+  state = {
+    cid: null,
+    staging: null,
+    loaded: null,
+    total: null,
+    secondsElapsed: null,
+    bytesPerSecond: null,
+    secondsRemaining: null,
+  };
 
   componentWillUnmount() {
     window.onbeforeunload = null;
   }
 
-  _handleClearState = (state) => {
+  _handleClearState = (state: any) => {
     return this.setState({
       ...state,
     });
   };
 
-  _handleUploadFile = (options) => {
+  _handleUploadFile = (options: any) => {
     this.setState({
       loaded: 0,
       total: 0,
@@ -60,7 +68,7 @@ export default class UploadPage extends React.Component {
     });
   };
 
-  _handleProgress = (response) => {
+  _handleProgress = (response: any) => {
     console.log(`Uploaded ${response.loaded} of ${response.total} bytes`);
     this.setState({
       loaded: response.loaded,
