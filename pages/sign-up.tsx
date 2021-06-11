@@ -100,6 +100,15 @@ function SignUpPage(props: any) {
     loading: false,
   });
 
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const inviteCode = params.get("invite");
+
+    if (!U.isEmpty(inviteCode)) {
+      setState({ ...state, inviteCode });
+    }
+  }, []);
+
   return (
     <Page
       title="Estuary: Sign up"
