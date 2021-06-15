@@ -1,8 +1,8 @@
-import styles from "@components/MarketingCube.module.scss";
+import styles from '@components/MarketingCube.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
 
 function MarketingCube(props: any) {
   return (

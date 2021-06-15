@@ -1,18 +1,18 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/home",
+        destination: '/home',
       },
     };
   }
@@ -45,7 +45,7 @@ function AdminUsersPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get("/admin/users");
+      const response = await R.get('/admin/users');
       if (response && response.error) {
         return;
       }
@@ -70,14 +70,14 @@ function AdminUsersPage(props) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: "96px" }}>
+                <th className={tstyles.th} style={{ width: '96px' }}>
                   id
                 </th>
                 <th className={tstyles.th}>Username</th>
-                <th className={tstyles.th} style={{ width: "136px" }}>
+                <th className={tstyles.th} style={{ width: '136px' }}>
                   Space
                 </th>
-                <th className={tstyles.th} style={{ width: "136px" }}>
+                <th className={tstyles.th} style={{ width: '136px' }}>
                   Files
                 </th>
               </tr>

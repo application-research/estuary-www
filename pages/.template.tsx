@@ -1,15 +1,15 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
+import * as React from 'react';
+import * as U from '@common/utilities';
 
-import ProgressCard from "@components/ProgressCard";
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import SingleColumnLayout from "@components/SingleColumnLayout";
+import ProgressCard from '@components/ProgressCard';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import SingleColumnLayout from '@components/SingleColumnLayout';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }

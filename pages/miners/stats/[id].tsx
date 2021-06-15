@@ -1,18 +1,18 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import Block from "@components/Block";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Block from '@components/Block';
 
-import { H1, H2, P } from "@components/Typography";
+import { H1, H2, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -46,7 +46,7 @@ function MinerStatsPage(props: any) {
       let iex;
       try {
         const iexResponse = await fetch(
-          "https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d"
+          'https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d'
         );
         iex = await iexResponse.json();
       } catch (e) {
@@ -67,7 +67,7 @@ function MinerStatsPage(props: any) {
     run();
   }, []);
 
-  console.log("state", state);
+  console.log('state', state);
 
   return (
     <Page

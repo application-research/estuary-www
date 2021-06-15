@@ -1,21 +1,21 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import Block from "@components/Block";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import Block from '@components/Block';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/home",
+        destination: '/home',
       },
     };
   }
@@ -44,11 +44,11 @@ export async function getServerSideProps(context) {
 }
 
 function AdminInvitesPage(props: any) {
-  const [state, setState] = React.useState({ invites: [], key: "", loading: false });
+  const [state, setState] = React.useState({ invites: [], key: '', loading: false });
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get("/admin/invites");
+      const response = await R.get('/admin/invites');
       console.log(response);
       setState({ ...state, invites: response && response.length ? response : [] });
     };
@@ -83,12 +83,12 @@ function AdminInvitesPage(props: any) {
               onSubmit={async () => {
                 setState({ ...state, loading: true });
                 await R.post(`/admin/invite/${state.key}`, {});
-                const response = await R.get("/admin/invites");
+                const response = await R.get('/admin/invites');
                 console.log(response);
                 setState({
                   ...state,
                   loading: false,
-                  key: "",
+                  key: '',
                   invites: response && response.length ? response : [],
                 });
               }}
@@ -100,12 +100,12 @@ function AdminInvitesPage(props: any) {
                 onClick={async () => {
                   setState({ ...state, loading: true });
                   await R.post(`/admin/invite/${state.key}`, {});
-                  const response = await R.get("/admin/invites");
+                  const response = await R.get('/admin/invites');
                   console.log(response);
                   setState({
                     ...state,
                     loading: false,
-                    key: "",
+                    key: '',
                     invites: response && response.length ? response : [],
                   });
                 }}
@@ -119,10 +119,10 @@ function AdminInvitesPage(props: any) {
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
                 <th className={tstyles.th}>Estuary invite key</th>
-                <th className={tstyles.th} style={{ width: "144px" }}>
+                <th className={tstyles.th} style={{ width: '144px' }}>
                   Creator
                 </th>
-                <th className={tstyles.th} style={{ width: "144px" }}>
+                <th className={tstyles.th} style={{ width: '144px' }}>
                   Recipient
                 </th>
               </tr>

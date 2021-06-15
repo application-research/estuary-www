@@ -1,11 +1,11 @@
-import styles from "@components/Marketing.module.scss";
+import styles from '@components/Marketing.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
 
-import ActionRow from "@components/ActionRow";
-import { ContentCard } from "@pages/deals";
+import ActionRow from '@components/ActionRow';
+import { ContentCard } from '@pages/deals';
 
 export function MarketingGraph(props: any) {
   return (
@@ -29,7 +29,7 @@ export function MarketingUpload(props: any) {
 
       {props.estimate ? (
         <ActionRow>
-          Will cost {U.convertFIL(props.estimate)} FIL ⇄{" "}
+          Will cost {U.convertFIL(props.estimate)} FIL ⇄{' '}
           {(Number(U.convertFIL(props.estimate)) * Number(props.price)).toFixed(2)} USD
         </ActionRow>
       ) : null}
@@ -49,27 +49,27 @@ export function MarketingUpload(props: any) {
 }
 
 export function MarketingProgress(props: any) {
-  const CID = "QmVm49v9w7LVx99zEzftuhYCptg86i4PjUq2ZbmrkefjGZ";
+  const CID = 'QmVm49v9w7LVx99zEzftuhYCptg86i4PjUq2ZbmrkefjGZ';
   const size = 292619370;
   const dealId = 520;
   const onChainDealId = 1856854;
   const contentId = 46;
-  const miner = "f8399";
-  const propCID = "bafyreidlpuvqumuic27njeij63sx3qlrmfcz4bphcpfuciaogwlpogx33i";
+  const miner = 'f8399';
+  const propCID = 'bafyreidlpuvqumuic27njeij63sx3qlrmfcz4bphcpfuciaogwlpogx33i';
 
   return (
     <div className={styles.cards}>
       <ContentCard
         id={contentId}
-        root={{ aggregatedFiles: "12238" }}
+        root={{ aggregatedFiles: '12238' }}
         content={{
           active: true,
           aggregate: false,
           aggregateIn: 0,
           cid: CID,
-          description: "",
+          description: '',
           id: contentId,
-          name: "/",
+          name: '/',
           offloaded: false,
           replication: 6,
           size: size,
@@ -90,7 +90,7 @@ export function MarketingProgress(props: any) {
               baseCid: CID,
               sent: size,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -107,7 +107,7 @@ export function MarketingProgress(props: any) {
               baseCid: CID,
               sent: size,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -124,7 +124,7 @@ export function MarketingProgress(props: any) {
               baseCid: CID,
               sent: size,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -141,7 +141,7 @@ export function MarketingProgress(props: any) {
               baseCid: CID,
               sent: size,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -157,7 +157,7 @@ export function MarketingProgress(props: any) {
               baseCid: CID,
               sent: size,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -171,7 +171,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 1,
-              statusMessage: "Ongoing",
+              statusMessage: 'Ongoing',
             },
           },
           {
@@ -185,7 +185,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 2,
-              statusMessage: "TransferFinished",
+              statusMessage: 'TransferFinished',
             },
           },
           {
@@ -199,7 +199,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 3,
-              statusMessage: "ResponderCompleted",
+              statusMessage: 'ResponderCompleted',
             },
           },
           {
@@ -213,7 +213,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 4,
-              statusMessage: "Finalizing",
+              statusMessage: 'Finalizing',
             },
           },
           {
@@ -227,7 +227,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 5,
-              statusMessage: "Completing",
+              statusMessage: 'Completing',
             },
           },
           {
@@ -241,7 +241,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -255,7 +255,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 6,
-              statusMessage: "Completed",
+              statusMessage: 'Completed',
             },
           },
           {
@@ -269,7 +269,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 7,
-              statusMessage: "Failing",
+              statusMessage: 'Failing',
             },
           },
           {
@@ -283,7 +283,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 8,
-              statusMessage: "Failed",
+              statusMessage: 'Failed',
             },
           },
           {
@@ -297,7 +297,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 9,
-              statusMessage: "Cancelling",
+              statusMessage: 'Cancelling',
             },
           },
           {
@@ -311,7 +311,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 10,
-              statusMessage: "Cancelled",
+              statusMessage: 'Cancelled',
             },
           },
           {
@@ -325,7 +325,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 11,
-              statusMessage: "InitiatorPaused",
+              statusMessage: 'InitiatorPaused',
             },
           },
           {
@@ -339,7 +339,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 12,
-              statusMessage: "ResponderPaused",
+              statusMessage: 'ResponderPaused',
             },
           },
           {
@@ -353,7 +353,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 13,
-              statusMessage: "BothPaused",
+              statusMessage: 'BothPaused',
             },
           },
           {
@@ -367,7 +367,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 14,
-              statusMessage: "ResponderFinalizing",
+              statusMessage: 'ResponderFinalizing',
             },
           },
           {
@@ -381,7 +381,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 15,
-              statusMessage: "RFTransferFinished",
+              statusMessage: 'RFTransferFinished',
             },
           },
           {
@@ -395,7 +395,7 @@ export function MarketingProgress(props: any) {
             transfer: {
               baseCid: CID,
               status: 16,
-              statusMessage: "ChannelNotFoundError",
+              statusMessage: 'ChannelNotFoundError',
             },
           },
         ]}

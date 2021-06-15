@@ -1,8 +1,8 @@
-import styles from "@components/ProgressBlock.module.scss";
+import styles from '@components/ProgressBlock.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
 
 export default class ProgressBlock extends React.Component<any> {
   static defaultProps = {
@@ -24,8 +24,8 @@ export default class ProgressBlock extends React.Component<any> {
         </div>
         <div className={styles.bottom}>
           <div className={styles.bottomLeft}>
-            {U.bytesToSize(this.props.loaded)} Loaded ({Math.floor(this.props.secondsRemaining)}{" "}
-            {U.pluralize("second", this.props.secondsRemaining)} remaining at{" "}
+            {U.bytesToSize(this.props.loaded)} Loaded ({Math.floor(this.props.secondsRemaining)}{' '}
+            {U.pluralize('second', this.props.secondsRemaining)} remaining at{' '}
             {U.bytesToSize(this.props.bytesPerSecond)} per second)
           </div>
           <div className={styles.bottomRight}>{U.bytesToSize(this.props.total)} Total</div>

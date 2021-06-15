@@ -1,20 +1,20 @@
-import S from "@pages/index.module.scss";
+import S from '@pages/index.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Page from "@components/Page";
-import Navigation from "@components/Navigation";
-import Card from "@components/Card";
-import Button from "@components/Button";
-import FeatureRow from "@components/FeatureRow";
-import MarketingCube from "@components/MarketingCube";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import Chart from "@components/Chart";
+import Page from '@components/Page';
+import Navigation from '@components/Navigation';
+import Card from '@components/Card';
+import Button from '@components/Button';
+import FeatureRow from '@components/FeatureRow';
+import MarketingCube from '@components/MarketingCube';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Chart from '@components/Chart';
 
-import { H1, H2, H3, P } from "@components/Typography";
-import { MarketingUpload, MarketingProgress, MarketingGraph } from "@components/Marketing";
+import { H1, H2, H3, P } from '@components/Typography';
+import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,9 +34,9 @@ function useWindowSize() {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
-    window.addEventListener("resize", updateSize);
+    window.addEventListener('resize', updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
   return size;
 }
@@ -53,8 +53,8 @@ function IndexPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const miners = await R.get("/public/miners");
-      const stats = await R.get("/public/stats");
+      const miners = await R.get('/public/miners');
+      const stats = await R.get('/public/stats');
 
       if ((miners && miners.error) || (stats && stats.error)) {
         return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
@@ -68,7 +68,7 @@ function IndexPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const data = await R.get("/public/metrics/deals-on-chain");
+      const data = await R.get('/public/metrics/deals-on-chain');
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];
@@ -92,7 +92,7 @@ function IndexPage(props: any) {
         dealsSealedBytes = dealsSealedBytes + item.dealsSealedBytes;
 
         // TODO(jim): Tell Jeromy this date is annoying
-        if (item.time === "0001-01-01T00:00:00Z") {
+        if (item.time === '0001-01-01T00:00:00Z') {
           continue;
         }
 
@@ -110,23 +110,23 @@ function IndexPage(props: any) {
         dealsSealedBytes,
         data: [
           {
-            color: "var(--status-16)",
-            name: "Attempted",
+            color: 'var(--status-16)',
+            name: 'Attempted',
             items: dealsAttemptedSet,
           },
           {
-            color: "var(--status-7)",
-            name: "Failed",
+            color: 'var(--status-7)',
+            name: 'Failed',
             items: dealsFailedSet,
           },
           {
-            color: "var(--status-6)",
-            name: "OnChain",
+            color: 'var(--status-6)',
+            name: 'OnChain',
             items: dealsOnChainSet,
           },
           {
-            color: "var(--status-success-bright)",
-            name: "Sealed",
+            color: 'var(--status-success-bright)',
+            name: 'Sealed',
             items: dealsSealedSet,
           },
         ],
@@ -137,7 +137,7 @@ function IndexPage(props: any) {
   }, [width]);
 
   const description =
-    "Use any browser and our API to store public data on the Filecoin Network and retrieve it from anywhere, anytime.";
+    'Use any browser and our API to store public data on the Filecoin Network and retrieve it from anywhere, anytime.';
 
   return (
     <Page title="Estuary" description={description} url="https://estuary.tech">
@@ -145,8 +145,8 @@ function IndexPage(props: any) {
 
       <div className={S.h}>
         <div className={S.ht}>
-          <H1 style={{ maxWidth: "768px", fontWeight: 800 }}>Automated storage with Filecoin</H1>
-          <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
+          <H1 style={{ maxWidth: '768px', fontWeight: 800 }}>Automated storage with Filecoin</H1>
+          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
             {description}
           </P>
           <div className={S.actions}>
@@ -155,9 +155,9 @@ function IndexPage(props: any) {
               target="_blank"
               style={{
                 background: `var(--main-primary)`,
-                margin: "0 16px 0 0",
-                fontSize: "24px",
-                padding: "16px 24px 16px 24px",
+                margin: '0 16px 0 0',
+                fontSize: '24px',
+                padding: '16px 24px 16px 24px',
               }}
             >
               Learn more
@@ -191,9 +191,9 @@ function IndexPage(props: any) {
         ) : null}
       </div>
 
-      <SingleColumnLayout style={{ textAlign: "center", marginBottom: 24 }}>
-        <H2 style={{ margin: "0 auto 0 auto" }}>Features</H2>
-        <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
+      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
+        <H2 style={{ margin: '0 auto 0 auto' }}>Features</H2>
+        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
           Estuary makes using Filecoin easy while showing a lot of useful information about where
           your data is stored.
         </P>
@@ -207,10 +207,10 @@ function IndexPage(props: any) {
             out the rules for you.
           </FeatureRow>
           <FeatureRow>
-            <strong>Many options.</strong> Tired of browsers? Use the command line, or an{" "}
+            <strong>Many options.</strong> Tired of browsers? Use the command line, or an{' '}
             <a href="https://docs.estuary.tech" target="_blank">
               API
-            </a>{" "}
+            </a>{' '}
             in your own application or website.
           </FeatureRow>
           <FeatureRow>
@@ -246,9 +246,9 @@ function IndexPage(props: any) {
         </div>
       </div>
 
-      <SingleColumnLayout style={{ textAlign: "center" }}>
-        <H2 style={{ margin: "0 auto 0 auto" }}>Open source code and public logs</H2>
-        <P style={{ marginTop: 12, maxWidth: "768px", fontSize: "1.15rem", opacity: "0.7" }}>
+      <SingleColumnLayout style={{ textAlign: 'center' }}>
+        <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
+        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
           Logs from your Filecoin miner are public so we can help debug and triage issues with the
           Filecoin Network.
         </P>

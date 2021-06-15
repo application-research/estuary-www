@@ -1,4 +1,4 @@
-import Cors from "cors";
+import Cors from 'cors';
 
 export function initMiddleware(middleware) {
   return (req, res) =>
@@ -14,6 +14,6 @@ export function initMiddleware(middleware) {
 
 export const cors = initMiddleware(
   Cors({
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ['GET', 'POST', 'OPTIONS'],
   })
 );

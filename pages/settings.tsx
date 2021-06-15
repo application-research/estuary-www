@@ -1,21 +1,21 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
-import * as Crypto from "@common/crypto";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
+import * as Crypto from '@common/crypto';
 
-import ProgressCard from "@components/ProgressCard";
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import ProgressCard from '@components/ProgressCard';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -38,24 +38,24 @@ const onSubmit = async (event, state, setState) => {
   setState({ ...state, loading: true });
 
   if (U.isEmpty(state.new)) {
-    alert("Please provide a new password");
+    alert('Please provide a new password');
     return setState({ ...state, loading: false });
   }
 
   if (!U.isValidPassword(state.new)) {
     return {
       error:
-        "Please provide a password thats at least 8 characters with at least one letter and one number",
+        'Please provide a password thats at least 8 characters with at least one letter and one number',
     };
   }
 
   if (U.isEmpty(state.confirm)) {
-    alert("Please confirm your new password");
+    alert('Please confirm your new password');
     return setState({ ...state, loading: false });
   }
 
   if (state.new !== state.confirm) {
-    alert("Please make sure you confirmed your new password correctly");
+    alert('Please make sure you confirmed your new password correctly');
     return setState({ ...state, loading: false });
   }
 
@@ -63,25 +63,25 @@ const onSubmit = async (event, state, setState) => {
 
   let response;
   try {
-    response = await R.put("/user/password", { newPasswordHash: newPasswordHash });
+    response = await R.put('/user/password', { newPasswordHash: newPasswordHash });
     await U.delay(1000);
 
     if (response.error) {
       alert(response.error);
-      return setState({ ...state, new: "", confirm: "", loading: false });
+      return setState({ ...state, new: '', confirm: '', loading: false });
     }
   } catch (e) {
     console.log(e);
-    alert("Something went wrong");
-    return setState({ ...state, new: "", confirm: "", loading: false });
+    alert('Something went wrong');
+    return setState({ ...state, new: '', confirm: '', loading: false });
   }
 
-  alert("Your password has been changed.");
-  return setState({ ...state, new: "", confirm: "", loading: false });
+  alert('Your password has been changed.');
+  return setState({ ...state, new: '', confirm: '', loading: false });
 };
 
 function SettingsPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, old: "", new: "", confirm: "" });
+  const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
 
   return (
     <Page

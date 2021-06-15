@@ -1,7 +1,7 @@
-import styles from "@components/Input.module.scss";
+import styles from '@components/Input.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
+import * as React from 'react';
+import * as U from '@common/utilities';
 
 export default class Input extends React.Component<any> {
   _input;
@@ -14,7 +14,7 @@ export default class Input extends React.Component<any> {
 
   _handleCopy = (e) => {
     this._input.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
   };
 
   _handleKeyUp = (e) => {

@@ -1,6 +1,6 @@
-import styles from "@components/Typography.module.scss";
+import styles from '@components/Typography.module.scss';
 
-import * as React from "react";
+import * as React from 'react';
 
 export const H1 = (props: any) => {
   return <h1 className={styles.h1} {...props} />;

@@ -1,9 +1,9 @@
-import * as React from "react";
-import * as U from "@common/utilities";
+import * as React from 'react';
+import * as U from '@common/utilities';
 
-import styles from "@components/Button.module.scss";
+import styles from '@components/Button.module.scss';
 
-import LoaderSpinner from "@components/LoaderSpinner";
+import LoaderSpinner from '@components/LoaderSpinner';
 
 const Button = (props: any) => {
   if (props.loading) {

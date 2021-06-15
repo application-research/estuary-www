@@ -1,22 +1,22 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import GridSection from "@components/GridSection";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import Block from "@components/Block";
-import Input from "@components/Input";
-import Button from "@components/Button";
-import MinerTable from "@components/MinerTable";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import GridSection from '@components/GridSection';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import Block from '@components/Block';
+import Input from '@components/Input';
+import Button from '@components/Button';
+import MinerTable from '@components/MinerTable';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/home",
+        destination: '/home',
       },
     };
   }
@@ -47,16 +47,16 @@ export async function getServerSideProps(context) {
 function AdminMinersPage(props) {
   const [state, setState] = React.useState({
     loading: false,
-    suspend_miner: "",
-    miner: "",
-    reason: "",
+    suspend_miner: '',
+    miner: '',
+    reason: '',
     miners: null,
   });
 
   React.useEffect(() => {
     const run = async () => {
       let map = {};
-      const response = await R.get("/admin/miners/stats");
+      const response = await R.get('/admin/miners/stats');
 
       for (let m of response) {
         map[m.miner] = m;
@@ -64,7 +64,7 @@ function AdminMinersPage(props) {
 
       console.log(map);
 
-      const list = await R.get("/public/miners");
+      const list = await R.get('/public/miners');
 
       const miners = list.map((each) => {
         if (map[each.addr]) {
@@ -117,13 +117,13 @@ function AdminMinersPage(props) {
                   loading={state.loading ? state.loading : undefined}
                   onClick={async () => {
                     if (U.isEmpty(state.miner)) {
-                      alert("Please provide a miner.");
+                      alert('Please provide a miner.');
                       return;
                     }
 
                     setState({ ...state, loading: true });
                     const request = R.post(`/admin/miners/add/${state.miner}`, {});
-                    setState({ ...state, miner: "", loading: false });
+                    setState({ ...state, miner: '', loading: false });
                   }}
                 >
                   Add
@@ -133,19 +133,19 @@ function AdminMinersPage(props) {
                   style={{
                     marginRight: 24,
                     marginBottom: 24,
-                    background: "var(--main-button-background-secondary)",
-                    color: "var(--main-button-text-secondary)",
+                    background: 'var(--main-button-background-secondary)',
+                    color: 'var(--main-button-text-secondary)',
                   }}
                   loading={state.loading ? state.loading : undefined}
                   onClick={async () => {
                     if (U.isEmpty(state.miner)) {
-                      alert("Please provide a miner.");
+                      alert('Please provide a miner.');
                       return;
                     }
 
                     setState({ ...state, loading: true });
                     const request = R.post(`/admin/miners/rm/${state.miner}`, {});
-                    setState({ ...state, miner: "", loading: false });
+                    setState({ ...state, miner: '', loading: false });
                   }}
                 >
                   Remove
@@ -154,19 +154,19 @@ function AdminMinersPage(props) {
                 <Button
                   style={{
                     marginBottom: 24,
-                    background: "var(--main-button-background-secondary)",
-                    color: "var(--main-button-text-secondary)",
+                    background: 'var(--main-button-background-secondary)',
+                    color: 'var(--main-button-text-secondary)',
                   }}
                   loading={state.loading ? state.loading : undefined}
                   onClick={async () => {
                     if (U.isEmpty(state.miner)) {
-                      alert("Please provide a miner.");
+                      alert('Please provide a miner.');
                       return;
                     }
 
                     setState({ ...state, loading: true });
                     const request = R.put(`/admin/miners/unsuspend/${state.miner}`, {});
-                    setState({ ...state, miner: "", loading: false });
+                    setState({ ...state, miner: '', loading: false });
                   }}
                 >
                   Reinstate
@@ -203,7 +203,7 @@ function AdminMinersPage(props) {
                   loading={state.loading ? state.loading : undefined}
                   onClick={async () => {
                     if (U.isEmpty(state.suspend_miner)) {
-                      alert("Please provide a miner to suspend.");
+                      alert('Please provide a miner to suspend.');
                       return;
                     }
 
@@ -219,9 +219,9 @@ function AdminMinersPage(props) {
 
                     setState({
                       ...state,
-                      miner: "",
-                      suspend_miner: "",
-                      reason: "",
+                      miner: '',
+                      suspend_miner: '',
+                      reason: '',
                       loading: false,
                     });
                   }}

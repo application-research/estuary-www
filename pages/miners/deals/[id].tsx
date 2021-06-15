@@ -1,14 +1,14 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -31,7 +31,7 @@ function MinerDealsPage(props: any) {
         return setState({ logs: response });
       }
 
-      alert("No deal history for this miner.");
+      alert('No deal history for this miner.');
     };
 
     run();
@@ -82,7 +82,7 @@ function MinerDealsPage(props: any) {
                       </td>
                       <td className={tstyles.td}>{log.content}</td>
                       <td className={tstyles.td}>
-                        {log.failed ? "--" : log.dealId > 0 ? log.dealId : "in-progress"}
+                        {log.failed ? '--' : log.dealId > 0 ? log.dealId : 'in-progress'}
                       </td>
                       <td className={tstyles.td}>{log.propCid}</td>
                       <td className={tstyles.td}>{log.dtChan}</td>

@@ -1,5 +1,5 @@
-import * as React from "react";
-import * as d3 from "d3";
+import * as React from 'react';
+import * as d3 from 'd3';
 
 const MultilineChart = (options: any) => {
   const { data = [], dimensions = {} } = options;
@@ -20,38 +20,38 @@ const MultilineChart = (options: any) => {
       .range([height, 0]);
 
     const svgEl = d3.select(svgRef.current);
-    svgEl.selectAll("*").remove();
+    svgEl.selectAll('*').remove();
 
-    const svg = svgEl.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    const svg = svgEl.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
     // XAXIS
-    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b %d"));
+    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b %d'));
     const xAxisGroup = svg
-      .append("g")
-      .attr("transform", `translate(0, ${height + 8})`)
+      .append('g')
+      .attr('transform', `translate(0, ${height + 8})`)
       .call(xAxis);
-    xAxisGroup.select(".domain").remove();
-    xAxisGroup.selectAll("line").attr("stroke", "rgba(255, 255, 255, 0.2)");
+    xAxisGroup.select('.domain').remove();
+    xAxisGroup.selectAll('line').attr('stroke', 'rgba(255, 255, 255, 0.2)');
     xAxisGroup
-      .selectAll("text")
-      .attr("opacity", 0.5)
-      .attr("color", "white")
-      .attr("font-size", "12px")
-      .attr("font-family", "Mono")
-      .attr("text-transform", "Uppercase");
+      .selectAll('text')
+      .attr('opacity', 0.5)
+      .attr('color', 'white')
+      .attr('font-size', '12px')
+      .attr('font-family', 'Mono')
+      .attr('text-transform', 'Uppercase');
 
     // YAXIS
     const yAxis = d3.axisLeft(yScale).tickFormat((d) => d);
-    const yAxisGroup = svg.append("g").call(yAxis);
-    yAxisGroup.select(".domain").remove();
-    yAxisGroup.selectAll("line").attr("stroke", "rgba(255, 255, 255, 0.2)");
+    const yAxisGroup = svg.append('g').call(yAxis);
+    yAxisGroup.select('.domain').remove();
+    yAxisGroup.selectAll('line').attr('stroke', 'rgba(255, 255, 255, 0.2)');
     yAxisGroup
-      .selectAll("text")
-      .attr("opacity", 0.5)
-      .attr("color", "white")
-      .attr("font-size", "12px")
-      .attr("font-family", "Mono")
-      .attr("text-transform", "Uppercase");
+      .selectAll('text')
+      .attr('opacity', 0.5)
+      .attr('color', 'white')
+      .attr('font-size', '12px')
+      .attr('font-family', 'Mono')
+      .attr('text-transform', 'Uppercase');
 
     const line = d3
       .line()
@@ -59,14 +59,14 @@ const MultilineChart = (options: any) => {
       .y((d) => yScale(d.value));
 
     svg
-      .selectAll(".line")
+      .selectAll('.line')
       .data(data)
       .enter()
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", (d) => d.color)
-      .attr("stroke-width", 4)
-      .attr("d", (d) => line(d.items));
+      .append('path')
+      .attr('fill', 'none')
+      .attr('stroke', (d) => d.color)
+      .attr('stroke-width', 4)
+      .attr('d', (d) => line(d.items));
   }, [data]);
 
   return <svg ref={svgRef} width={svgWidth} height={svgHeight} />;

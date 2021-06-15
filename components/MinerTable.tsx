@@ -1,8 +1,8 @@
-import styles from "@pages/table.module.scss";
+import styles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as C from "@common/constants";
-import * as U from "@common/utilities";
+import * as React from 'react';
+import * as C from '@common/constants';
+import * as U from '@common/utilities';
 
 export default class MinerTable extends React.Component<any> {
   static defaultProps = {
@@ -30,7 +30,7 @@ export default class MinerTable extends React.Component<any> {
                 <tr className={styles.tr} key={`${miner.miner}-${index}`}>
                   <td className={styles.tdcta}>
                     <a className={styles.cta} href={`/miners/stats/${miner.addr}`}>
-                      {miner.addr} {!U.isEmpty(miner.name) ? `(${miner.name})` : ""}
+                      {miner.addr} {!U.isEmpty(miner.name) ? `(${miner.name})` : ''}
                     </a>
                   </td>
 
@@ -74,7 +74,7 @@ export default class MinerTable extends React.Component<any> {
         <table className={styles.table}>
           <tbody className={styles.tbody}>
             <tr className={styles.tr}>
-              <th className={styles.th} style={{ width: "132px" }}>
+              <th className={styles.th} style={{ width: '132px' }}>
                 Miner
               </th>
               <th className={styles.th}>Suspension reason</th>

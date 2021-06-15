@@ -1,21 +1,21 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
+import * as R from '@common/requests';
 
-import ProgressCard from "@components/ProgressCard";
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import LoaderSpinner from "@components/LoaderSpinner";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import Button from "@components/Button";
+import ProgressCard from '@components/ProgressCard';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import LoaderSpinner from '@components/LoaderSpinner';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -57,12 +57,12 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
 
   const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
 
-  let name = "...";
+  let name = '...';
   if (content && content.name) {
     name = content.name;
   }
-  if (name === "aggregate") {
-    name = "/";
+  if (name === 'aggregate') {
+    name = '/';
   }
 
   const dealErrorURL = `/errors/${id}`;
@@ -72,16 +72,16 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
       <table className={tstyles.table}>
         <tbody className={tstyles.tbody}>
           <tr className={tstyles.tr}>
-            <th className={tstyles.th} style={{ width: "25%" }}>
+            <th className={tstyles.th} style={{ width: '25%' }}>
               Name
             </th>
-            <th className={tstyles.th} style={{ width: "50%" }}>
+            <th className={tstyles.th} style={{ width: '50%' }}>
               Retrieval CID
             </th>
-            <th className={tstyles.th} style={{ width: "12.5%" }}>
+            <th className={tstyles.th} style={{ width: '12.5%' }}>
               ID
             </th>
-            <th className={tstyles.th} style={{ width: "12.5%" }}>
+            <th className={tstyles.th} style={{ width: '12.5%' }}>
               Size
             </th>
           </tr>
@@ -102,12 +102,12 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
       </table>
       {root && root.aggregatedFiles > 1 ? (
         <div className={styles.titleSection}>
-          This deal has {root.aggregatedFiles} additional{" "}
-          {U.pluralize("file", root.aggregatedFiles)}
+          This deal has {root.aggregatedFiles} additional{' '}
+          {U.pluralize('file', root.aggregatedFiles)}
         </div>
       ) : null}
       <div className={styles.titleSection}>
-        {dealElements.length} Storage provider {U.pluralize("deal", dealElements.length)}{" "}
+        {dealElements.length} Storage provider {U.pluralize('deal', dealElements.length)}{' '}
         <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
         </a>

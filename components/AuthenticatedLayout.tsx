@@ -1,6 +1,6 @@
-import styles from "@components/AuthenticatedLayout.module.scss";
+import styles from '@components/AuthenticatedLayout.module.scss';
 
-import * as React from "react";
+import * as React from 'react';
 
 function AuthenticatedLayout(props: any) {
   return (

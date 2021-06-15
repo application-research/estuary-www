@@ -1,22 +1,22 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import ActionRow from "@components/ActionRow";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import Block from "@components/Block";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import ActionRow from '@components/ActionRow';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import Block from '@components/Block';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -39,8 +39,8 @@ function UploadCIDPage(props: any) {
   const [state, setState] = React.useState({
     success: false,
     loading: false,
-    filename: "",
-    cid: "",
+    filename: '',
+    cid: '',
   });
 
   return (
@@ -73,7 +73,7 @@ function UploadCIDPage(props: any) {
               />
               {U.isEmpty(state.cid) ? null : (
                 <aside className={styles.formAside}>
-                  Check your CID:{" "}
+                  Check your CID:{' '}
                   <a href={`https://dweb.link/ipfs/${state.cid}`} target="_blank">
                     https://dweb.link/ipfs/{state.cid}
                   </a>
@@ -92,7 +92,7 @@ function UploadCIDPage(props: any) {
                   setState({ ...state, loading: true });
 
                   if (U.isEmpty(state.cid)) {
-                    alert("You must provide a CID");
+                    alert('You must provide a CID');
                     return setState({ ...state, loading: false });
                   }
 
@@ -103,14 +103,14 @@ function UploadCIDPage(props: any) {
                   console.log(response);
                   if (response && response.error) {
                     alert(response.error);
-                    return setState({ success: false, filename: "", cid: "", loading: false });
+                    return setState({ success: false, filename: '', cid: '', loading: false });
                   }
-                  setState({ ...state, loading: false, filename: "", cid: "", success: true });
+                  setState({ ...state, loading: false, filename: '', cid: '', success: true });
                 }}
               />
 
               <H3 style={{ marginTop: 24 }}>Default deal settings</H3>
-              <div style={{ maxWidth: "568px" }}>
+              <div style={{ maxWidth: '568px' }}>
                 <ActionRow style={{ marginTop: 12 }}>
                   Replicated across {props.viewer.settings.replication} miners.
                 </ActionRow>
@@ -132,7 +132,7 @@ function UploadCIDPage(props: any) {
                   onClick={async () => {
                     setState({ ...state, loading: true });
                     if (U.isEmpty(state.cid)) {
-                      alert("You must provide a CID");
+                      alert('You must provide a CID');
                       return setState({ ...state, loading: false });
                     }
 
@@ -143,10 +143,10 @@ function UploadCIDPage(props: any) {
                     console.log(response);
                     if (response && response.error) {
                       alert(response.error);
-                      return setState({ success: false, filename: "", cid: "", loading: false });
+                      return setState({ success: false, filename: '', cid: '', loading: false });
                     }
 
-                    setState({ ...state, loading: false, filename: "", cid: "", success: true });
+                    setState({ ...state, loading: false, filename: '', cid: '', success: true });
                   }}
                 >
                   Make Filecoin deals
@@ -155,8 +155,8 @@ function UploadCIDPage(props: any) {
                 <Button
                   style={{
                     marginBottom: 24,
-                    background: "var(--main-button-background-secondary)",
-                    color: "var(--main-button-text-secondary)",
+                    background: 'var(--main-button-background-secondary)',
+                    color: 'var(--main-button-text-secondary)',
                   }}
                   href="/upload"
                 >
@@ -186,8 +186,8 @@ function UploadCIDPage(props: any) {
                 <Button
                   style={{
                     marginBottom: 24,
-                    background: "var(--main-button-background-secondary)",
-                    color: "var(--main-button-text-secondary)",
+                    background: 'var(--main-button-background-secondary)',
+                    color: 'var(--main-button-text-secondary)',
                   }}
                   href="/upload"
                 >

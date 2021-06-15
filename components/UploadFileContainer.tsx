@@ -1,14 +1,14 @@
-import styles from "@components/UploadFileContainer.module.scss";
+import styles from '@components/UploadFileContainer.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
+import * as R from '@common/requests';
 
-import LoaderSpinner from "@components/LoaderSpinner";
-import Button from "@components/Button";
-import ActionRow from "@components/ActionRow";
-import Cookies from "js-cookie";
+import LoaderSpinner from '@components/LoaderSpinner';
+import Button from '@components/Button';
+import ActionRow from '@components/ActionRow';
+import Cookies from 'js-cookie';
 
 export default class UploadFileContainer extends React.Component<any> {
   state = {
@@ -22,10 +22,10 @@ export default class UploadFileContainer extends React.Component<any> {
   componentDidMount() {
     let ref = this.dropRef.current as Element;
 
-    ref.addEventListener("dragenter", this.handleDragIn);
-    ref.addEventListener("dragleave", this.handleDragOut);
-    ref.addEventListener("dragover", this.handleDrag);
-    ref.addEventListener("drop", this.handleDrop);
+    ref.addEventListener('dragenter', this.handleDragIn);
+    ref.addEventListener('dragleave', this.handleDragOut);
+    ref.addEventListener('dragover', this.handleDrag);
+    ref.addEventListener('drop', this.handleDrop);
   }
 
   doFileUpload = async (file, filename) => {
@@ -37,14 +37,14 @@ export default class UploadFileContainer extends React.Component<any> {
       return await this.upload();
     }
 
-    const response = await R.post("/deals/estimate", {
+    const response = await R.post('/deals/estimate', {
       size: file.size,
       replication: this.props.viewer.settings.replication,
       durationBlks: this.props.viewer.settings.dealDuration,
       verified: this.props.viewer.settings.verified,
     });
 
-    const local = await fetch("/api/fil-usd");
+    const local = await fetch('/api/fil-usd');
     const { price } = await local.json();
 
     const estimate = response && response.totalAttoFil ? response.totalAttoFil : null;
@@ -62,13 +62,13 @@ export default class UploadFileContainer extends React.Component<any> {
 
   upload = async () => {
     if (!this.state.data) {
-      alert("No data provided");
+      alert('No data provided');
       return;
     }
 
     const formData = new FormData();
 
-    formData.append("data", this.state.data.file, this.state.data.filename);
+    formData.append('data', this.state.data.file, this.state.data.filename);
 
     console.log(formData);
 
@@ -129,14 +129,14 @@ export default class UploadFileContainer extends React.Component<any> {
       }
     };
 
-    xhr.open("POST", `${C.api.host}/content/add`);
-    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    xhr.open('POST', `${C.api.host}/content/add`);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     xhr.send(formData);
   };
 
   handleSelectFile = (e) => {
     e.persist();
-    console.log("select file: ", e.target);
+    console.log('select file: ', e.target);
     if (e.target.files.length == 0) {
       return;
     }
@@ -149,7 +149,7 @@ export default class UploadFileContainer extends React.Component<any> {
   handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("dropped a thing: ", e.dataTransfer.files);
+    console.log('dropped a thing: ', e.dataTransfer.files);
 
     if (this.state.mode !== 3) {
       return;
@@ -160,7 +160,7 @@ export default class UploadFileContainer extends React.Component<any> {
     }
 
     if (e.dataTransfer.files.length > 1) {
-      alert("You can only upload one file at a time.");
+      alert('You can only upload one file at a time.');
       return;
     }
 
@@ -193,21 +193,21 @@ export default class UploadFileContainer extends React.Component<any> {
 
   render() {
     const backgrounds = {
-      2: "#fff",
-      3: "var(--main-text)",
-      4: "var(--main-text)",
+      2: '#fff',
+      3: 'var(--main-text)',
+      4: 'var(--main-text)',
     };
 
     const colors = {
-      2: "#000",
-      3: "#fff",
-      4: "#fff",
+      2: '#000',
+      3: '#fff',
+      4: '#fff',
     };
 
     const statusText = {
-      1: "Ready",
-      3: "Ready for file drop",
-      4: "Processing data",
+      1: 'Ready',
+      3: 'Ready for file drop',
+      4: 'Processing data',
     };
 
     const style = {
@@ -218,7 +218,7 @@ export default class UploadFileContainer extends React.Component<any> {
     const showLoader = this.state.mode === 4 || this.props.uploadFinished;
     let status = statusText[this.state.mode];
     if (this.props.uploadFinished) {
-      status = "Upload finished, now processing";
+      status = 'Upload finished, now processing';
     }
 
     let cta = (
@@ -234,8 +234,8 @@ export default class UploadFileContainer extends React.Component<any> {
         <Button
           style={{
             marginBottom: 24,
-            background: "var(--main-button-background-secondary)",
-            color: "var(--main-button-text-secondary)",
+            background: 'var(--main-button-background-secondary)',
+            color: 'var(--main-button-text-secondary)',
           }}
           href="/upload-cid"
         >
@@ -256,8 +256,8 @@ export default class UploadFileContainer extends React.Component<any> {
           <Button
             style={{
               marginLeft: 24,
-              background: "var(--main-button-background-secondary)",
-              color: "var(--main-button-text-secondary)",
+              background: 'var(--main-button-background-secondary)',
+              color: 'var(--main-button-text-secondary)',
             }}
             onClick={() => {
               this.setState({ data: null, mode: 1 });
@@ -283,7 +283,7 @@ export default class UploadFileContainer extends React.Component<any> {
                     }}
                   />
                 ) : (
-                  "Waiting for your file..."
+                  'Waiting for your file...'
                 )}
               </div>
               <div className={styles.bottom}>
@@ -306,10 +306,10 @@ export default class UploadFileContainer extends React.Component<any> {
           <React.Fragment>
             {this.state.data.estimate ? (
               <ActionRow>
-                Will cost {U.convertFIL(this.state.data.estimate)} FIL ⇄{" "}
+                Will cost {U.convertFIL(this.state.data.estimate)} FIL ⇄{' '}
                 {(
                   Number(U.convertFIL(this.state.data.estimate)) * Number(this.state.data.price)
-                ).toFixed(2)}{" "}
+                ).toFixed(2)}{' '}
                 USD
               </ActionRow>
             ) : null}

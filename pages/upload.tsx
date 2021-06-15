@@ -1,22 +1,22 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
+import * as R from '@common/requests';
 
-import Cookies from "js-cookie";
-import Page from "@components/Page";
-import Navigation from "@components/Navigation";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import UploadFileContainer from "@components/UploadFileContainer";
-import ProgressBlock from "@components/ProgressBlock";
-import Block from "@components/Block";
-import ActionRow from "@components/ActionRow";
+import Cookies from 'js-cookie';
+import Page from '@components/Page';
+import Navigation from '@components/Navigation';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import UploadFileContainer from '@components/UploadFileContainer';
+import ProgressBlock from '@components/ProgressBlock';
+import Block from '@components/Block';
+import ActionRow from '@components/ActionRow';
 
-import { H1, H2, P } from "@components/Typography";
+import { H1, H2, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -60,7 +60,7 @@ export default class UploadPage extends React.Component<any> {
     this.setState({
       loaded: 0,
       total: 0,
-      cid: "",
+      cid: '',
       secondsElapsed: 0,
       bytesPerSecond: 0,
       secondsRemaining: 0,
@@ -78,13 +78,13 @@ export default class UploadPage extends React.Component<any> {
       secondsRemaining: response.secondsRemaining,
     });
 
-    window.onbeforeunload = function () {
-      return "An upload is in progress, are you sure you want to navigate away?";
+    window.onbeforeunload = function() {
+      return 'An upload is in progress, are you sure you want to navigate away?';
     };
   };
 
   _handleUploadFinished = ({ cid }) => {
-    console.log("Upload finished.", cid);
+    console.log('Upload finished.', cid);
 
     // NOTE(jim): You must reset all of the state, some state depends on it.
     this.setState({
@@ -115,7 +115,7 @@ export default class UploadPage extends React.Component<any> {
             label="Your retrieval URL"
             custom="➝ Go see Filecoin storage miner status."
             onCustomClick={() => {
-              window.location.href = "/deals";
+              window.location.href = '/deals';
             }}
           >
             https://dweb.link/ipfs/{this.state.cid}
@@ -139,7 +139,7 @@ export default class UploadPage extends React.Component<any> {
               label="Your retrieval URL"
               custom="➝ View staging area."
               onCustomClick={() => {
-                window.location.href = "/staging";
+                window.location.href = '/staging';
               }}
             >
               https://dweb.link/ipfs/{this.state.cid}

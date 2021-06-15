@@ -25,11 +25,11 @@ export const statusColors = {
 // As discussed with Why, this salt is okay to expose to the client
 // Normally we would never do this but we want the password to be hashed from the wire.
 // And not server to server
-export const salt = "$2a$08$r31MZDLMLVcHAUfrePT2H.";
+export const salt = '$2a$08$r31MZDLMLVcHAUfrePT2H.';
 
 // NOTE(jim)
 // Cookie key
-export const auth = "ESTUARY_TOKEN";
+export const auth = 'ESTUARY_TOKEN';
 
 // NOTE(jim)
 // Valid username regex
@@ -42,5 +42,5 @@ export const regex = {
 
 // TODO(jim): support offline development
 export const api = {
-  host: "https://api.estuary.tech",
+  host: 'https://api.estuary.tech',
 };

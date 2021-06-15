@@ -1,25 +1,25 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import Block from "@components/Block";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import Block from '@components/Block';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
-import { H1, H2, P } from "@components/Typography";
+import { H1, H2, P } from '@components/Typography';
 
 const sendEscrow = async (state, setState) => {
   setState({ ...state, loading: true });
 
-  if (!window.confirm("Are you sure you want to transfer this amount?")) {
+  if (!window.confirm('Are you sure you want to transfer this amount?')) {
     setState({ ...state, loading: false });
     return;
   }
@@ -28,7 +28,7 @@ const sendEscrow = async (state, setState) => {
   console.log(response);
 
   if (response.error) {
-    alert("Something went wrong, please try again.");
+    alert('Something went wrong, please try again.');
     setState({ ...state, loading: false, amount: 0 });
     return;
   }
@@ -37,7 +37,7 @@ const sendEscrow = async (state, setState) => {
 };
 
 const getBalance = async (state, setState) => {
-  const response = await R.get("/admin/balance");
+  const response = await R.get('/admin/balance');
   if (response.error) {
     console.log(response.error);
     return;
@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -62,7 +62,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/home",
+        destination: '/home',
       },
     };
   }

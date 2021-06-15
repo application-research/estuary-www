@@ -1,8 +1,8 @@
-import styles from "@components/ProgressCard.module.scss";
+import styles from '@components/ProgressCard.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
 
 const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
   const isOnChain = deal.dealId > 0;
@@ -12,8 +12,8 @@ const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
     if (!deal.dealId) {
       message = transfer.statusMessage;
 
-      if (message === "Completed") {
-        message = "TransferFinish";
+      if (message === 'Completed') {
+        message = 'TransferFinish';
       }
     }
 
@@ -23,7 +23,7 @@ const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
   }
 
   if (deal && deal.failed && transfer.status === 6) {
-    message = "FailAfterTransfer";
+    message = 'FailAfterTransfer';
   }
 
   let topStyle = { background: C.statusColors[Number(transfer.status)] };
@@ -54,7 +54,7 @@ const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
           <a className={styles.title} href={minerStatsURL} target="_blank">
             {deal.miner}
           </a>
-          <div className={styles.plain} style={{ textTransform: "none" }}>
+          <div className={styles.plain} style={{ textTransform: 'none' }}>
             {message}
           </div>
           {dealURL ? (

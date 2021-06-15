@@ -1,22 +1,22 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
+import * as R from '@common/requests';
 
-import Cookie from "js-cookie";
-import ProgressCard from "@components/ProgressCard";
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import Button from "@components/Button";
+import Cookie from 'js-cookie';
+import ProgressCard from '@components/ProgressCard';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -42,7 +42,7 @@ function APIPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get("/user/api-keys");
+      const response = await R.get('/user/api-keys');
       console.log(response);
 
       if (response && !response.error) {
@@ -79,7 +79,7 @@ function APIPage(props: any) {
                   setState({ ...state, loading: true });
                   const request = await R.post(`/user/api-keys`, {});
 
-                  const keys = await R.get("/user/api-keys");
+                  const keys = await R.get('/user/api-keys');
                   if (keys && !keys.error) {
                     setState({ ...state, loading: false, keys });
                     return;
@@ -92,8 +92,8 @@ function APIPage(props: any) {
               <Button
                 style={{
                   marginBottom: 24,
-                  background: "var(--main-button-background-secondary)",
-                  color: "var(--main-button-text-secondary)",
+                  background: 'var(--main-button-background-secondary)',
+                  color: 'var(--main-button-text-secondary)',
                 }}
                 href="https://docs.estuary.tech"
               >
@@ -107,7 +107,7 @@ function APIPage(props: any) {
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
                   <th className={tstyles.th}>Key</th>
-                  <th className={tstyles.th} style={{ width: "136px" }}>
+                  <th className={tstyles.th} style={{ width: '136px' }}>
                     Options
                   </th>
                 </tr>
@@ -116,7 +116,7 @@ function APIPage(props: any) {
                       return (
                         <tr key={k.token} className={tstyles.tr}>
                           <td className={tstyles.td}>
-                            {k.token}{" "}
+                            {k.token}{' '}
                             {viewerToken === k.token ? (
                               <strong>(current browser session)</strong>
                             ) : null}
@@ -125,7 +125,7 @@ function APIPage(props: any) {
                             <button
                               onClick={async () => {
                                 const confirm = window.confirm(
-                                  "Are you sure you want to delete this key?"
+                                  'Are you sure you want to delete this key?'
                                 );
                                 if (!confirm) {
                                   return;
@@ -133,11 +133,11 @@ function APIPage(props: any) {
 
                                 const response = await R.del(`/user/api-keys/${k.token}`);
                                 if (viewerToken === k.token) {
-                                  window.location.href = "/";
+                                  window.location.href = '/';
                                   return;
                                 }
 
-                                const keys = await R.get("/user/api-keys");
+                                const keys = await R.get('/user/api-keys');
                                 if (keys && !keys.error) {
                                   setState({ ...state, keys });
                                 }

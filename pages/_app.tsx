@@ -1,6 +1,6 @@
-import "@root/global.scss";
+import '@root/global.scss';
 
-import * as React from "react";
+import * as React from 'react';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;

@@ -1,10 +1,10 @@
-import styles from "@components/Block.module.scss";
+import styles from '@components/Block.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
 
-import ActionRow from "@components/ActionRow";
+import ActionRow from '@components/ActionRow';
 
 function Block(props: any) {
   return (

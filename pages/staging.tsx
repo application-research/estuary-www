@@ -1,20 +1,20 @@
-import styles from "@pages/app.module.scss";
-import tstyles from "@pages/table.module.scss";
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as R from "@common/requests";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
 
-import ProgressCard from "@components/ProgressCard";
-import Navigation from "@components/Navigation";
-import Page from "@components/Page";
-import AuthenticatedLayout from "@components/AuthenticatedLayout";
-import AuthenticatedSidebar from "@components/AuthenticatedSidebar";
-import EmptyStatePlaceholder from "@components/EmptyStatePlaceholder";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import Button from "@components/Button";
+import ProgressCard from '@components/ProgressCard';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/sign-in",
+        destination: '/sign-in',
       },
     };
   }
@@ -38,7 +38,7 @@ function StagingPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      const files = await R.get("/content/staging-zones");
+      const files = await R.get('/content/staging-zones');
       console.log(files);
 
       if (!files || files.error) {
@@ -70,7 +70,7 @@ function StagingPage(props) {
         <SingleColumnLayout>
           <H2>Staging zone</H2>
           <P style={{ marginTop: 8 }}>
-            When you upload data under the size of{" "}
+            When you upload data under the size of{' '}
             {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged
             here. After a few hours a storage deal will be made.
           </P>
@@ -83,14 +83,14 @@ function StagingPage(props) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: "30%" }}>
+                <th className={tstyles.th} style={{ width: '30%' }}>
                   Name
                 </th>
                 <th className={tstyles.th}>Retrieval link</th>
-                <th className={tstyles.th} style={{ width: "104px" }}>
+                <th className={tstyles.th} style={{ width: '104px' }}>
                   Size
                 </th>
-                <th className={tstyles.th} style={{ width: "120px" }}>
+                <th className={tstyles.th} style={{ width: '120px' }}>
                   User ID
                 </th>
               </tr>
@@ -98,7 +98,7 @@ function StagingPage(props) {
                 ? state.files.map((data, index) => {
                     const fileURL = `https://dweb.link/ipfs/${data.cid}`;
                     return (
-                      <tr key={`${data.cid["/"]}-${index}`} className={tstyles.tr}>
+                      <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
                         <td className={tstyles.td}>{data.name}</td>
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>

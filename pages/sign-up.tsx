@@ -1,18 +1,18 @@
-import styles from "@pages/app.module.scss";
+import styles from '@pages/app.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
-import * as C from "@common/constants";
-import * as Crypto from "@common/crypto";
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as C from '@common/constants';
+import * as Crypto from '@common/crypto';
 
-import Cookies from "js-cookie";
-import Page from "@components/Page";
-import Navigation from "@components/Navigation";
-import SingleColumnLayout from "@components/SingleColumnLayout";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import Cookies from 'js-cookie';
+import Page from '@components/Page';
+import Navigation from '@components/Navigation';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
-import { H1, H2, H3, P } from "@components/Typography";
+import { H1, H2, H3, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         permanent: false,
-        destination: "/home",
+        destination: '/home',
       },
     };
   }
@@ -33,47 +33,47 @@ export async function getServerSideProps(context) {
 
 async function handleRegister(state: any) {
   if (U.isEmpty(state.password)) {
-    return { error: "Please provide a valid password." };
+    return { error: 'Please provide a valid password.' };
   }
 
   if (!U.isValidPassword(state.password)) {
     return {
       error:
-        "Please provide a password thats at least 8 characters with at least one letter and one number",
+        'Please provide a password thats at least 8 characters with at least one letter and one number',
     };
   }
 
   if (U.isEmpty(state.username)) {
-    return { error: "Please provide a username." };
+    return { error: 'Please provide a username.' };
   }
 
   if (U.isEmpty(state.inviteCode)) {
-    return { error: "Please provide your invite code." };
+    return { error: 'Please provide your invite code.' };
   }
 
   if (!U.isValidUsername(state.username)) {
     return {
       error:
-        "Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.",
+        'Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.',
     };
   }
 
   let passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
   let r = await fetch(`${C.api.host}/register`, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify({
       passwordHash: passwordHash,
       username: state.username.toLowerCase(),
       inviteCode: state.inviteCode,
     }),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (r.status !== 200) {
-    return { error: "Our server failed to register your account. Please contact us." };
+    return { error: 'Our server failed to register your account. Please contact us.' };
   }
 
   const j = await r.json();
@@ -83,26 +83,26 @@ async function handleRegister(state: any) {
 
   if (!j.token) {
     return {
-      error: "Our server failed to register your account and sign you in. Please contact us.",
+      error: 'Our server failed to register your account and sign you in. Please contact us.',
     };
   }
 
   Cookies.set(C.auth, j.token);
-  window.location.href = "/home";
+  window.location.href = '/home';
   return;
 }
 
 function SignUpPage(props: any) {
   const [state, setState] = React.useState({
-    inviteCode: "",
-    username: "",
-    password: "",
+    inviteCode: '',
+    username: '',
+    password: '',
     loading: false,
   });
 
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const inviteCode = params.get("invite");
+    const inviteCode = params.get('invite');
 
     if (!U.isEmpty(inviteCode)) {
       setState({ ...state, inviteCode });
@@ -170,7 +170,7 @@ function SignUpPage(props: any) {
           }}
         />
         <aside className={styles.formAside}>
-          Need an invite key?{" "}
+          Need an invite key?{' '}
           <a href="https://docs.estuary.tech" target="_blank">
             Learn how to get one.
           </a>
@@ -179,7 +179,7 @@ function SignUpPage(props: any) {
 
         <div className={styles.actions}>
           <Button
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             loading={state.loading ? state.loading : undefined}
             onClick={async () => {
               setState({ ...state, loading: true });
@@ -198,10 +198,10 @@ function SignUpPage(props: any) {
           </Button>
           <Button
             style={{
-              width: "100%",
+              width: '100%',
               marginTop: 12,
-              background: "var(--main-button-background-secondary)",
-              color: "var(--main-button-text-secondary)",
+              background: 'var(--main-button-background-secondary)',
+              color: 'var(--main-button-text-secondary)',
             }}
             href="/sign-in"
           >

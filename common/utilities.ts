@@ -1,11 +1,11 @@
-import { FilecoinNumber, Converter } from "@glif/filecoin-number";
+import { FilecoinNumber, Converter } from '@glif/filecoin-number';
 
-import * as Cookies from "@vendor/cookie-cutter";
-import * as C from "@common/constants";
+import * as Cookies from '@vendor/cookie-cutter';
+import * as C from '@common/constants';
 
 export const pad = (num: number, size: number): any => {
-  let s = num + "";
-  while (s.length < size) s = "0" + s;
+  let s = num + '';
+  while (s.length < size) s = '0' + s;
   return s;
 };
 
@@ -34,13 +34,13 @@ export function formatAsFilecoin(number) {
 }
 
 export function convertFIL(number = 0) {
-  const filecoinNumber = new FilecoinNumber(`${number}`, "attofil");
+  const filecoinNumber = new FilecoinNumber(`${number}`, 'attofil');
   const inFil = filecoinNumber.toFil();
   return inFil;
 }
 
 export function inFIL(number = 0) {
-  const filecoinNumber = new FilecoinNumber(`${number}`, "attofil");
+  const filecoinNumber = new FilecoinNumber(`${number}`, 'attofil');
   const inFil = filecoinNumber.toFil();
 
   let candidate = `${formatAsFilecoin(inFil)}`;
@@ -49,7 +49,7 @@ export function inFIL(number = 0) {
 }
 
 export function inUSDPrice(number = 0, price = 0) {
-  const filecoinNumber = new FilecoinNumber(`${number}`, "attofil");
+  const filecoinNumber = new FilecoinNumber(`${number}`, 'attofil');
   const inFil = filecoinNumber.toFil();
 
   if (!isEmpty(price)) {
@@ -99,24 +99,24 @@ export const getViewerFromHeader = async (headers) => {
 
 export const toDate = (data) => {
   const date = new Date(data);
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
     hour12: true,
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
   });
 };
 
 export const bytesToSize = (bytes, decimals = 2) => {
-  if (bytes === 0) return "0 Bytes";
+  if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+  const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -133,7 +133,7 @@ export const isEmpty = (string) => {
     return true;
   }
 
-  if (typeof string === "object") {
+  if (typeof string === 'object') {
     return true;
   }
 
@@ -157,7 +157,7 @@ export function classNames(...args: any[]) {
 
     var argType = typeof arg;
 
-    if (argType === "string" || argType === "number") {
+    if (argType === 'string' || argType === 'number') {
       classes.push(arg);
     } else if (Array.isArray(arg)) {
       if (arg.length) {
@@ -166,7 +166,7 @@ export function classNames(...args: any[]) {
           classes.push(inner);
         }
       }
-    } else if (argType === "object") {
+    } else if (argType === 'object') {
       if (arg.toString !== Object.prototype.toString) {
         classes.push(arg.toString());
       } else {
@@ -179,5 +179,5 @@ export function classNames(...args: any[]) {
     }
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }

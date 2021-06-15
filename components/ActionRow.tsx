@@ -1,7 +1,7 @@
-import styles from "@components/ActionRow.module.scss";
+import styles from '@components/ActionRow.module.scss';
 
-import * as React from "react";
-import * as U from "@common/utilities";
+import * as React from 'react';
+import * as U from '@common/utilities';
 
 function ActionRow(props: any) {
   return (
