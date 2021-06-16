@@ -26,11 +26,14 @@
 }
 
 .item {
-  margin-left: 24px;
+  margin-left: 32px;
   cursor: pointer;
   transition: 200ms ease all;
   color: var(--main-text);
   text-decoration: none;
+  font-family: 'MonoMedium';
+  font-size: 14px;
+  text-transform: uppercase;
 
   &:hover {
     opacity: 0.7;

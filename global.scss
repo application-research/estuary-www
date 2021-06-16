@@ -1,6 +1,11 @@
 @font-face {
-  font-family: "Mono";
-  src: url("https://next-s3-public.s3-us-west-2.amazonaws.com/mono.woff") format("woff");
+  font-family: 'Mono';
+  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/JetBrainsMono-Regular.woff2') format('woff');
+}
+
+@font-face {
+  font-family: 'MonoMedium';
+  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/JetBrainsMono-Medium.woff2') format('woff');
 }
 
 html,

@@ -16,22 +16,22 @@ const Navigation = (props: any) => {
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
             <a href="/sign-up" className={styles.item}>
-              ➝ Use invite
+              Use invite
             </a>
           ) : null}
           {!props.isAuthenticated && props.active !== 'SIGN_IN' ? (
             <a href="/sign-in" className={styles.item}>
-              ➝ Sign in
+              Sign in
             </a>
           ) : null}
           {props.isAuthenticated && props.active === 'INDEX' ? (
             <a href="/home" className={styles.item}>
-              ➝ Your files
+              Your files
             </a>
           ) : null}
 
           <a href="https://docs.estuary.tech" className={styles.item}>
-            ➝ Documentation
+            Documentation
           </a>
         </div>
       </nav>

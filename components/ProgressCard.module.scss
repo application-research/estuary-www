@@ -42,12 +42,12 @@
 }
 
 .title {
-  font-family: "Mono";
+  font-family: 'MonoMedium';
   text-transform: uppercase;
   text-decoration: none;
   font-size: 12px;
   display: block;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--main-text);
   padding: 8px 14px 8px 14px;
   cursor: pointer;
@@ -65,7 +65,7 @@
 }
 
 .item {
-  font-family: "Mono";
+  font-family: 'Mono';
   text-transform: uppercase;
   display: block;
   font-size: 12px;
@@ -93,7 +93,7 @@
 }
 
 .plain {
-  font-family: "Mono";
+  font-family: 'Mono';
   text-transform: uppercase;
   display: block;
   font-size: 12px;
