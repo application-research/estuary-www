@@ -26,37 +26,38 @@
 }
 
 .item {
-  margin-left: 32px;
+  margin-left: 24px;
   cursor: pointer;
   transition: 200ms ease all;
-  color: var(--main-text);
   text-decoration: none;
-  font-family: 'MonoMedium';
+  font-weight: 600;
   font-size: 14px;
-  text-transform: uppercase;
 
-  &:hover {
-    opacity: 0.7;
-  }
+  color: var(--main-text);
 
   &:visited {
     color: var(--main-text);
+  }
+
+  &:hover {
+    color: var(--main-primary);
   }
 }
 
 .logo {
-  cursor: pointer;
   transition: 200ms ease all;
-  color: var(--main-text);
+  transition-property: color, opacity;
   text-decoration: none;
-  font-weight: 400;
-
-  &:hover {
-    opacity: 0.7;
-  }
+  color: var(--main-text);
+  font-weight: 600;
+  font-size: 12px;
 
   &:visited {
     color: var(--main-text);
+  }
+
+  &:hover {
+    color: var(--main-primary);
   }
 }
 

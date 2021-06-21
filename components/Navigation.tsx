@@ -9,14 +9,14 @@ const Navigation = (props: any) => {
     <div className={styles.navigation}>
       <nav className={styles.container} style={props.style}>
         <div className={styles.left}>
-          <a className={styles.logo} href="/" style={{ fontSize: 32, lineHeight: 32 }}>
-            ↬
+          <a className={styles.logo} href="/">
+            Estuary
           </a>
         </div>
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
             <a href="/sign-up" className={styles.item}>
-              Use invite
+              Sign up
             </a>
           ) : null}
           {!props.isAuthenticated && props.active !== 'SIGN_IN' ? (
@@ -26,7 +26,7 @@ const Navigation = (props: any) => {
           ) : null}
           {props.isAuthenticated && props.active === 'INDEX' ? (
             <a href="/home" className={styles.item}>
-              Your files
+              Home
             </a>
           ) : null}
 
