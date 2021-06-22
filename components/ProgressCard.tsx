@@ -22,8 +22,13 @@ const ProgressCard = ({ deal, transfer, chain, marketing, contentId }) => {
     }
   }
 
-  if (deal && deal.failed && transfer.status === 6) {
-    message = 'FailAfterTransfer';
+  if (deal && deal.failed) {
+    message = 'Failed';
+
+    // NOTE(jim): status 6 is a successful deal transfer.
+    if (transfer.status === 6) {
+      message = 'FailedAfterTransfer';
+    }
   }
 
   let topStyle = { background: C.statusColors[Number(transfer.status)] };
