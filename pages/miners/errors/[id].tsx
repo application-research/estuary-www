@@ -35,16 +35,11 @@ function MinerErrorPage(props: any) {
     run();
   }, []);
 
+  const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
+
   return (
-    <Page
-      title="Estuary: Public: Miner: Errors"
-      description={`Errors for Miner: ${props.id}`}
-      url={`https://estuary.tech/miners/errors/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" />}
-        sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}
-      >
+    <Page title="Estuary: Public: Miner: Errors" description={`Errors for Miner: ${props.id}`} url={`https://estuary.tech/miners/errors/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} active="INDEX" />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>

@@ -11,10 +11,10 @@ import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import SingleColumnLayout from '@components/SingleColumnLayout';
+import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -57,28 +57,22 @@ function StagingPage(props) {
 
   console.log(props.viewer);
 
+  const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Staging"
-      description="Data before a Filecoin deal is made"
-      url="https://estuary.tech/staging"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="FILES" viewer={props.viewer} />}
-      >
-        <SingleColumnLayout>
+    <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url="https://estuary.tech/staging">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <PageHeader>
           <H2>Staging zone</H2>
-          <P style={{ marginTop: 8 }}>
-            When you upload data under the size of{' '}
-            {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged
-            here. After a few hours a storage deal will be made.
+          <P style={{ marginTop: 16 }}>
+            When you upload data under the size of {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged here. After a few hours a storage deal will
+            be made.
           </P>
 
           <div className={styles.actions}>
             <Button href="/upload">Upload data</Button>
           </div>
-        </SingleColumnLayout>
+        </PageHeader>
         <div className={styles.group}>
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>

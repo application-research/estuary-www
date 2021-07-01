@@ -15,7 +15,7 @@ import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -44,8 +44,7 @@ const onSubmit = async (event, state, setState) => {
 
   if (!U.isValidPassword(state.new)) {
     return {
-      error:
-        'Please provide a password thats at least 8 characters with at least one letter and one number',
+      error: 'Please provide a password thats at least 8 characters with at least one letter and one number',
     };
   }
 
@@ -83,28 +82,21 @@ const onSubmit = async (event, state, setState) => {
 function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
 
+  const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Settings: Account"
-      description="Update your settings for your account."
-      url="https://estuary.tech/settings"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="SETTINGS" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="https://estuary.tech/settings">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Settings</H2>
-          <P style={{ marginTop: 8 }}>Update your user settings.</P>
+          <P style={{ marginTop: 16 }}>Update your user settings.</P>
         </SingleColumnLayout>
 
         <SingleColumnLayout>
-          <H2>Change password</H2>
-          <P style={{ marginTop: 8 }}>
-            Please enter your old password and your new password to change your password.
-          </P>
+          <H3>Change password</H3>
+          <P style={{ marginTop: 16 }}>Please enter your old password and your new password to change your password.</P>
 
-          <H3 style={{ marginTop: 24 }}>New password</H3>
+          <H4 style={{ marginTop: 32 }}>New password</H4>
           <Input
             style={{ marginTop: 8 }}
             placeholder="Pick something memorable"
@@ -113,11 +105,9 @@ function SettingsPage(props: any) {
             type="password"
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
           />
-          <aside className={styles.formAside}>
-            Requirements: at least 8 characers, must use at least one letter and number.
-          </aside>
+          <aside className={styles.formAside}>Requirements: at least 8 characers, must use at least one letter and number.</aside>
 
-          <H3 style={{ marginTop: 24 }}>Confirm new password</H3>
+          <H4 style={{ marginTop: 24 }}>Confirm new password</H4>
           <Input
             style={{ marginTop: 8 }}
             placeholder="Pick something memorable"

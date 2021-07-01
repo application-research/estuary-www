@@ -113,8 +113,8 @@ img {
 
 html,
 body {
-  --main-background: #e7e7e7;
-  --main-background-foreground: #d7d7d7;
+  --main-background: rgba(246, 246, 246, 1);
+  --main-background-foreground: rgba(240, 240, 240, 1);
   --main-background-input: #ffffff;
 
   --main-background-table: rgba(0, 0, 0, 0.04);
@@ -130,10 +130,10 @@ body {
   --main-border-input: rgba(0, 0, 0, 0.4);
   --main-border: rgba(0, 0, 0, 0.2);
 
-  --main-button-background: #171414;
+  --main-button-background: var(--main-primary);
   --main-button-text: #ffffff;
-  --main-button-background-secondary: #ffffff;
-  --main-button-text-secondary: #171414;
+  --main-button-background-secondary: rgba(0, 0, 0, 1);
+  --main-button-text-secondary: #ffffff;
 
   --status-0: #387bf9;
   --status-1: #387bf9;
@@ -178,9 +178,5 @@ body {
 
   @media (max-width: 1024px) {
     font-size: 14px;
-  }
-
-  @media (max-width: 960px) {
-    font-size: 12px;
   }
 }

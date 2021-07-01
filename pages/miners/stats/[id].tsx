@@ -12,7 +12,7 @@ import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Block from '@components/Block';
 
-import { H1, H2, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -45,9 +45,7 @@ function MinerStatsPage(props: any) {
       const response = await R.get(`/public/miners/stats/${props.id}`);
       let iex;
       try {
-        const iexResponse = await fetch(
-          'https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d'
-        );
+        const iexResponse = await fetch('https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d');
         iex = await iexResponse.json();
       } catch (e) {
         console.log(e);
@@ -69,27 +67,21 @@ function MinerStatsPage(props: any) {
 
   console.log('state', state);
 
+  const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
+
   return (
-    <Page
-      title={`Estuary: Public: Miner: ${props.id}`}
-      description={`Stats for Miner: ${props.id}`}
-      url={`https://estuary.tech/miners/stats/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" />}
-        sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}
-      >
+    <Page title={`Estuary: Public: Miner: ${props.id}`} description={`Stats for Miner: ${props.id}`} url={`https://estuary.tech/miners/stats/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {state.loading > 1 ? (
           <SingleColumnLayout>
             <H2>
               {props.id} {U.isEmpty(state.name) ? null : `— ${state.name}`}
             </H2>
             {state.usedByEstuary ? (
-              <P style={{ marginTop: 8, marginBottom: 24 }}>This miner is used by Estuary.</P>
+              <P style={{ marginTop: 16, marginBottom: 24 }}>This miner is used by Estuary.</P>
             ) : (
-              <P style={{ marginTop: 8, marginBottom: 24 }}>
-                This miner is not used by Estuary, therefore we do not make storage deals against
-                this miner. An admin of Estuary can add this miner in the future.
+              <P style={{ marginTop: 16, marginBottom: 24 }}>
+                This miner is not used by Estuary, therefore we do not make storage deals against this miner. An admin of Estuary can add this miner in the future.
               </P>
             )}
 

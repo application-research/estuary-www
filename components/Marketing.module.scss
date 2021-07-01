@@ -24,7 +24,7 @@
   width: 100%;
   max-width: 100%;
   margin-top: 24px;
-  background: #fff;
+  background: var(--main-background-foreground);
   padding: 24px;
 }
 
@@ -41,7 +41,7 @@
   margin-top: 24px;
   display: flex;
   justify-content: space-between;
-  font-family: "Mono";
+  font-family: 'Mono';
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1px;

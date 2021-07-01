@@ -11,11 +11,12 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import PageHeader from '@components/PageHeader';
 import Block from '@components/Block';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -56,31 +57,40 @@ function AdminInvitesPage(props: any) {
     run();
   }, []);
 
-  return (
-    <Page
-      title="Estuary: Admin: Invite"
-      description="Create invite keys for new users."
-      url="https://estuary.tech/admin/invite"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_INVITES" viewer={props.viewer} />}
-      >
-        <div className={styles.group}>
-          <SingleColumnLayout>
-            <H2>Create Invite</H2>
-            <P style={{ marginTop: 8 }}>
-              You can create a single use key with any string that you like.
-            </P>
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_INVITES" viewer={props.viewer} />;
 
-            <H3 style={{ marginTop: 24 }}>Invite key</H3>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="Pick something memorable"
-              value={state.key}
-              name="key"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-              onSubmit={async () => {
+  return (
+    <Page title="Estuary: Admin: Invite" description="Create invite keys for new users." url="https://estuary.tech/admin/invite">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <PageHeader>
+          <H2>Create Invite</H2>
+          <P style={{ marginTop: 16 }}>You can create a single use key with any string that you like.</P>
+
+          <H4 style={{ marginTop: 32 }}>Invite key</H4>
+          <Input
+            style={{ marginTop: 8 }}
+            placeholder="Pick something memorable"
+            value={state.key}
+            name="key"
+            onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+            onSubmit={async () => {
+              setState({ ...state, loading: true });
+              await R.post(`/admin/invite/${state.key}`, {});
+              const response = await R.get('/admin/invites');
+              console.log(response);
+              setState({
+                ...state,
+                loading: false,
+                key: '',
+                invites: response && response.length ? response : [],
+              });
+            }}
+          />
+
+          <div className={styles.actions}>
+            <Button
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
                 setState({ ...state, loading: true });
                 await R.post(`/admin/invite/${state.key}`, {});
                 const response = await R.get('/admin/invites');
@@ -92,29 +102,12 @@ function AdminInvitesPage(props: any) {
                   invites: response && response.length ? response : [],
                 });
               }}
-            />
-
-            <div className={styles.actions}>
-              <Button
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  setState({ ...state, loading: true });
-                  await R.post(`/admin/invite/${state.key}`, {});
-                  const response = await R.get('/admin/invites');
-                  console.log(response);
-                  setState({
-                    ...state,
-                    loading: false,
-                    key: '',
-                    invites: response && response.length ? response : [],
-                  });
-                }}
-              >
-                Create invite
-              </Button>
-            </div>
-          </SingleColumnLayout>
-
+            >
+              Create invite
+            </Button>
+          </div>
+        </PageHeader>
+        <div className={styles.group}>
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>

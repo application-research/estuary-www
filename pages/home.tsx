@@ -12,9 +12,10 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import SingleColumnLayout from '@components/SingleColumnLayout';
+import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,35 +35,67 @@ export async function getServerSideProps(context) {
 }
 
 function HomePage(props: any) {
-  const [state, setState] = React.useState({ files: null });
+  const [state, setState] = React.useState({ files: null, stats: null });
 
   React.useEffect(() => {
     const run = async () => {
       const files = await R.get('/content/stats');
-      console.log(files);
+      const stats = await R.get('/user/stats');
 
-      if (!files || files.error) {
-        return;
+      if (files && !files.error) {
+        setState({ files, stats });
       }
-
-      setState({ files });
     };
 
     run();
   }, []);
 
   console.log(props.viewer);
+  console.log(state);
+
+  const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
 
   return (
-    <Page
-      title="Estuary: Home"
-      description="Analytics about Filecoin and your data."
-      url="https://estuary.tech/home"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="FILES" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Home" description="Analytics about Filecoin and your data." url="https://estuary.tech/home">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        {state.files && !state.files.length ? (
+          <PageHeader>
+            <H2>Upload public data</H2>
+            <P style={{ marginTop: 16 }}>
+              Uploading your public data to IPFS and backing it up on Filecoin is easy. <br />
+              <br />
+              Lets get started!
+            </P>
+
+            <div className={styles.actions}>
+              <Button href="/upload">Upload your first file</Button>
+            </div>
+          </PageHeader>
+        ) : (
+          <PageHeader>
+            <H2>Files</H2>
+          </PageHeader>
+        )}
+
+        {state.stats ? (
+          <div className={styles.group}>
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Total size bytes</th>
+                  <th className={tstyles.th}>Total size</th>
+                  <th className={tstyles.th}>Total number of pins</th>
+                </tr>
+                <tr className={tstyles.tr}>
+                  <td className={tstyles.td}>{state.stats.totalSize}</td>
+                  <td className={tstyles.td}>{U.bytesToSize(state.stats.totalSize)}</td>
+                  <td className={tstyles.td}>{state.stats.numPins}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ) : null}
+
         <div className={styles.group}>
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
@@ -103,21 +136,6 @@ function HomePage(props: any) {
             </tbody>
           </table>
         </div>
-
-        {state.files && !state.files.length ? (
-          <SingleColumnLayout>
-            <H2>Upload public data</H2>
-            <P style={{ marginTop: 8 }}>
-              Uploading your public data to IPFS and backing it up on Filecoin is easy. <br />
-              <br />
-              Lets get started!
-            </P>
-
-            <div className={styles.actions}>
-              <Button href="/upload">Upload your first file</Button>
-            </div>
-          </SingleColumnLayout>
-        ) : null}
       </AuthenticatedLayout>
     </Page>
   );

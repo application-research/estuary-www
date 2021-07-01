@@ -44,16 +44,11 @@ function DealErrorPage(props: any) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Deals: Errors"
-      description={`Errors for deal ID: ${props.id}`}
-      url={`https://estuary.tech/errors/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="INDEX" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Deals: Errors" description={`Errors for deal ID: ${props.id}`} url={`https://estuary.tech/errors/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>

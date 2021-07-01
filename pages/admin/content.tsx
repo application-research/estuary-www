@@ -9,13 +9,13 @@ import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import SingleColumnLayout from '@components/SingleColumnLayout';
+import PageHeader from '@components/PageHeader';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import Block from '@components/Block';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -61,16 +61,16 @@ function AdminContentPage(props: any) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Content"
-      description="Manage the content on Estuary"
-      url="https://estuary.tech/admin/content"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Content" description="Manage the content on Estuary" url="https://estuary.tech/admin/content">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <PageHeader>
+          <H2>Content</H2>
+          <P style={{ marginTop: 16 }}>All of the pinned data on this Estuary node.</P>
+        </PageHeader>
+
         <div className={styles.group}>
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
@@ -79,9 +79,6 @@ function AdminContentPage(props: any) {
                   name
                 </th>
                 <th className={tstyles.th}>cid</th>
-                <th className={tstyles.th} style={{ width: '128px' }}>
-                  active
-                </th>
                 <th className={tstyles.th} style={{ width: '128px' }}>
                   replication
                 </th>
@@ -103,7 +100,6 @@ function AdminContentPage(props: any) {
                             {fileURL}
                           </a>
                         </td>
-                        <td className={tstyles.td}>{String(data.active)}</td>
                         <td className={tstyles.td}>{data.replication} times</td>
                         <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
                         {!props.offloaded ? (
@@ -111,9 +107,7 @@ function AdminContentPage(props: any) {
                             <button
                               className={tstyles.tdbutton}
                               onClick={async () => {
-                                const confirm = window.confirm(
-                                  'Are you sure you want to delete this data?'
-                                );
+                                const confirm = window.confirm('Are you sure you want to delete this data?');
 
                                 if (!confirm) {
                                   return;

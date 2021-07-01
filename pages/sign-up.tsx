@@ -12,7 +12,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -38,8 +38,7 @@ async function handleRegister(state: any) {
 
   if (!U.isValidPassword(state.password)) {
     return {
-      error:
-        'Please provide a password thats at least 8 characters with at least one letter and one number',
+      error: 'Please provide a password thats at least 8 characters with at least one letter and one number',
     };
   }
 
@@ -53,8 +52,7 @@ async function handleRegister(state: any) {
 
   if (!U.isValidUsername(state.username)) {
     return {
-      error:
-        'Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.',
+      error: 'Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.',
     };
   }
 
@@ -110,19 +108,13 @@ function SignUpPage(props: any) {
   }, []);
 
   return (
-    <Page
-      title="Estuary: Sign up"
-      description="Create an account on Estuary with an invite key."
-      url="https://estuary.tech/sign-up"
-    >
+    <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url="https://estuary.tech/sign-up">
       <Navigation active="SIGN_UP" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign up</H2>
-        <P style={{ marginTop: 8 }}>
-          You can create an account to use Estuary if you have an invite key.
-        </P>
+        <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P>
 
-        <H3 style={{ marginTop: 24 }}>Username</H3>
+        <H4 style={{ marginTop: 32 }}>Username</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Type in your desired username"
@@ -131,11 +123,9 @@ function SignUpPage(props: any) {
           value={state.username}
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
         />
-        <aside className={styles.formAside}>
-          Requirements: 1-32 characters or digits, no symbols allowed
-        </aside>
+        <aside className={styles.formAside}>Requirements: 1-32 characters or digits, no symbols allowed</aside>
 
-        <H3 style={{ marginTop: 24 }}>Password</H3>
+        <H4 style={{ marginTop: 24 }}>Password</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Type in your password"
@@ -144,11 +134,9 @@ function SignUpPage(props: any) {
           name="password"
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
-        <aside className={styles.formAside}>
-          Requirements: at least 8 characters, must use at least one letter and number.
-        </aside>
+        <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
 
-        <H3 style={{ marginTop: 24 }}>Invite code</H3>
+        <H4 style={{ marginTop: 24 }}>Invite code</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Provide your invite code"

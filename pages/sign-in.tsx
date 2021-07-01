@@ -13,7 +13,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -117,20 +117,13 @@ function SignInPage(props: any) {
   const [state, setState] = React.useState({ loading: false, username: '', password: '' });
 
   return (
-    <Page
-      title="Estuary: Sign in"
-      description="Sign in to your Estuary account."
-      url="https://estuary.tech/sign-in"
-    >
+    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url="https://estuary.tech/sign-in">
       <Navigation active="SIGN_IN" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>
-        <P style={{ marginTop: 8 }}>
-          If you have created an account with Estuary before, you can use your username and password
-          to sign in.
-        </P>
+        <P style={{ marginTop: 16 }}>If you have created an account with Estuary before, you can use your username and password to sign in.</P>
 
-        <H3 style={{ marginTop: 24 }}>Username</H3>
+        <H4 style={{ marginTop: 32 }}>Username</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Your account's username"
@@ -139,7 +132,7 @@ function SignInPage(props: any) {
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
 
-        <H3 style={{ marginTop: 24 }}>Password</H3>
+        <H4 style={{ marginTop: 24 }}>Password</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Your account's password"

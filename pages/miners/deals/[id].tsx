@@ -37,16 +37,11 @@ function MinerDealsPage(props: any) {
     run();
   }, []);
 
+  const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
+
   return (
-    <Page
-      title="Estuary: Public: Miner: Deals"
-      description={`Deals for Miner: ${props.id}`}
-      url={`https://estuary.tech/miners/deals/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" />}
-        sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}
-      >
+    <Page title="Estuary: Public: Miner: Deals" description={`Deals for Miner: ${props.id}`} url={`https://estuary.tech/miners/deals/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
@@ -81,9 +76,7 @@ function MinerDealsPage(props: any) {
                         </a>
                       </td>
                       <td className={tstyles.td}>{log.content}</td>
-                      <td className={tstyles.td}>
-                        {log.failed ? '--' : log.dealId > 0 ? log.dealId : 'in-progress'}
-                      </td>
+                      <td className={tstyles.td}>{log.failed ? '--' : log.dealId > 0 ? log.dealId : 'in-progress'}</td>
                       <td className={tstyles.td}>{log.propCid}</td>
                       <td className={tstyles.td}>{log.dtChan}</td>
                     </tr>

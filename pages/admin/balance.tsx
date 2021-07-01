@@ -14,7 +14,7 @@ import Block from '@components/Block';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 const sendEscrow = async (state, setState) => {
   setState({ ...state, loading: true });
@@ -92,21 +92,14 @@ function AdminBalancePage(props) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_BALANCE" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Manage Balance"
-      description="The balance remaining in the Estuary node for Filecoin deals."
-      url="https://estuary.tech/admin/balance"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_BALANCE" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Manage Balance" description="The balance remaining in the Estuary node for Filecoin deals." url="https://estuary.tech/admin/balance">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Manage Balance</H2>
-          <P style={{ marginTop: 8 }}>
-            Your Filecoin address. None of the funds here are used for storage or retrieval deals.
-          </P>
+          <P style={{ marginTop: 16 }}>Your Filecoin address. None of the funds here are used for storage or retrieval deals.</P>
 
           <Block style={{ marginTop: 24 }} label="Account address (BLS)">
             {state.account}
@@ -118,15 +111,13 @@ function AdminBalancePage(props) {
             {U.bytesToSize(state.verifiedClientBalance)}
           </Block>
 
-          <H2 style={{ marginTop: 56 }}>Move Filecoin into Estuary Escrow</H2>
-          <P style={{ marginTop: 8 }}>
-            Enter the amount of Filecoin you would like to move into Estuary Escrow for Filecoin
-            storage and retrieval deals.
-          </P>
+          <H3 style={{ marginTop: 56 }}>Move Filecoin into Estuary Escrow</H3>
+          <P style={{ marginTop: 16 }}>Enter the amount of Filecoin you would like to move into Estuary Escrow for Filecoin storage and retrieval deals.</P>
 
+          <H4 style={{ marginTop: 24 }}>Filecoin amount</H4>
           <Input
             style={{ marginTop: 8 }}
-            placeholder="Filecoin amount"
+            placeholder="ex: 0.2"
             name="amount"
             type="number"
             value={state.amount}
@@ -135,19 +126,13 @@ function AdminBalancePage(props) {
           />
 
           <div className={styles.actions}>
-            <Button
-              loading={state.loading ? state.loading : undefined}
-              onClick={() => sendEscrow(state, setState)}
-            >
+            <Button loading={state.loading ? state.loading : undefined} onClick={() => sendEscrow(state, setState)}>
               Move amount
             </Button>
           </div>
 
-          <H2 style={{ marginTop: 56 }}>Estuary Escrow</H2>
-          <P style={{ marginTop: 8 }}>
-            The Escrow available is the amount of Filecoin you have available to make storage deals
-            and retrieval deals on the Filecoin Network.
-          </P>
+          <H3 style={{ marginTop: 56 }}>Estuary Escrow</H3>
+          <P style={{ marginTop: 16 }}>The Escrow available is the amount of Filecoin you have available to make storage deals and retrieval deals on the Filecoin Network.</P>
 
           <Block style={{ marginTop: 24 }} label="Escrow available">
             {U.inFIL(state.marketAvailable)}

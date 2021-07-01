@@ -16,7 +16,7 @@ import ProgressBlock from '@components/ProgressBlock';
 import Block from '@components/Block';
 import ActionRow from '@components/ActionRow';
 
-import { H1, H2, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -105,10 +105,7 @@ export default class UploadPage extends React.Component<any> {
       endStateElement = (
         <React.Fragment>
           <H2 style={{ marginTop: 48 }}>Success</H2>
-          <P style={{ marginTop: 8 }}>
-            Your data has been uploaded. Estuary will now make Filecoin Storage Deals on your behalf
-            to ensure proper storage.
-          </P>
+          <P style={{ marginTop: 16 }}>Your data has been uploaded. Estuary will now make Filecoin Storage Deals on your behalf to ensure proper storage.</P>
 
           <Block
             style={{ marginTop: 24 }}
@@ -129,9 +126,8 @@ export default class UploadPage extends React.Component<any> {
         endStateElement = (
           <React.Fragment>
             <H2 style={{ marginTop: 48 }}>Added to staging</H2>
-            <P style={{ marginTop: 8 }}>
-              Your data has been uploaded. In a few hours deals will be made for all files you have
-              uploaded under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}.
+            <P style={{ marginTop: 16 }}>
+              Your data has been uploaded. In a few hours deals will be made for all files you have uploaded under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}.
             </P>
 
             <Block
@@ -149,22 +145,16 @@ export default class UploadPage extends React.Component<any> {
       }
     }
 
+    const sidebarElement = <AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />;
+
     return (
-      <Page
-        title="Estuary: Upload data"
-        description="Upload your data to the Filecoin Network."
-        url="https://estuary.tech/upload"
-      >
-        <AuthenticatedLayout
-          navigation={<Navigation isAuthenticated />}
-          sidebar={<AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />}
-        >
+      <Page title="Estuary: Upload data" description="Upload your data to the Filecoin Network." url="https://estuary.tech/upload">
+        <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <SingleColumnLayout>
             <H2>Upload data</H2>
-            <P style={{ marginTop: 8 }}>
-              Add your public data to Estuary so anyone can retrieve it anytime. If you upload any
-              files under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}, we will
-              aggregate your files into a single deal.
+            <P style={{ marginTop: 16 }}>
+              Add your public data to Estuary so anyone can retrieve it anytime. If you upload any files under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}, we
+              will aggregate your files into a single deal.
             </P>
 
             <UploadFileContainer

@@ -47,16 +47,11 @@ function ProposalPage(props: any) {
     fileURL = `https://dweb.link/ipfs/${state.deal.Label}`;
   }
 
+  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+
   return (
-    <Page
-      title={`Estuary: Proposal: CID: ${props.cid}`}
-      description={`Proposals for proposal (prop) cid: ${props.cid}`}
-      url={`https://estuary.tech/proposals/${props.cid}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="PROPOSAL_BY_CID" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
-      >
+    <Page title={`Estuary: Proposal: CID: ${props.cid}`} description={`Proposals for proposal (prop) cid: ${props.cid}`} url={`https://estuary.tech/proposals/${props.cid}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="PROPOSAL_BY_CID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>
             <table className={tstyles.table}>
@@ -198,12 +193,7 @@ function ProposalPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>
-                    {U.inFIL(
-                      state.deal.StoragePricePerEpoch *
-                        (state.deal.EndEpoch - state.deal.StartEpoch)
-                    )}
-                  </td>
+                  <td className={tstyles.td}>{U.inFIL(state.deal.StoragePricePerEpoch * (state.deal.EndEpoch - state.deal.StartEpoch))}</td>
                 </tr>
               </tbody>
             </table>

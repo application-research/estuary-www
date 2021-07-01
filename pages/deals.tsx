@@ -10,12 +10,12 @@ import ProgressCard from '@components/ProgressCard';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import LoaderSpinner from '@components/LoaderSpinner';
-import SingleColumnLayout from '@components/SingleColumnLayout';
+import PageHeader from '@components/PageHeader';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -42,15 +42,18 @@ const ContentDeal = (props: any) => (
     chain={props.data.onChainState}
     transfer={props.data.transfer}
     marketing={false}
+    showFailures={props.showFailures}
   />
 );
 
 export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
-  const [state, setState] = React.useState({ showFiles: false });
+  const [state, setState] = React.useState({ showFiles: false, showFailures: false });
 
   let dealElements =
     deals && deals.length ? (
-      deals.map((d, index) => <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} />)
+      deals.map((d, index) => {
+        return <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} showFailures={state.showFailures} />;
+      })
     ) : (
       <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
     );
@@ -102,15 +105,17 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
       </table>
       {root && root.aggregatedFiles > 1 ? (
         <div className={styles.titleSection}>
-          This deal has {root.aggregatedFiles} additional{' '}
-          {U.pluralize('file', root.aggregatedFiles)}
+          This deal has {root.aggregatedFiles} additional {U.pluralize('file', root.aggregatedFiles)}
         </div>
       ) : null}
       <div className={styles.titleSection}>
         {dealElements.length} Storage provider {U.pluralize('deal', dealElements.length)}{' '}
         <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
-        </a>
+        </a>{' '}
+        <span style={{ color: `var(--main-text)`, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setState({ ...state, showFailures: !state.showFailures })}>
+          (show failures)
+        </span>
       </div>
       <div className={styles.deals}>{dealElements}</div>
     </div>
@@ -152,31 +157,21 @@ export default class Dashboard extends React.Component<any> {
   }
 
   render() {
-    const statusElements = this.state.entities.length
-      ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />)
-      : null;
+    const statusElements = this.state.entities.length ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />) : null;
+
+    const sidebarElement = <AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />;
 
     return (
-      <Page
-        title="Estuary: Deals"
-        description="Check the status of your Filecoin storage deals"
-        url="https://estuary.tech/deals"
-      >
-        <AuthenticatedLayout
-          navigation={<Navigation isAuthenticated />}
-          sidebar={<AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />}
-        >
-          <SingleColumnLayout>
+      <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url="https://estuary.tech/deals">
+        <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+          <PageHeader>
             <H2>Deals</H2>
-            <P style={{ marginTop: 8 }}>
-              All of your Filecoin deals and logs will appear here. Deals are automated and made on
-              your behalf.
-            </P>
+            <P style={{ marginTop: 16 }}>All of your Filecoin deals and logs will appear here. Deals are automated and made on your behalf.</P>
 
             <div className={styles.actions}>
               <Button href="/upload">Upload data</Button>
             </div>
-          </SingleColumnLayout>
+          </PageHeader>
           <div>{statusElements}</div>
         </AuthenticatedLayout>
       </Page>

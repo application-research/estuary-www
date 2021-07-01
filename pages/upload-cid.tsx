@@ -16,7 +16,7 @@ import Block from '@components/Block';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -43,27 +43,21 @@ function UploadCIDPage(props: any) {
     cid: '',
   });
 
+  const sidebarElement = <AuthenticatedSidebar active="UPLOAD_CID" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Upload: CID"
-      description="Use an existing IPFS CID to make storage deals."
-      url="https://estuary.tech/upload-cid"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="UPLOAD_CID" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Upload: CID" description="Use an existing IPFS CID to make storage deals." url="https://estuary.tech/upload-cid">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {!state.success ? (
           <div className={styles.group}>
             <SingleColumnLayout>
               <H2>Upload CID</H2>
-              <P style={{ marginTop: 8 }}>
-                Use an existing IPFS content address to make Filecoin storage deals. If you use any
-                CID under {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, we will
+              <P style={{ marginTop: 16 }}>
+                Use an existing IPFS content address to make Filecoin storage deals. If you use any CID under {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, we will
                 aggregate your files into a single deal.
               </P>
 
-              <H3 style={{ marginTop: 24 }}>CID</H3>
+              <H4 style={{ marginTop: 32 }}>CID</H4>
               <Input
                 style={{ marginTop: 8 }}
                 placeholder="Type or paste your CID"
@@ -81,7 +75,7 @@ function UploadCIDPage(props: any) {
                 </aside>
               )}
 
-              <H3 style={{ marginTop: 24 }}>New filename (optional)</H3>
+              <H4 style={{ marginTop: 24 }}>New filename (optional)</H4>
               <Input
                 style={{ marginTop: 8 }}
                 placeholder="Type in a new filename"
@@ -109,20 +103,13 @@ function UploadCIDPage(props: any) {
                 }}
               />
 
-              <H3 style={{ marginTop: 24 }}>Default deal settings</H3>
+              <H4 style={{ marginTop: 24 }}>Default deal settings</H4>
               <div style={{ maxWidth: '568px' }}>
-                <ActionRow style={{ marginTop: 12 }}>
-                  Replicated across {props.viewer.settings.replication} miners.
-                </ActionRow>
+                <ActionRow style={{ marginTop: 12 }}>Replicated across {props.viewer.settings.replication} miners.</ActionRow>
                 <ActionRow>
-                  Stored for {props.viewer.settings.dealDuration} filecoin-epochs (
-                  {((props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
+                  Stored for {props.viewer.settings.dealDuration} filecoin-epochs ({((props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
                 </ActionRow>
-                {props.viewer.settings.verified ? (
-                  <ActionRow>This deal is verified.</ActionRow>
-                ) : (
-                  <ActionRow>This deal is not verified.</ActionRow>
-                )}
+                {props.viewer.settings.verified ? <ActionRow>This deal is verified.</ActionRow> : <ActionRow>This deal is not verified.</ActionRow>}
               </div>
 
               <div className={styles.actions}>
@@ -149,7 +136,7 @@ function UploadCIDPage(props: any) {
                     setState({ ...state, loading: false, filename: '', cid: '', success: true });
                   }}
                 >
-                  Make Filecoin deals
+                  Make Filecoin deal
                 </Button>
 
                 <Button
@@ -169,9 +156,7 @@ function UploadCIDPage(props: any) {
           <div className={styles.group}>
             <SingleColumnLayout>
               <H2>Success</H2>
-              <P style={{ marginTop: 8 }}>
-                The content address will now be stored on the Filecoin Network shortly.
-              </P>
+              <P style={{ marginTop: 16 }}>The content address will now be stored on the Filecoin Network shortly.</P>
 
               <div className={styles.actions}>
                 <Button

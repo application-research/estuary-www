@@ -12,7 +12,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import Block from '@components/Block';
 
-import { H1, H2, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -60,19 +60,14 @@ function AdminStatsPage(props) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_STATS" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Stats"
-      description="Estuary node performance and behavior."
-      url="https://estuary.tech/stats"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_STATS" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="https://estuary.tech/stats">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Stats</H2>
-          <P style={{ marginTop: 8 }}>Statistics around your Estuary node usage.</P>
+          <P style={{ marginTop: 16 }}>Statistics around your Estuary node usage.</P>
 
           {state.bstoreFree ? (
             <React.Fragment>

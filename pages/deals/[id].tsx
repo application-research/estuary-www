@@ -47,16 +47,11 @@ function DealPage(props: any) {
     fileURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
   }
 
+  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+
   return (
-    <Page
-      title={`Estuary: Deal: ${props.id}`}
-      description={`Deal status and transfer information`}
-      url={`https://estuary.tech/deals/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="DEAL_BY_ID" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
-      >
+    <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`https://estuary.tech/deals/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="DEAL_BY_ID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>
             <table className={tstyles.table}>
@@ -245,10 +240,8 @@ function DealPage(props: any) {
 
                     <tr className={tstyles.tr}>
                       <td className={tstyles.td}>
-                        {state.onChainState.sectorStartEpoch > 0
-                          ? U.toDateSinceEpoch(state.onChainState.sectorStartEpoch)
-                          : state.onChainState.sectorStartEpoch}{' '}
-                        ({state.onChainState.sectorStartEpoch})
+                        {state.onChainState.sectorStartEpoch > 0 ? U.toDateSinceEpoch(state.onChainState.sectorStartEpoch) : state.onChainState.sectorStartEpoch} (
+                        {state.onChainState.sectorStartEpoch})
                       </td>
                     </tr>
                   </tbody>
@@ -262,9 +255,7 @@ function DealPage(props: any) {
 
                     <tr className={tstyles.tr}>
                       <td className={tstyles.td}>
-                        {state.onChainState.lastUpdatedEpoch > 0
-                          ? U.toDateSinceEpoch(state.onChainState.lastUpdatedEpoch)
-                          : state.onChainState.lastUpdatedEpoch}
+                        {state.onChainState.lastUpdatedEpoch > 0 ? U.toDateSinceEpoch(state.onChainState.lastUpdatedEpoch) : state.onChainState.lastUpdatedEpoch}
                       </td>
                     </tr>
                   </tbody>
@@ -277,11 +268,7 @@ function DealPage(props: any) {
                     </tr>
 
                     <tr className={tstyles.tr}>
-                      <td className={tstyles.td}>
-                        {state.onChainState.slashEpoch > 0
-                          ? U.toDateSinceEpoch(state.onChainState.slashEpoch)
-                          : state.onChainState.slashEpoch}
-                      </td>
+                      <td className={tstyles.td}>{state.onChainState.slashEpoch > 0 ? U.toDateSinceEpoch(state.onChainState.slashEpoch) : state.onChainState.slashEpoch}</td>
                     </tr>
                   </tbody>
                 </table>

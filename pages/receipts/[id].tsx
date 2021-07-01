@@ -47,16 +47,11 @@ function ReceiptPage(props) {
     fileURL = `https://dweb.link/ipfs/${state.deal.Label}`;
   }
 
+  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+
   return (
-    <Page
-      title={`Estuary: Receipts: ID: ${props.id}`}
-      description={`Receipt for deal ID: ${props.id}`}
-      url={`https://estuary.tech/receipts/${props.id}`}
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="DEAL_BY_ID" />}
-        sidebar={<AuthenticatedSidebar viewer={props.viewer} />}
-      >
+    <Page title={`Estuary: Receipts: ID: ${props.id}`} description={`Receipt for deal ID: ${props.id}`} url={`https://estuary.tech/receipts/${props.id}`}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="DEAL_BY_ID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>
             <table className={tstyles.table}>
@@ -95,8 +90,7 @@ function ReceiptPage(props) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.td}>
-                    {U.toDateSinceEpoch(state.deal.SectorStartEpoch)} ({state.deal.SectorStartEpoch}
-                    )
+                    {U.toDateSinceEpoch(state.deal.SectorStartEpoch)} ({state.deal.SectorStartEpoch})
                   </td>
                 </tr>
               </tbody>
@@ -211,12 +205,7 @@ function ReceiptPage(props) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>
-                    {U.inFIL(
-                      state.deal.StoragePricePerEpoch *
-                        (state.deal.EndEpoch - state.deal.SectorStartEpoch)
-                    )}
-                  </td>
+                  <td className={tstyles.td}>{U.inFIL(state.deal.StoragePricePerEpoch * (state.deal.EndEpoch - state.deal.SectorStartEpoch))}</td>
                 </tr>
               </tbody>
             </table>

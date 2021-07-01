@@ -11,8 +11,9 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import PageHeader from '@components/PageHeader';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -56,16 +57,15 @@ function AdminUsersPage(props) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_USERS" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Users"
-      description="All the users using this Estuary node."
-      url="https://estuary.tech/admin/users"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_USERS" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Users" description="All the users using this Estuary node." url="https://estuary.tech/admin/users">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <PageHeader>
+          <H2>Users</H2>
+          <P style={{ marginTop: 16 }}>All of the managed users for this Estuary node.</P>
+        </PageHeader>
         <div className={styles.group}>
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>

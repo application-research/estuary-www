@@ -193,7 +193,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
   render() {
     const backgrounds = {
-      2: '#fff',
+      2: 'var(--main-background-foreground)',
       3: 'var(--main-text)',
       4: 'var(--main-text)',
     };
@@ -223,11 +223,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
     let cta = (
       <div className={styles.actions}>
-        <Button
-          htmlFor="FILE_UPLOAD_TARGET"
-          type="file"
-          style={{ marginRight: 24, marginBottom: 24 }}
-        >
+        <Button htmlFor="FILE_UPLOAD_TARGET" type="file" style={{ marginRight: 24, marginBottom: 24 }}>
           Upload a file
         </Button>
 
@@ -306,26 +302,15 @@ export default class UploadFileContainer extends React.Component<any> {
           <React.Fragment>
             {this.state.data.estimate ? (
               <ActionRow>
-                Will cost {U.convertFIL(this.state.data.estimate)} FIL ⇄{' '}
-                {(
-                  Number(U.convertFIL(this.state.data.estimate)) * Number(this.state.data.price)
-                ).toFixed(2)}{' '}
-                USD
+                Will cost {U.convertFIL(this.state.data.estimate)} FIL ⇄ {(Number(U.convertFIL(this.state.data.estimate)) * Number(this.state.data.price)).toFixed(2)} USD
               </ActionRow>
             ) : null}
             <ActionRow>{U.bytesToSize(this.state.data.file.size)}</ActionRow>
+            <ActionRow>Replicated across {this.props.viewer.settings.replication} miners.</ActionRow>
             <ActionRow>
-              Replicated across {this.props.viewer.settings.replication} miners.
+              Stored for {this.props.viewer.settings.dealDuration} filecoin-epochs ({((this.props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
             </ActionRow>
-            <ActionRow>
-              Stored for {this.props.viewer.settings.dealDuration} filecoin-epochs (
-              {((this.props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
-            </ActionRow>
-            {this.props.viewer.settings.verified ? (
-              <ActionRow>This deal is verified.</ActionRow>
-            ) : (
-              <ActionRow>This deal is not verified.</ActionRow>
-            )}
+            {this.props.viewer.settings.verified ? <ActionRow>This deal is verified.</ActionRow> : <ActionRow>This deal is not verified.</ActionRow>}
           </React.Fragment>
         ) : null}
 
@@ -333,12 +318,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
         {cta}
 
-        <input
-          className={styles.invisible}
-          onChange={this.handleSelectFile}
-          type="file"
-          id="FILE_UPLOAD_TARGET"
-        />
+        <input className={styles.invisible} onChange={this.handleSelectFile} type="file" id="FILE_UPLOAD_TARGET" />
       </React.Fragment>
     );
   }

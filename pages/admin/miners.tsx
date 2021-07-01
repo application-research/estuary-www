@@ -16,7 +16,7 @@ import Input from '@components/Input';
 import Button from '@components/Button';
 import MinerTable from '@components/MinerTable';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -83,33 +83,19 @@ function AdminMinersPage(props) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Add miner"
-      description="Add a miner to make Filecoin storage deals with"
-      url="https://estuary.tech/admin/miners"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Add miner" description="Add a miner to make Filecoin storage deals with" url="https://estuary.tech/admin/miners">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <div className={styles.group}>
           <div className={styles.grid}>
             <GridSection>
               <H2>Manage miners</H2>
-              <P style={{ marginTop: 8 }}>
-                Add, remove or reinstate any miner you would like to make deals with using Estuary's
-                escrow.
-              </P>
+              <P style={{ marginTop: 16 }}>Add, remove or reinstate any miner you would like to make deals with using Estuary's escrow.</P>
 
-              <H3 style={{ marginTop: 24 }}>Add Miner by ID</H3>
-              <Input
-                style={{ marginTop: 8 }}
-                placeholder="ex: f0100"
-                value={state.miner}
-                name="miner"
-                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-              />
+              <H4 style={{ marginTop: 32 }}>Add Miner by ID</H4>
+              <Input style={{ marginTop: 8 }} placeholder="ex: f0100" value={state.miner} name="miner" onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })} />
 
               <div className={styles.actions}>
                 <Button
@@ -176,12 +162,9 @@ function AdminMinersPage(props) {
 
             <GridSection>
               <H2>Suspend miner</H2>
-              <P style={{ marginTop: 8 }}>
-                You can suspend a miner. Your Estuary node will no longer make deals with this
-                miner.
-              </P>
+              <P style={{ marginTop: 8 }}>You can suspend a miner. Your Estuary node will no longer make deals with this miner.</P>
 
-              <H3 style={{ marginTop: 24 }}>Miner</H3>
+              <H4 style={{ marginTop: 32 }}>Miner</H4>
               <Input
                 style={{ marginTop: 8 }}
                 placeholder="ex: f0100"
@@ -189,7 +172,7 @@ function AdminMinersPage(props) {
                 name="suspend_miner"
                 onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
               />
-              <H3 style={{ marginTop: 8 }}>Reason</H3>
+              <H4 style={{ marginTop: 8 }}>Reason</H4>
               <Input
                 style={{ marginTop: 8 }}
                 placeholder="ex: miner ask is too high."

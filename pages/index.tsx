@@ -13,7 +13,7 @@ import MarketingCube from '@components/MarketingCube';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Chart from '@components/Chart';
 
-import { H1, H2, H3, P } from '@components/Typography';
+import { H1, H2, H3, H4, P } from '@components/Typography';
 import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
 
 export async function getServerSideProps(context) {
@@ -109,6 +109,7 @@ function IndexPage(props: any) {
       setGraph({
         dealsSealedBytes,
         data: [
+          /*
           {
             color: 'var(--status-16)',
             name: 'Attempted',
@@ -119,6 +120,7 @@ function IndexPage(props: any) {
             name: 'Failed',
             items: dealsFailedSet,
           },
+          */
           {
             color: 'var(--status-6)',
             name: 'OnChain',
@@ -136,8 +138,7 @@ function IndexPage(props: any) {
     load();
   }, [width]);
 
-  const description =
-    'Use any browser and our API to store public data on the Filecoin Network and retrieve it from anywhere, anytime.';
+  const description = 'Use any browser and our API to store public data on the Filecoin Network and retrieve it from anywhere, anytime.';
 
   return (
     <Page title="Estuary" description={description} url="https://estuary.tech">
@@ -146,9 +147,7 @@ function IndexPage(props: any) {
       <div className={S.h}>
         <div className={S.ht}>
           <H1 style={{ maxWidth: '768px', fontWeight: 800 }}>Automated storage with Filecoin</H1>
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-            {description}
-          </P>
+          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>{description}</P>
           <div className={S.actions}>
             <Button
               href="https://docs.estuary.tech"
@@ -163,10 +162,7 @@ function IndexPage(props: any) {
               Learn more
             </Button>
           </div>
-          <img
-            className={S.hbimg}
-            src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-marketing-hero.png"
-          />
+          <img className={S.hbimg} src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-marketing-hero.png" />
         </div>
       </div>
 
@@ -194,8 +190,7 @@ function IndexPage(props: any) {
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
         <H2 style={{ margin: '0 auto 0 auto' }}>Features</H2>
         <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Estuary makes using Filecoin easy while showing a lot of useful information about where
-          your data is stored.
+          Estuary makes using Filecoin easy while showing a lot of useful information about where your data is stored.
         </P>
       </SingleColumnLayout>
 
@@ -203,8 +198,7 @@ function IndexPage(props: any) {
         <div className={S.rl}>
           <div className={S.rtext}>Upload public data</div>
           <FeatureRow>
-            <strong>No minimum size</strong>. Upload the data you want, Estuary Nodes will figure
-            out the rules for you.
+            <strong>No minimum size</strong>. Upload the data you want, Estuary Nodes will figure out the rules for you.
           </FeatureRow>
           <FeatureRow>
             <strong>Many options.</strong> Tired of browsers? Use the command line, or an{' '}
@@ -218,14 +212,7 @@ function IndexPage(props: any) {
           </FeatureRow>
         </div>
         <div className={S.rr}>
-          <MarketingUpload
-            estimate="0"
-            price="0"
-            size="792259920"
-            replication="6"
-            duration={1051200}
-            verified={true}
-          />
+          <MarketingUpload estimate="0" price="0" size="792259920" replication="6" duration={1051200} verified={true} />
         </div>
       </div>
 
@@ -233,12 +220,10 @@ function IndexPage(props: any) {
         <div className={S.rl}>
           <div className={S.rtext}>All about the details</div>
           <FeatureRow>
-            <strong>Reliability</strong>. Estuary Nodes have automation algorithms that make sure
-            your data is replicated and stored on the network.
+            <strong>Reliability</strong>. Estuary Nodes have automation algorithms that make sure your data is replicated and stored on the network.
           </FeatureRow>
           <FeatureRow>
-            <strong>A ton of information</strong>. Logs, status updates, and deal data. Know
-            everything about the resilence of your storage so you can make better promises.
+            <strong>A ton of information</strong>. Logs, status updates, and deal data. Know everything about the resilence of your storage so you can make better promises.
           </FeatureRow>
         </div>
         <div className={S.rr}>
@@ -249,8 +234,7 @@ function IndexPage(props: any) {
       <SingleColumnLayout style={{ textAlign: 'center' }}>
         <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
         <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Logs from your Filecoin miner are public so we can help debug and triage issues with the
-          Filecoin Network.
+          Logs from your Filecoin miner are public so we can help debug and triage issues with the Filecoin Network.
         </P>
 
         <div className={S.actions}>
@@ -290,10 +274,7 @@ function IndexPage(props: any) {
             {graph.data.map((each) => {
               return (
                 <div className={S.fcol4} key={each.name}>
-                  <div
-                    className={S.graphItem}
-                    style={{ background: each.color, color: `var(--main-text)` }}
-                  >
+                  <div className={S.graphItem} style={{ background: each.color, color: `var(--main-text)` }}>
                     {each.name}: {each.items[each.items.length - 1].value}
                   </div>
                 </div>
@@ -306,9 +287,7 @@ function IndexPage(props: any) {
             <span className={S.flink}>Index</span>
           </div>
           <div className={S.fcolfull}>
-            <span className={S.flink}>
-              All of the miners that store data from this Estuary node.
-            </span>
+            <span className={S.flink}>All of the miners that store data from this Estuary node.</span>
           </div>
         </div>
         {state.miners.map((each, index) => {

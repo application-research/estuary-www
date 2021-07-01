@@ -6,7 +6,7 @@
 .title {
   display: block;
   padding: 4px 16px 4px 16px;
-  font-size: 0.7rem;
+  font-size: 10px;
   font-weight: 600;
   margin-top: 24px;
   color: var(--main-text-details);
@@ -23,7 +23,7 @@
   transition: 200ms ease color;
   color: var(--main-text);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 14px;
 
   &:visited {
     color: var(--main-text);
@@ -50,7 +50,7 @@
   color: var(--main-text);
   background: var(--main-background-navigation-admin);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 14px;
 
   &:visited {
     color: var(--main-text);

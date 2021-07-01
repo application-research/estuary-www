@@ -54,16 +54,11 @@ function AdminAnalyticsPage(props: any) {
     run();
   }, []);
 
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_ANALYTICS" viewer={props.viewer} />;
+
   return (
-    <Page
-      title="Estuary: Admin: Analytics"
-      description="A list of Estuary node analytics."
-      url="https://estuary.tech/admin/analytics"
-    >
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated />}
-        sidebar={<AuthenticatedSidebar active="ADMIN_ANALYTICS" viewer={props.viewer} />}
-      >
+    <Page title="Estuary: Admin: Analytics" description="A list of Estuary node analytics." url="https://estuary.tech/admin/analytics">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <EmptyStatePlaceholder>Coming soon</EmptyStatePlaceholder>
         </SingleColumnLayout>

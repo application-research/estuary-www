@@ -5,10 +5,11 @@ import * as U from '@common/utilities';
 import * as C from '@common/constants';
 
 const Navigation = (props: any) => {
+  console.log(props);
   return (
     <div className={styles.navigation}>
       <nav className={styles.container} style={props.style}>
-        <div className={styles.left}>
+        <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
           <a className={styles.logo} href="/">
             Estuary
           </a>
@@ -30,9 +31,15 @@ const Navigation = (props: any) => {
             </a>
           ) : null}
 
-          <a href="https://docs.estuary.tech" className={styles.item}>
+          <a href="https://docs.estuary.tech" className={styles.webItem}>
             Documentation
           </a>
+
+          {props.isAuthenticated ? (
+            <a href="/_" className={styles.mobileItem}>
+              Menu
+            </a>
+          ) : null}
         </div>
       </nav>
     </div>
