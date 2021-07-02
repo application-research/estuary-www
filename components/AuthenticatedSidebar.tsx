@@ -12,48 +12,24 @@ function AuthenticatedLayout(props: any) {
       <div className={styles.title} style={{ marginTop: 40 }}>
         Home
       </div>
-      <a
-        className={styles.item}
-        href="/home"
-        style={props.active === 'FILES' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/home" style={props.active === 'FILES' ? { color: `var(--main-primary)` } : null}>
         Files
       </a>
-      <a
-        className={styles.item}
-        href="/upload"
-        style={props.active === 'UPLOAD' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/upload" style={props.active === 'UPLOAD' ? { color: `var(--main-primary)` } : null}>
         Upload
       </a>
-      <a
-        className={styles.item}
-        href="/upload-cid"
-        style={props.active === 'UPLOAD_CID' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/upload-cid" style={props.active === 'UPLOAD_CID' ? { color: `var(--main-primary)` } : null}>
         Upload CID
       </a>
 
       <div className={styles.title}>Developers</div>
-      <a
-        className={styles.item}
-        href="/staging"
-        style={props.active === 'STAGING' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/staging" style={props.active === 'STAGING' ? { color: `var(--main-primary)` } : null}>
         Staging
       </a>
-      <a
-        className={styles.item}
-        href="/deals"
-        style={props.active === 'DEALS' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/deals" style={props.active === 'DEALS' ? { color: `var(--main-primary)` } : null}>
         Deals
       </a>
-      <a
-        className={styles.item}
-        href="/api-admin"
-        style={props.active === 'API' ? { color: `var(--main-primary)` } : null}
-      >
+      <a className={styles.item} href="/api-admin" style={props.active === 'API' ? { color: `var(--main-primary)` } : null}>
         API keys
       </a>
 
@@ -78,56 +54,37 @@ function AuthenticatedLayout(props: any) {
 
       {props.viewer.perms >= 10 ? <div className={styles.title}>Admin</div> : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/stats"
-          style={props.active === 'ADMIN_STATS' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/impersonate" style={props.active === 'ADMIN_IMPERSONATE' ? { color: `var(--main-primary)` } : null}>
+          Impersonate
+        </a>
+      ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/stats" style={props.active === 'ADMIN_STATS' ? { color: `var(--main-primary)` } : null}>
           System
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/balance"
-          style={props.active === 'ADMIN_BALANCE' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/balance" style={props.active === 'ADMIN_BALANCE' ? { color: `var(--main-primary)` } : null}>
           Balance
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/miners"
-          style={props.active === 'ADMIN_MINERS' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/miners" style={props.active === 'ADMIN_MINERS' ? { color: `var(--main-primary)` } : null}>
           Miners
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/content"
-          style={props.active === 'ADMIN_CONTENT' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/content" style={props.active === 'ADMIN_CONTENT' ? { color: `var(--main-primary)` } : null}>
           Content
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/users"
-          style={props.active === 'ADMIN_USERS' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/users" style={props.active === 'ADMIN_USERS' ? { color: `var(--main-primary)` } : null}>
           Users
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a
-          className={styles.item}
-          href="/admin/invites"
-          style={props.active === 'ADMIN_INVITES' ? { color: `var(--main-primary)` } : null}
-        >
+        <a className={styles.item} href="/admin/invites" style={props.active === 'ADMIN_INVITES' ? { color: `var(--main-primary)` } : null}>
           Invites
         </a>
       ) : null}

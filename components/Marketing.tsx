@@ -8,12 +8,7 @@ import ActionRow from '@components/ActionRow';
 import { ContentCard } from '@pages/deals';
 
 export function MarketingGraph(props: any) {
-  return (
-    <img
-      src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-diagram-3.png"
-      className={styles.image}
-    />
-  );
+  return <img src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-diagram-3.png" className={styles.image} />;
 }
 
 export function MarketingUpload(props: any) {
@@ -29,21 +24,15 @@ export function MarketingUpload(props: any) {
 
       {props.estimate ? (
         <ActionRow>
-          Will cost {U.convertFIL(props.estimate)} FIL ⇄{' '}
-          {(Number(U.convertFIL(props.estimate)) * Number(props.price)).toFixed(2)} USD
+          Will cost {U.convertFIL(props.estimate)} FIL ⇄ {(Number(U.convertFIL(props.estimate)) * Number(props.price)).toFixed(2)} USD
         </ActionRow>
       ) : null}
       <ActionRow>{U.bytesToSize(props.size)}</ActionRow>
       <ActionRow>Replicated across {props.replication} miners.</ActionRow>
       <ActionRow>
-        Stored for {props.duration} filecoin-epochs (
-        {((props.duration * 30) / 60 / 60 / 24).toFixed(2)} days).
+        Stored for {props.duration} filecoin-epochs ({((props.duration * 30) / 60 / 60 / 24).toFixed(2)} days).
       </ActionRow>
-      {props.verified ? (
-        <ActionRow>This deal is verified.</ActionRow>
-      ) : (
-        <ActionRow>This deal is not verified.</ActionRow>
-      )}
+      {props.verified ? <ActionRow>This deal is verified.</ActionRow> : <ActionRow>This deal is not verified.</ActionRow>}
     </div>
   );
 }
@@ -60,6 +49,7 @@ export function MarketingProgress(props: any) {
   return (
     <div className={styles.cards}>
       <ContentCard
+        viewer={{}}
         id={contentId}
         root={{ aggregatedFiles: '12238' }}
         content={{

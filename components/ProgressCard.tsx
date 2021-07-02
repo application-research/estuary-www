@@ -4,48 +4,10 @@ import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 
-const ProgressCard = ({ deal, transfer, chain, marketing, contentId, showFailures }) => {
-  const isOnChain = deal.dealId > 0;
-
-  let message = `DealOnChain`;
-  if (transfer && transfer.statusMessage) {
-    if (!deal.dealId) {
-      message = transfer.statusMessage;
-
-      if (message === 'Failed') {
-        return null;
-      }
-
-      if (message === 'Completed') {
-        message = 'TransferFinish';
-      }
-    }
-
-    if (chain && chain.sectorStartEpoch && Number(chain.sectorStartEpoch) > 0) {
-      message = `ActiveOnChain`;
-    }
-  }
-
-  if (deal && deal.failed) {
-    message = 'Failed';
-
-    if (!showFailures) {
-      return null;
-    }
-
-    // NOTE(jim): status 6 is a successful deal transfer.
-    if (transfer.status === 6) {
-      message = 'FailedAfterTransfer';
-    }
-  }
-
+const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) => {
   let topStyle = { background: C.statusColors[Number(transfer.status)] };
   if (transfer) {
     if (deal.failed && transfer.status === 6) {
-      if (!showFailures) {
-        return null;
-      }
-
       topStyle.background = `var(--status-6-failed)`;
     }
 

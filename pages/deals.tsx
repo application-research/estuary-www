@@ -34,25 +34,29 @@ export async function getServerSideProps(context) {
   };
 }
 
-const ContentDeal = (props: any) => (
-  <ProgressCard
-    key={props.data.ID}
-    contentId={props.contentId}
-    deal={props.data.deal}
-    chain={props.data.onChainState}
-    transfer={props.data.transfer}
-    marketing={false}
-    showFailures={props.showFailures}
-  />
-);
-
-export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
+export const ContentCard = ({ content, deals, id, root, failuresCount, viewer }): any => {
   const [state, setState] = React.useState({ showFiles: false, showFailures: false });
+
+  let failureCount = 0;
+  let successCount = 0;
 
   let dealElements =
     deals && deals.length ? (
       deals.map((d, index) => {
-        return <ContentDeal key={`${d.ID}-${index}`} data={d} contentId={id} showFailures={state.showFailures} />;
+        const message = U.getDealStateMessage(d.deal, d.transfer, d.onChainState);
+        if (message === 'Failed' || message === 'FailedAfterTransfer') {
+          failureCount = failureCount + 1;
+
+          if (!state.showFailures) {
+            return null;
+          }
+        }
+
+        if (message === 'ActiveOnChain') {
+          successCount = successCount + 1;
+        }
+
+        return <ProgressCard key={`${d.ID}-${id}-${index}`} contentId={id} deal={d.deal} chain={d.onChainState} transfer={d.transfer} message={message} marketing={false} />;
       })
     ) : (
       <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
@@ -105,24 +109,41 @@ export const ContentCard = ({ content, deals, id, root, failuresCount }) => {
       </table>
       {root && root.aggregatedFiles > 1 ? (
         <div className={styles.titleSection}>
-          This deal has {root.aggregatedFiles} additional {U.pluralize('file', root.aggregatedFiles)}
+          {root.aggregatedFiles} additional {U.pluralize('file', root.aggregatedFiles)} in this deal
         </div>
       ) : null}
       <div className={styles.titleSection}>
-        {dealElements.length} Storage provider {U.pluralize('deal', dealElements.length)}{' '}
+        Estuary made {dealElements.length} {U.pluralize('attempt', dealElements.length)}&nbsp;
         <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
-        </a>{' '}
-        <span style={{ color: `var(--main-text)`, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setState({ ...state, showFailures: !state.showFailures })}>
-          (show failures)
-        </span>
+        </a>
+        &nbsp;
+        {failureCount > 0 ? (
+          <span style={{ color: `var(--main-text)`, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setState({ ...state, showFailures: !state.showFailures })}>
+            (toggle {failureCount} {U.pluralize('failure', failureCount)})
+          </span>
+        ) : null}
       </div>
+      {viewer && viewer.settings ? (
+        <React.Fragment>
+          {successCount === viewer.settings.replication ? (
+            <div className={styles.titleSection} style={{ backgroundColor: `var(--status-success-bright)`, fontFamily: 'MonoMedium' }}>
+              Your data is backed up to the Filecoin Network
+            </div>
+          ) : (
+            <div className={styles.titleSection} style={{ fontFamily: 'MonoMedium' }}>
+              <LoaderSpinner style={{ border: `2px solid rgba(0, 0, 0, 0.1)`, borderTop: `2px solid #000` }} />
+              &nbsp; Estuary is working on {viewer.settings.replication} successful on chain deals. {successCount} / {viewer.settings.replication}
+            </div>
+          )}
+        </React.Fragment>
+      ) : null}
       <div className={styles.deals}>{dealElements}</div>
     </div>
   );
 };
 
-class ContentStatus extends React.Component<any> {
+class ContentStatus extends React.Component<any, any> {
   state = {
     status: null,
   };
@@ -137,11 +158,11 @@ class ContentStatus extends React.Component<any> {
   }
 
   render() {
-    return <ContentCard id={this.props.id} {...this.state.status} root={this.props.root} />;
+    return <ContentCard {...this.state.status} viewer={this.props.viewer} id={this.props.id} root={this.props.root} />;
   }
 }
 
-export default class Dashboard extends React.Component<any> {
+export default class Dashboard extends React.Component<any, any> {
   state = {
     entities: [],
   };
@@ -157,13 +178,13 @@ export default class Dashboard extends React.Component<any> {
   }
 
   render() {
-    const statusElements = this.state.entities.length ? this.state.entities.map((s, index) => <ContentStatus id={s.id} key={s.id} root={s} />) : null;
-
+    const statusElements = this.state.entities.length ? this.state.entities.map((s, index) => <ContentStatus viewer={this.props.viewer} id={s.id} key={s.id} root={s} />) : null;
     const sidebarElement = <AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />;
+    const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 
     return (
       <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url="https://estuary.tech/deals">
-        <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
           <PageHeader>
             <H2>Deals</H2>
             <P style={{ marginTop: 16 }}>All of your Filecoin deals and logs will appear here. Deals are automated and made on your behalf.</P>

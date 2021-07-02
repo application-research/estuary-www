@@ -109,7 +109,8 @@ function IndexPage(props: any) {
       setGraph({
         dealsSealedBytes,
         data: [
-          /*
+          /* NOTE(jim)
+             Asked not to show failure.
           {
             color: 'var(--status-16)',
             name: 'Attempted',
@@ -146,23 +147,33 @@ function IndexPage(props: any) {
 
       <div className={S.h}>
         <div className={S.ht}>
-          <H1 style={{ maxWidth: '768px', fontWeight: 800 }}>Automated storage with Filecoin</H1>
+          <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Store your data</H1>
           <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>{description}</P>
           <div className={S.actions}>
             <Button
               href="https://docs.estuary.tech"
               target="_blank"
               style={{
-                background: `var(--main-primary)`,
-                margin: '0 16px 0 0',
-                fontSize: '24px',
-                padding: '16px 24px 16px 24px',
+                marginRight: 24,
+                marginBottom: 24,
               }}
             >
               Learn more
             </Button>
+
+            <Button
+              href="https://docs.estuary.tech/get-invite-key"
+              target="_blank"
+              style={{
+                background: 'var(--main-button-background-secondary)',
+                color: 'var(--main-button-text-secondary)',
+                marginBottom: 24,
+              }}
+            >
+              Get access
+            </Button>
           </div>
-          <img className={S.hbimg} src="https://next-s3-public.s3-us-west-2.amazonaws.com/estuary-marketing-hero.png" />
+          <img className={S.hbimg} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
         </div>
       </div>
 

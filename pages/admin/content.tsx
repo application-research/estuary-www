@@ -75,7 +75,7 @@ function AdminContentPage(props: any) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: '30%' }}>
+                <th className={tstyles.th} style={{ width: '128px' }}>
                   name
                 </th>
                 <th className={tstyles.th}>cid</th>
@@ -93,8 +93,8 @@ function AdminContentPage(props: any) {
                 ? state.content.map((data, index) => {
                     const fileURL = `https://dweb.link/ipfs/${data.cid}`;
                     return (
-                      <tr className={tstyles.tr}>
-                        <td className={tstyles.td}>{data.name}</td>
+                      <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
+                        <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>
                             {fileURL}

@@ -8,8 +8,7 @@ import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import GridSection from '@components/GridSection';
+import PageHeader from '@components/PageHeader';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import Block from '@components/Block';
 import Input from '@components/Input';
@@ -47,7 +46,6 @@ export async function getServerSideProps(context) {
 function AdminMinersPage(props) {
   const [state, setState] = React.useState({
     loading: false,
-    suspend_miner: '',
     miner: '',
     reason: '',
     miners: null,
@@ -88,135 +86,136 @@ function AdminMinersPage(props) {
   return (
     <Page title="Estuary: Admin: Add miner" description="Add a miner to make Filecoin storage deals with" url="https://estuary.tech/admin/miners">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
-        <div className={styles.group}>
-          <div className={styles.grid}>
-            <GridSection>
-              <H2>Manage miners</H2>
-              <P style={{ marginTop: 16 }}>Add, remove or reinstate any miner you would like to make deals with using Estuary's escrow.</P>
+        <PageHeader>
+          <H2>Miners</H2>
+          <P style={{ marginTop: 16 }}>Add, remove suspend or reinstate any miner.</P>
 
-              <H4 style={{ marginTop: 32 }}>Add Miner by ID</H4>
-              <Input style={{ marginTop: 8 }} placeholder="ex: f0100" value={state.miner} name="miner" onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })} />
+          <H4 style={{ marginTop: 32 }}>Miner ID</H4>
+          <Input style={{ marginTop: 8 }} placeholder="ex: f0100" value={state.miner} name="miner" onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })} />
 
-              <div className={styles.actions}>
-                <Button
-                  style={{ marginRight: 24, marginBottom: 24 }}
-                  loading={state.loading ? state.loading : undefined}
-                  onClick={async () => {
-                    if (U.isEmpty(state.miner)) {
-                      alert('Please provide a miner.');
-                      return;
-                    }
+          <div className={styles.actions}>
+            <Button
+              style={{ marginRight: 24, marginBottom: 24 }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                if (U.isEmpty(state.miner)) {
+                  alert('Please provide a miner to add.');
+                  return;
+                }
 
-                    setState({ ...state, loading: true });
-                    const request = R.post(`/admin/miners/add/${state.miner}`, {});
-                    setState({ ...state, miner: '', loading: false });
-                  }}
-                >
-                  Add
-                </Button>
+                setState({ ...state, loading: true });
+                const request: any = await R.post(`/admin/miners/add/${state.miner}`, {});
+                if (request && request.error) {
+                  alert(request.error);
+                  setState({ ...state, miner: '', loading: false });
+                  return;
+                }
 
-                <Button
-                  style={{
-                    marginRight: 24,
-                    marginBottom: 24,
-                    background: 'var(--main-button-background-secondary)',
-                    color: 'var(--main-button-text-secondary)',
-                  }}
-                  loading={state.loading ? state.loading : undefined}
-                  onClick={async () => {
-                    if (U.isEmpty(state.miner)) {
-                      alert('Please provide a miner.');
-                      return;
-                    }
+                setState({ ...state, miner: '', loading: false });
 
-                    setState({ ...state, loading: true });
-                    const request = R.post(`/admin/miners/rm/${state.miner}`, {});
-                    setState({ ...state, miner: '', loading: false });
-                  }}
-                >
-                  Remove
-                </Button>
+                window.location.reload();
+              }}
+            >
+              Add
+            </Button>
 
-                <Button
-                  style={{
-                    marginBottom: 24,
-                    background: 'var(--main-button-background-secondary)',
-                    color: 'var(--main-button-text-secondary)',
-                  }}
-                  loading={state.loading ? state.loading : undefined}
-                  onClick={async () => {
-                    if (U.isEmpty(state.miner)) {
-                      alert('Please provide a miner.');
-                      return;
-                    }
+            <Button
+              style={{
+                marginRight: 24,
+                marginBottom: 24,
+                background: 'var(--main-button-background-secondary)',
+                color: 'var(--main-button-text-secondary)',
+              }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                if (U.isEmpty(state.miner)) {
+                  alert('Please provide a miner to remove.');
+                  return;
+                }
 
-                    setState({ ...state, loading: true });
-                    const request = R.put(`/admin/miners/unsuspend/${state.miner}`, {});
-                    setState({ ...state, miner: '', loading: false });
-                  }}
-                >
-                  Reinstate
-                </Button>
-              </div>
-            </GridSection>
+                setState({ ...state, loading: true });
+                const request: any = await R.post(`/admin/miners/rm/${state.miner}`, {});
+                if (request && request.error) {
+                  alert(request.error);
+                  setState({ ...state, miner: '', loading: false });
+                  return;
+                }
 
-            <GridSection>
-              <H2>Suspend miner</H2>
-              <P style={{ marginTop: 8 }}>You can suspend a miner. Your Estuary node will no longer make deals with this miner.</P>
+                setState({ ...state, miner: '', loading: false });
 
-              <H4 style={{ marginTop: 32 }}>Miner</H4>
-              <Input
-                style={{ marginTop: 8 }}
-                placeholder="ex: f0100"
-                value={state.suspend_miner}
-                name="suspend_miner"
-                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-              />
-              <H4 style={{ marginTop: 8 }}>Reason</H4>
-              <Input
-                style={{ marginTop: 8 }}
-                placeholder="ex: miner ask is too high."
-                value={state.reason}
-                name="reason"
-                onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-              />
+                window.location.reload();
+              }}
+            >
+              Remove
+            </Button>
 
-              <div className={styles.actions}>
-                <Button
-                  loading={state.loading ? state.loading : undefined}
-                  onClick={async () => {
-                    if (U.isEmpty(state.suspend_miner)) {
-                      alert('Please provide a miner to suspend.');
-                      return;
-                    }
+            <Button
+              style={{
+                marginRight: 24,
+                marginBottom: 24,
+                background: 'var(--main-button-background-secondary)',
+                color: 'var(--main-button-text-secondary)',
+              }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                if (U.isEmpty(state.miner)) {
+                  alert('Please provide a miner a miner to reinstate.');
+                  return;
+                }
 
-                    setState({ ...state, loading: true });
-                    const request = await R.post(`/admin/miners/suspend/${state.suspend_miner}`, {
-                      reason: state.reason,
-                    });
+                setState({ ...state, loading: true });
+                const request: any = await R.put(`/admin/miners/unsuspend/${state.miner}`, {});
+                if (request && request.error) {
+                  alert(request.error);
+                  setState({ ...state, miner: '', loading: false });
+                  return;
+                }
 
-                    if (request && request.error) {
-                      alert(request.error);
-                      return;
-                    }
+                setState({ ...state, miner: '', loading: false });
 
-                    setState({
-                      ...state,
-                      miner: '',
-                      suspend_miner: '',
-                      reason: '',
-                      loading: false,
-                    });
-                  }}
-                >
-                  Suspend {state.suspend_miner}
-                </Button>
-              </div>
-            </GridSection>
+                window.location.reload();
+              }}
+            >
+              Reinstate
+            </Button>
+
+            <Button
+              style={{ background: 'var(--main-button-background-secondary)', color: 'var(--main-button-text-secondary)' }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                if (U.isEmpty(state.miner)) {
+                  alert('Please provide a miner to suspend.');
+                  return;
+                }
+
+                setState({ ...state, loading: true });
+
+                const reason = window.prompt('What is the reason?');
+                const request: any = await R.post(`/admin/miners/suspend/${state.miner}`, {
+                  reason: U.isEmpty(reason) ? 'N/A' : reason,
+                });
+
+                if (request && request.error) {
+                  alert(request.error);
+                  setState({ ...state, miner: '', loading: false });
+                  return;
+                }
+
+                setState({
+                  ...state,
+                  miner: '',
+                  loading: false,
+                });
+
+                window.location.reload();
+              }}
+            >
+              Suspend
+            </Button>
           </div>
+        </PageHeader>
 
-          {state.miners ? <MinerTable miners={state.miners} /> : null}
-        </div>
+        <div className={styles.group}>{state.miners ? <MinerTable miners={state.miners} /> : null}</div>
       </AuthenticatedLayout>
     </Page>
   );

@@ -114,7 +114,7 @@ async function handleSignIn(state: any) {
 }
 
 function SignInPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, username: '', password: '' });
+  const [state, setState] = React.useState({ loading: false, username: '', password: '', key: '' });
 
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url="https://estuary.tech/sign-in">
@@ -175,6 +175,37 @@ function SignInPage(props: any) {
             href="/sign-up"
           >
             Create an account instead
+          </Button>
+        </div>
+
+        <H3 style={{ marginTop: 64 }}>Authenticate Using Key</H3>
+        <P style={{ marginTop: 8 }}>You can authenticate using an API key if you have one.</P>
+
+        <H4 style={{ marginTop: 32 }}>API key</H4>
+        <Input
+          style={{ marginTop: 8 }}
+          placeholder="ex: ESTxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxARY"
+          name="key"
+          value={state.key}
+          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+        />
+
+        <div className={styles.actions}>
+          <Button
+            style={{ width: '100%' }}
+            loading={state.loading ? state.loading : undefined}
+            onClick={async () => {
+              if (U.isEmpty(state.key)) {
+                alert('Please provide a valid key');
+                return null;
+              }
+
+              console.log('Impersonating...');
+              Cookies.set(C.auth, state.key);
+              window.location.reload();
+            }}
+          >
+            Authenticate
           </Button>
         </div>
       </SingleColumnLayout>

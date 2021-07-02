@@ -181,3 +181,32 @@ export function classNames(...args: any[]) {
 
   return classes.join(' ');
 }
+
+export function getDealStateMessage(deal, transfer, chain) {
+  const isOnChain = deal.dealId > 0;
+
+  let message = `DealOnChain`;
+  if (transfer && transfer.statusMessage) {
+    if (!deal.dealId) {
+      message = transfer.statusMessage;
+
+      if (message === 'Completed') {
+        message = 'TransferFinish';
+      }
+    }
+
+    if (chain && chain.sectorStartEpoch && Number(chain.sectorStartEpoch) > 0) {
+      message = `ActiveOnChain`;
+    }
+  }
+
+  if (deal && deal.failed) {
+    message = 'Failed';
+
+    if (transfer.status === 6) {
+      message = 'FailedAfterTransfer';
+    }
+  }
+
+  return message;
+}
