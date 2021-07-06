@@ -47,7 +47,7 @@ function DealErrorPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Deals: Errors" description={`Errors for deal ID: ${props.id}`} url={`https://estuary.tech/errors/${props.id}`}>
+    <Page title="Estuary: Deals: Errors" description={`Errors for storage deal ID: ${props.id}`} url={`https://estuary.tech/errors/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
@@ -56,7 +56,7 @@ function DealErrorPage(props: any) {
                 Created date
               </th>
               <th className={tstyles.th} style={{ width: 120 }}>
-                miner
+                provider
               </th>
               <th className={tstyles.th} style={{ width: 120 }}>
                 phase
@@ -70,7 +70,7 @@ function DealErrorPage(props: any) {
                       {U.toDate(log.CreatedAt)}
                     </td>
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={`/miners/stats/${log.miner}`}>
+                      <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}
                       </a>
                     </td>

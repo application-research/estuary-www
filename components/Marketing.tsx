@@ -28,7 +28,7 @@ export function MarketingUpload(props: any) {
         </ActionRow>
       ) : null}
       <ActionRow>{U.bytesToSize(props.size)}</ActionRow>
-      <ActionRow>Replicated across {props.replication} miners.</ActionRow>
+      <ActionRow>Replicated across {props.replication} storage providers.</ActionRow>
       <ActionRow>
         Stored for {props.duration} filecoin-epochs ({((props.duration * 30) / 60 / 60 / 24).toFixed(2)} days).
       </ActionRow>

@@ -88,7 +88,7 @@ function AdminUsersPage(props) {
                         <td className={tstyles.td}>{data.id}</td>
                         <td className={tstyles.td}>{data.username}</td>
                         <td className={tstyles.td}>{U.bytesToSize(data.spaceUsed)}</td>
-                        <td className={tstyles.td}>{data.numFiles}</td>
+                        <td className={tstyles.td}>{U.formatNumber(data.numFiles)}</td>
                       </tr>
                     );
                   })

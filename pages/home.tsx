@@ -87,9 +87,9 @@ function HomePage(props: any) {
                   <th className={tstyles.th}>Total number of pins</th>
                 </tr>
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.stats.totalSize}</td>
+                  <td className={tstyles.td}>{U.formatNumber(state.stats.totalSize)}</td>
                   <td className={tstyles.td}>{U.bytesToSize(state.stats.totalSize)}</td>
-                  <td className={tstyles.td}>{state.stats.numPins}</td>
+                  <td className={tstyles.td}>{U.formatNumber(state.stats.numPins)}</td>
                 </tr>
               </tbody>
             </table>

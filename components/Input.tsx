@@ -68,6 +68,7 @@ export default class Input extends React.Component<any> {
           readOnly={this.props.readOnly}
           style={{
             ...this.props.inputStyle,
+            opacity: this.props.readOnly ? 0.5 : 1,
           }}
         />
       </div>

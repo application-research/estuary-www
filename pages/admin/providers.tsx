@@ -43,6 +43,32 @@ export async function getServerSideProps(context) {
   };
 }
 
+const refresh = async (state, setState) => {
+  let map = {};
+  const response = await R.get('/admin/miners/stats');
+
+  for (let m of response) {
+    map[m.miner] = m;
+  }
+
+  console.log(map);
+
+  const list = await R.get('/public/miners');
+
+  const miners = list.map((each) => {
+    if (map[each.addr]) {
+      return {
+        ...each,
+        ...map[each.addr],
+      };
+    }
+
+    return each;
+  });
+
+  setState({ ...state, miners, miner: '', loading: false, reason: '' });
+};
+
 function AdminMinersPage(props) {
   const [state, setState] = React.useState({
     loading: false,
@@ -53,29 +79,7 @@ function AdminMinersPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      let map = {};
-      const response = await R.get('/admin/miners/stats');
-
-      for (let m of response) {
-        map[m.miner] = m;
-      }
-
-      console.log(map);
-
-      const list = await R.get('/public/miners');
-
-      const miners = list.map((each) => {
-        if (map[each.addr]) {
-          return {
-            ...each,
-            ...map[each.addr],
-          };
-        }
-
-        return each;
-      });
-
-      setState({ ...state, miners });
+      await refresh(state, setState);
     };
 
     run();
@@ -84,13 +88,13 @@ function AdminMinersPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Add miner" description="Add a miner to make Filecoin storage deals with" url="https://estuary.tech/admin/miners">
+    <Page title="Estuary: Admin: Add storage provider" description="Add a storage provider to make Filecoin storage deals with" url="https://estuary.tech/admin/providers">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
-          <H2>Miners</H2>
-          <P style={{ marginTop: 16 }}>Add, remove suspend or reinstate any miner.</P>
+          <H2>Storage providers</H2>
+          <P style={{ marginTop: 16 }}>Add, remove suspend or reinstate any storage provider.</P>
 
-          <H4 style={{ marginTop: 32 }}>Miner ID</H4>
+          <H4 style={{ marginTop: 32 }}>Storage provider ID</H4>
           <Input style={{ marginTop: 8 }} placeholder="ex: f0100" value={state.miner} name="miner" onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })} />
 
           <div className={styles.actions}>
@@ -99,7 +103,7 @@ function AdminMinersPage(props) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 if (U.isEmpty(state.miner)) {
-                  alert('Please provide a miner to add.');
+                  alert('Please provide a storage provider to add.');
                   return;
                 }
 
@@ -111,9 +115,8 @@ function AdminMinersPage(props) {
                   return;
                 }
 
-                setState({ ...state, miner: '', loading: false });
-
-                window.location.reload();
+                alert(`${state.miner} has been added.`);
+                await refresh(state, setState);
               }}
             >
               Add
@@ -129,7 +132,7 @@ function AdminMinersPage(props) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 if (U.isEmpty(state.miner)) {
-                  alert('Please provide a miner to remove.');
+                  alert('Please provide a storage provider to remove.');
                   return;
                 }
 
@@ -141,9 +144,8 @@ function AdminMinersPage(props) {
                   return;
                 }
 
-                setState({ ...state, miner: '', loading: false });
-
-                window.location.reload();
+                alert(`${state.miner} has been removed.`);
+                await refresh(state, setState);
               }}
             >
               Remove
@@ -159,7 +161,7 @@ function AdminMinersPage(props) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 if (U.isEmpty(state.miner)) {
-                  alert('Please provide a miner a miner to reinstate.');
+                  alert('Please provide a storage provider to reinstate.');
                   return;
                 }
 
@@ -171,9 +173,8 @@ function AdminMinersPage(props) {
                   return;
                 }
 
-                setState({ ...state, miner: '', loading: false });
-
-                window.location.reload();
+                alert(`${state.miner} has been reinstated.`);
+                await refresh(state, setState);
               }}
             >
               Reinstate
@@ -184,7 +185,7 @@ function AdminMinersPage(props) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 if (U.isEmpty(state.miner)) {
-                  alert('Please provide a miner to suspend.');
+                  alert('Please provide a storage provider to suspend.');
                   return;
                 }
 
@@ -201,13 +202,8 @@ function AdminMinersPage(props) {
                   return;
                 }
 
-                setState({
-                  ...state,
-                  miner: '',
-                  loading: false,
-                });
-
-                window.location.reload();
+                alert(`${state.miner} has been suspended for reason: ${reason}`);
+                await refresh(state, setState);
               }}
             >
               Suspend

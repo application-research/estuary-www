@@ -3,6 +3,15 @@ import { FilecoinNumber, Converter } from '@glif/filecoin-number';
 import * as Cookies from '@vendor/cookie-cutter';
 import * as C from '@common/constants';
 
+export const nanoToHours = (number: any): string => {
+  const ms = Number(number) / 1000000;
+  return (Number(ms) / (1000 * 60 * 60)).toFixed(1);
+};
+
+export const formatNumber = (number: any): string => {
+  return Number(number).toLocaleString();
+};
+
 export const pad = (num: number, size: number): any => {
   let s = num + '';
   while (s.length < size) s = '0' + s;

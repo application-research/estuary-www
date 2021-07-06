@@ -123,7 +123,7 @@ function AdminInvitesPage(props: any) {
                 ? state.invites.map((data, index) => {
                     return (
                       <tr key={data.code} className={tstyles.tr} style={{ opacity: !U.isEmpty(data.claimedBy) ? 0.2 : 1 }}>
-                        <td className={tstyles.td}>https://estuary.tech/sign-up?token={data.code}</td>
+                        <td className={tstyles.td}>https://estuary.tech/sign-up?invite={data.code}</td>
                         <td className={tstyles.td}>{data.createdBy}</td>
                         <td className={tstyles.td}>{data.claimedBy}</td>
                       </tr>

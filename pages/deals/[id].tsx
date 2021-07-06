@@ -74,7 +74,7 @@ function DealPage(props: any) {
                   <th className={tstyles.th}>Deal Database ID</th>
                   <th className={tstyles.th}>Content ID</th>
                   <th className={tstyles.th}>Network Deal ID</th>
-                  <th className={tstyles.th}>Miner</th>
+                  <th className={tstyles.th}>Provider</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
@@ -86,7 +86,7 @@ function DealPage(props: any) {
                     </a>
                   </td>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/miners/stats/${state.deal.miner}`}>
+                    <a className={tstyles.cta} href={`/providers/stats/${state.deal.miner}`}>
                       {state.deal.miner}
                     </a>
                   </td>

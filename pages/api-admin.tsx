@@ -100,7 +100,10 @@ function APIPage(props: any) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
-                <th className={tstyles.th}>Key</th>
+                <th className={tstyles.th} style={{ width: '328px' }}>
+                  Key
+                </th>
+                <th className={tstyles.th}>Expiry</th>
                 <th className={tstyles.th} style={{ width: '136px' }}>
                   Options
                 </th>
@@ -112,6 +115,7 @@ function APIPage(props: any) {
                         <td className={tstyles.td}>
                           {k.token} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
                         </td>
+                        <td className={tstyles.td}>{U.toDate(k.expiry)}</td>
                         <td className={tstyles.td}>
                           <button
                             onClick={async () => {

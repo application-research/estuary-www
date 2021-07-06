@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
 }
 
 function StagingPage(props) {
-  const [state, setState] = React.useState({ files: null });
+  const [state, setState] = React.useState({ files: [] });
 
   React.useEffect(() => {
     const run = async () => {
@@ -45,11 +45,7 @@ function StagingPage(props) {
         return;
       }
 
-      if (!files.length) {
-        return;
-      }
-
-      setState({ files: files[0].contents });
+      setState({ files });
     };
 
     run();
@@ -57,7 +53,7 @@ function StagingPage(props) {
 
   console.log(props.viewer);
 
-  const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
+  const sidebarElement = <AuthenticatedSidebar active="STAGING" viewer={props.viewer} />;
 
   return (
     <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url="https://estuary.tech/staging">
@@ -73,41 +69,82 @@ function StagingPage(props) {
             <Button href="/upload">Upload data</Button>
           </div>
         </PageHeader>
-        <div className={styles.group}>
-          <table className={tstyles.table}>
-            <tbody className={tstyles.tbody}>
-              <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: '30%' }}>
-                  Name
-                </th>
-                <th className={tstyles.th}>Retrieval link</th>
-                <th className={tstyles.th} style={{ width: '104px' }}>
-                  Size
-                </th>
-                <th className={tstyles.th} style={{ width: '120px' }}>
-                  User ID
-                </th>
-              </tr>
-              {state.files && state.files.length
-                ? state.files.map((data, index) => {
-                    const fileURL = `https://dweb.link/ipfs/${data.cid}`;
-                    return (
-                      <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
-                        <td className={tstyles.td}>{data.name}</td>
-                        <td className={tstyles.tdcta}>
-                          <a href={fileURL} target="_blank" className={tstyles.cta}>
-                            {fileURL}
-                          </a>
-                        </td>
-                        <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
-                        <td className={tstyles.td}>{data.userId}</td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
-        </div>
+
+        {state.files.map((bucket, index) => (
+          <div key={`ephemeral-staging-bucket-${index}`} style={{ marginBottom: 64 }}>
+            <PageHeader>
+              <H3>ephemeral-staging-bucket-{index}</H3>
+            </PageHeader>
+
+            <div className={styles.group}>
+              <table className={tstyles.table}>
+                <tbody className={tstyles.tbody}>
+                  <tr className={tstyles.tr}>
+                    <th className={tstyles.th}>Opening</th>
+                    <th className={tstyles.th}>Closing</th>
+                  </tr>
+                  <tr className={tstyles.tr}>
+                    <td className={tstyles.td}>{U.toDate(bucket.zoneOpened)}</td>
+                    <td className={tstyles.td}>{U.toDate(bucket.closeTime)}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table className={tstyles.table}>
+                <tbody className={tstyles.tbody}>
+                  <tr className={tstyles.tr}>
+                    <th className={tstyles.th}>Size</th>
+                    <th className={tstyles.th}>Max Size</th>
+                    <th className={tstyles.th}>Min size</th>
+                    <th className={tstyles.th}>Max items</th>
+                  </tr>
+                  <tr className={tstyles.tr}>
+                    <td className={tstyles.td}>{U.formatNumber(bucket.curSize)}</td>
+                    <td className={tstyles.td}>{U.bytesToSize(bucket.maxSize)}</td>
+                    <td className={tstyles.td}>{U.bytesToSize(bucket.minSize)}</td>
+                    <td className={tstyles.td}>{U.formatNumber(bucket.maxItems)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {bucket.contents && bucket.contents.length ? (
+              <div className={styles.group}>
+                <table className={tstyles.table}>
+                  <tbody className={tstyles.tbody}>
+                    <tr className={tstyles.tr}>
+                      <th className={tstyles.th} style={{ width: '30%' }}>
+                        Name
+                      </th>
+                      <th className={tstyles.th}>Retrieval link</th>
+                      <th className={tstyles.th} style={{ width: '104px' }}>
+                        Size
+                      </th>
+                      <th className={tstyles.th} style={{ width: '120px' }}>
+                        User ID
+                      </th>
+                    </tr>
+
+                    {bucket.contents.map((data, index) => {
+                      const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                      return (
+                        <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
+                          <td className={tstyles.td}>{data.name}</td>
+                          <td className={tstyles.tdcta}>
+                            <a href={fileURL} target="_blank" className={tstyles.cta}>
+                              {fileURL}
+                            </a>
+                          </td>
+                          <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>
+                          <td className={tstyles.td}>{data.userId}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+          </div>
+        ))}
       </AuthenticatedLayout>
     </Page>
   );

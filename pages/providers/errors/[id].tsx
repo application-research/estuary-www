@@ -38,7 +38,7 @@ function MinerErrorPage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (
-    <Page title="Estuary: Public: Miner: Errors" description={`Errors for Miner: ${props.id}`} url={`https://estuary.tech/miners/errors/${props.id}`}>
+    <Page title="Estuary: Public: Providers: Errors" description={`Errors for storage provider: ${props.id}`} url={`https://estuary.tech/providers/errors/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} active="INDEX" />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
@@ -47,7 +47,7 @@ function MinerErrorPage(props: any) {
                 Creation
               </th>
               <th className={tstyles.th} style={{ width: 104 }}>
-                Miner
+                Provider
               </th>
               <th className={tstyles.th} style={{ width: 96 }}>
                 Phase
@@ -59,7 +59,7 @@ function MinerErrorPage(props: any) {
                   <tr key={log.ID} className={tstyles.tr}>
                     <td className={tstyles.td}>{U.toDate(log.CreatedAt)}</td>
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={`/miners/stats/${log.miner}`}>
+                      <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}
                       </a>
                     </td>

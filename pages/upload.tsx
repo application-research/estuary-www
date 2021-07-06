@@ -5,16 +5,14 @@ import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
 
-import Cookies from 'js-cookie';
 import Page from '@components/Page';
 import Navigation from '@components/Navigation';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import SingleColumnLayout from '@components/SingleColumnLayout';
-import UploadFileContainer from '@components/UploadFileContainer';
-import ProgressBlock from '@components/ProgressBlock';
-import Block from '@components/Block';
-import ActionRow from '@components/ActionRow';
+import UploadZone from '@components/UploadZone';
+import UploadList from '@components/UploadList';
+import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
@@ -36,115 +34,56 @@ export async function getServerSideProps(context) {
 }
 
 export default class UploadPage extends React.Component<any> {
+  list = React.createRef<any>();
+
   state = {
-    cid: null,
-    staging: null,
-    loaded: null,
-    total: null,
-    secondsElapsed: null,
-    bytesPerSecond: null,
-    secondsRemaining: null,
+    files: [],
   };
 
-  componentWillUnmount() {
-    window.onbeforeunload = null;
-  }
+  _handleUpload = () => {
+    return this.list.current.uploadAll();
+  };
 
-  _handleClearState = (state: any) => {
+  _handleRemove = (id) => {
+    this.setState({ files: this.state.files.filter((each) => each.id !== id) });
+  };
+
+  _handleFlush = () => {
+    this.setState({ files: [] });
+  };
+
+  _handleFile = async (file) => {
+    if (!file) {
+      console.log('MISSING DATA');
+      return;
+    }
+
+    // NOTE(jim): Prevents small files from being made directly into deals.
+    if (file.size < this.props.viewer.settings.fileStagingThreshold) {
+      return this.setState({
+        files: [{ id: `file-${new Date().getTime()}`, data: file, estimation: null, price: null }, ...this.state.files],
+      });
+    }
+
+    const response = await R.post('/deals/estimate', {
+      size: file.size,
+      replication: this.props.viewer.settings.replication,
+      durationBlks: this.props.viewer.settings.dealDuration,
+      verified: this.props.viewer.settings.verified,
+    });
+
+    const local = await fetch('/api/fil-usd');
+    const { price } = await local.json();
+
+    const estimate = response && response.totalAttoFil ? response.totalAttoFil : null;
+
     return this.setState({
-      ...state,
+      files: [{ id: `file-${new Date().getTime()}`, data: file, estimation: estimate, price }, ...this.state.files],
     });
-  };
-
-  _handleUploadFile = (options: any) => {
-    this.setState({
-      loaded: 0,
-      total: 0,
-      cid: '',
-      secondsElapsed: 0,
-      bytesPerSecond: 0,
-      secondsRemaining: 0,
-      staging: options && options.staging,
-    });
-  };
-
-  _handleProgress = (response: any) => {
-    console.log(`Uploaded ${response.loaded} of ${response.total} bytes`);
-    this.setState({
-      loaded: response.loaded,
-      total: response.total,
-      secondsElapsed: response.secondsElapsed,
-      bytesPerSecond: response.bytesPerSecond,
-      secondsRemaining: response.secondsRemaining,
-    });
-
-    window.onbeforeunload = function() {
-      return 'An upload is in progress, are you sure you want to navigate away?';
-    };
-  };
-
-  _handleUploadFinished = ({ cid }) => {
-    console.log('Upload finished.', cid);
-
-    // NOTE(jim): You must reset all of the state, some state depends on it.
-    this.setState({
-      loaded: 0,
-      total: 0,
-      cid,
-      secondsElapsed: 0,
-      bytesPerSecond: 0,
-      secondsRemaining: 0,
-    });
-
-    window.onbeforeunload = null;
   };
 
   render() {
-    let endStateElement;
-    if (!U.isEmpty(this.state.cid)) {
-      endStateElement = (
-        <React.Fragment>
-          <H2 style={{ marginTop: 48 }}>Success</H2>
-          <P style={{ marginTop: 16 }}>Your data has been uploaded. Estuary will now make Filecoin Storage Deals on your behalf to ensure proper storage.</P>
-
-          <Block
-            style={{ marginTop: 24 }}
-            label="Your retrieval URL"
-            custom="➝ Go see Filecoin storage miner status."
-            onCustomClick={() => {
-              window.location.href = '/deals';
-            }}
-          >
-            https://dweb.link/ipfs/{this.state.cid}
-          </Block>
-
-          <ActionRow>You can retrieve your data in a few minutes.</ActionRow>
-        </React.Fragment>
-      );
-
-      if (this.state.staging) {
-        endStateElement = (
-          <React.Fragment>
-            <H2 style={{ marginTop: 48 }}>Added to staging</H2>
-            <P style={{ marginTop: 16 }}>
-              Your data has been uploaded. In a few hours deals will be made for all files you have uploaded under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}.
-            </P>
-
-            <Block
-              style={{ marginTop: 24 }}
-              label="Your retrieval URL"
-              custom="➝ View staging area."
-              onCustomClick={() => {
-                window.location.href = '/staging';
-              }}
-            >
-              https://dweb.link/ipfs/{this.state.cid}
-            </Block>
-          </React.Fragment>
-        );
-      }
-    }
-
+    console.log(this.state.files);
     const sidebarElement = <AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />;
 
     return (
@@ -152,32 +91,34 @@ export default class UploadPage extends React.Component<any> {
         <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <SingleColumnLayout>
             <H2>Upload data</H2>
-            <P style={{ marginTop: 16 }}>
-              Add your public data to Estuary so anyone can retrieve it anytime. If you upload any files under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}, we
-              will aggregate your files into a single deal.
-            </P>
+            <P style={{ marginTop: 16 }}>Add your public data to Estuary so anyone can retrieve it anytime.</P>
+            <UploadZone onFile={this._handleFile} onFlush={this._handleFlush} />
 
-            <UploadFileContainer
-              onProgress={this._handleProgress}
-              onUploadFinished={this._handleUploadFinished}
-              onUploadFile={this._handleUploadFile}
-              onClearState={this._handleClearState}
-              uploadFinished={this.state.loaded > 0 && this.state.loaded === this.state.total}
-              viewer={this.props.viewer}
-            >
-              {this.state.total ? (
-                <ProgressBlock
-                  style={{ marginTop: 2 }}
-                  loaded={this.state.loaded}
-                  total={this.state.total}
-                  secondsRemaining={this.state.secondsRemaining}
-                  secondsElapsed={this.state.secondsElapsed}
-                  bytesPerSecond={this.state.bytesPerSecond}
-                />
-              ) : null}
-            </UploadFileContainer>
+            {this.state.files.length ? (
+              <React.Fragment>
+                <H3 style={{ marginTop: 64 }}>Queued files</H3>
+                <P style={{ marginTop: 16 }}>Your data that is ready to be uploaded to Estuary</P>
 
-            {endStateElement}
+                <div className={styles.actions}>
+                  <Button style={{ marginRight: 24, marginBottom: 24 }} onClick={this._handleUpload}>
+                    Upload all
+                  </Button>
+
+                  <Button
+                    style={{
+                      marginBottom: 24,
+                      background: 'var(--main-button-background-secondary)',
+                      color: 'var(--main-button-text-secondary)',
+                    }}
+                    onClick={this._handleFlush}
+                  >
+                    Clear list
+                  </Button>
+                </div>
+
+                <UploadList ref={this.list} files={this.state.files} viewer={this.props.viewer} onRemove={this._handleRemove} />
+              </React.Fragment>
+            ) : null}
           </SingleColumnLayout>
         </AuthenticatedLayout>
       </Page>

@@ -104,7 +104,7 @@ function UploadCIDPage(props: any) {
 
             <H4 style={{ marginTop: 24 }}>Default deal settings</H4>
             <div style={{ maxWidth: '568px' }}>
-              <ActionRow style={{ marginTop: 12 }}>Replicated across {props.viewer.settings.replication} miners.</ActionRow>
+              <ActionRow style={{ marginTop: 12 }}>Replicated across {props.viewer.settings.replication} storage providers.</ActionRow>
               <ActionRow>
                 Stored for {props.viewer.settings.dealDuration} filecoin-epochs ({((props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
               </ActionRow>

@@ -123,6 +123,35 @@ function SettingsPage(props: any) {
               Change
             </Button>
           </div>
+
+          <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
+          <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
+
+          <H4 style={{ marginTop: 24 }}>Replication</H4>
+          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.settings.replication} />
+          <aside className={styles.formAside}>
+            This is the amount of storage providers we will secure deals (sealed, on chain) with on the Filecoin Network. Once this happens we will stop.
+          </aside>
+
+          <H4 style={{ marginTop: 24 }}>Deal duration (30 second fil-epoch)</H4>
+          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.settings.dealDuration} />
+          <aside className={styles.formAside}>
+            Stored for {props.viewer.settings.dealDuration} filecoin-epochs ({((props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days). This Estuary node will
+            auto renew deals if there is Filecoin in the address used to make deals.
+          </aside>
+
+          <H4 style={{ marginTop: 24 }}>Max staging wait (nanoseconds)</H4>
+          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.settings.maxStagingWait} />
+          <aside className={styles.formAside}>
+            The amount of time Estuary waits before making deals for a <a href="/staging">staging zone</a>. Currently Estuary waits{' '}
+            {U.nanoToHours(props.viewer.settings.maxStagingWait)} hours.
+          </aside>
+
+          <H4 style={{ marginTop: 24 }}>Staging threshold (bytes)</H4>
+          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.settings.fileStagingThreshold} />
+          <aside className={styles.formAside}>
+            If you upload anything under {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, Estuary will initialize a staging area for those files.
+          </aside>
         </SingleColumnLayout>
       </AuthenticatedLayout>
     </Page>

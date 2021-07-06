@@ -161,12 +161,12 @@ function ReceiptPage(props) {
             <table className={tstyles.table}>
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Provider Miner</th>
+                  <th className={tstyles.th}>Provider ID</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/miners/stats/${state.deal.Provider}`}>
+                    <a className={tstyles.cta} href={`/providers/stats/${state.deal.Provider}`}>
                       {state.deal.Provider}
                     </a>
                   </td>

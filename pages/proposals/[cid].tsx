@@ -50,7 +50,7 @@ function ProposalPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title={`Estuary: Proposal: CID: ${props.cid}`} description={`Proposals for proposal (prop) cid: ${props.cid}`} url={`https://estuary.tech/proposals/${props.cid}`}>
+    <Page title={`Estuary: Proposal: CID: ${props.cid}`} description={`Deal proposals for proposal (prop) cid: ${props.cid}`} url={`https://estuary.tech/proposals/${props.cid}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="PROPOSAL_BY_CID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>
@@ -149,12 +149,12 @@ function ProposalPage(props: any) {
             <table className={tstyles.table}>
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Provider Miner</th>
+                  <th className={tstyles.th}>Provider</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/miners/stats/${state.deal.Provider}`}>
+                    <a className={tstyles.cta} href={`/providers/stats/${state.deal.Provider}`}>
                       {state.deal.Provider}
                     </a>
                   </td>

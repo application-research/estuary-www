@@ -31,7 +31,7 @@ function MinerDealsPage(props: any) {
         return setState({ logs: response });
       }
 
-      alert('No deal history for this miner.');
+      alert('No deal history for this storage provider.');
     };
 
     run();
@@ -40,7 +40,7 @@ function MinerDealsPage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (
-    <Page title="Estuary: Public: Miner: Deals" description={`Deals for Miner: ${props.id}`} url={`https://estuary.tech/miners/deals/${props.id}`}>
+    <Page title="Estuary: Public: Providers: Deals" description={`Deals for storage provider: ${props.id}`} url={`https://estuary.tech/providers/deals/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>
@@ -49,7 +49,7 @@ function MinerDealsPage(props: any) {
                 Creation
               </th>
               <th className={tstyles.th} style={{ width: 104 }}>
-                Miner
+                Provider
               </th>
               <th className={tstyles.th} style={{ width: 96 }}>
                 Content
@@ -71,7 +71,7 @@ function MinerDealsPage(props: any) {
                     <tr key={log.ID} className={tstyles.tr} style={style}>
                       <td className={tstyles.td}>{U.toDate(log.CreatedAt)}</td>
                       <td className={tstyles.tdcta}>
-                        <a className={tstyles.cta} href={`/miners/stats/${log.miner}`}>
+                        <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                           {log.miner}
                         </a>
                       </td>

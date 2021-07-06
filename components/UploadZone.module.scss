@@ -1,0 +1,50 @@
+.invisible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.drop {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 24px;
+  background: var(--main-background-foreground);
+  padding: 24px;
+}
+
+.top {
+  margin-top: 144px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.bottom {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Mono';
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+}
+
+.bottomLeft {
+  flex-shrink: 0;
+}
+
+.bottomRight {
+  min-width: 10%;
+  width: 100%;
+  text-align: right;
+}
+
+.actions {
+  margin-top: 24px;
+}

@@ -20,7 +20,7 @@ const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) 
     }
   }
 
-  const minerStatsURL = `/miners/stats/${deal.miner}`;
+  const minerStatsURL = `/providers/stats/${deal.miner}`;
   const dealErrorURL = `/errors/${contentId}`;
   const dealURL = deal ? `/deals/${deal.ID}` : null;
   const receiptURL = deal && deal.dealId ? `/receipts/${deal.dealId}` : null;

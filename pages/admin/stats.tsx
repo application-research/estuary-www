@@ -86,7 +86,7 @@ function AdminStatsPage(props) {
               {state.lmdbStat ? (
                 <React.Fragment>
                   <Block style={{ marginTop: 2 }} label="LMDB branch pages">
-                    {state.lmdbStat.branchPages}
+                    {U.formatNumber(state.lmdbStat.branchPages)}
                   </Block>
 
                   <Block style={{ marginTop: 2 }} label="LMDB depth">
@@ -94,19 +94,19 @@ function AdminStatsPage(props) {
                   </Block>
 
                   <Block style={{ marginTop: 2 }} label="LMDB entries">
-                    {state.lmdbStat.entries}
+                    {U.formatNumber(state.lmdbStat.entries)}
                   </Block>
 
                   <Block style={{ marginTop: 2 }} label="LMDB leaf pages">
-                    {state.lmdbStat.leafPages}
+                    {U.formatNumber(state.lmdbStat.leafPages)}
                   </Block>
 
                   <Block style={{ marginTop: 2 }} label="LMDB overflow pages">
-                    {state.lmdbStat.overflowPages}
+                    {U.formatNumber(state.lmdbStat.overflowPages)}
                   </Block>
 
                   <Block style={{ marginTop: 2 }} label="LMDB p size">
-                    {state.lmdbStat.pSize}
+                    {U.formatNumber(state.lmdbStat.pSize)}
                   </Block>
                 </React.Fragment>
               ) : null}

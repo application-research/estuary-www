@@ -1,9 +1,12 @@
+.default {
+  font-family: 'Mono';
+}
+
 .container {
   width: 100%;
   background: var(--main-background-foreground);
   margin-top: 2px;
   padding: 8px 24px 8px 24px;
-  font-family: "Mono";
   font-size: 12px;
 }
 

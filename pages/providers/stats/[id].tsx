@@ -70,7 +70,7 @@ function MinerStatsPage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (
-    <Page title={`Estuary: Public: Miner: ${props.id}`} description={`Stats for Miner: ${props.id}`} url={`https://estuary.tech/miners/stats/${props.id}`}>
+    <Page title={`Estuary: Public: Providers: ${props.id}`} description={`Stats for storage provider: ${props.id}`} url={`https://estuary.tech/providers/stats/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {state.loading > 1 ? (
           <SingleColumnLayout>
@@ -78,10 +78,11 @@ function MinerStatsPage(props: any) {
               {props.id} {U.isEmpty(state.name) ? null : `— ${state.name}`}
             </H2>
             {state.usedByEstuary ? (
-              <P style={{ marginTop: 16, marginBottom: 24 }}>This miner is used by Estuary.</P>
+              <P style={{ marginTop: 16, marginBottom: 24 }}>This storage provider is used by Estuary.</P>
             ) : (
               <P style={{ marginTop: 16, marginBottom: 24 }}>
-                This miner is not used by Estuary, therefore we do not make storage deals against this miner. An admin of Estuary can add this miner in the future.
+                This storage provider is not used by Estuary, therefore we do not make storage deals against this storage provider. An admin of Estuary can add this storage
+                provider in the future.
               </P>
             )}
 
@@ -117,7 +118,7 @@ function MinerStatsPage(props: any) {
                   style={{ marginTop: 2 }}
                   label="Attempted deals"
                   onCustomClick={() => {
-                    window.location.href = `/miners/deals/${props.id}`;
+                    window.location.href = `/providers/deals/${props.id}`;
                   }}
                   custom={`➝ View deals for ${props.id}`}
                 >
@@ -128,7 +129,7 @@ function MinerStatsPage(props: any) {
                   style={{ marginTop: 2 }}
                   label="Total errors"
                   onCustomClick={() => {
-                    window.location.href = `/miners/errors/${props.id}`;
+                    window.location.href = `/providers/errors/${props.id}`;
                   }}
                   custom={`➝ View errors for ${props.id}`}
                 >

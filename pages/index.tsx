@@ -245,7 +245,7 @@ function IndexPage(props: any) {
       <SingleColumnLayout style={{ textAlign: 'center' }}>
         <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
         <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Logs from your Filecoin miner are public so we can help debug and triage issues with the Filecoin Network.
+          Logs from your Storage providers are public so we can help debug and triage issues with the Filecoin Network.
         </P>
 
         <div className={S.actions}>
@@ -298,7 +298,7 @@ function IndexPage(props: any) {
             <span className={S.flink}>Index</span>
           </div>
           <div className={S.fcolfull}>
-            <span className={S.flink}>All of the miners that store data from this Estuary node.</span>
+            <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
           </div>
         </div>
         {state.miners.map((each, index) => {
@@ -324,22 +324,22 @@ function IndexPage(props: any) {
           return (
             <div className={S.fam} key={each.addr}>
               <div className={S.fcol4}>
-                <a className={S.flink} href={`/miners/stats/${each.addr}`}>
+                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
                   {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
                 </a>
               </div>
               <div className={S.fcol4}>
-                <a className={S.flink} href={`/miners/stats/${each.addr}`}>
+                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
                   ➝ {each.addr}/stats
                 </a>
               </div>
               <div className={S.fcol4}>
-                <a className={S.flink} href={`/miners/deals/${each.addr}`}>
+                <a className={S.flink} href={`/providers/deals/${each.addr}`}>
                   ➝ {each.addr}/deals
                 </a>
               </div>
               <div className={S.fcol4}>
-                <a className={S.flink} href={`/miners/errors/${each.addr}`}>
+                <a className={S.flink} href={`/providers/errors/${each.addr}`}>
                   ➝ {each.addr}/errors
                 </a>
               </div>

@@ -1,0 +1,42 @@
+.item {
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  min-width: 10%;
+  width: 100%;
+}
+
+.right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+.button {
+  margin-top: 2px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15);
+  margin-left: 2px;
+  padding: 8px 24px 8px 24px;
+  font-size: 12px;
+  height: 33px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  transition: 200ms ease all;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--main-primary);
+    color: var(--main-background);
+  }
+}

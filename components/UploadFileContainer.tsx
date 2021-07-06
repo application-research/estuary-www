@@ -306,7 +306,7 @@ export default class UploadFileContainer extends React.Component<any> {
               </ActionRow>
             ) : null}
             <ActionRow>{U.bytesToSize(this.state.data.file.size)}</ActionRow>
-            <ActionRow>Replicated across {this.props.viewer.settings.replication} miners.</ActionRow>
+            <ActionRow>Replicated across {this.props.viewer.settings.replication} storage providers.</ActionRow>
             <ActionRow>
               Stored for {this.props.viewer.settings.dealDuration} filecoin-epochs ({((this.props.viewer.settings.dealDuration * 30) / 60 / 60 / 24).toFixed(2)} days).
             </ActionRow>

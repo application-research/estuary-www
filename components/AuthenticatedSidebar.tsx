@@ -69,8 +69,8 @@ function AuthenticatedLayout(props: any) {
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
-        <a className={styles.item} href="/admin/miners" style={props.active === 'ADMIN_MINERS' ? { color: `var(--main-primary)` } : null}>
-          Miners
+        <a className={styles.item} href="/admin/providers" style={props.active === 'ADMIN_MINERS' ? { color: `var(--main-primary)` } : null}>
+          Providers
         </a>
       ) : null}
       {props.viewer.perms >= 10 ? (
