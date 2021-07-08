@@ -108,9 +108,9 @@ export default class UploadItem extends React.Component<any> {
             </ActionRow>
             <ActionRow>https://dweb.link/ipfs/{this.state.final.cid}</ActionRow>
             {this.props.file.estimation ? (
-              <ActionRow style={{ background: `var(--status-success-bright)` }}>Filecoin Deals are being made now.</ActionRow>
+              <ActionRow style={{ background: `var(--status-success-bright)` }}>Filecoin Deals are being mmade for {this.props.file.data.name}.</ActionRow>
             ) : (
-              <ActionRow>Filecoin Deals will be made for the staging bucket {this.props.file.data.name} belongs to later.</ActionRow>
+              <ActionRow>{this.props.file.data.name} was added to a staging bucket.</ActionRow>
             )}
             {this.props.file.estimation ? (
               <ActionRow onClick={() => window.open('/deals')}>→ See all Filecoin deals.</ActionRow>

@@ -193,7 +193,6 @@ function SignInPage(props: any) {
         <div className={styles.actions}>
           <Button
             style={{ width: '100%' }}
-            loading={state.loading ? state.loading : undefined}
             onClick={async () => {
               if (U.isEmpty(state.key)) {
                 alert('Please provide a valid key');

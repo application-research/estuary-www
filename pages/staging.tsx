@@ -112,6 +112,10 @@ function StagingPage(props) {
                 <table className={tstyles.table}>
                   <tbody className={tstyles.tbody}>
                     <tr className={tstyles.tr}>
+                      <th className={tstyles.th} style={{ width: '80px' }}>
+                        #
+                      </th>
+
                       <th className={tstyles.th} style={{ width: '30%' }}>
                         Name
                       </th>
@@ -128,6 +132,9 @@ function StagingPage(props) {
                       const fileURL = `https://dweb.link/ipfs/${data.cid}`;
                       return (
                         <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
+                          <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
+                            {String(index).padStart(7, '0')}
+                          </td>
                           <td className={tstyles.td}>{data.name}</td>
                           <td className={tstyles.tdcta}>
                             <a href={fileURL} target="_blank" className={tstyles.cta}>

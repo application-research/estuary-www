@@ -14,8 +14,11 @@ import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
+import ActionRow from '@components/ActionRow';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+
+const INCREMENT = 1000;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,16 +37,38 @@ export async function getServerSideProps(context) {
   };
 }
 
+const getNext = async (state, setState) => {
+  const offset = state.offset + INCREMENT;
+  const limit = state.limit;
+  const next = await R.get(`/content/stats?offset=${offset}&limit=${limit}`);
+
+  if (!next || !next.length) {
+    return;
+  }
+
+  setState({
+    ...state,
+    offset,
+    limit,
+    files: [...state.files, ...next],
+  });
+};
+
 function HomePage(props: any) {
-  const [state, setState] = React.useState({ files: null, stats: null });
+  const [state, setState] = React.useState({
+    files: null,
+    stats: null,
+    offset: 0,
+    limit: INCREMENT,
+  });
 
   React.useEffect(() => {
     const run = async () => {
-      const files = await R.get('/content/stats');
+      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`);
       const stats = await R.get('/user/stats');
 
       if (files && !files.error) {
-        setState({ files, stats });
+        setState({ ...state, files, stats });
       }
     };
 
@@ -100,6 +125,9 @@ function HomePage(props: any) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: '80px' }}>
+                  #
+                </th>
                 <th className={tstyles.th} style={{ width: '30%' }}>
                   Name
                 </th>
@@ -122,6 +150,9 @@ function HomePage(props: any) {
 
                     return (
                       <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
+                        <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
+                          {String(index + 1).padStart(7, '0')}
+                        </td>
                         <td className={tstyles.td}>{name}</td>
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>
@@ -135,6 +166,11 @@ function HomePage(props: any) {
                 : null}
             </tbody>
           </table>
+          {state.files && state.offset + state.limit === state.files.length ? (
+            <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState)}>
+              ➝ Next 1000
+            </ActionRow>
+          ) : null}
         </div>
       </AuthenticatedLayout>
     </Page>
