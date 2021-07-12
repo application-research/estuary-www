@@ -30,6 +30,15 @@ export async function getServerSideProps(context) {
     };
   }
 
+  if (viewer.settings && viewer.settings.contentAddingDisabled) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/upload-disabled',
+      },
+    };
+  }
+
   return {
     props: { viewer },
   };
