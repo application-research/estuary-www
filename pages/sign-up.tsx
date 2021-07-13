@@ -196,6 +196,13 @@ function SignUpPage(props: any) {
             Sign in instead
           </Button>
         </div>
+        <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
+          By creating an account or by using Estuary you unconditionally agree to our{' '}
+          <a href="https://docs.estuary.tech/terms" target="_blank">
+            Terms of Service
+          </a>
+          .
+        </aside>
       </SingleColumnLayout>
     </Page>
   );
