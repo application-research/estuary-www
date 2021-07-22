@@ -4,9 +4,8 @@ import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
-import * as R from '@common/requests';
 
-import * as webnative from 'webnative';
+import * as Webnative from 'webnative';
 import { useFissionAuth } from '@common/useFissionAuth';
 
 import Cookies from 'js-cookie';
@@ -91,7 +90,8 @@ async function handleRegister(state: any) {
   }
 
   /** Request an API token to store for the next sign in
-   *  The token is stored encrypted at rest in WNFS.
+   * The token is stored encrypted at rest in WNFS.
+   * NOTE(bgins)
    */
 
   let response = await fetch(`${C.api.host}/user/api-keys`, {
@@ -119,7 +119,7 @@ async function handleRegister(state: any) {
     };
   }
 
-  const tokenPath = state.fs.appPath(webnative.path.file(C.auth));
+  const tokenPath = state.fs.appPath(Webnative.path.file(C.auth));
   await state.fs.write(tokenPath, json.token);
   const result = await state.publish(tokenPath);
 
@@ -127,7 +127,7 @@ async function handleRegister(state: any) {
     return result;
   }
 
-  // Set the first token granted and redirect to home
+  // NOTE(bgins): Set the first token granted and redirect to home
   Cookies.set(C.auth, j.token);
   window.location.href = '/home';
   return;
@@ -163,6 +163,7 @@ function AccountSetupPage(props: any) {
   /** Check for token
    * The user may already have an account. If we have a token stored for
    * them, redirect them to the Authed with Fission interstitial page
+   * NOTE(bgins)
    */
 
   React.useEffect(() => {
