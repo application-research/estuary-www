@@ -19,6 +19,8 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const host = context.req.headers.host;
+  const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
   if (viewer) {
     return {
@@ -30,7 +32,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, host, protocol },
   };
 }
 
@@ -139,7 +141,7 @@ function AccountSetupPage(props: any) {
     loading: false,
     fs: null,
   });
-  const { fs, publish, readToken, username } = useFissionAuth();
+  const { fs, publish, readToken, username } = useFissionAuth({ host: props.host, protocol: props.protocol });
 
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);

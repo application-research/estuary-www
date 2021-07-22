@@ -13,6 +13,8 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const host = context.req.headers.host;
+  const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
   if (viewer) {
     return {
@@ -24,7 +26,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, host, protocol },
   };
 }
 
@@ -33,7 +35,7 @@ function AuthedWithFissionPage(props: any) {
     loading: false,
     fs: null,
   });
-  const { signIn, username } = useFissionAuth();
+  const { signIn, username } = useFissionAuth({ host: props.host, protocol: props.protocol });
 
   return (
     <Page title="Estuary: Authenticated with Fission" description="Authenticated with Fission. Continue to Estuary" url="https://estuary.tech/authed-with-fission">
