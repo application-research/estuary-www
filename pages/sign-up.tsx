@@ -5,7 +5,7 @@ import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 
-import * as webnative from 'webnative';
+import * as Webnative from 'webnative';
 import { useFissionAuth } from '@common/useFissionAuth';
 
 import Cookies from 'js-cookie';
@@ -96,7 +96,7 @@ async function handleRegister(state: any) {
 }
 
 async function handleFissionAuth({ authorise, authScenario, signIn }) {
-  if (authScenario === webnative.Scenario.AuthSucceeded || authScenario === webnative.Scenario.Continuation) {
+  if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
     return await signIn();
   } else {
     authorise('account-setup');
@@ -139,8 +139,8 @@ function SignUpPage(props: any) {
           }}
           loading={state.fissionLoading ? state.fissionLoading : undefined}
           onClick={async () => {
-            // Show loading state only if user is authed, otherwise we will be redirecting
-            if (authScenario === webnative.Scenario.AuthSucceeded || authScenario === webnative.Scenario.Continuation) {
+            // NOTE(bgins): Show loading state only if user is authed, otherwise we will be redirecting
+            if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
               setState({ ...state, fissionLoading: true });
             }
             const response = await handleFissionAuth({
