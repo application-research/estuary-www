@@ -112,9 +112,8 @@ export function useFissionAuth({ host, protocol }) {
         window.location.href = '/home';
         return;
       } else {
-        return {
-          error: 'We could not find your credentials stored with Fission. Please contact us.',
-        };
+        window.location.href = '/account-setup';
+        return;
       }
     } else {
       return {
