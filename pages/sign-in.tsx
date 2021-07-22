@@ -20,6 +20,10 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const host = context.req.headers.host;
+  const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
+
+  console.log(protocol)
 
   if (viewer) {
     return {
@@ -31,7 +35,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {},
+    props: { host, protocol },
   };
 }
 
@@ -126,7 +130,7 @@ async function handleFissionAuth({ authorise, authScenario, signIn }) {
 
 function SignInPage(props: any) {
   const [state, setState] = React.useState({ loading: false, fissionLoading: false, username: '', password: '', key: '' });
-  const { authorise, signIn, authScenario } = useFissionAuth();
+  const { authorise, signIn, authScenario } = useFissionAuth({ host: props.host, protocol: props.protocol });
 
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url="https://estuary.tech/sign-in">

@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 
 webnative.setup.debug({ enabled: true })
 
-export function useFissionAuth() {
+export function useFissionAuth({ host,  protocol }) {
   const [state, setState] = useState<webnative.State>(null)
   let fs;
   let authScenario: webnative.Scenario | null = null;
@@ -71,7 +71,7 @@ export function useFissionAuth() {
 
   const authorise = (redirectBackTo: string) => {
     if (state) {
-      webnative.redirectToLobby(state.permissions, `http://localhost:4444/${redirectBackTo}`)
+      webnative.redirectToLobby(state.permissions, `${protocol}://${host}/${redirectBackTo}`)
     }
   }
 
@@ -154,9 +154,7 @@ export function useFissionAuth() {
    */
 
   const publish = async (path) => {
-    console.log('fs', fs)
     if (fs) {
-      console.log('publishing')
       const cid = await fs.root.put();
       const ucan = await webnative.ucan.dictionary.lookupFilesystemUcan(path);
       await webnative.dataRoot.update(cid, ucan);
