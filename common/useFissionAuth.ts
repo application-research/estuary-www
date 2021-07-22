@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 
 webnative.setup.debug({ enabled: true })
 
-export function useFissionAuth({ host,  protocol }) {
+export function useFissionAuth({ host, protocol }) {
   const [state, setState] = useState<webnative.State>(null)
   let fs;
   let authScenario: webnative.Scenario | null = null;
@@ -29,12 +29,12 @@ export function useFissionAuth({ host,  protocol }) {
           // at bgins/estuary-www.
           app: {
             name: 'estuary-www',
-            creator: 'bgins',
+            creator: 'arg',
           },
           fs: {
             // The cosigner key is stored in the private filesystem
             // at the path Keychain/fil-cosigner.
-            private: [webnativeFilecoin.DEFAULT_KEY_PERMISSION]
+            private: [webnative.path.file('Keychain', 'estuary-fil-cosigner')]
           }
         },
       })
