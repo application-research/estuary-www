@@ -1,0 +1,142 @@
+import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
+
+import * as React from 'react';
+import * as U from '@common/utilities';
+import * as R from '@common/requests';
+
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import AuthenticatedLayout from '@components/AuthenticatedLayout';
+import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
+import PageHeader from '@components/PageHeader';
+import Block from '@components/Block';
+import Input from '@components/Input';
+import Button from '@components/Button';
+
+import { H1, H2, H3, H4, P } from '@components/Typography';
+
+export async function getServerSideProps(context) {
+  const viewer = await U.getViewerFromHeader(context.req.headers);
+
+  if (!viewer) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/sign-in',
+      },
+    };
+  }
+
+  if (viewer.perms < 10) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/home',
+      },
+    };
+  }
+
+  return {
+    props: { viewer },
+  };
+}
+
+function AdminShuttlePage(props: any) {
+  const [state, setState] = React.useState({ loading: false, shuttles: [] });
+
+  React.useEffect(() => {
+    const run = async () => {
+      const response = await R.get('/admin/shuttle/list');
+      console.log(response);
+      setState({ ...state, shuttles: response && response.length ? response : [] });
+    };
+
+    run();
+  }, []);
+
+  const sidebarElement = <AuthenticatedSidebar active="ADMIN_SHUTTLE" viewer={props.viewer} />;
+
+  return (
+    <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url="https://estuary.tech/admin/shuttle">
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <PageHeader>
+          <H2>Create Shuttle</H2>
+          <P style={{ marginTop: 16 }}>Generate a Shuttle for your data.</P>
+
+          <div className={styles.actions}>
+            <Button
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                setState({ ...state, loading: true });
+                await R.post(`/admin/shuttle/init`, {});
+                const response = await R.get('/admin/shuttle/list');
+                console.log(response);
+                setState({ ...state, loading: false, shuttles: response && response.length ? response : [] });
+              }}
+            >
+              Initialize a shuttle
+            </Button>
+          </div>
+        </PageHeader>
+        <div className={styles.group}>
+          {state.shuttles && state.shuttles.length
+            ? state.shuttles.map((data, index) => {
+                const id = data.addrInfo ? data.addrInfo.ID : 'PENDING';
+                return (
+                  <div style={{ marginTop: 24 }} key={`${id}-${index}`}>
+                    <H3 style={{ margin: `8px 0 8px 0px` }}>Shuttle: {id}</H3>
+                    <table className={tstyles.table}>
+                      <tbody className={tstyles.tbody}>
+                        <tr className={tstyles.tr}>
+                          <th className={tstyles.th}>handle</th>
+                        </tr>
+                        <tr className={tstyles.tr}>
+                          <td className={tstyles.td}>{data.handle}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table className={tstyles.table}>
+                      <tbody className={tstyles.tbody}>
+                        <tr className={tstyles.tr}>
+                          <th className={tstyles.th}>token</th>
+                        </tr>
+                        <tr className={tstyles.tr}>
+                          <td className={tstyles.td}>{data.token}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table className={tstyles.table}>
+                      <tbody className={tstyles.tbody}>
+                        <tr className={tstyles.tr}>
+                          <th className={tstyles.th}>Last connection</th>
+                          <th className={tstyles.th}>Addresses</th>
+                          <th className={tstyles.th}>Online</th>
+                        </tr>
+                        <tr className={tstyles.tr}>
+                          <td className={tstyles.td}>{U.toDate(data.lastConnection)}</td>
+                          <td className={tstyles.td}>
+                            {data.addrInfo
+                              ? data.addrInfo.Addrs.map((each) => {
+                                  return <div key={each}>{each}</div>;
+                                })
+                              : 'None'}
+                          </td>
+
+                          <td className={tstyles.td}>{String(data.online)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })
+            : null}
+        </div>
+      </AuthenticatedLayout>
+    </Page>
+  );
+}
+
+export default AdminShuttlePage;

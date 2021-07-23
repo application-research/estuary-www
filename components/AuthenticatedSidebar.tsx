@@ -88,6 +88,11 @@ function AuthenticatedLayout(props: any) {
           Invites
         </a>
       ) : null}
+      {props.viewer.perms >= 10 ? (
+        <a className={styles.item} href="/admin/shuttle" style={props.active === 'ADMIN_SHUTTLE' ? { color: `var(--main-primary)` } : null}>
+          Shuttle
+        </a>
+      ) : null}
     </nav>
   );
 }
