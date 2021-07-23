@@ -82,6 +82,16 @@ const onSubmit = async (event, state, setState) => {
 function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
 
+  React.useEffect(() => {
+    async function performEffect() {
+      const response = await R.put('/user/address', { address: '<empty>' });
+
+      console.log(response);
+    }
+
+    performEffect();
+  }, []);
+
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={props.viewer} />;
 
   return (
@@ -126,6 +136,12 @@ function SettingsPage(props: any) {
 
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
+
+          <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
+          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.address} />
+          <aside className={styles.formAside}>
+            This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="https://fission.codes">Fission's website</a>.
+          </aside>
 
           <H4 style={{ marginTop: 24 }}>Replication</H4>
           <Input style={{ marginTop: 8 }} readOnly value={props.viewer.settings.replication} />
