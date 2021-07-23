@@ -5,19 +5,20 @@ import * as U from '@common/utilities';
 import * as C from '@common/constants';
 
 const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) => {
-  let topStyle = { background: C.statusColors[Number(transfer.status)] };
+  let topStyle = { background: null };
   if (transfer) {
+    topStyle = { background: C.statusColors[Number(transfer.status)] };
     if (deal.failed && transfer.status === 6) {
       topStyle.background = `var(--status-6-failed)`;
     }
+  }
 
-    if (message === `DealOnChain`) {
-      topStyle.background = `var(--status-success)`;
-    }
+  if (message === `DealOnChain`) {
+    topStyle.background = `var(--status-success)`;
+  }
 
-    if (message === `ActiveOnChain`) {
-      topStyle.background = `var(--status-success-bright)`;
-    }
+  if (message === `ActiveOnChain`) {
+    topStyle.background = `var(--status-success-bright)`;
   }
 
   const minerStatsURL = `/providers/stats/${deal.miner}`;
@@ -30,9 +31,11 @@ const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) 
     <div className={U.classNames(marketing ? styles.marketing : styles.card)}>
       <div className={styles.container}>
         <div className={styles.items} style={topStyle}>
-          <a className={styles.title} href={minerStatsURL} target="_blank">
-            {deal.miner}
-          </a>
+          {deal.miner ? (
+            <a className={styles.title} href={minerStatsURL} target="_blank">
+              {deal.miner}
+            </a>
+          ) : null}
           <div className={styles.plain} style={{ textTransform: 'none' }}>
             {message}
           </div>

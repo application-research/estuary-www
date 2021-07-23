@@ -212,9 +212,13 @@ export function getDealStateMessage(deal, transfer, chain) {
   if (deal && deal.failed) {
     message = 'Failed';
 
-    if (transfer.status === 6) {
+    if (transfer && transfer.status === 6) {
       message = 'FailedAfterTransfer';
     }
+  }
+
+  if (deal && deal.onChainAt === `0001-01-01T00:00:00Z` && message === `DealOnChain`) {
+    message = 'BrokenShuttle';
   }
 
   return message;
