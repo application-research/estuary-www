@@ -257,6 +257,17 @@ function AccountSetupPage(props: any) {
           >
             Set up account
           </Button>
+          <Button
+            style={{
+              width: '100%',
+              marginTop: 12,
+              background: 'var(--main-button-background-secondary)',
+              color: 'var(--main-button-text-secondary)',
+            }}
+            href="/sign-in"
+          >
+            Sign in instead
+          </Button>
         </div>
         <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
           By creating an account or by using Estuary you unconditionally agree to our{' '}
