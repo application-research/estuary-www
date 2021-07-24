@@ -11,6 +11,7 @@ import Button from '@components/Button';
 import FeatureRow from '@components/FeatureRow';
 import MarketingCube from '@components/MarketingCube';
 import SingleColumnLayout from '@components/SingleColumnLayout';
+import Comparison from '@components/Comparison';
 import Chart from '@components/Chart';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
@@ -41,7 +42,7 @@ function useWindowSize() {
   return size;
 }
 
-function IndexPage(props: any) {
+function ComparisonPage(props: any) {
   const [width, height] = useWindowSize();
   const [state, setState] = React.useState({
     miners: [],
@@ -139,47 +140,26 @@ function IndexPage(props: any) {
     load();
   }, [width]);
 
-  const description = 'Use any browser and our API to store public data on the decentralized Filecoin Network and retrieve it from anywhere.';
+  const description = 'A comparison of Estuary and popular cloud storage options.';
 
   return (
-    <Page title="Estuary" description={description} url="https://estuary.tech">
+    <Page title="Estuary: Comparisons" description={description} url="https://estuary.tech">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
+
+      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
+        <H1 style={{ margin: '0 auto 0 auto' }}>Let's compare</H1>
+        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>Data to compare this Estuary Node, Amazon S3, and Alibaba Cloud Storage.</P>
+        <div className={S.actions}>
+          <Button href="/">Try Estuary</Button>
+        </div>
+      </SingleColumnLayout>
+
+      <Comparison />
 
       <div className={S.h}>
         <div className={S.ht}>
-          {props.viewer ? <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Welcome back!</H1> : <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Store your data</H1>}
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>{description}</P>
-          {props.viewer ? (
-            <div className={S.actions}>
-              <Button href="/home">View your files</Button>
-            </div>
-          ) : (
-            <div className={S.actions}>
-              <Button
-                href="https://docs.estuary.tech"
-                target="_blank"
-                style={{
-                  marginRight: 24,
-                  marginBottom: 24,
-                }}
-              >
-                Learn more
-              </Button>
-
-              <Button
-                href="https://docs.estuary.tech/get-invite-key"
-                target="_blank"
-                style={{
-                  background: 'var(--main-button-background-secondary)',
-                  color: 'var(--main-button-text-secondary)',
-                  marginBottom: 24,
-                }}
-              >
-                Get access
-              </Button>
-            </div>
-          )}
-          <img className={S.hbimg} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
+          <H2 style={{ maxWidth: '768px', fontWeight: 600 }}>Stored data</H2>
+          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>Our Estuary Node has pinned and stored data on the Filecoin Network.</P>
         </div>
       </div>
 
@@ -202,58 +182,6 @@ function IndexPage(props: any) {
             <div className={S.scl}>Total sealed storage</div>
           </div>
         ) : null}
-      </div>
-
-      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
-        <H2 style={{ margin: '0 auto 0 auto' }}>Filecoin storage made easy</H2>
-        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Estuary makes using Filecoin as easy as uploading a file. Now you can make storage deals without having to understand how it works.
-        </P>
-        <div className={S.actions}>
-          <Button href="/comparisons">Compare to Cloud Storage</Button>
-        </div>
-      </SingleColumnLayout>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Upload public data</div>
-          <FeatureRow>
-            <strong>No minimum size</strong>. 32 GB maximum per file.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Use this website, or our API</strong>. Check out our{' '}
-            <a href="https://docs.estuary.tech" target="_blank">
-              documentation
-            </a>
-            .
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Global access.</strong> Retrieve your data from any IPFS gateway.
-          </FeatureRow>
-        </div>
-        <div className={S.rr} style={{ background: `#000` }}>
-          <video className={S.video} controls src="https://ipfs.io/ipfs/bafybeiaxlts3bqrsywzcymnp3lv7rrqarszntge455yav26ekfvhbxkjfm" autoPlay={true} playsInline muted loop />
-          {/* <MarketingUpload estimate="0" price="0" size="792259920" replication="6" duration={1051200} verified={true} /> */}
-        </div>
-      </div>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Provable storage</div>
-          <FeatureRow>
-            <strong>Interoperable</strong>. All storage is accessible from any IPFS gateway.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Verifiable</strong>. All storage has an immutable content address so you always know what you're getting. All deals have receipts before and after getting on
-            chain.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Detailed</strong>. Learn exactly how your data is stored and with which provider in the world.
-          </FeatureRow>
-        </div>
-        <div className={S.rr}>
-          <MarketingProgress />
-        </div>
       </div>
 
       <SingleColumnLayout style={{ textAlign: 'center' }}>
@@ -371,4 +299,4 @@ function IndexPage(props: any) {
   );
 }
 
-export default IndexPage;
+export default ComparisonPage;
