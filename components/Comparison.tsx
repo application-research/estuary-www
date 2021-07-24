@@ -297,14 +297,14 @@ function Comparison(props: any) {
             </td>
 
             <td className={tstyles.td}>
-              US, JP, CN, BE, UK, DE, AU, IN, BR, SG, FI.
+              US, JP, CN, UK, DE, AU, SG, IN, BE, BR, FI.
               <br />
               <br />
               &nbsp;
             </td>
 
             <td className={tstyles.td}>
-              CN, HK, SG, AU, MY, ID, IN, JP, US, DE, UK, AE
+              US, JP, CN, UK, DE, AU, SG, IN, ID, AE, HK, MY,
               <br />
               <br />
               &nbsp;
