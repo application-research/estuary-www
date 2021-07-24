@@ -90,7 +90,12 @@ export default class UploadItem extends React.Component<any> {
       }
     };
 
-    xhr.open('POST', `${C.api.host}/content/add`);
+    let targetURL = `${C.api.host}/content/add`;
+    if (this.props.viewer.settings.uploadEndpoints && this.props.viewer.settings.uploadEndpoints.length) {
+      targetURL = this.props.viewer.settings.uploadEndpoints[0];
+    }
+
+    xhr.open('POST', targetURL);
     xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     xhr.send(formData);
     this.setState({ ...this.state, loaded: 1 });
@@ -98,6 +103,11 @@ export default class UploadItem extends React.Component<any> {
 
   render() {
     const isLoading = !this.state.final && this.state.loaded > 0;
+
+    let targetURL = `${C.api.host}/content/add`;
+    if (this.props.viewer.settings.uploadEndpoints && this.props.viewer.settings.uploadEndpoints.length) {
+      targetURL = this.props.viewer.settings.uploadEndpoints[0];
+    }
 
     return (
       <section className={styles.item}>
@@ -156,6 +166,7 @@ export default class UploadItem extends React.Component<any> {
                 {this.props.file.estimation && this.props.viewer.settings.verified ? <ActionRow>The Filecoin deal will be verified.</ActionRow> : null}
               </React.Fragment>
             ) : null}
+            <ActionRow>Will be sent to: {targetURL}</ActionRow>
           </React.Fragment>
         )}
 
