@@ -54,7 +54,13 @@ function AdminStatsPage(props) {
         return;
       }
 
-      setState({ ...state, ...response, ...disk });
+      let stats = await R.get('/admin/stats');
+      if (stats.error) {
+        console.log(stats.error);
+        stats = {};
+      }
+
+      setState({ ...state, ...response, ...disk, ...stats });
     };
 
     run();
@@ -66,8 +72,53 @@ function AdminStatsPage(props) {
     <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="https://estuary.tech/stats">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
-          <H2>System</H2>
+          <H2>Stats</H2>
           <P style={{ marginTop: 16 }}>Statistics around your Estuary node usage.</P>
+
+          {state.numFiles ? (
+            <React.Fragment>
+              <Block style={{ marginTop: 24 }} label="Total files">
+                {U.formatNumber(state.numFiles)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total miners">
+                {U.formatNumber(state.numMiners)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total retrieval failures">
+                {U.formatNumber(state.numRetrievalFailures)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total retrievals">
+                {U.formatNumber(state.numRetrievals)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total storage failures">
+                {U.formatNumber(state.numStorageFailures)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total users">
+                {U.formatNumber(state.numUsers)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total deals attempted">
+                {U.formatNumber(state.totalDealsAttempted)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total deals failed">
+                {U.formatNumber(state.totalDealsFailed)}
+              </Block>
+
+              <Block style={{ marginTop: 2 }} label="Total deals successful">
+                {U.formatNumber(state.totalDealsSuccessful)}
+              </Block>
+            </React.Fragment>
+          ) : null}
+        </SingleColumnLayout>
+
+        <SingleColumnLayout>
+          <H2>System</H2>
+          <P style={{ marginTop: 16 }}>Hardware and system statistics around your Estuary node usage.</P>
 
           {state.bstoreFree ? (
             <React.Fragment>
