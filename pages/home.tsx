@@ -15,6 +15,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
 import ActionRow from '@components/ActionRow';
+import AlertPanel from '@components/AlertPanel';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
@@ -83,6 +84,11 @@ function HomePage(props: any) {
   return (
     <Page title="Estuary: Home" description="Analytics about Filecoin and your data." url="https://estuary.tech/home">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <AlertPanel title="Storage deals are experiencing delays">
+          Currently Filecoin deals are experiencing delays that are effecting the accuracy of receipts and status reporting. We are waiting for patches in the Lotus implementation
+          of Filecoin to be deployed by miners.
+        </AlertPanel>
+
         {state.files && !state.files.length ? (
           <PageHeader>
             <H2>Upload public data</H2>
