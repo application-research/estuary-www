@@ -41,7 +41,21 @@ export async function getServerSideProps(context) {
 }
 
 function AdminStatsPage(props) {
-  const [state, setState] = React.useState({ bstoreFree: null, bstoreSize: null, lmdbStat: null, lmdbUsage: null });
+  const [state, setState] = React.useState({
+    bstoreFree: null,
+    bstoreSize: null,
+    lmdbStat: null,
+    lmdbUsage: null,
+    numFiles: null,
+    numMiners: null,
+    numRetrievalFailures: null,
+    numRetrievals: null,
+    numStorageFailures: null,
+    numUsers: null,
+    totalDealsAttempted: null,
+    totalDealsFailed: null,
+    totalDealsSuccessful: null,
+  });
 
   React.useEffect(() => {
     // TODO(why): Content stats can't be serialized to JSON.
