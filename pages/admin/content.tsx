@@ -78,6 +78,9 @@ function AdminContentPage(props: any) {
                 <th className={tstyles.th} style={{ width: '128px' }}>
                   name
                 </th>
+                <th className={tstyles.th} style={{ width: '112px' }}>
+                  local id
+                </th>
                 <th className={tstyles.th}>cid</th>
                 <th className={tstyles.th} style={{ width: '128px' }}>
                   replication
@@ -95,6 +98,7 @@ function AdminContentPage(props: any) {
                     return (
                       <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>
+                        <td className={tstyles.td}>{data.id}</td>
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>
                             {fileURL}
