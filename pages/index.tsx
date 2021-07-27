@@ -67,8 +67,19 @@ function IndexPage(props: any) {
   }, []);
 
   React.useEffect(() => {
-    const load = async () => {
-      const data = await R.get('/public/metrics/deals-on-chain');
+    async function load() {
+      let data;
+
+      try {
+        data = await R.get('/public/metrics/deals-on-chain');
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
+
+      if (data.error) {
+        return null;
+      }
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];
@@ -134,7 +145,7 @@ function IndexPage(props: any) {
           },
         ],
       });
-    };
+    }
 
     load();
   }, [width]);

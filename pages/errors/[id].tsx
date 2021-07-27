@@ -33,6 +33,7 @@ function DealErrorPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/content/failures/${props.id}`);
+      console.log(response);
 
       if (response && response.length) {
         return setState({ logs: response });
@@ -55,6 +56,9 @@ function DealErrorPage(props: any) {
               <th className={tstyles.th} style={{ width: 144 }}>
                 Created date
               </th>
+              <th className={tstyles.th} style={{ width: 112 }}>
+                Local ID
+              </th>
               <th className={tstyles.th} style={{ width: 120 }}>
                 provider
               </th>
@@ -69,6 +73,7 @@ function DealErrorPage(props: any) {
                     <td className={tstyles.td} style={{ maxWidth: 144 }}>
                       {U.toDate(log.CreatedAt)}
                     </td>
+                    <td className={tstyles.td}>{log.content}</td>
                     <td className={tstyles.tdcta}>
                       <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}
