@@ -38,6 +38,7 @@ function MinerStatsPage(props: any) {
     price: null,
     maxPieceSize: null,
     minPieceSize: null,
+    chainInfo: null,
   });
 
   React.useEffect(() => {
