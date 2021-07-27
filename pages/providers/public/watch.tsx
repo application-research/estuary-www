@@ -11,6 +11,7 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import SingleColumnLayout from '@components/SingleColumnLayout';
+import LoaderSpinner from '@components/LoaderSpinner';
 import StatRow from '@components/StatRow';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
@@ -114,70 +115,79 @@ function WatchProvidersPage(props: any) {
     <Page title="Estuary: Providers" description="This is a providers page." url="https://estuary.tech/providers/public/watch">
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
         <div className={styles.group} style={{ paddingTop: 88, paddingBottom: 88 }}>
-          {state.providers.map((each) => {
-            return (
-              <div style={{ marginBottom: 48 }} key={each.miner}>
-                <H2
-                  style={{ marginBottom: 12 }}
-                  onClick={() => {
-                    window.location.href = `/providers/stats/${each.miner}`;
-                  }}
-                >
-                  {each.miner}
-                </H2>
-                {each.statError ? (
-                  <StatRow title={'Stat error'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
-                    {each.statError}
-                  </StatRow>
-                ) : null}
-                {each.askError ? (
-                  <StatRow title={'Ask error'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
-                    {each.askError}
-                  </StatRow>
-                ) : null}
-                {each.suspended ? (
-                  <StatRow title={'Suspended'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
-                    {each.suspendedReason}
-                  </StatRow>
-                ) : null}
+          {state.providers && state.providers.length ? (
+            state.providers.map((each) => {
+              return (
+                <div style={{ marginBottom: 48 }} key={each.miner}>
+                  <H2
+                    style={{ marginBottom: 12 }}
+                    onClick={() => {
+                      window.location.href = `/providers/stats/${each.miner}`;
+                    }}
+                  >
+                    {each.miner}
+                  </H2>
+                  {each.statError ? (
+                    <StatRow title={'Stat error'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
+                      {each.statError}
+                    </StatRow>
+                  ) : null}
+                  {each.askError ? (
+                    <StatRow title={'Ask error'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
+                      {each.askError}
+                    </StatRow>
+                  ) : null}
+                  {each.suspended ? (
+                    <StatRow title={'Suspended'} style={{ background: `#FF0000`, color: '#FFFFFF' }}>
+                      {each.suspendedReason}
+                    </StatRow>
+                  ) : null}
 
-                {each.version ? <StatRow title={'Version'}>{each.version}</StatRow> : null}
+                  {each.version ? <StatRow title={'Version'}>{each.version}</StatRow> : null}
 
-                {each.chainInfo ? <StatRow title={'Peer ID'}>{each.chainInfo.peerId}</StatRow> : null}
-                {each.chainInfo ? <StatRow title={'Owner ID'}>{each.chainInfo.owner}</StatRow> : null}
-                {each.chainInfo ? <StatRow title={'Worker ID'}>{each.chainInfo.worker}</StatRow> : null}
+                  {each.chainInfo ? <StatRow title={'Peer ID'}>{each.chainInfo.peerId}</StatRow> : null}
+                  {each.chainInfo ? <StatRow title={'Owner ID'}>{each.chainInfo.owner}</StatRow> : null}
+                  {each.chainInfo ? <StatRow title={'Worker ID'}>{each.chainInfo.worker}</StatRow> : null}
 
-                {each.chainInfo && each.chainInfo.addresses && each.chainInfo.addresses.length ? (
-                  <StatRow title="Addresses">
-                    {each.chainInfo.addresses.map((each) => {
-                      return (
-                        <React.Fragment>
-                          {each}
-                          <br />
-                        </React.Fragment>
-                      );
-                    })}
-                  </StatRow>
-                ) : null}
+                  {each.chainInfo && each.chainInfo.addresses && each.chainInfo.addresses.length ? (
+                    <StatRow title="Addresses">
+                      {each.chainInfo.addresses.map((each) => {
+                        return (
+                          <React.Fragment>
+                            {each}
+                            <br />
+                          </React.Fragment>
+                        );
+                      })}
+                    </StatRow>
+                  ) : null}
 
-                {each.dealCount ? <StatRow title={'Deal count'}>{each.dealCount}</StatRow> : null}
-                {each.errorCount ? <StatRow title={'Deal errors'}>{each.errorCount}</StatRow> : null}
+                  {each.dealCount ? <StatRow title={'Deal count'}>{each.dealCount}</StatRow> : null}
+                  {each.errorCount ? <StatRow title={'Deal errors'}>{each.errorCount}</StatRow> : null}
 
-                {each.verifiedPrice ? <StatRow title={'Verified price'}>{U.inUSDPrice(each.verifiedPrice, each.usd)}</StatRow> : null}
-                {each.price ? <StatRow title={'Price'}>{U.inUSDPrice(each.price, each.usd)}</StatRow> : null}
-                {each.minPieceSize ? (
-                  <StatRow title={'Min piece size'}>
-                    {each.minPieceSize} bytes ⇄ {U.bytesToSize(each.minPieceSize)}
-                  </StatRow>
-                ) : null}
-                {each.maxPieceSize ? (
-                  <StatRow title={'Max piece Size'}>
-                    {each.maxPieceSize} bytes ⇄ {U.bytesToSize(each.maxPieceSize)}
-                  </StatRow>
-                ) : null}
-              </div>
-            );
-          })}
+                  {each.verifiedPrice ? <StatRow title={'Verified price'}>{U.inUSDPrice(each.verifiedPrice, each.usd)}</StatRow> : null}
+                  {each.price ? <StatRow title={'Price'}>{U.inUSDPrice(each.price, each.usd)}</StatRow> : null}
+                  {each.minPieceSize ? (
+                    <StatRow title={'Min piece size'}>
+                      {each.minPieceSize} bytes ⇄ {U.bytesToSize(each.minPieceSize)}
+                    </StatRow>
+                  ) : null}
+                  {each.maxPieceSize ? (
+                    <StatRow title={'Max piece Size'}>
+                      {each.maxPieceSize} bytes ⇄ {U.bytesToSize(each.maxPieceSize)}
+                    </StatRow>
+                  ) : null}
+                </div>
+              );
+            })
+          ) : (
+            <React.Fragment>
+              <H2>
+                Loading your providers... <LoaderSpinner />
+              </H2>
+              <P style={{ marginTop: 16 }}>Loading this page and fetching all of the provider data takes some time...</P>
+            </React.Fragment>
+          )}
         </div>
       </AuthenticatedLayout>
     </Page>
