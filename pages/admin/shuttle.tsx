@@ -84,10 +84,10 @@ function AdminShuttlePage(props: any) {
         <div className={styles.group}>
           {state.shuttles && state.shuttles.length
             ? state.shuttles.map((data, index) => {
-                const id = data.addrInfo ? data.addrInfo.ID : 'PENDING';
+                const id = data.addrInfo ? data.hostname : 'NOT-DEPLOYED';
                 return (
                   <div style={{ marginTop: 24 }} key={`${id}-${index}`}>
-                    <H3 style={{ margin: `8px 0 8px 0px` }}>Shuttle: {id}</H3>
+                    <H3 style={{ margin: `8px 0 8px 0px` }}>Shuttle ➝ {id}</H3>
                     <table className={tstyles.table}>
                       <tbody className={tstyles.tbody}>
                         <tr className={tstyles.tr}>
@@ -108,6 +108,24 @@ function AdminShuttlePage(props: any) {
                         </tr>
                       </tbody>
                     </table>
+                    {data.storageStats ? (
+                      <table className={tstyles.table}>
+                        <tbody className={tstyles.tbody}>
+                          <tr className={tstyles.tr}>
+                            <th className={tstyles.th}>Free space</th>
+                            <th className={tstyles.th}>Total space</th>
+                            <th className={tstyles.th}>Pins</th>
+                            <th className={tstyles.th}>Queue</th>
+                          </tr>
+                          <tr className={tstyles.tr}>
+                            <td className={tstyles.td}>{U.bytesToSize(data.storageStats.blockstoreFree)}</td>
+                            <td className={tstyles.td}>{U.bytesToSize(data.storageStats.blockstoreSize)}</td>
+                            <td className={tstyles.td}>{data.storageStats.pinCount}</td>
+                            <td className={tstyles.td}>{data.storageStats.pinQueueLength}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ) : null}
                     <table className={tstyles.table}>
                       <tbody className={tstyles.tbody}>
                         <tr className={tstyles.tr}>
