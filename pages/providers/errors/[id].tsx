@@ -24,6 +24,7 @@ function MinerErrorPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/public/miners/failures/${props.id}`);
+      console.log(response);
 
       if (response && response.length) {
         return setState({ logs: response });
@@ -44,7 +45,10 @@ function MinerErrorPage(props: any) {
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
               <th className={tstyles.th} style={{ width: 144 }}>
-                Creation
+                Created date
+              </th>
+              <th className={tstyles.th} style={{ width: 112 }}>
+                Local ID
               </th>
               <th className={tstyles.th} style={{ width: 104 }}>
                 Provider
@@ -58,6 +62,7 @@ function MinerErrorPage(props: any) {
               ? state.logs.map((log) => (
                   <tr key={log.ID} className={tstyles.tr}>
                     <td className={tstyles.td}>{U.toDate(log.CreatedAt)}</td>
+                    <td className={tstyles.td}>{log.content}</td>
                     <td className={tstyles.tdcta}>
                       <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}

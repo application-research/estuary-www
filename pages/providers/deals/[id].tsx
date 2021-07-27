@@ -46,13 +46,13 @@ function MinerDealsPage(props: any) {
           <tbody className={tstyles.tbody}>
             <tr className={tstyles.tr}>
               <th className={tstyles.th} style={{ width: 144 }}>
-                Creation
+                Created date
+              </th>
+              <th className={tstyles.th} style={{ width: 96 }}>
+                Local ID
               </th>
               <th className={tstyles.th} style={{ width: 104 }}>
                 Provider
-              </th>
-              <th className={tstyles.th} style={{ width: 96 }}>
-                Content
               </th>
               <th className={tstyles.th} style={{ width: 96 }}>
                 Deal ID
@@ -70,12 +70,12 @@ function MinerDealsPage(props: any) {
                   return (
                     <tr key={log.ID} className={tstyles.tr} style={style}>
                       <td className={tstyles.td}>{U.toDate(log.CreatedAt)}</td>
+                      <td className={tstyles.td}>{log.content}</td>
                       <td className={tstyles.tdcta}>
                         <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                           {log.miner}
                         </a>
                       </td>
-                      <td className={tstyles.td}>{log.content}</td>
                       <td className={tstyles.td}>{log.failed ? '--' : log.dealId > 0 ? log.dealId : 'in-progress'}</td>
                       <td className={tstyles.td}>{log.propCid}</td>
                       <td className={tstyles.td}>{log.dtChan}</td>
