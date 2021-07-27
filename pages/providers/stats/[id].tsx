@@ -167,6 +167,38 @@ function MinerStatsPage(props: any) {
                 ) : null}
               </React.Fragment>
             ) : null}
+
+            {state.chainInfo ? (
+              <React.Fragment>
+                <H2 style={{ marginTop: 88 }}>Chain Info</H2>
+                <P style={{ marginTop: 16, marginBottom: 24 }}>Additional chain info for debugging.</P>
+
+                {state.chainInfo.addresses && state.chainInfo.addresses.length ? (
+                  <Block style={{ marginTop: 2 }} label="MultiAddr Addresses">
+                    {state.chainInfo.addresses.map((each) => {
+                      return (
+                        <React.Fragment>
+                          {each}
+                          <br />
+                        </React.Fragment>
+                      );
+                    })}
+                  </Block>
+                ) : null}
+
+                <Block style={{ marginTop: 2 }} label="Peer">
+                  {state.chainInfo.peerId}
+                </Block>
+
+                <Block style={{ marginTop: 2 }} label="Owner ID">
+                  {state.chainInfo.owner}
+                </Block>
+
+                <Block style={{ marginTop: 2 }} label="Worker ID">
+                  {state.chainInfo.worker}
+                </Block>
+              </React.Fragment>
+            ) : null}
           </SingleColumnLayout>
         ) : null}
       </AuthenticatedLayout>
