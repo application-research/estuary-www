@@ -29,6 +29,9 @@ function AuthenticatedLayout(props: any) {
       <a className={styles.item} href="/deals" style={props.active === 'DEALS' ? { color: `var(--main-primary)` } : null}>
         Deals
       </a>
+      <a className={styles.item} href="/deals/debug" style={props.active === 'DEALS_DEBUG' ? { color: `var(--main-primary)` } : null}>
+        Debug
+      </a>
       <a className={styles.item} href="/api-admin" style={props.active === 'API' ? { color: `var(--main-primary)` } : null}>
         API keys
       </a>
