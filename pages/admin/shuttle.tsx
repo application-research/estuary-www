@@ -57,11 +57,11 @@ function AdminShuttlePage(props: any) {
     run();
   }, []);
 
-  const sidebarElement = <AuthenticatedSidebar active="ADMIN_SHUTTLE" viewer={props.viewer} />;
+  const sidebarElement = props.viewer ? <AuthenticatedSidebar active="ADMIN_SHUTTLE" viewer={props.viewer} /> : null;
 
   return (
     <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url="https://estuary.tech/admin/shuttle">
-      <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+      <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Create Shuttle</H2>
           <P style={{ marginTop: 16 }}>Generate a Shuttle for your data.</P>

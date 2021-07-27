@@ -7,6 +7,11 @@ import * as C from '@common/constants';
 import * as R from '@common/requests';
 
 function AuthenticatedLayout(props: any) {
+  let perms = 0;
+  if (props.viewer) {
+    perms = props.viewer.perms;
+  }
+
   return (
     <nav className={styles.container}>
       <div className={styles.title} style={{ marginTop: 40 }}>
@@ -55,43 +60,43 @@ function AuthenticatedLayout(props: any) {
         Sign out
       </span>
 
-      {props.viewer.perms >= 10 ? <div className={styles.title}>Admin</div> : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? <div className={styles.title}>Admin</div> : null}
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/impersonate" style={props.active === 'ADMIN_IMPERSONATE' ? { color: `var(--main-primary)` } : null}>
           Impersonate
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/stats" style={props.active === 'ADMIN_STATS' ? { color: `var(--main-primary)` } : null}>
           System
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/balance" style={props.active === 'ADMIN_BALANCE' ? { color: `var(--main-primary)` } : null}>
           Balance
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/providers" style={props.active === 'ADMIN_MINERS' ? { color: `var(--main-primary)` } : null}>
           Providers
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/content" style={props.active === 'ADMIN_CONTENT' ? { color: `var(--main-primary)` } : null}>
           Content
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/users" style={props.active === 'ADMIN_USERS' ? { color: `var(--main-primary)` } : null}>
           Users
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/invites" style={props.active === 'ADMIN_INVITES' ? { color: `var(--main-primary)` } : null}>
           Invites
         </a>
       ) : null}
-      {props.viewer.perms >= 10 ? (
+      {perms >= 10 ? (
         <a className={styles.item} href="/admin/shuttle" style={props.active === 'ADMIN_SHUTTLE' ? { color: `var(--main-primary)` } : null}>
           Shuttle
         </a>
