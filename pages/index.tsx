@@ -16,6 +16,10 @@ import Chart from '@components/Chart';
 import { H1, H2, H3, H4, P } from '@components/Typography';
 import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
 
+const curl = `curl \n-X POST https://api.estuary.tech/content/add \n-H "Authorization: Bearer YOUR_API_KEY" \n-H "Accept: application/json" \n-H "Content-Type: multipart/form-data" \n-F "data=@PATH_TO_FILE"`;
+
+const retrieve = `lotus client retrieve --miner MINER_ID DATA_CID OUTPUT_FILE_NAME`;
+
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
@@ -190,7 +194,28 @@ function IndexPage(props: any) {
               </Button>
             </div>
           )}
-          <img className={S.hbimg} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
+          <div className={S.hbimgc}>
+            <div className={S.ca}>
+              <div className={S.cb} style={{ background: `var(--main-text)` }}>
+                <div className={S.cbt}>CLI ➝ Store</div>
+                <div className={S.cbb}>{curl}</div>
+              </div>
+
+              <div className={S.cb} style={{ marginTop: 24, background: `var(--main-text)` }}>
+                <div className={S.cbt}>CLI ➝ Retrieve</div>
+                <div className={S.cbb}>{retrieve}</div>
+              </div>
+
+              <div className={S.cb} style={{ marginTop: 24 }}>
+                <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
+                <a className={S.cbb} href="https://dweb.link/ipfs/QmTMBh4bCQFgzr1fTCjVb5pRBUe7v9673HTLZWh77sUHUx" target="_blank">
+                  https://dweb.link/ipfs/QmTMBh4bCQFgzr1fTCjVb5pRBUe7v9673HTLZWh77sUHUx
+                </a>
+              </div>
+            </div>
+
+            <img className={S.hbimg} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
+          </div>
         </div>
       </div>
 
@@ -239,7 +264,7 @@ function IndexPage(props: any) {
             .
           </FeatureRow>
           <FeatureRow>
-            <strong>Global access.</strong> Retrieve your data from any IPFS gateway.
+            <strong>Global access.</strong> Retrieve your data from any IPFS gateway or Filecoin miner directly.
           </FeatureRow>
         </div>
         <div className={S.rr} style={{ background: `#000` }}>
