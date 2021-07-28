@@ -7,14 +7,19 @@ import * as C from '@common/constants';
 import * as R from '@common/requests';
 
 import Cookies from 'js-cookie';
+import { Wallet } from 'webnative-filecoin';
 
 Webnative.setup.debug({ enabled: true })
+WebnativeFilecoin.setup.server({
+  url: 'https://estuarycosigner.runfission.com/api/v1/filecoin',
+});
 
 export function useFissionAuth({ host, protocol }) {
   const [state, setState] = useState<Webnative.State>(null)
   let fs;
   let authScenario: Webnative.Scenario | null = null;
   let username: string = null;
+  let wallet: WebnativeFilecoin.Wallet;
 
 
   /** Webnative Initialization
@@ -34,7 +39,7 @@ export function useFissionAuth({ host, protocol }) {
           },
           fs: {
             // NOTE(bgins): The cosigner key is stored in the private filesystem
-            // at the path Keychain/fil-cosigner.
+            // at the path Keychain/estuary-fil-cosigner.
             private: [Webnative.path.file('Keychain', 'estuary-fil-cosigner')]
           }
         },
@@ -170,5 +175,36 @@ export function useFissionAuth({ host, protocol }) {
     }
   }
 
-  return { authorise, authScenario, fs, publish, readToken, signIn, username }
+  /** Get or setup wallet
+   * Call the cosigning server to set up the user's wallet or if they have one
+   * get the address. The savedAddress is the address registered with the Estuary
+   * server if any.
+   * 
+   * If the savedAdress is different from the address reported by the cosigning
+   * server, update the user's wallet with Estuary.
+   * NOTE(bgins)
+   */
+
+  const getWallet = async (savedAddress) => {
+    if (fs) {
+      console.log('saved address', savedAddress)
+      wallet = await WebnativeFilecoin.getWallet(fs, Webnative, { keyname: 'estuary-fil-cosigner' });
+      const address = wallet.getAddress();
+
+      console.log('address from cosigner', address)
+      // TODO: what is the default value for the address before the user sets one
+      if (savedAddress === null || address !== savedAddress) {
+        return { address, isNew: true }
+      } else {
+        return { address, isNew: false }
+      }
+
+    } else {
+      return {
+        error: 'We could not load your webnative file system. Please contact us.',
+      };
+    }
+  }
+
+  return { authorise, authScenario, fs, getWallet, publish, readToken, signIn, username }
 }
