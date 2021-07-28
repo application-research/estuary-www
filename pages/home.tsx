@@ -131,8 +131,8 @@ function HomePage(props: any) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: '80px' }}>
-                  #
+                <th className={tstyles.th} style={{ width: '96px' }}>
+                  Local ID
                 </th>
                 <th className={tstyles.th} style={{ width: '30%' }}>
                   Name
@@ -157,7 +157,7 @@ function HomePage(props: any) {
                     return (
                       <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
                         <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
-                          {String(index + 1).padStart(7, '0')}
+                          {String(data.id).padStart(9, '0')}
                         </td>
                         <td className={tstyles.td}>{name}</td>
                         <td className={tstyles.tdcta}>
@@ -174,7 +174,7 @@ function HomePage(props: any) {
           </table>
           {state.files && state.offset + state.limit === state.files.length ? (
             <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState)}>
-              ➝ Next 1000
+              ➝ Next {INCREMENT}
             </ActionRow>
           ) : null}
         </div>

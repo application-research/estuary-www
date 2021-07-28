@@ -14,9 +14,12 @@ import PageHeader from '@components/PageHeader';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Button from '@components/Button';
+import ActionRow from '@components/ActionRow';
 import AlertPanel from '@components/AlertPanel';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+
+const INCREMENT = 100;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -166,16 +169,35 @@ class ContentStatus extends React.Component<any, any> {
 export default class Dashboard extends React.Component<any, any> {
   state = {
     entities: [],
+    offset: 0,
+    limit: INCREMENT,
   };
 
   async componentDidMount() {
-    const entities = await R.get(`/content/deals`);
+    const entities = await R.get(`/content/deals?offset=${this.state.offset}&limit=${this.state.limit}`);
     if (!entities || entities.error) {
       console.log(entities.error);
       return;
     }
 
     this.setState({ entities });
+  }
+
+  async getNext() {
+    const offset = this.state.offset + INCREMENT;
+    const limit = this.state.limit;
+    const next = await R.get(`/content/deals?offset=${offset}&limit=${limit}`);
+
+    if (!next || !next.length) {
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      offset,
+      limit,
+      files: [...this.state.entities, ...next],
+    });
   }
 
   render() {
@@ -199,6 +221,11 @@ export default class Dashboard extends React.Component<any, any> {
             </div>
           </PageHeader>
           <div>{statusElements}</div>
+          {this.state.entities && this.state.offset + this.state.limit === this.state.entities.length ? (
+            <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => this.getNext()}>
+              ➝ Next {INCREMENT}
+            </ActionRow>
+          ) : null}
         </AuthenticatedLayout>
       </Page>
     );
