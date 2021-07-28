@@ -5,6 +5,8 @@ import * as U from '@common/utilities';
 import * as R from '@common/requests';
 import * as Crypto from '@common/crypto';
 
+import { useFissionAuth } from '@common/useFissionAuth';
+
 import ProgressCard from '@components/ProgressCard';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -19,6 +21,8 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const host = context.req.headers.host;
+  const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
   if (!viewer) {
     return {
@@ -30,7 +34,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, host, protocol },
   };
 }
 
@@ -81,16 +85,29 @@ const onSubmit = async (event, state, setState) => {
 
 function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
+  const [address, setAddress] = React.useState('')
+  const { fs, getWallet } = useFissionAuth({ host: props.host, protocol: props.protocol });
 
   React.useEffect(() => {
     async function performEffect() {
-      const response = await R.put('/user/address', { address: '<empty>' });
+      if (fs) {
+        const cosignerResponse = await getWallet(props.viewer.address);
 
-      console.log(response);
+        if (cosignerResponse.error) {
+          alert(cosignerResponse.error);
+        }
+
+        if (cosignerResponse.isNew) {
+          setAddress(cosignerResponse.address)
+          // const response = await R.put('/user/address', { address: cosignerResponse.address });
+        } else {
+          setAddress(props.viewer.address);
+        }
+      }
     }
 
     performEffect();
-  }, []);
+  }, [fs]);
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={props.viewer} />;
 
@@ -138,7 +155,7 @@ function SettingsPage(props: any) {
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
 
           <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
-          <Input style={{ marginTop: 8 }} readOnly value={props.viewer.address} />
+          <Input style={{ marginTop: 8 }} readOnly value={address ? address : ''} />
           <aside className={styles.formAside}>
             This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="https://fission.codes">Fission's website</a>.
           </aside>

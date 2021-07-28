@@ -23,8 +23,6 @@ export async function getServerSideProps(context) {
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
-  console.log(protocol)
-
   if (viewer) {
     return {
       redirect: {
