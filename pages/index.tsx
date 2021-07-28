@@ -208,8 +208,8 @@ function IndexPage(props: any) {
 
               <div className={S.cb} style={{ marginTop: 24 }}>
                 <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
-                <a className={S.cbb} href="https://dweb.link/ipfs/QmTMBh4bCQFgzr1fTCjVb5pRBUe7v9673HTLZWh77sUHUx" target="_blank">
-                  https://dweb.link/ipfs/QmTMBh4bCQFgzr1fTCjVb5pRBUe7v9673HTLZWh77sUHUx
+                <a className={S.cbb} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
+                  https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi
                 </a>
               </div>
             </div>
