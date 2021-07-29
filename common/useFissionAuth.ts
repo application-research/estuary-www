@@ -187,13 +187,40 @@ export function useFissionAuth({ host, protocol }) {
 
   const getWallet = async (savedAddress) => {
     if (fs) {
-      console.log('saved address', savedAddress)
-      wallet = await WebnativeFilecoin.getWallet(fs, Webnative, { keyname: 'estuary-fil-cosigner' });
-      const address = wallet.getAddress();
+      console.log('Estuary has wallet stored as', savedAddress)
 
-      console.log('address from cosigner', address)
-      // TODO: what is the default value for the address before the user sets one
+      // Get or create a wallet
+      wallet = await WebnativeFilecoin.getWallet(fs, Webnative, { keyname: 'estuary-fil-cosigner' });
+
+      // After we get the wallet, we can check its address
+      const address = wallet.getAddress();
+      console.log('cosigner says wallet is', address)
+
+      // And we can check its balance
+      const balance = await wallet.getBalance();
+      console.log('wallet balance is', balance)
+
+      // We can also check the provider address
+      const providerAddress = await wallet.getProviderAddress();
+      console.log('provider address', providerAddress)
+
+      // And the provider balance
+      const providerBalance = await wallet.getProviderBalance();
+      console.log('provider address', providerBalance)
+
+      // Caution: this sends FIL and for moment is called when the settings page
+      // is loaded. This includes reload on save when running on local development.
+      // Be careful or the monies will be flying 💸
+      //
+      // await testTransactions(wallet);
+
+      // TODO: check what the default value for the wallet is before the user sets one
+      // We assume null here, but it might be '<empty>'
       if (savedAddress === null || address !== savedAddress) {
+
+        // Store the wallet with the Estuary backend
+        const response = await R.put('/user/address', { address });
+
         return { address, isNew: true }
       } else {
         return { address, isNew: false }
@@ -204,6 +231,34 @@ export function useFissionAuth({ host, protocol }) {
         error: 'We could not load your webnative file system. Please contact us.',
       };
     }
+  }
+
+  /** Send funds to provider
+   * To send funds to our provider we:
+   *   1. Request cosigning permissions. This checks for existing, valid permissions
+   *      and redirects to the auth lobby if we don't have them. A second check is
+   *      performed on return from the auth lobby (we can the function again)
+   *   2. Sends FIL to the provider and returns us a receipt
+   */
+
+  const testTransactions = async (wallet: Wallet) => {
+    console.log('requesting cosigning permission and/or sending a transaction')
+
+    wallet
+      .requestPermissions()
+      .then(async () => {
+
+        // Send a small, hardcoded amount to the provider
+        const receipt = await wallet.fundProvider(0.001);
+        console.log('receipt from transaction', receipt)
+
+        // We could also send funds to an arbtitrary wallet
+        // const anotherReceipt = await wallet.send('<some-wallet-address>', 0.001);
+        // console.log('receipt', anotherReceipt)
+      })
+      .catch(err => {
+        console.log('request permission failed because', err)
+      });
   }
 
   return { authorise, authScenario, fs, getWallet, publish, readToken, signIn, username }

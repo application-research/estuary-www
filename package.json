@@ -21,8 +21,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "1.34.1",
-    "webnative": "^0.25.2",
-    "webnative-filecoin": "^0.6.10"
+    "webnative": "0.24.2-alpha-2",
+    "webnative-filecoin": "0.6.10"
   },
   "devDependencies": {
     "@types/react": "^17.0.8",
