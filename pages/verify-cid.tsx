@@ -21,11 +21,11 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
-  if (viewer) {
+  if (!viewer) {
     return {
       redirect: {
         permanent: false,
-        destination: '/home',
+        destination: '/',
       },
     };
   }
