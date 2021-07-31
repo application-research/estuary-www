@@ -30,6 +30,10 @@ const Navigation = (props: any) => {
             </a>
           ) : null}
 
+          <a href="https://docs.estuary.tech/verify-cid" className={styles.webItem}>
+            Verify
+          </a>
+
           <a href="https://docs.estuary.tech" className={styles.webItem}>
             Documentation
           </a>

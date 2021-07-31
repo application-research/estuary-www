@@ -38,6 +38,16 @@ export const isValidPassword = (password) => {
   return C.regex.password.test(password);
 };
 
+export function debounce(func, timeout = 600) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+
 export function formatAsFilecoin(number) {
   return `${number} FIL`;
 }
