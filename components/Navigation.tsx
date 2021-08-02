@@ -30,11 +30,9 @@ const Navigation = (props: any) => {
             </a>
           ) : null}
 
-          {props.isAuthenticated ? (
-            <a href="https://estuary.tech/verify-cid" className={styles.webItem}>
-              Verify
-            </a>
-          ) : null}
+          <a href="https://estuary.tech/verify-cid" className={styles.webItem}>
+            Verify
+          </a>
 
           <a href="https://docs.estuary.tech" className={styles.webItem}>
             Documentation

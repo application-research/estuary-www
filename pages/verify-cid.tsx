@@ -21,15 +21,6 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
-  if (!viewer) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
-
   return {
     props: { viewer },
   };
@@ -53,7 +44,7 @@ function useWindowSize() {
 }
 
 const onCheckCID = async (state, setState) => {
-  const response = await R.get(`/content/by-cid/${state.cid}`);
+  const response = await R.get(`/public/by-cid/${state.cid}`);
   setTimeout(() => {
     setState({ ...state, data: response && response.length ? response[0] : null });
   });
