@@ -159,7 +159,7 @@ export function useFissionAuth({ host, protocol }) {
    * 
    * See the WNFS guide for the non-blocking implemenation of publish: 
    * https://guide.fission.codes/developers/webnative/file-system-wnfs
-   * 
+   *
    * NOTE(bgins)
    */
 
@@ -189,36 +189,38 @@ export function useFissionAuth({ host, protocol }) {
     if (fs) {
       console.log('Estuary has wallet stored as', savedAddress)
 
-      // Get or create a wallet
+      // NOTE(bgins): Get or create a wallet
       wallet = await WebnativeFilecoin.getWallet(fs, Webnative, { keyname: 'estuary-fil-cosigner' });
 
-      // After we get the wallet, we can check its address
+      // NOTE(bgins): After we get the wallet, we can check its address
       const address = wallet.getAddress();
       console.log('cosigner says wallet is', address)
 
-      // And we can check its balance
+      // NOTE(bgins): And we can check its balance
       const balance = await wallet.getBalance();
       console.log('wallet balance is', balance)
 
-      // We can also check the provider address
+      // NOTE(bgins): We can also check the provider address
       const providerAddress = await wallet.getProviderAddress();
       console.log('provider address', providerAddress)
 
-      // And the provider balance
+      // NOTE(bgins): And the provider balance
       const providerBalance = await wallet.getProviderBalance();
       console.log('balance held by provider', providerBalance)
 
       // Caution: this sends FIL and for moment is called when the settings page
       // is loaded. This includes reload on save when running on local development.
       // Be careful or the monies will be flying 💸
+      // NOTE(bgins)
       //
       // await testTransactions(wallet, balance);
 
       // TODO: check what the default value for the wallet is before the user sets one
       // We assume null here, but it might be '<empty>'
+      // NOTE(bgins)
       if (savedAddress === null || address !== savedAddress) {
 
-        // Store the wallet with the Estuary backend
+        // NOTE(bgins): Store the wallet with the Estuary backend
         const response = await R.put('/user/address', { address });
 
         return { address, isNew: true }
@@ -239,6 +241,8 @@ export function useFissionAuth({ host, protocol }) {
    *      and redirects to the auth lobby if we don't have them. A second check is
    *      performed on return from the auth lobby (we can the function again)
    *   2. Sends FIL to the provider and returns us a receipt
+   *
+   * NOTE(bgins)
    */
 
   const testTransactions = async (wallet: Wallet, balance: number) => {
@@ -249,11 +253,11 @@ export function useFissionAuth({ host, protocol }) {
       .then(async () => {
 
         if (balance > 0.001) {
-          // Send a small, hardcoded amount to the provider
+          // NOTE(bgins): Send a small, hardcoded amount to the provider
           const receipt = await wallet.fundProvider(0.001);
           console.log('receipt from transaction', receipt)
 
-          // We could also send funds to an arbtitrary wallet
+          // NOTE(bgins): We could also send funds to an arbtitrary wallet
           // const anotherReceipt = await wallet.send('<some-wallet-address>', 0.001);
           // console.log('receipt', anotherReceipt)
         } else {
