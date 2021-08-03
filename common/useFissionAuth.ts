@@ -206,13 +206,13 @@ export function useFissionAuth({ host, protocol }) {
 
       // And the provider balance
       const providerBalance = await wallet.getProviderBalance();
-      console.log('provider address', providerBalance)
+      console.log('balance held by provider', providerBalance)
 
       // Caution: this sends FIL and for moment is called when the settings page
       // is loaded. This includes reload on save when running on local development.
       // Be careful or the monies will be flying 💸
       //
-      // await testTransactions(wallet);
+      // await testTransactions(wallet, balance);
 
       // TODO: check what the default value for the wallet is before the user sets one
       // We assume null here, but it might be '<empty>'
@@ -241,20 +241,24 @@ export function useFissionAuth({ host, protocol }) {
    *   2. Sends FIL to the provider and returns us a receipt
    */
 
-  const testTransactions = async (wallet: Wallet) => {
+  const testTransactions = async (wallet: Wallet, balance: number) => {
     console.log('requesting cosigning permission and/or sending a transaction')
 
     wallet
       .requestPermissions()
       .then(async () => {
 
-        // Send a small, hardcoded amount to the provider
-        const receipt = await wallet.fundProvider(0.001);
-        console.log('receipt from transaction', receipt)
+        if (balance > 0.001) {
+          // Send a small, hardcoded amount to the provider
+          const receipt = await wallet.fundProvider(0.001);
+          console.log('receipt from transaction', receipt)
 
-        // We could also send funds to an arbtitrary wallet
-        // const anotherReceipt = await wallet.send('<some-wallet-address>', 0.001);
-        // console.log('receipt', anotherReceipt)
+          // We could also send funds to an arbtitrary wallet
+          // const anotherReceipt = await wallet.send('<some-wallet-address>', 0.001);
+          // console.log('receipt', anotherReceipt)
+        } else {
+          console.log('insufficient funds in wallet to make transaction')
+        }
       })
       .catch(err => {
         console.log('request permission failed because', err)
