@@ -10,7 +10,6 @@ import { useFissionAuth } from '@common/useFissionAuth';
 
 import Cookies from 'js-cookie';
 import Page from '@components/Page';
-import Navigation from '@components/Navigation';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Input from '@components/Input';
 import Button from '@components/Button';
@@ -90,28 +89,59 @@ async function handleRegister(state: any) {
     };
   }
 
+  /** Request an API token to store for the next sign in
+   * The token is stored encrypted at rest in WNFS.
+   * NOTE(bgins)
+   */
+
+  let response = await fetch(`${C.api.host}/user/api-keys`, {
+    method: 'POST',
+    body: '{}',
+    headers: {
+      Authorization: `Bearer ${j.token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status === 403) {
+    return { error: 'You are not authorized.' };
+  }
+
+  const json = await response.json();
+  if (json.error) {
+    return json;
+  }
+
+  if (!json.token) {
+    return {
+      error: 'Our server failed to issue you credentials. Please contact us.',
+    };
+  }
+
+  const tokenPath = state.fs.appPath(Webnative.path.file(C.auth));
+  await state.fs.write(tokenPath, json.token);
+  const result = await state.publish(tokenPath);
+
+  if (result?.error) {
+    return result;
+  }
+
+  // NOTE(bgins): Set the first token granted and redirect to home
   Cookies.set(C.auth, j.token);
   window.location.href = '/home';
   return;
 }
 
-async function handleFissionAuth({ authorise, authScenario, signIn }) {
-  if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
-    return await signIn();
-  } else {
-    authorise('account-setup');
-  }
-}
-
-function SignUpPage(props: any) {
+function AccountSetupPage(props: any) {
   const [state, setState] = React.useState({
     inviteCode: '',
     username: '',
     password: '',
     loading: false,
-    fissionLoading: false,
+    fs: null,
   });
-  const { authorise, authScenario, signIn } = useFissionAuth({ host: props.host, protocol: props.protocol });
+  const { fs, publish, readToken, username } = useFissionAuth({ host: props.host, protocol: props.protocol });
 
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -120,46 +150,40 @@ function SignUpPage(props: any) {
     if (!U.isEmpty(inviteCode)) {
       setState({ ...state, inviteCode });
     }
+
+    async function checkForToken() {
+      const token = await readToken();
+      if (token) {
+        window.location.href = '/authed-with-fission';
+      }
+    }
+    checkForToken();
   }, []);
 
+  /** Check for token
+   * The user may already have an account. If we have a token stored for
+   * them, redirect them to the Authed with Fission interstitial page
+   * NOTE(bgins)
+   */
+
+  React.useEffect(() => {
+    async function checkForToken() {
+      const token = await readToken();
+      if (token) {
+        window.location.href = '/authed-with-fission';
+      }
+    }
+    checkForToken();
+  }, [fs]);
+
   return (
-    <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url="https://estuary.tech/sign-up">
-      <Navigation active="SIGN_UP" />
+    <Page title="Estuary: Account Setup" description="Setup an account on Estuary with an invite key." url="https://estuary.tech/account-setup">
       <SingleColumnLayout style={{ maxWidth: 488 }}>
-        <H2>Sign up</H2>
-        <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P>
+        <H2>Account Setup</H2>
+        <P style={{ marginTop: 16 }}>Welcome back! You can create an account to use Estuary if you have an invite key.</P>
+        <P style={{ marginTop: 16 }}>{username ? `You are signed into Fission as ${username}.` : 'One moment, we are loading your Fission account.'}</P>
 
-        <H3 style={{ marginTop: 32 }}>Want a Filecoin address?</H3>
-        <P style={{ marginTop: 16 }}>Sign in with Fission to create an account and make a Filecoin address.</P>
-        <Button
-          style={{
-            width: '100%',
-            marginTop: 12,
-            background: 'var(--main-button-background-fission)',
-          }}
-          loading={state.fissionLoading ? state.fissionLoading : undefined}
-          onClick={async () => {
-            // NOTE(bgins): Show loading state only if user is authed, otherwise we will be redirecting
-            if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
-              setState({ ...state, fissionLoading: true });
-            }
-            const response = await handleFissionAuth({
-              authorise,
-              authScenario,
-              signIn,
-            });
-            if (response && response.error) {
-              alert(response.error);
-              setState({ ...state, fissionLoading: false });
-            }
-          }}
-        >
-          Sign in with Fission
-        </Button>
-        <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside>
-
-        <H3 style={{ marginTop: 32 }}>Create an account</H3>
-        <H4 style={{ marginTop: 16 }}>Username</H4>
+        <H4 style={{ marginTop: 32 }}>Username</H4>
         <Input
           style={{ marginTop: 8 }}
           placeholder="Type in your desired username"
@@ -195,6 +219,8 @@ function SignUpPage(props: any) {
               password: state.password,
               username: state.username,
               inviteCode: state.inviteCode,
+              fs,
+              publish,
             });
             if (response && response.error) {
               alert(response.error);
@@ -212,7 +238,7 @@ function SignUpPage(props: any) {
 
         <div className={styles.actions}>
           <Button
-            style={{ width: '100%' }}
+            style={username ? { width: '100%' } : { width: '100%', backgroundColor: '#aaaaaa' }}
             loading={state.loading ? state.loading : undefined}
             onClick={async () => {
               setState({ ...state, loading: true });
@@ -220,6 +246,8 @@ function SignUpPage(props: any) {
                 password: state.password,
                 username: state.username,
                 inviteCode: state.inviteCode,
+                fs,
+                publish,
               });
               if (response && response.error) {
                 alert(response.error);
@@ -227,7 +255,7 @@ function SignUpPage(props: any) {
               }
             }}
           >
-            Sign up
+            Set up account
           </Button>
           <Button
             style={{
@@ -253,4 +281,4 @@ function SignUpPage(props: any) {
   );
 }
 
-export default SignUpPage;
+export default AccountSetupPage;
