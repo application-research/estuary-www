@@ -137,7 +137,7 @@ function SignInPage(props: any) {
         <H2>Sign in</H2>
 
         <H3 style={{ marginTop: 16 }}>Sign in with Fission</H3>
-        <P style={{ marginTop: 8 }}>Sign in here if you created your account with Fission.</P>
+        <P style={{ marginTop: 8 }}>Alpha: Sign in here if you created your account with Fission. You may have to create an account with Estuary afterwards.</P>
         <Button
           style={{
             width: '100%',
