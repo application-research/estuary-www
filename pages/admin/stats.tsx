@@ -95,7 +95,6 @@ function AdminStatsPage(props) {
           <div className={styles.actions}>
             {props.viewer.settings.dealMakingDisabled ? (
               <Button
-                loading={state.loading ? state.loading : undefined}
                 style={{ marginRight: 24, marginBottom: 24 }}
                 onClick={async () => {
                   const response = await R.post(`/admin/cm/dealmaking`, { enabled: true });
@@ -107,7 +106,6 @@ function AdminStatsPage(props) {
               </Button>
             ) : (
               <Button
-                loading={state.loading ? state.loading : undefined}
                 style={{ marginRight: 24, marginBottom: 24 }}
                 onClick={async () => {
                   const response = await R.post(`/admin/cm/dealmaking`, { enabled: false });
