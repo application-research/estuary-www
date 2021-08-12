@@ -11,6 +11,7 @@ import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import Block from '@components/Block';
+import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
@@ -82,9 +83,44 @@ function AdminStatsPage(props) {
 
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_STATS" viewer={props.viewer} />;
 
+  console.log(props.viewer);
+
   return (
     <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="https://estuary.tech/stats">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
+        <SingleColumnLayout>
+          <H2>System modes</H2>
+          <P style={{ marginTop: 16 }}>Configure the system mode for your Estuary Node.</P>
+
+          <div className={styles.actions}>
+            {props.viewer.settings.dealMakingDisabled ? (
+              <Button
+                loading={state.loading ? state.loading : undefined}
+                style={{ marginRight: 24, marginBottom: 24 }}
+                onClick={async () => {
+                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: true });
+                  alert('Estuary will make storage deals until you disable deal making again.');
+                  window.location.reload();
+                }}
+              >
+                Enable deal making
+              </Button>
+            ) : (
+              <Button
+                loading={state.loading ? state.loading : undefined}
+                style={{ marginRight: 24, marginBottom: 24 }}
+                onClick={async () => {
+                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: false });
+                  alert('Estuary will suspend deal making until you enable deal making again.');
+                  window.location.reload();
+                }}
+              >
+                Disable deal making
+              </Button>
+            )}
+          </div>
+        </SingleColumnLayout>
+
         <SingleColumnLayout>
           <H2>Stats</H2>
           <P style={{ marginTop: 16 }}>Statistics around your Estuary node usage.</P>
