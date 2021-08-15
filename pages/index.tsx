@@ -197,17 +197,17 @@ function IndexPage(props: any) {
           )}
           <div className={S.hbimgc}>
             <div className={S.ca}>
-              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ background: `var(--main-text)` }}>
+              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ background: `var(--main-text)` }}>
                 <div className={S.cbt}>CLI ➝ Store</div>
                 <div className={S.cbb}>{curl}</div>
               </div>
 
-              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ marginTop: 24, background: `var(--main-text)` }}>
+              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24, background: `var(--main-text)` }}>
                 <div className={S.cbt}>CLI ➝ Retrieve</div>
                 <div className={S.cbb}>{retrieve}</div>
               </div>
 
-              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ marginTop: 24 }}>
+              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24 }}>
                 <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
                 <a className={S.cbb} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
                   https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi
@@ -215,7 +215,7 @@ function IndexPage(props: any) {
               </div>
             </div>
 
-            <img className={S.hbimg} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
+            <img className={U.classNames(S.hbimg, state.ready ? S.visible : null)} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
           </div>
         </div>
       </div>
