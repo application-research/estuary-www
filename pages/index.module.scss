@@ -62,6 +62,7 @@
 
   @media (max-width: 960px) {
     display: none;
+    visibility: hidden;
   }
 }
 
@@ -77,11 +78,17 @@
   background: var(--main-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transform: scale(1);
-  transition: 200ms ease transform;
+  transition: 200ms ease all;
+  transition-property: opacity, transform;
+  opacity: 0;
 
   &:hover {
     transform: scale(1.2);
   }
+}
+
+.cbready {
+  opacity: 1;
 }
 
 .cbt {

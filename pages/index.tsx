@@ -52,6 +52,7 @@ function IndexPage(props: any) {
     totalStorage: 0,
     totalFiles: 0,
     dealsOnChain: 0,
+    ready: false,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
@@ -61,10 +62,10 @@ function IndexPage(props: any) {
       const stats = await R.get('/public/stats');
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, ready: true });
       }
 
-      setState({ ...state, miners, ...stats });
+      setState({ ...state, miners, ...stats, ready: true });
     };
 
     run();
@@ -196,17 +197,17 @@ function IndexPage(props: any) {
           )}
           <div className={S.hbimgc}>
             <div className={S.ca}>
-              <div className={S.cb} style={{ background: `var(--main-text)` }}>
+              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ background: `var(--main-text)` }}>
                 <div className={S.cbt}>CLI ➝ Store</div>
                 <div className={S.cbb}>{curl}</div>
               </div>
 
-              <div className={S.cb} style={{ marginTop: 24, background: `var(--main-text)` }}>
+              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ marginTop: 24, background: `var(--main-text)` }}>
                 <div className={S.cbt}>CLI ➝ Retrieve</div>
                 <div className={S.cbb}>{retrieve}</div>
               </div>
 
-              <div className={S.cb} style={{ marginTop: 24 }}>
+              <div className={U.classNames(S.cb, state.ready ? S.cbready : null)} style={{ marginTop: 24 }}>
                 <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
                 <a className={S.cbb} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
                   https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi
