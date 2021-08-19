@@ -2,6 +2,7 @@ import { FilecoinNumber, Converter } from '@glif/filecoin-number';
 
 import * as Cookies from '@vendor/cookie-cutter';
 import * as C from '@common/constants';
+import * as R from '@common/requests';
 
 export const nanoToHours = (number: any): string => {
   const ms = Number(number) / 1000000;
@@ -88,6 +89,53 @@ export function inUSDPrice(number = 0, price = 0) {
 
   return `${formatAsFilecoin(inFil)}`;
 }
+
+export const getViewerFromFission = async ({ fs, path }) => {
+  console.log({ path });
+  const maybePathExists = await fs.exists(path);
+
+  if (!maybePathExists) {
+    const newKey = await R.post(`/user/api-keys`, {});
+    const newToken = await fs.write(path, newKey);
+    await fs.publish(tokenPath, '');
+  }
+
+  const token = await fs.read(path);
+  if (!token) {
+    console.log('Failed to authenticate with Fission.');
+    return null;
+  }
+
+  const viewer = await getViewerFromToken(token);
+  console.log({ fissionSourcedViewer: viewer });
+  return viewer;
+};
+
+export const getViewerFromToken = async (token) => {
+  try {
+    const url = `${C.api.host}/viewer`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await response.json();
+    console.log(json);
+    if (!json) {
+      return null;
+    }
+
+    if (json.error) {
+      return null;
+    }
+
+    return json;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
 
 export const getViewerFromHeader = async (headers) => {
   try {
