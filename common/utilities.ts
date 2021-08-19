@@ -97,7 +97,7 @@ export const getViewerFromFission = async ({ fs, path }) => {
   if (!maybePathExists) {
     const newKey = await R.post(`/user/api-keys`, {});
     const newToken = await fs.write(path, newKey);
-    await fs.publish(tokenPath, '');
+    await fs.publish(path, '');
   }
 
   const token = await fs.read(path);
