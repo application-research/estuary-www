@@ -166,7 +166,7 @@ export default class UploadItem extends React.Component<any> {
                 {this.props.file.estimation && this.props.viewer.settings.verified ? <ActionRow>The Filecoin deal will be verified.</ActionRow> : null}
               </React.Fragment>
             ) : null}
-            <ActionRow>Will be sent to: {targetURL}</ActionRow>
+            <ActionRow style={{ background: isLoading ? `#000` : null, color: isLoading ? `#fff` : null }}>Will be sent to: {targetURL}</ActionRow>
           </React.Fragment>
         )}
 

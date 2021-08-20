@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as Flags from '@common/flags';
 import * as Crypto from '@common/crypto';
 
 import * as Webnative from 'webnative';
@@ -17,6 +18,8 @@ import Input from '@components/Input';
 import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+
+const ENABLE_SIGN_IN_WITH_FISSION = false;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -136,36 +139,41 @@ function SignInPage(props: any) {
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>
 
-        <H3 style={{ marginTop: 16 }}>Sign in with Fission</H3>
-        <P style={{ marginTop: 8 }}>Alpha: Sign in here if you created your account with Fission. You may have to create an account with Estuary afterwards.</P>
-        <Button
-          style={{
-            width: '100%',
-            marginTop: 12,
-            background: 'var(--main-button-background-fission)',
-          }}
-          loading={state.fissionLoading ? state.fissionLoading : undefined}
-          onClick={async () => {
-            // Show loading state only if user is authed, otherwise we will be redirecting
-            if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
-              setState({ ...state, fissionLoading: true });
-            }
-            const response = await handleFissionAuth({
-              authorise,
-              authScenario,
-              signIn,
-            });
-            if (response && response.error) {
-              alert(response.error);
-              setState({ ...state, fissionLoading: false });
-            }
-          }}
-        >
-          Sign in with Fission
-        </Button>
-        <aside className={styles.formAside}>{state.fissionLoading ? 'One moment, we are signing you in with Fission.' : ''}</aside>
+        {Flags.FISSION_FRONT_PAGE_AUTH ? (
+          <React.Fragment>
+            <H3 style={{ marginTop: 16 }}>Sign in with Fission</H3>
+            <P style={{ marginTop: 8 }}>Alpha: Sign in here if you created your account with Fission. You may have to create an account with Estuary afterwards.</P>
+            <Button
+              style={{
+                width: '100%',
+                marginTop: 12,
+                background: 'var(--main-button-background-fission)',
+              }}
+              loading={state.fissionLoading ? state.fissionLoading : undefined}
+              onClick={async () => {
+                // Show loading state only if user is authed, otherwise we will be redirecting
+                if (authScenario === Webnative.Scenario.AuthSucceeded || authScenario === Webnative.Scenario.Continuation) {
+                  setState({ ...state, fissionLoading: true });
+                }
+                const response = await handleFissionAuth({
+                  authorise,
+                  authScenario,
+                  signIn,
+                });
+                if (response && response.error) {
+                  alert(response.error);
+                  setState({ ...state, fissionLoading: false });
+                }
+              }}
+            >
+              Sign in with Fission
+            </Button>
+            <aside className={styles.formAside}>{state.fissionLoading ? 'One moment, we are signing you in with Fission.' : ''}</aside>
 
-        <H3 style={{ marginTop: 32 }}>Sign in</H3>
+            <H3 style={{ marginTop: 32 }}>Sign in</H3>
+          </React.Fragment>
+        ) : null}
+
         <P style={{ marginTop: 16 }}>If you have created an account with Estuary before, you can use your username and password to sign in.</P>
         <H4 style={{ marginTop: 32 }}>Username</H4>
         <Input
