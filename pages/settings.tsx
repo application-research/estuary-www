@@ -22,11 +22,21 @@ import LoaderSpinner from '@components/LoaderSpinner';
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
+  const viewer = await U.getViewerFromHeader(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
+  if (!viewer) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/sign-in',
+      },
+    };
+  }
+
   return {
-    props: { host, protocol },
+    props: { host, protocol, viewer },
   };
 }
 
@@ -76,7 +86,8 @@ const onSubmit = async (event, state, setState) => {
 };
 
 function SettingsPage(props: any) {
-  const [viewer, setViewer] = React.useState(null);
+  const { viewer } = props;
+  const [fissionUser, setFissionUser] = React.useState(null);
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
@@ -84,11 +95,11 @@ function SettingsPage(props: any) {
 
   React.useEffect(() => {
     async function performAuthCheck() {
-      const viewer = await U.getViewerFromFission({
+      const data = await U.getViewerFromFission({
         fs,
         path: await getNativePath(C.auth),
       });
-      setViewer({ ...viewer });
+      setFissionUser({ ...data });
     }
 
     if (fs) {
@@ -101,8 +112,8 @@ function SettingsPage(props: any) {
 
   React.useEffect(() => {
     async function performEffect() {
-      if (fs && viewer) {
-        const cosignerResponse = await getWallet(viewer.address);
+      if (fs && fissionUser) {
+        const cosignerResponse = await getWallet(fissionUser.address);
 
         if (cosignerResponse.error) {
           alert(cosignerResponse.error);
@@ -114,13 +125,15 @@ function SettingsPage(props: any) {
           // const response = await R.put('/user/address', { address: cosignerResponse.address });
         } else {
           setBalance(cosignerResponse.balance);
-          setAddress(viewer.address);
+          setAddress(fissionUser.address);
         }
       }
     }
 
     performEffect();
-  }, [fs, viewer]);
+  }, [fs, fissionUser]);
+
+  console.log({ viewer });
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
@@ -179,15 +192,19 @@ function SettingsPage(props: any) {
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
 
-          <H4 style={{ marginTop: 24 }}>Fission Filecoin balance</H4>
-          <Input style={{ marginTop: 8 }} readOnly value={balance} />
-          <aside className={styles.formAside}>Filecoin Balance in AttoFIL ({U.inFIL(balance)}).</aside>
+          {fissionUser ? (
+            <React.Fragment>
+              <H4 style={{ marginTop: 24 }}>Fission Filecoin balance</H4>
+              <Input style={{ marginTop: 8 }} readOnly value={balance} />
+              <aside className={styles.formAside}>Filecoin Balance in AttoFIL ({U.inFIL(balance)}).</aside>
 
-          <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
-          <Input style={{ marginTop: 8 }} readOnly value={address ? address : ''} />
-          <aside className={styles.formAside}>
-            This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="https://fission.codes">Fission's website</a>.
-          </aside>
+              <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
+              <Input style={{ marginTop: 8 }} readOnly value={address ? address : ''} />
+              <aside className={styles.formAside}>
+                This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="https://fission.codes">Fission's website</a>.
+              </aside>
+            </React.Fragment>
+          ) : null}
 
           <H4 style={{ marginTop: 24 }}>Replication</H4>
           <Input style={{ marginTop: 8 }} readOnly value={viewer.settings.replication} />
