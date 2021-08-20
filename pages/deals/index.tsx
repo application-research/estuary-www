@@ -208,10 +208,6 @@ export default class Dashboard extends React.Component<any, any> {
     return (
       <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url="https://estuary.tech/deals">
         <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
-          <AlertPanel title="Storage deals are experiencing delays">
-            Currently Filecoin deals are experiencing delays that are effecting the accuracy of receipts and status reporting. We are waiting for patches in the Lotus
-            implementation of Filecoin to be deployed by miners.
-          </AlertPanel>
           <PageHeader>
             <H2>Deals</H2>
             <P style={{ marginTop: 16 }}>All of your Filecoin deals and logs will appear here. Deals are automated and made on your behalf.</P>
