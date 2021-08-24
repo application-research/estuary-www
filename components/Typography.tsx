@@ -21,3 +21,7 @@ export const H4 = (props: any) => {
 export const P = (props: any) => {
   return <p className={styles.p} {...props} />;
 };
+
+export const CodeBlock = (props: any) => {
+  return <p className={styles.code} {...props} />;
+};

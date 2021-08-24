@@ -201,7 +201,7 @@ function SettingsPage(props: any) {
               <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
               <Input style={{ marginTop: 8 }} readOnly value={address ? address : ''} />
               <aside className={styles.formAside}>
-                This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="https://fission.codes">Fission's website</a>.
+                This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="/fission">Fission's website</a>.
               </aside>
             </React.Fragment>
           ) : null}

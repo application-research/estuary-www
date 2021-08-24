@@ -42,6 +42,14 @@ function AuthenticatedLayout(props: any) {
       </a>
 
       <div className={styles.title}>Settings</div>
+      <a className={styles.item} href="/your-miners">
+        Your miners
+      </a>
+
+      <a className={styles.item} href="/fission">
+        Fission
+      </a>
+
       <a className={styles.item} href="/settings">
         Account
       </a>
