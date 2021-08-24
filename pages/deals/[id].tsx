@@ -129,11 +129,15 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={fileURL} target="_blank">
-                      {fileURL}
-                    </a>
-                  </td>
+                  {!U.isEmpty(fileURL) ? (
+                    <td className={tstyles.tdcta}>
+                      <a className={tstyles.cta} href={fileURL} target="_blank">
+                        {fileURL}
+                      </a>
+                    </td>
+                  ) : (
+                    <td className={tstyles.td}>Does not exist</td>
+                  )}
                 </tr>
               </tbody>
             </table>
@@ -145,7 +149,7 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.ID : ``}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.ID : `NO TRANSFER`}</td>
                 </tr>
               </tbody>
             </table>
@@ -157,7 +161,7 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Initiator : ``}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Initiator : `NO TRANSFER`}</td>
                 </tr>
               </tbody>
             </table>
@@ -169,7 +173,7 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Responder : ``}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Responder : `NO TRANSFER`}</td>
                 </tr>
               </tbody>
             </table>
