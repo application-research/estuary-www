@@ -145,7 +145,7 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer.channelId.ID}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.ID : ``}</td>
                 </tr>
               </tbody>
             </table>
@@ -157,7 +157,7 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer.channelId.Initiator}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Initiator : ``}</td>
                 </tr>
               </tbody>
             </table>
@@ -169,12 +169,12 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer.channelId.Responder}</td>
+                  <td className={tstyles.td}>{state.transfer ? state.transfer.channelId.Responder : ``}</td>
                 </tr>
               </tbody>
             </table>
 
-            {!U.isEmpty(state.transfer.message) ? (
+            {state.transfer && !U.isEmpty(state.transfer.message) ? (
               <table className={tstyles.table}>
                 <tbody className={tstyles.tbody}>
                   <tr className={tstyles.tr}>
@@ -188,47 +188,53 @@ function DealPage(props: any) {
               </table>
             ) : null}
 
-            <table className={tstyles.table}>
-              <tbody className={tstyles.tbody}>
-                <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Received</th>
-                  <th className={tstyles.th}>Sent</th>
-                  <th className={tstyles.th}>Status</th>
-                  <th className={tstyles.th}>Message</th>
-                </tr>
+            {state.transfer ? (
+              <table className={tstyles.table}>
+                <tbody className={tstyles.tbody}>
+                  <tr className={tstyles.tr}>
+                    <th className={tstyles.th}>Received</th>
+                    <th className={tstyles.th}>Sent</th>
+                    <th className={tstyles.th}>Status</th>
+                    <th className={tstyles.th}>Message</th>
+                  </tr>
 
-                <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{U.bytesToSize(state.transfer.received)}</td>
-                  <td className={tstyles.td}>{U.bytesToSize(state.transfer.sent)}</td>
-                  <td className={tstyles.td}>{state.transfer.status}</td>
-                  <td className={tstyles.td}>{state.transfer.statusMessage}</td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr className={tstyles.tr}>
+                    <td className={tstyles.td}>{U.bytesToSize(state.transfer.received)}</td>
+                    <td className={tstyles.td}>{U.bytesToSize(state.transfer.sent)}</td>
+                    <td className={tstyles.td}>{state.transfer.status}</td>
+                    <td className={tstyles.td}>{state.transfer.statusMessage}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ) : null}
 
-            <table className={tstyles.table}>
-              <tbody className={tstyles.tbody}>
-                <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Remote peer</th>
-                </tr>
+            {state.transfer ? (
+              <table className={tstyles.table}>
+                <tbody className={tstyles.tbody}>
+                  <tr className={tstyles.tr}>
+                    <th className={tstyles.th}>Remote peer</th>
+                  </tr>
 
-                <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer.remotePeer}</td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr className={tstyles.tr}>
+                    <td className={tstyles.td}>{state.transfer.remotePeer}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ) : null}
 
-            <table className={tstyles.table}>
-              <tbody className={tstyles.tbody}>
-                <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Self peer</th>
-                </tr>
+            {state.transfer ? (
+              <table className={tstyles.table}>
+                <tbody className={tstyles.tbody}>
+                  <tr className={tstyles.tr}>
+                    <th className={tstyles.th}>Self peer</th>
+                  </tr>
 
-                <tr className={tstyles.tr}>
-                  <td className={tstyles.td}>{state.transfer.selfPeer}</td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr className={tstyles.tr}>
+                    <td className={tstyles.td}>{state.transfer.selfPeer}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ) : null}
 
             {state.onChainState ? (
               <React.Fragment>
