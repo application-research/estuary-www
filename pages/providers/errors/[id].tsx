@@ -69,7 +69,9 @@ function MinerErrorPage(props: any) {
                       </a>
                     </td>
                     <td className={tstyles.td}>{log.phase}</td>
-                    <td className={tstyles.td}>{log.message}</td>
+                    <td className={tstyles.td}>
+                      <strong>[{log.minerVersion}]</strong> {log.message}
+                    </td>
                   </tr>
                 ))
               : null}
