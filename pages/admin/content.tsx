@@ -98,7 +98,13 @@ function AdminContentPage(props: any) {
                     return (
                       <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>
-                        <td className={tstyles.td}>{data.id}</td>
+
+                        <td className={tstyles.tdcta}>
+                          <a className={tstyles.cta} href={`/content/${data.id}`}>
+                            {data.id}
+                          </a>
+                        </td>
+
                         <td className={tstyles.tdcta}>
                           <a href={fileURL} target="_blank" className={tstyles.cta}>
                             {fileURL}

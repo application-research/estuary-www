@@ -70,7 +70,11 @@ function MinerDealsPage(props: any) {
                   return (
                     <tr key={log.ID} className={tstyles.tr} style={style}>
                       <td className={tstyles.td}>{U.toDate(log.CreatedAt)}</td>
-                      <td className={tstyles.td}>{log.content}</td>
+                      <td className={tstyles.tdcta}>
+                        <a className={tstyles.cta} href={`/content/${log.content}`}>
+                          {log.content}
+                        </a>
+                      </td>
                       <td className={tstyles.tdcta}>
                         <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                           {log.miner}
