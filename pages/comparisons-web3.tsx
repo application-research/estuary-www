@@ -11,14 +11,11 @@ import Button from '@components/Button';
 import FeatureRow from '@components/FeatureRow';
 import MarketingCube from '@components/MarketingCube';
 import SingleColumnLayout from '@components/SingleColumnLayout';
+import ComparisonWeb3 from '@components/ComparisonWeb3';
 import Chart from '@components/Chart';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
-
-const curl = `curl \n-X POST https://api.estuary.tech/content/add \n-H "Authorization: Bearer YOUR_API_KEY" \n-H "Accept: application/json" \n-H "Content-Type: multipart/form-data" \n-F "data=@PATH_TO_FILE"`;
-
-const retrieve = `lotus client retrieve --miner MINER_ID DATA_CID OUTPUT_FILE_NAME`;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -45,14 +42,13 @@ function useWindowSize() {
   return size;
 }
 
-function IndexPage(props: any) {
+function ComparisonsWeb3Page(props: any) {
   const [width, height] = useWindowSize();
   const [state, setState] = React.useState({
     miners: [],
     totalStorage: 0,
     totalFiles: 0,
     dealsOnChain: 0,
-    ready: false,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
@@ -62,29 +58,18 @@ function IndexPage(props: any) {
       const stats = await R.get('/public/stats');
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, ready: true });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
       }
 
-      setState({ ...state, miners, ...stats, ready: true });
+      setState({ ...state, miners, ...stats });
     };
 
     run();
   }, []);
 
   React.useEffect(() => {
-    async function load() {
-      let data;
-
-      try {
-        data = await R.get('/public/metrics/deals-on-chain');
-      } catch (e) {
-        console.log(e);
-        return null;
-      }
-
-      if (data.error) {
-        return null;
-      }
+    const load = async () => {
+      const data = await R.get('/public/metrics/deals-on-chain');
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];
@@ -150,73 +135,31 @@ function IndexPage(props: any) {
           },
         ],
       });
-    }
+    };
 
     load();
   }, [width]);
 
-  const description = 'Use any browser and our API to store public data on the decentralized Filecoin Network and retrieve it from anywhere.';
+  const description = 'A comparison of Estuary to other popular Web3 storage solutions.';
 
   return (
-    <Page title="Estuary" description={description} url="https://estuary.tech">
+    <Page title="Estuary: Comparisons of Estuary to others" description={description} url="https://estuary.tech/comparisons-web3">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
+
+      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
+        <H1 style={{ margin: '0 auto 0 auto' }}>Let's compare</H1>
+        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>Comparing Estuary to Web3 Storage and NFT Storage.</P>
+        <div className={S.actions}>
+          <Button href="/">Try Estuary</Button>
+        </div>
+      </SingleColumnLayout>
+
+      <ComparisonWeb3 />
 
       <div className={S.h}>
         <div className={S.ht}>
-          {props.viewer ? <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Welcome back!</H1> : <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Store your data</H1>}
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>{description}</P>
-          {props.viewer ? (
-            <div className={S.actions}>
-              <Button href="/home">View your files</Button>
-            </div>
-          ) : (
-            <div className={S.actions}>
-              <Button
-                href="https://docs.estuary.tech"
-                target="_blank"
-                style={{
-                  marginRight: 24,
-                  marginBottom: 24,
-                }}
-              >
-                Learn more
-              </Button>
-
-              <Button
-                href="https://docs.estuary.tech/get-invite-key"
-                target="_blank"
-                style={{
-                  background: 'var(--main-button-background-secondary)',
-                  color: 'var(--main-button-text-secondary)',
-                  marginBottom: 24,
-                }}
-              >
-                Get access
-              </Button>
-            </div>
-          )}
-          <div className={S.hbimgc}>
-            <div className={S.ca}>
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ background: `var(--main-text)` }}>
-                <div className={S.cbt}>CLI ➝ Store</div>
-                <div className={S.cbb}>{curl}</div>
-              </div>
-
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24, background: `var(--main-text)` }}>
-                <div className={S.cbt}>CLI ➝ Retrieve</div>
-                <div className={S.cbb}>{retrieve}</div>
-              </div>
-
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24 }}>
-                <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
-                <a className={S.cbb} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
-                  https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi
-                </a>
-              </div>
-            </div>
-
-            <img className={U.classNames(S.hbimg, state.ready ? S.visible : null)} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
-          </div>
+          <H2 style={{ maxWidth: '768px', fontWeight: 600 }}>Stored data</H2>
+          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>Our Estuary Node has pinned and stored data on the Filecoin Network.</P>
         </div>
       </div>
 
@@ -239,76 +182,6 @@ function IndexPage(props: any) {
             <div className={S.scl}>Total sealed storage</div>
           </div>
         ) : null}
-      </div>
-
-      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
-        <H2 style={{ margin: '0 auto 0 auto' }}>Filecoin storage made easy</H2>
-        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Estuary makes using Filecoin as easy as uploading a file. Now you can make storage deals without having to understand how it works.
-        </P>
-        <div className={S.actions}>
-          <Button
-            href="/comparisons"
-            style={{
-              marginRight: 24,
-              marginBottom: 24,
-            }}
-          >
-            Compare to Cloud
-          </Button>
-          <Button
-            href="/comparisons-web3"
-            style={{
-              background: 'var(--main-button-background-secondary)',
-              color: 'var(--main-button-text-secondary)',
-              marginBottom: 24,
-            }}
-          >
-            Web3 Comparisons
-          </Button>
-        </div>
-      </SingleColumnLayout>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Upload public data</div>
-          <FeatureRow>
-            <strong>No minimum size</strong>. 32 GB maximum per file.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Use this website, or our API</strong>. Check out our{' '}
-            <a href="https://docs.estuary.tech" target="_blank">
-              documentation
-            </a>
-            .
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Global access.</strong> Retrieve your data from any IPFS gateway or Filecoin miner directly.
-          </FeatureRow>
-        </div>
-        <div className={S.rr} style={{ background: `#000` }}>
-          <video className={S.video} controls src="https://ipfs.io/ipfs/bafybeiaxlts3bqrsywzcymnp3lv7rrqarszntge455yav26ekfvhbxkjfm" autoPlay={true} playsInline muted loop />
-          {/* <MarketingUpload estimate="0" price="0" size="792259920" replication="6" duration={1051200} verified={true} /> */}
-        </div>
-      </div>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Provable storage</div>
-          <FeatureRow>
-            <strong>Interoperable</strong>. All storage is accessible from any IPFS gateway.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Verifiable</strong>. All storage has an immutable content address so you always know what you're getting. All deals have receipts before and after getting on
-            chain.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Detailed</strong>. Learn exactly how your data is stored and with which provider in the world.
-          </FeatureRow>
-        </div>
-        <div className={S.rr}>
-          <MarketingProgress />
-        </div>
       </div>
 
       <SingleColumnLayout style={{ textAlign: 'center' }}>
@@ -413,4 +286,4 @@ function IndexPage(props: any) {
   );
 }
 
-export default IndexPage;
+export default ComparisonsWeb3Page;

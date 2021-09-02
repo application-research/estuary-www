@@ -143,7 +143,7 @@ function ComparisonPage(props: any) {
   const description = 'A comparison of Estuary and popular cloud storage options.';
 
   return (
-    <Page title="Estuary: Comparisons" description={description} url="https://estuary.tech">
+    <Page title="Estuary: Comparisons" description={description} url="https://estuary.tech/comparisons">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
@@ -245,20 +245,7 @@ function ComparisonPage(props: any) {
         </div>
         {state.miners.map((each, index) => {
           if (each.suspended) {
-            return (
-              <div className={S.fa} key={each.addr}>
-                <div className={S.fcol4}>
-                  <span className={S.flink} style={{ background: `var(--status-error)` }}>
-                    {each.addr} suspended
-                  </span>
-                </div>
-                <div className={S.fcolfull}>
-                  <span className={S.flink} style={{ background: `var(--status-error)` }}>
-                    reason: {each.suspendedReason}
-                  </span>
-                </div>
-              </div>
-            );
+            return null;
           }
 
           const indexValue = U.pad(index, 4);
