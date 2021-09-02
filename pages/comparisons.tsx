@@ -279,7 +279,7 @@ function ComparisonPage(props: any) {
 
       <div className={S.fb}>
         <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
-          ➝ Built by ꧁𓀨꧂
+          ➝ Built by ARG
         </a>
       </div>
     </Page>

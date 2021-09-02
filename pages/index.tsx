@@ -155,7 +155,7 @@ function IndexPage(props: any) {
     load();
   }, [width]);
 
-  const description = 'Use any browser and our API to store public data on the decentralized Filecoin Network and retrieve it from anywhere.';
+  const description = 'Use any browser and our API to store public data on IPFS and Filecoin.';
 
   return (
     <Page title="Estuary" description={description} url="https://estuary.tech">
@@ -406,7 +406,7 @@ function IndexPage(props: any) {
 
       <div className={S.fb}>
         <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
-          ➝ Built by ꧁𓀨꧂
+          ➝ Built by ARG
         </a>
       </div>
     </Page>

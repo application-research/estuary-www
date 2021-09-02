@@ -30,7 +30,7 @@ function ComparisonWeb3(props: any) {
               <strong>Marketing tagline</strong>
             </td>
 
-            <td className={tstyles.td}>Use any browser or our API to store public data on the decentralized Filecoin Network and retrieve it from anywhere</td>
+            <td className={tstyles.td}>Use any browser or our API to store public data on IPFS and Filecoin</td>
 
             <td className={tstyles.td}>Build apps backed by Filecoin, no infrastructure required</td>
 
@@ -298,13 +298,9 @@ function ComparisonWeb3(props: any) {
 
             <td className={tstyles.td}>Yes</td>
 
-            <td className={tstyles.td}>
-              <strong>Uses https://estuary.tech</strong> and other options in development
-            </td>
+            <td className={tstyles.td}>Uses Estuary, Textile's BidBot and other promising options in development</td>
 
-            <td className={tstyles.td}>
-              <strong>Uses https://estuary.tech</strong>
-            </td>
+            <td className={tstyles.td}>Uses Estuary, Textile's BidBot and other promising options in development</td>
           </tr>
 
           <tr className={tstyles.tr}>
