@@ -424,22 +424,7 @@ function ComparisonWeb3(props: any) {
               <strong>Provider control</strong>
               <br />
               <br />
-              Can the provider control whether or not they will be sent deals?
-            </td>
-
-            <td className={tstyles.td}>Yes</td>
-
-            <td className={tstyles.td}>-</td>
-
-            <td className={tstyles.td}>-</td>
-          </tr>
-
-          <tr className={tstyles.tr}>
-            <td className={tstyles.td}>
-              <strong>Suspension</strong>
-              <br />
-              <br />
-              Can the Estuary Node admin temporarily suspend providers?
+              Can the provider control whether or not they will be sent deals? Can an administrator suspend providers temporarily?
             </td>
 
             <td className={tstyles.td}>Yes</td>
