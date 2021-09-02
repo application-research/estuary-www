@@ -147,7 +147,7 @@ function ComparisonsWeb3Page(props: any) {
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
-        <H1 style={{ margin: '0 auto 0 auto' }}>Let's compare</H1>
+        <H1 style={{ margin: '0 auto 0 auto' }}>Storage solution comparisons</H1>
         <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>Comparing Estuary to Web3 Storage and NFT Storage.</P>
         <div className={S.actions}>
           <Button href="/">Try Estuary</Button>

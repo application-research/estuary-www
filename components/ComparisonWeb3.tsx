@@ -234,6 +234,18 @@ function ComparisonWeb3(props: any) {
 
             <td className={tstyles.td}>Yes</td>
           </tr>
+
+          <tr className={tstyles.tr}>
+            <td className={tstyles.td}>
+              <strong>NFT education and support</strong>
+            </td>
+
+            <td className={tstyles.td}>Partial</td>
+
+            <td className={tstyles.td}>Partial</td>
+
+            <td className={tstyles.td}>Yes</td>
+          </tr>
         </tbody>
       </table>
       <br />
@@ -245,7 +257,7 @@ function ComparisonWeb3(props: any) {
               Feature
             </th>
             <th className={tstyles.th} style={{ width: '30%' }}>
-              https://estuary.tech
+              Any Estuary Node
             </th>
             <th className={tstyles.th} style={{ width: '30%' }}>
               Web3 Storage
