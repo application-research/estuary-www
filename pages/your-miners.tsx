@@ -68,12 +68,13 @@ const onClaimMiner = async (e, state, setState) => {
     return;
   }
 
-  const response = await R.post(`/user/miner/claim/${state.miner}`, {
+  const response = await R.post(`/user/miner/claim`, {
     miner: state.miner,
     claim: state.signature,
   });
 
   if (response && response.error) {
+    console.log(response.error);
     alert(`Failed to claim your miner ${state.miner}.`);
     return;
   }
@@ -107,11 +108,7 @@ function YourMinerPage(props: any) {
           <H3>Get signature</H3>
           <P style={{ marginTop: 16 }}>Please enter your provider/miner ID to obtain a hex message and a command to run on Lotus.</P>
 
-          {!U.isEmpty(state.hexmsg) ? (
-            <CodeBlock style={{ marginTop: 16 }}>
-              lotus wallet sign {state.miner} {state.hexmsg}
-            </CodeBlock>
-          ) : null}
+          {!U.isEmpty(state.hexmsg) ? <CodeBlock style={{ marginTop: 16 }}>lotus wallet sign YOUR_WORKER_ADDRESS {state.hexmsg}</CodeBlock> : null}
 
           <H4 style={{ marginTop: 32 }}>Miner ID</H4>
           <Input
