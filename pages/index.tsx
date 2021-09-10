@@ -58,14 +58,18 @@ function IndexPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const miners = await R.get('/public/miners');
-      const stats = await R.get('/public/stats');
+      let miners;
+      let stats;
+      try {
+        miners = await R.get('/public/miners');
+        stats = await R.get('/public/stats');
+      } catch (e) {}
 
       if ((miners && miners.error) || (stats && stats.error)) {
         return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, ready: true });
       }
 
-      setState({ ...state, miners, ...stats, ready: true });
+      setState({ ...state, ...stats, miners, ready: true });
     };
 
     run();
@@ -74,11 +78,14 @@ function IndexPage(props: any) {
   React.useEffect(() => {
     async function load() {
       let data;
-
       try {
         data = await R.get('/public/metrics/deals-on-chain');
       } catch (e) {
         console.log(e);
+        return null;
+      }
+
+      if (!data) {
         return null;
       }
 
@@ -220,26 +227,28 @@ function IndexPage(props: any) {
         </div>
       </div>
 
-      <div className={S.stats}>
-        <div className={S.sc}>
-          <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : null}</div>
-          <div className={S.scl}>Total files</div>
-        </div>
-        <div className={S.sc}>
-          <div className={S.scn}>{state.dealsOnChain}</div>
-          <div className={S.scl}>Deals on chain</div>
-        </div>
-        <div className={S.sc}>
-          <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
-          <div className={S.scl}>Total pinned data</div>
-        </div>
-        {graph.dealsSealedBytes ? (
+      {state.totalFiles ? (
+        <div className={S.stats}>
           <div className={S.sc}>
-            <div className={S.scn}>{U.bytesToSize(graph.dealsSealedBytes)}</div>
-            <div className={S.scl}>Total sealed storage</div>
+            <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : null}</div>
+            <div className={S.scl}>Total files</div>
           </div>
-        ) : null}
-      </div>
+          <div className={S.sc}>
+            <div className={S.scn}>{state.dealsOnChain}</div>
+            <div className={S.scl}>Deals on chain</div>
+          </div>
+          <div className={S.sc}>
+            <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
+            <div className={S.scl}>Total pinned data</div>
+          </div>
+          {graph.dealsSealedBytes ? (
+            <div className={S.sc}>
+              <div className={S.scn}>{U.bytesToSize(graph.dealsSealedBytes)}</div>
+              <div className={S.scl}>Total sealed storage</div>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
         <H2 style={{ margin: '0 auto 0 auto' }}>Filecoin storage made easy</H2>
@@ -311,24 +320,26 @@ function IndexPage(props: any) {
         </div>
       </div>
 
-      <SingleColumnLayout style={{ textAlign: 'center' }}>
-        <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
-        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Logs from your Storage providers are public so we can help debug and triage issues with the Filecoin Network.
-        </P>
+      {state.miners ? (
+        <SingleColumnLayout style={{ textAlign: 'center' }}>
+          <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
+          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
+            Logs from your Storage providers are public so we can help debug and triage issues with the Filecoin Network.
+          </P>
 
-        <div className={S.actions}>
-          <Button
-            href="https://docs.estuary.tech/feedback"
-            target="_blank"
-            style={{
-              background: `var(--main-primary)`,
-            }}
-          >
-            Give us feedback
-          </Button>
-        </div>
-      </SingleColumnLayout>
+          <div className={S.actions}>
+            <Button
+              href="https://docs.estuary.tech/feedback"
+              target="_blank"
+              style={{
+                background: `var(--main-primary)`,
+              }}
+            >
+              Give us feedback
+            </Button>
+          </div>
+        </SingleColumnLayout>
+      ) : null}
 
       {graph.data ? (
         <div className={S.graphArea}>
@@ -348,61 +359,64 @@ function IndexPage(props: any) {
         </div>
       ) : null}
 
-      <footer className={S.f}>
-        {graph.data ? (
+      {state.miners ? (
+        <footer className={S.f}>
+          {graph.data ? (
+            <div className={S.fa}>
+              {graph.data.map((each) => {
+                return (
+                  <div className={S.fcol4} key={each.name}>
+                    <div className={S.graphItem} style={{ background: each.color, color: `var(--main-text)` }}>
+                      {each.name}: {each.items[each.items.length - 1].value}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
           <div className={S.fa}>
-            {graph.data.map((each) => {
+            <div className={S.fcol4}>
+              <span className={S.flink}>Index</span>
+            </div>
+            <div className={S.fcolfull}>
+              <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
+            </div>
+          </div>
+          {state.miners &&
+            state.miners.map((each, index) => {
+              if (each.suspended) {
+                return null;
+              }
+
+              const indexValue = U.pad(index, 4);
+
               return (
-                <div className={S.fcol4} key={each.name}>
-                  <div className={S.graphItem} style={{ background: each.color, color: `var(--main-text)` }}>
-                    {each.name}: {each.items[each.items.length - 1].value}
+                <div className={S.fam} key={each.addr}>
+                  <div className={S.fcol4}>
+                    <a className={S.flink} href={`/providers/stats/${each.addr}`}>
+                      {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
+                    </a>
+                  </div>
+                  <div className={S.fcol4}>
+                    <a className={S.flink} href={`/providers/stats/${each.addr}`}>
+                      ➝ {each.addr}/stats
+                    </a>
+                  </div>
+                  <div className={S.fcol4}>
+                    <a className={S.flink} href={`/providers/deals/${each.addr}`}>
+                      ➝ {each.addr}/deals
+                    </a>
+                  </div>
+                  <div className={S.fcol4}>
+                    <a className={S.flink} href={`/providers/errors/${each.addr}`}>
+                      ➝ {each.addr}/errors
+                    </a>
                   </div>
                 </div>
               );
             })}
-          </div>
-        ) : null}
-        <div className={S.fa}>
-          <div className={S.fcol4}>
-            <span className={S.flink}>Index</span>
-          </div>
-          <div className={S.fcolfull}>
-            <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
-          </div>
-        </div>
-        {state.miners.map((each, index) => {
-          if (each.suspended) {
-            return null;
-          }
-
-          const indexValue = U.pad(index, 4);
-
-          return (
-            <div className={S.fam} key={each.addr}>
-              <div className={S.fcol4}>
-                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                  {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
-                </a>
-              </div>
-              <div className={S.fcol4}>
-                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                  ➝ {each.addr}/stats
-                </a>
-              </div>
-              <div className={S.fcol4}>
-                <a className={S.flink} href={`/providers/deals/${each.addr}`}>
-                  ➝ {each.addr}/deals
-                </a>
-              </div>
-              <div className={S.fcol4}>
-                <a className={S.flink} href={`/providers/errors/${each.addr}`}>
-                  ➝ {each.addr}/errors
-                </a>
-              </div>
-            </div>
-          );
-        })}
-      </footer>
+        </footer>
+      ) : null}
 
       <div className={S.fb}>
         <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
