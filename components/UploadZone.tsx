@@ -13,6 +13,22 @@ const MODES = {
   3: 'PROCESSING',
 };
 
+function traverseFileTree(item, path) {
+  path = path || '';
+  if (item.isFile) {
+    item.file(function (file) {
+      console.log('File:', path + file.name);
+    });
+  } else if (item.isDirectory) {
+    var dirReader = item.createReader();
+    dirReader.readEntries(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        traverseFileTree(entries[i], path + item.name + '/');
+      }
+    });
+  }
+}
+
 export default class UploadZone extends React.Component<any> {
   state = {
     mode: MODES[1],
@@ -83,6 +99,12 @@ export default class UploadZone extends React.Component<any> {
 
   handlePushFiles = async (files) => {
     for await (const file of files) {
+      if (!file.type && file.size % 4096 == 0) {
+        console.log('folder', file);
+        window.alert(`Estuary does not support folder upload at the moment, skipping "${file.name}"`);
+        continue;
+      }
+
       await this.props.onFile(file);
     }
 

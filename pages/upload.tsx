@@ -105,7 +105,9 @@ export default class UploadPage extends React.Component<any> {
 
             {this.state.files.length ? (
               <React.Fragment>
-                <H3 style={{ marginTop: 64 }}>Queued files</H3>
+                <H3 style={{ marginTop: 64 }}>
+                  Queued {U.pluralize('file', this.state.files.length)} {`(${this.state.files.length})`}
+                </H3>
                 <P style={{ marginTop: 16 }}>Your data that is ready to be uploaded to Estuary</P>
 
                 <div className={styles.actions}>
