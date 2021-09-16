@@ -1,4 +1,5 @@
 import styles from '@pages/app.module.scss';
+import tstyles from '@pages/table.module.scss';
 
 import * as React from 'react';
 import * as U from '@common/utilities';
@@ -99,14 +100,94 @@ function YourMinerPage(props: any) {
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Your miners</H2>
-          <P style={{ marginTop: 16 }}>
-            By following these steps, you will be able to claim your miner and manage some aspects of it through Estuary. (Miner Management Section WIP)
-          </P>
+          {!viewer.miners || !viewer.miners.length ? (
+            <P style={{ marginTop: 16 }}>By following these steps, you will be able to claim your provider/miner and manage some aspects of it through Estuary.</P>
+          ) : (
+            <P style={{ marginTop: 16 }}>Here are the providers/miners you have added.</P>
+          )}
+
+          {viewer.miners && viewer.miners.length ? (
+            <table className={tstyles.table} style={{ marginTop: 48 }}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th} style={{ width: '128px' }}>
+                    provider
+                  </th>
+                  <th className={tstyles.th}>options</th>
+                </tr>
+
+                {viewer.miners.map((data, index) => {
+                  return (
+                    <tr className={tstyles.tr} key={`provider-${index}`}>
+                      <td className={tstyles.td}>{data}</td>
+                      {!props.offloaded ? (
+                        <td className={tstyles.td}>
+                          <button
+                            className={tstyles.tdbutton}
+                            style={{ margin: '0 8px 8px 0' }}
+                            onClick={async () => {
+                              const answer = window.prompt('Pick a new name.');
+
+                              if (U.isEmpty(answer)) {
+                                window.alert('You did not provide a name, try again.');
+                                return;
+                              }
+
+                              const response = await R.put(`/user/miner/set-info/${answer}`, { name: answer });
+
+                              if (response && response.error) {
+                                return alert(response.error);
+                              }
+
+                              window.alert(`Name changed to ${answer}.`);
+                              window.location.reload();
+                            }}
+                          >
+                            Change name
+                          </button>
+                          <button
+                            className={tstyles.tdbutton}
+                            style={{ margin: '0 8px 8px 0' }}
+                            onClick={async () => {
+                              const reason = window.prompt('Enter a reason (optional)');
+
+                              const response = await R.post(`/user/miner/suspend/${data}`, { reason });
+
+                              if (response && response.error) {
+                                return alert(response.error);
+                              }
+
+                              window.alert(`Provider is suspended. ${data} will not receive deals.`);
+                              window.location.reload();
+                            }}
+                          >
+                            Suspend
+                          </button>
+                          <button
+                            className={tstyles.tdbutton}
+                            style={{ margin: '0 8px 8px 0' }}
+                            onClick={async () => {
+                              const response = await R.put(`/user/miner/unsuspend/${data}`, {});
+
+                              window.alert(`Provider unsuspended.  ${data} will receive deals from Estuary.`);
+                              window.location.reload();
+                            }}
+                          >
+                            Unsuspend
+                          </button>
+                        </td>
+                      ) : null}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          ) : null}
         </SingleColumnLayout>
 
         <SingleColumnLayout>
           <H3>Get signature</H3>
-          <P style={{ marginTop: 16 }}>Please enter your provider/miner ID to obtain a hex message and a command to run on Lotus.</P>
+          <P style={{ marginTop: 16 }}>To get started with adding a provider/miner. Please enter your provider/miner ID to obtain a hex message and a command to run on Lotus.</P>
 
           {!U.isEmpty(state.hexmsg) ? <CodeBlock style={{ marginTop: 16 }}>lotus wallet sign YOUR_WORKER_ADDRESS {state.hexmsg}</CodeBlock> : null}
 
