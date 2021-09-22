@@ -1,6 +1,6 @@
 {
   "name": "estuary-www",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "node": "16.x"
   },
@@ -16,11 +16,11 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "d3": "^5.16.0",
-    "js-cookie": "^2.2.1",
-    "next": "^10.2.3",
+    "js-cookie": "^3.0.1",
+    "next": "^11.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "sass": "1.34.1",
+    "sass": "1.42.1",
     "webnative": "0.25.2",
     "webnative-filecoin": "0.6.11"
   },
