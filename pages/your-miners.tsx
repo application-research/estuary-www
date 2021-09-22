@@ -187,7 +187,7 @@ function YourMinerPage(props: any) {
 
         <SingleColumnLayout>
           <H3>Get signature</H3>
-          <P style={{ marginTop: 16 }}>To get started with adding a provider/miner. Please enter your provider/miner ID to obtain a hex message and a command to run on Lotus.</P>
+          <P style={{ marginTop: 16 }}>To get started with adding a provider/miner, please enter your provider/miner ID to obtain a hex message and a command to run on Lotus.</P>
 
           {!U.isEmpty(state.hexmsg) ? <CodeBlock style={{ marginTop: 16 }}>lotus wallet sign YOUR_WORKER_ADDRESS {state.hexmsg}</CodeBlock> : null}
 
