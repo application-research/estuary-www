@@ -86,6 +86,28 @@ function APIPage(props: any) {
             <Button
               style={{
                 marginBottom: 24,
+                marginRight: 24,
+                background: 'var(--main-button-background-secondary)',
+                color: 'var(--main-button-text-secondary)',
+              }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                setState({ ...state, loading: true });
+                const request = await R.post(`/user/api-keys?expiry=false`, { expiry: false });
+
+                const keys = await R.get('/user/api-keys');
+                if (keys && !keys.error) {
+                  setState({ ...state, loading: false, keys });
+                  return;
+                }
+              }}
+            >
+              Generate key without Expiry
+            </Button>
+
+            <Button
+              style={{
+                marginBottom: 24,
                 background: 'var(--main-button-background-secondary)',
                 color: 'var(--main-button-text-secondary)',
               }}
