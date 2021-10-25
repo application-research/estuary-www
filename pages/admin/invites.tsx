@@ -17,6 +17,7 @@ import Input from '@components/Input';
 import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -51,7 +52,7 @@ function AdminInvitesPage(props: any) {
     const run = async () => {
       const response = await R.get('/admin/invites');
       console.log(response);
-      setState({ ...state, invites: response && response.length ? response : [] });
+      setState({ ...state, invites: response && response.length ? response.reverse() : [] });
     };
 
     run();
@@ -64,7 +65,7 @@ function AdminInvitesPage(props: any) {
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Create Invite</H2>
-          <P style={{ marginTop: 16 }}>You can create a single use key with any string that you like.</P>
+          <P style={{ marginTop: 16 }}>You can create a single use key with any string that you like. If you do not provide a string we will generate a random invite for you.</P>
 
           <H4 style={{ marginTop: 32 }}>Invite key</H4>
           <Input
@@ -82,7 +83,7 @@ function AdminInvitesPage(props: any) {
                 ...state,
                 loading: false,
                 key: '',
-                invites: response && response.length ? response : [],
+                invites: response && response.length ? response.reverse() : [],
               });
             }}
           />
@@ -91,6 +92,20 @@ function AdminInvitesPage(props: any) {
             <Button
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
+                if (U.isEmpty(state.key)) {
+                  const generatedKey = `estuary-invite-${uuidv4()}`;
+                  setState({ ...state, loading: true });
+                  await R.post(`/admin/invite/${generatedKey}`, {});
+                  const response = await R.get('/admin/invites');
+                  console.log(response);
+                  return setState({
+                    ...state,
+                    loading: false,
+                    key: '',
+                    invites: response && response.length ? response.reverse() : [],
+                  });
+                }
+
                 setState({ ...state, loading: true });
                 await R.post(`/admin/invite/${state.key}`, {});
                 const response = await R.get('/admin/invites');
@@ -99,7 +114,7 @@ function AdminInvitesPage(props: any) {
                   ...state,
                   loading: false,
                   key: '',
-                  invites: response && response.length ? response : [],
+                  invites: response && response.length ? response.reverse() : [],
                 });
               }}
             >
