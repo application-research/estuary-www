@@ -1,4 +1,4 @@
-![Post](https://user-images.githubusercontent.com/310223/116985054-d5576d00-ac80-11eb-85c0-abacdbdbfc47.png)
+![Post](https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png)
 
 # Estuary WWW
 

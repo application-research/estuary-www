@@ -21,6 +21,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "1.42.1",
+    "uuid": "^8.3.2",
     "webnative": "0.25.2",
     "webnative-filecoin": "0.6.11"
   },
