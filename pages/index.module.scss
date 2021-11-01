@@ -350,3 +350,44 @@ a.flink {
   font-size: 12px;
   padding: 4px 16px 24px 18px;
 }
+
+.ecosystem {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.ecosystemParagraph {
+  color: rgba(128, 128, 128, 1);
+  padding: 0 24px 0 24px;
+  font-size: 24px;
+}
+
+.ecosystemHeading {
+}
+
+.ecosystemSection {
+  max-width: 480px;
+  width: 100%;
+  display: inline-flex;
+}
+
+.ecosystemStatCard {
+  padding: 20px;
+}
+
+.ecosystemStatValue {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.ecosystemStatText {
+  font-size: 14px;
+  font-family: 'Mono';
+  margin-top: 8px;
+  text-transform: uppercase;
+  color: rgba(99, 99, 99, 1);
+}
+
+.ecosystemParagraph {
+  padding: 20px;
+}
