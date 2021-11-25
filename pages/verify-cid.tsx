@@ -14,6 +14,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Input from '@components/Input';
 import StatRow from '@components/StatRow';
 import LoaderSpinner from '@components/LoaderSpinner';
+import RetrievalCommands from '@components/RetrievalCommands';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
@@ -245,8 +246,13 @@ function VerifyCIDPage(props: any) {
                         (view receipt)
                       </a>
                     </StatRow>
-                    <StatRow title="Lotus retrieval">
-                      lotus client retrieve --miner {d.miner} {state.data.content.cid} data-{d.dealId}
+                    <StatRow title="CLI retrieval">
+                      <RetrievalCommands
+                        miner={d.miner}
+                        dealId={d.dealId}
+                        cid={state.data.content.cid}
+                        aggregatedIn={state.data.aggregatedIn?.cid}
+                        selector={state.data.selector} />
                     </StatRow>
                   </div>
                 );
