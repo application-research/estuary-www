@@ -7,8 +7,6 @@ import * as R from '@common/requests';
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 
-import { useFissionAuth } from '@common/useFissionAuth';
-
 import ProgressCard from '@components/ProgressCard';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';

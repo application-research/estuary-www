@@ -6,8 +6,6 @@ import * as R from '@common/requests';
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 
-import { useFissionAuth } from '@common/useFissionAuth';
-
 import ProgressCard from '@components/ProgressCard';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -91,47 +89,6 @@ function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
-  const { fs, getWallet, getNativePath } = useFissionAuth({ host: props.host, protocol: props.protocol });
-
-  React.useEffect(() => {
-    async function performAuthCheck() {
-      const data = await U.getViewerFromFission({
-        fs,
-        path: await getNativePath(C.auth),
-      });
-      setFissionUser({ ...data });
-    }
-
-    if (fs) {
-      console.log('[Fission Auth] There is FS');
-      performAuthCheck();
-    } else {
-      console.log('[Fission Auth] No FS');
-    }
-  }, [fs]);
-
-  React.useEffect(() => {
-    async function performEffect() {
-      if (fs && fissionUser) {
-        const cosignerResponse = await getWallet(fissionUser.address);
-
-        if (cosignerResponse.error) {
-          alert(cosignerResponse.error);
-        }
-
-        if (cosignerResponse.isNew) {
-          setAddress(cosignerResponse.address);
-          setBalance(cosignerResponse.balance);
-          // const response = await R.put('/user/address', { address: cosignerResponse.address });
-        } else {
-          setBalance(cosignerResponse.balance);
-          setAddress(fissionUser.address);
-        }
-      }
-    }
-
-    performEffect();
-  }, [fs, fissionUser]);
 
   console.log({ viewer });
 
