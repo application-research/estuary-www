@@ -108,7 +108,7 @@ export default class UploadPage extends React.Component<any> {
                 <H3 style={{ marginTop: 64 }}>
                   Queued {U.pluralize('file', this.state.files.length)} {`(${this.state.files.length})`}
                 </H3>
-                <P style={{ marginTop: 16 }}>Your data that is ready to be uploaded to Estuary</P>
+                <P style={{ marginTop: 16 }}>Our Estuary node is ready to accept your data, click upload all to upload everything or click upload to upload individual files.</P>
 
                 <div className={styles.actions}>
                   <Button style={{ marginRight: 24, marginBottom: 24 }} onClick={this._handleUpload}>

@@ -3,11 +3,55 @@ import styles from '@components/UploadItem.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
+import * as R from '@common/requests';
 
 import Cookies from 'js-cookie';
 import ProgressBlock from '@components/ProgressBlock';
 import ActionRow from '@components/ActionRow';
 import LoaderSpinner from '@components/LoaderSpinner';
+
+export class PinStatusElement extends React.Component<any> {
+  state = { pinned: false, delegates: ['none'] };
+
+  componentDidMount() {
+    const checkPinStatus = () => {
+      window.setTimeout(async () => {
+        const response = await R.get(`/pinning/pins/${this.props.id}`);
+        console.log(response);
+
+        if (response.status === 'pinned') {
+          console.log('stop loop');
+          this.setState({ pinned: true, ...response });
+          this.forceUpdate();
+          return;
+        }
+
+        checkPinStatus();
+      }, 5000);
+    };
+
+    checkPinStatus();
+  }
+
+  render() {
+    let maybePinStatusElement = null;
+
+    if (this.state.pinned) {
+      return (
+        <React.Fragment>
+          <ActionRow>This CID is pinned.</ActionRow>
+          <ActionRow>Delegate {this.state.delegates[0]}</ActionRow>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <ActionRow style={{ background: `#000`, color: `#fff` }}>
+        This CID is now being pinned to IPFS in the background, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+      </ActionRow>
+    );
+  }
+}
 
 export default class UploadItem extends React.Component<any> {
   state = {
@@ -109,18 +153,27 @@ export default class UploadItem extends React.Component<any> {
       targetURL = this.props.viewer.settings.uploadEndpoints[0];
     }
 
+    // TODO(jim)
+    // States getting messy here, need to refactor this component.
+    // Not sure if this will be an ongoing problem of tracking pin status.
+    let maybePinStatusElement = null;
+    if (this.state.final) {
+      maybePinStatusElement = <PinStatusElement id={this.state.final.estuaryId} />;
+    }
+
     return (
       <section className={styles.item}>
         {this.state.final ? (
           <React.Fragment>
             <ActionRow isHeading style={{ fontSize: '0.9rem', fontWeight: 500, background: `var(--status-success-bright)` }}>
-              {this.props.file.data.name} uploaded!
+              {this.props.file.data.name} uploaded to our node!
             </ActionRow>
             <ActionRow>https://dweb.link/ipfs/{this.state.final.cid}</ActionRow>
+            {maybePinStatusElement}
             {this.props.file.estimation ? (
               <ActionRow style={{ background: `var(--status-success-bright)` }}>Filecoin Deals are being mmade for {this.props.file.data.name}.</ActionRow>
             ) : (
-              <ActionRow>{this.props.file.data.name} was added to a staging bucket.</ActionRow>
+              <ActionRow>{this.props.file.data.name} was added to a staging bucket for a batched Filecoin deal.</ActionRow>
             )}
             {this.props.file.estimation ? (
               <ActionRow onClick={() => window.open('/deals')}>→ See all Filecoin deals.</ActionRow>
@@ -166,7 +219,7 @@ export default class UploadItem extends React.Component<any> {
                 {this.props.file.estimation && this.props.viewer.settings.verified ? <ActionRow>The Filecoin deal will be verified.</ActionRow> : null}
               </React.Fragment>
             ) : null}
-            <ActionRow style={{ background: isLoading ? `#000` : null, color: isLoading ? `#fff` : null }}>Will be sent to: {targetURL}</ActionRow>
+            <ActionRow style={{ background: isLoading ? `#000` : null, color: isLoading ? `#fff` : null }}>Data will be sent to {targetURL}</ActionRow>
           </React.Fragment>
         )}
 
