@@ -2,7 +2,7 @@
   "name": "estuary-www",
   "version": "0.0.5",
   "engines": {
-    "node": "16.x"
+    "node": "14.x"
   },
   "scripts": {
     "dev": "next dev -p 4444",
