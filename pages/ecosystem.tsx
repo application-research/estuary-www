@@ -3,6 +3,7 @@ import S from '@pages/index.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as Logos from '@components/PartnerLogoSVG';
 
 import Page from '@components/Page';
 import Navigation from '@components/Navigation';
@@ -137,7 +138,14 @@ function EcosystemPage(props: any) {
         <div className={S.ecosystemHeading}>
           <EstuarySVG height="64px" />
 
-          <p className={S.ecosystemParagraph}>Estuary's performance since April 2021</p>
+          <p className={S.ecosystemParagraph} style={{ fontSize: 16 }}>
+            Estuary's performance since April 2021
+          </p>
+        </div>
+
+        <div className={S.ecosystemHeading}>
+          <p className={S.ecosystemParagraph}>Collaborators</p>
+          <Logos.Zora height="48px" style={{ margin: 22 }} />
         </div>
 
         <div className={S.ecosystemSection}>
