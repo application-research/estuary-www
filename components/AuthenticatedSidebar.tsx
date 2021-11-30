@@ -24,7 +24,7 @@ function AuthenticatedLayout(props: any) {
         Upload
       </a>
       <a className={styles.item} href="/upload-cid" style={props.active === 'UPLOAD_CID' ? { color: `var(--main-primary)` } : null}>
-        Upload CID
+        Pin CID
       </a>
 
       <div className={styles.title}>Developers</div>
@@ -44,10 +44,6 @@ function AuthenticatedLayout(props: any) {
       <div className={styles.title}>Settings</div>
       <a className={styles.item} href="/your-miners">
         Your miners
-      </a>
-
-      <a className={styles.item} href="/fission">
-        Fission
       </a>
 
       <a className={styles.item} href="/settings">
