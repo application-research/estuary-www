@@ -131,7 +131,7 @@ function YourMinerPage(props: any) {
                                 return;
                               }
 
-                              const response = await R.put(`/user/miner/set-info/${answer}`, { name: answer });
+                              const response = await R.put(`/user/miner/set-info/${data}`, { name: answer });
 
                               if (response && response.error) {
                                 return alert(response.error);
