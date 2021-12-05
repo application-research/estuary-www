@@ -132,12 +132,18 @@ function APIPage(props: any) {
               </tr>
               {state.keys && state.keys.length
                 ? state.keys.map((k, index) => {
+                    const expiryDate = new Date(k.expiry);
+                    const currentDate = new Date();
+                    const isExpired = expiryDate < currentDate;
+
                     return (
                       <tr key={k.token} className={tstyles.tr}>
-                        <td className={tstyles.td}>
+                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
                           {k.token} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
                         </td>
-                        <td className={tstyles.td}>{U.toDate(k.expiry)}</td>
+                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
+                          {U.toDate(k.expiry)}
+                        </td>
                         <td className={tstyles.td}>
                           <button
                             onClick={async () => {
@@ -159,7 +165,7 @@ function APIPage(props: any) {
                             }}
                             className={tstyles.tdbutton}
                           >
-                            Revoke
+                            {isExpired ? 'Delete expired' : `Revoke`}
                           </button>
                         </td>
                       </tr>
