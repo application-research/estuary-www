@@ -44,7 +44,7 @@ function DealDebugPage(props: any) {
     run();
   }, []);
 
-  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+  const sidebarElement = <AuthenticatedSidebar active="DEALS_DEBUG" viewer={props.viewer} />;
 
   return (
     <Page title="Estuary: Deals: Debug" description={`Debug storage deals on Estuary.`} url={`https://estuary.tech/deals/debug`}>

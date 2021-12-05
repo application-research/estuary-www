@@ -47,7 +47,7 @@ function DealPage(props: any) {
     fileURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
   }
 
-  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
+  const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
 
   return (
     <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`https://estuary.tech/deals/${props.id}`}>
