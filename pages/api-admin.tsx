@@ -80,7 +80,7 @@ function APIPage(props: any) {
                 }
               }}
             >
-              Create a key
+              Create key
             </Button>
 
             <Button
@@ -102,18 +102,45 @@ function APIPage(props: any) {
                 }
               }}
             >
-              Generate key without Expiry
+              Create permanent key
             </Button>
 
             <Button
               style={{
                 marginBottom: 24,
+                marginRight: 24,
                 background: 'var(--main-button-background-secondary)',
                 color: 'var(--main-button-text-secondary)',
               }}
-              href="https://docs.estuary.tech"
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                setState({ ...state, loading: true });
+
+                for await (const key of state.keys) {
+                  try {
+                    const expiryDate = new Date(key.expiry);
+                    const currentDate = new Date();
+                    const isExpired = expiryDate < currentDate;
+
+                    if (viewerToken === key.token) {
+                      continue;
+                    }
+
+                    if (isExpired) {
+                      const response = await R.del(`/user/api-keys/${key.token}`);
+                    }
+                  } catch (e) {
+                    console.log(e);
+                  }
+                }
+
+                const keys = await R.get('/user/api-keys');
+                if (keys && !keys.error) {
+                  setState({ ...state, keys, loading: false });
+                }
+              }}
             >
-              Read docs
+              Delete expired keys
             </Button>
           </div>
         </PageHeader>
