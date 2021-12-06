@@ -165,7 +165,7 @@ function ComparisonsWeb3Page(props: any) {
 
       <div className={S.stats}>
         <div className={S.sc}>
-          <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : null}</div>
+          <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : "0"}</div>
           <div className={S.scl}>Total files</div>
         </div>
         <div className={S.sc}>
