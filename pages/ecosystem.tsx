@@ -149,6 +149,7 @@ function EcosystemPage(props: any) {
             <Logos.Zora height="48px" style={{ margin: 22 }} />
             <Logos.QRI height="48px" style={{ margin: 22 }} />
             <Logos.IA height="48px" style={{ margin: 22 }} />
+            <Logos.Portrait height="48px" style={{ margin: 22 }} />
           </div>
         </div>
 
