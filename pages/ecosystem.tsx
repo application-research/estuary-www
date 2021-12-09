@@ -150,6 +150,8 @@ function EcosystemPage(props: any) {
             <Logos.QRI height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.IA height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.Portrait height="48px" style={{ margin: 22, flexShrink: 0 }} />
+            <Logos.GainForest style={{ margin: 22, height: 48, flexShrink: 0 }} />
+            <Logos.NBFS style={{ margin: 22, height: 48, flexShrink: 0 }} />
           </div>
         </div>
 
