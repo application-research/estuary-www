@@ -15,12 +15,17 @@ function RetrievalCommands(props: {
   return (
     <Tabs selectedTabClassName={styles.selectedTab}>
       <TabList>
-        {aggregatedIn && (
+        <Tab>filc</Tab>
+        {aggregatedIn && selector && (
           <Tab>lotus 1.13.2+</Tab>
         )}
         <Tab>lotus</Tab>
-        <Tab>filc</Tab>
       </TabList>
+      <TabPanel>
+        <pre className={styles.command}>
+          filc retrieve {cid}
+        </pre>
+      </TabPanel>
       {aggregatedIn && selector && (
         <TabPanel>
           <pre className={styles.command}>
@@ -31,11 +36,6 @@ function RetrievalCommands(props: {
       <TabPanel>
         <pre className={styles.command}>
           lotus client retrieve --miner {miner} {cid} data-{dealId}
-        </pre>
-      </TabPanel>
-      <TabPanel>
-        <pre className={styles.command}>
-          filc retrieve {cid}
         </pre>
       </TabPanel>
     </Tabs>
