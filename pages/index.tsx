@@ -149,7 +149,7 @@ function IndexPage(props: any) {
           .
         </h1>
         <p className={styles.caption}>
-          Store your public data and guarantee it is available to everyone around the world. Our technology will repair lost data and guarantee data replication requirements.
+          Store your public data and guarantee it is available to everyone around the world. Our technology will repair lost data and guarantee data replication.
         </p>
 
         {!props.viewer ? (
@@ -188,20 +188,20 @@ function IndexPage(props: any) {
 
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
-          This node's users have pinned <b>{state.totalFiles.toLocaleString()}</b> files to IPFS. That means this Estuary node pinned <b>{U.bytesToSize(state.totalStorage)}</b> of
-          data. Then to ensure the data permanently available, our node automatically replicated everything 6 times onto Filecoin. So far&nbsp;
-          <b>{state.dealsOnChain.toLocaleString()}</b> successful deals were made and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
+          Users of this Estuary node have pinned <b>{state.totalFiles.toLocaleString()} files</b> to IPFS. That means this node pinned <b>{U.bytesToSize(state.totalStorage)}</b> of
+          data. To ensure the data is permanently available, our node automatically replicated the data 6 times onto Filecoin. So far&nbsp;
+          <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
         </h2>
 
         <h2 className={styles.h2} style={{ marginTop: 48 }}>
-          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. When this node succeeds at storing data with these
-          providers, any user of this node can verify their{' '}
+          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. When this node successfully stores data, any user of this
+          node can verify their{' '}
           <a href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
             CID
           </a>{' '}
-          is on chain by clicking{' '}
+          is on chain by visiting the{' '}
           <a href="https://estuary.tech/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
-            this link
+            verify page
           </a>
           .
         </h2>
@@ -428,7 +428,7 @@ function IndexPage(props: any) {
         <div className={styles.slot}>
           <div className={styles.box}>
             <div className={styles.boxText}>
-              <h3 className={styles.h3}>Follow our tutorial</h3>
+              <h3 className={styles.h3}>Get started</h3>
 
               <p className={styles.p}>Want to follow a step by step guide to learn how to use Estuary? Try our tutorial.</p>
             </div>
