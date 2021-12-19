@@ -63,7 +63,7 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
         return <ProgressCard key={`${d.ID}-${id}-${index}`} contentId={id} deal={d.deal} chain={d.onChainState} transfer={d.transfer} message={message} marketing={false} />;
       })
     ) : (
-      <div className={styles.empty}>Estuary has not peformed any deals for this file, yet.</div>
+      <div className={styles.empty}>Estuary has not performed any deals for this file, yet.</div>
     );
 
   const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
