@@ -213,8 +213,12 @@ function IndexPage(props: any) {
 
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
-          Users of this Estuary node have pinned <b>{state.totalFiles.toLocaleString()} files</b> to IPFS. That means this node pinned <b>{U.bytesToSize(state.totalStorage)}</b> of
-          data. To ensure the data is permanently available, our node automatically replicates the data 6 times onto Filecoin. So far&nbsp;
+          Users of this Estuary node have pinned{' '}
+          <b>
+            {state.totalFiles.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) files & directories
+          </b>{' '}
+          to IPFS, where the object count is many multiples larger. To ensure the data is permanently available, our node automatically replicates the data 6 times onto Filecoin.
+          So far&nbsp;
           <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
         </h2>
 
