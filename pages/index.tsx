@@ -1,4 +1,4 @@
-import S from '@pages/index.module.scss';
+import styles from '@pages/new-index.module.scss';
 
 import * as React from 'react';
 import * as U from '@common/utilities';
@@ -28,25 +28,9 @@ export async function getServerSideProps(context) {
   };
 }
 
-function useWindowSize() {
-  const [size, setSize] = React.useState([0, 0]);
-  if (!process.browser) {
-    return size;
-  }
-
-  React.useLayoutEffect(() => {
-    function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
-    }
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  return size;
-}
+const description = 'Use any browser and our API to store public data on IPFS and Filecoin.';
 
 function IndexPage(props: any) {
-  const [width, height] = useWindowSize();
   const [state, setState] = React.useState({
     miners: [],
     totalStorage: 0,
@@ -132,19 +116,6 @@ function IndexPage(props: any) {
       setGraph({
         dealsSealedBytes,
         data: [
-          /* NOTE(jim)
-             Asked not to show failure.
-          {
-            color: 'var(--status-16)',
-            name: 'Attempted',
-            items: dealsAttemptedSet,
-          },
-          {
-            color: 'var(--status-7)',
-            name: 'Failed',
-            items: dealsFailedSet,
-          },
-          */
           {
             color: 'var(--status-6)',
             name: 'OnChain',
@@ -160,268 +131,314 @@ function IndexPage(props: any) {
     }
 
     load();
-  }, [width]);
-
-  const description = 'Use any browser and our API to store public data on IPFS and Filecoin.';
+  }, []);
 
   return (
     <Page title="Estuary" description={description} url="https://estuary.tech">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
+      <div className={styles.heading}>
+        <h1 className={styles.h1}>
+          A reliable way to upload public data onto{' '}
+          <a className={styles.link} href="https://filecoin.io" target="_blank">
+            Filecoin
+          </a>{' '}
+          and pin it to{' '}
+          <a className={styles.link} href="https://ipfs.io" target="_blank">
+            IPFS
+          </a>
+          .
+        </h1>
+        <p className={styles.caption}>
+          Store your public data and guarantee it is available to everyone around the world. Our technology will repair lost data and guarantee data replication requirements.
+        </p>
 
-      <div className={S.h}>
-        <div className={S.ht}>
-          {props.viewer ? <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Welcome back!</H1> : <H1 style={{ maxWidth: '768px', fontWeight: 600 }}>Store your data</H1>}
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>{description}</P>
-          {props.viewer ? (
-            <div className={S.actions}>
-              <Button href="/home">View your files</Button>
-            </div>
-          ) : (
-            <div className={S.actions}>
-              <Button
-                href="https://docs.estuary.tech"
-                target="_blank"
-                style={{
-                  marginRight: 24,
-                  marginBottom: 24,
-                }}
-              >
-                Learn more
-              </Button>
-
-              <Button
-                href="https://docs.estuary.tech/get-invite-key"
-                target="_blank"
-                style={{
-                  background: 'var(--main-button-background-secondary)',
-                  color: 'var(--main-button-text-secondary)',
-                  marginBottom: 24,
-                }}
-              >
-                Get access
-              </Button>
-            </div>
-          )}
-          <div className={S.hbimgc}>
-            <div className={S.ca}>
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ background: `var(--main-text)` }}>
-                <div className={S.cbt}>CLI ➝ Store</div>
-                <div className={S.cbb}>{curl}</div>
-              </div>
-
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24, background: `var(--main-text)` }}>
-                <div className={S.cbt}>CLI ➝ Retrieve</div>
-                <div className={S.cbb}>{retrieve}</div>
-              </div>
-
-              <div className={U.classNames(S.cb, state.ready ? S.visible : null)} style={{ marginTop: 24 }}>
-                <div className={S.cbt}>Browser ➝ Retrieve via gateway</div>
-                <a className={S.cbb} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
-                  https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi
-                </a>
-              </div>
-            </div>
-
-            <img className={U.classNames(S.hbimg, state.ready ? S.visible : null)} src="https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png" />
-          </div>
-        </div>
-      </div>
-
-      {state.totalFiles ? (
-        <div className={S.stats}>
-          <div className={S.sc}>
-            <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : "0"}</div>
-            <div className={S.scl}>Total files</div>
-          </div>
-          <div className={S.sc}>
-            <div className={S.scn}>{state.dealsOnChain}</div>
-            <div className={S.scl}>Deals on chain</div>
-          </div>
-          <div className={S.sc}>
-            <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
-            <div className={S.scl}>Total pinned data</div>
-          </div>
-          {graph.dealsSealedBytes ? (
-            <div className={S.sc}>
-              <div className={S.scn}>{U.bytesToSize(graph.dealsSealedBytes)}</div>
-              <div className={S.scl}>Total sealed storage</div>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-
-      <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
-        <H2 style={{ margin: '0 auto 0 auto' }}>Filecoin storage made easy</H2>
-        <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-          Estuary makes using Filecoin as easy as uploading a file. Now you can make storage deals without having to understand how it works.
-        </P>
-        <div className={S.actions}>
-          <Button
-            href="/comparisons"
-            style={{
-              marginRight: 24,
-              marginBottom: 24,
-            }}
-          >
-            Compare to Cloud
-          </Button>
-          <Button
-            href="/comparisons-web3"
-            style={{
-              background: 'var(--main-button-background-secondary)',
-              color: 'var(--main-button-text-secondary)',
-              marginBottom: 24,
-            }}
-          >
-            Web3 Comparisons
-          </Button>
-        </div>
-      </SingleColumnLayout>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Upload public data</div>
-          <FeatureRow>
-            <strong>No minimum size</strong>. 32 GB maximum per file.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Use this website, or our API</strong>. Check out our{' '}
-            <a href="https://docs.estuary.tech" target="_blank">
-              documentation
-            </a>
-            .
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Global access.</strong> Retrieve your data from any IPFS gateway or Filecoin miner directly.
-          </FeatureRow>
-        </div>
-        <div className={S.rr} style={{ background: `#000` }}>
-          <video className={S.video} controls src="https://ipfs.io/ipfs/bafybeiaxlts3bqrsywzcymnp3lv7rrqarszntge455yav26ekfvhbxkjfm" autoPlay={true} playsInline muted loop />
-          {/* <MarketingUpload estimate="0" price="0" size="792259920" replication="6" duration={1051200} verified={true} /> */}
-        </div>
-      </div>
-
-      <div className={S.r}>
-        <div className={S.rl}>
-          <div className={S.rtext}>Provable storage</div>
-          <FeatureRow>
-            <strong>Interoperable</strong>. All storage is accessible from any IPFS gateway.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Verifiable</strong>. All storage has an immutable content address so you always know what you're getting. All deals have receipts before and after getting on
-            chain.
-          </FeatureRow>
-          <FeatureRow>
-            <strong>Detailed</strong>. Learn exactly how your data is stored and with which provider in the world.
-          </FeatureRow>
-        </div>
-        <div className={S.rr}>
-          <MarketingProgress />
-        </div>
-      </div>
-
-      {state.miners ? (
-        <SingleColumnLayout style={{ textAlign: 'center' }}>
-          <H2 style={{ margin: '0 auto 0 auto' }}>Open source code and public logs</H2>
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-            Logs from your Storage providers are public so we can help debug and triage issues with the Filecoin Network.
-          </P>
-
-          <div className={S.actions}>
-            <Button
-              href="https://docs.estuary.tech/feedback"
-              target="_blank"
-              style={{
-                background: `var(--main-primary)`,
+        {!props.viewer ? (
+          <div className={styles.action}>
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = 'https://docs.estuary.tech/get-invite-key';
               }}
             >
-              Give us feedback
-            </Button>
-          </div>
-        </SingleColumnLayout>
-      ) : null}
+              Get an invite ➝
+            </button>
 
-      {graph.data ? (
-        <div className={S.graphArea}>
-          <Chart
-            data={graph.data}
-            dimensions={{
-              width: width - 88,
-              height: 480 + 20,
-              margin: {
-                top: 30,
-                right: 30,
-                bottom: 30,
-                left: 60,
-              },
-            }}
-          />
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = 'https://docs.estuary.tech/get-provider-added';
+              }}
+            >
+              Apply to provide storage ➝
+            </button>
+          </div>
+        ) : (
+          <div className={styles.action}>
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = '/home';
+              }}
+            >
+              View your files ➝
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.section} style={{ marginTop: 64 }}>
+        <h2 className={styles.h2}>
+          This node's users have pinned <b>{state.totalFiles.toLocaleString()}</b> files to IPFS. That means this Estuary node pinned <b>{U.bytesToSize(state.totalStorage)}</b> of
+          data. Then to ensure the data permanently available, our node automatically replicated everything 6 times onto Filecoin. So far&nbsp;
+          <b>{state.dealsOnChain.toLocaleString()}</b> successful deals were made and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
+        </h2>
+
+        <h2 className={styles.h2} style={{ marginTop: 48 }}>
+          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. When this node succeeds at storing data with these
+          providers, any user of this node can verify their{' '}
+          <a href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
+            CID
+          </a>{' '}
+          is on chain by clicking{' '}
+          <a href="https://estuary.tech/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
+            this link
+          </a>
+          .
+        </h2>
+      </div>
+
+      <div className={styles.boxes} style={{ marginTop: 64 }}>
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>API documentation</h3>
+
+              <p className={styles.p}>Are you a developer? Use CURL or our REST API to upload data to our Estuary node in any programming language.</p>
+            </div>
+
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://docs.estuary.tech" target="_blank">
+                Read docs ➝
+              </a>
+            </div>
+          </div>
         </div>
-      ) : null}
 
-      {state.miners ? (
-        <footer className={S.f}>
-          {graph.data ? (
-            <div className={S.fa}>
-              {graph.data.map((each) => {
-                return (
-                  <div className={S.fcol4} key={each.name}>
-                    <div className={S.graphItem} style={{ background: each.color, color: `var(--main-text)` }}>
-                      {each.name}: {each.items[each.items.length - 1].value}
-                    </div>
-                  </div>
-                );
-              })}
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Run your own Estuary node</h3>
+
+              <p className={styles.p}>Want to try running an Estuary node? Estuary is completely open source, please take our code!</p>
             </div>
-          ) : null}
-          <div className={S.fa}>
-            <div className={S.fcol4}>
-              <span className={S.flink}>Index</span>
-            </div>
-            <div className={S.fcolfull}>
-              <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
+
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://github.com/application-research/estuary" target="_blank">
+                View source ➝
+              </a>
             </div>
           </div>
-          {state.miners &&
-            state.miners.map((each, index) => {
-              if (each.suspended) {
-                return null;
-              }
+        </div>
 
-              const indexValue = U.pad(index, 4);
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Analytics, collaborations, and logs</h3>
 
-              return (
-                <div className={S.fam} key={each.addr}>
-                  <div className={S.fcol4}>
-                    <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                      {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
-                    </a>
-                  </div>
-                  <div className={S.fcol4}>
-                    <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                      ➝ {each.addr}/stats
-                    </a>
-                  </div>
-                  <div className={S.fcol4}>
-                    <a className={S.flink} href={`/providers/deals/${each.addr}`}>
-                      ➝ {each.addr}/deals
-                    </a>
-                  </div>
-                  <div className={S.fcol4}>
-                    <a className={S.flink} href={`/providers/errors/${each.addr}`}>
-                      ➝ {each.addr}/errors
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
-        </footer>
-      ) : null}
+              <p className={styles.p}>Want to see the performance data for this Estuary node? Want to see which storage providers we work with?</p>
+            </div>
 
-      <div className={S.fb}>
-        <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
-          ➝ Built by ARG
-        </a>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="/ecosystem" target="_blank">
+                View dashboard ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Support us</h3>
+
+              <p className={styles.p}>Follow the Application Research Group and Estuary on Twitter.</p>
+            </div>
+
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://www.twitter.com/aresearchgroup" target="_blank">
+                Follow on Twitter ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Provable and verifiable storage</h3>
+
+              <p className={styles.p}>
+                All storage has an immutable content address so you always know what you're getting. All deals have receipts before and after getting on chain.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Unlimited uploads</h3>
+
+              <p className={styles.p}>
+                For now, there is no limit to how much data a user can upload. For each file there is a <b>32 GiB</b> max size.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Retrievable from any gateway</h3>
+
+              <p className={styles.p}>Data stored with Estuary can be retrieved from any IPFS gateway on the internet.</p>
+            </div>
+
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
+                Try it ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>FAQ</h3>
+
+              <p className={styles.p}>Check our FAQ for answers to your questions</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/faq" target="_blank">
+                Read FAQ ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Give feedback</h3>
+
+              <p className={styles.p}>Do you have questions about Estuary? Ask your question using this form, everyone on the team will see it.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/feedback" target="_blank">
+                Give feedback ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Open source</h3>
+
+              <p className={styles.p}>Check out our repositories on GitHub to contribute to our tools to use IPFS, Filecoin and Libp2p.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://github.com/application-research" target="_blank">
+                GitHub ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Filecoin</h3>
+
+              <p className={styles.p}>Filecoin is an open-source cloud storage marketplace, protocol, and incentive layer.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://filecoin.io" target="_blank">
+                Learn more ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Application Research Group</h3>
+
+              <p className={styles.p}>This project is maintained by the Application Research Group.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://arg.protocol.ai" target="_blank">
+                Learn more ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.codeBlock}>
+            <div className={styles.boxText}>
+              <p className={styles.codeCaption}>CURL UPLOAD EXAMPLE</p>
+
+              <p className={styles.code}>
+                curl -X POST https://api.estuary.tech/content/add -H "Authorization: Bearer YOUR_API_KEY" -H "Accept: application/json" -H "Content-Type: multipart/form-data" -F
+                "data=@PATH_TO_FILE"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.codeBlock}>
+            <div className={styles.boxText}>
+              <p className={styles.codeCaption}>CLI RETRIEVAL EXAMPLE</p>
+
+              <p className={styles.code}>lotus client retrieve --miner MINER_ID DATA_CID OUTPUT_FILE_NAME</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Modify this website</h3>
+
+              <p className={styles.p}>This website is open source. You can make contributions here.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://github.com/application-research/estuary-www" target="_blank">
+                View source ➝
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.slot}>
+          <div className={styles.box}>
+            <div className={styles.boxText}>
+              <h3 className={styles.h3}>Follow our tutorial</h3>
+
+              <p className={styles.p}>Want to follow a step by step guide to learn how to use Estuary? Try our tutorial.</p>
+            </div>
+            <div className={styles.action}>
+              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/tutorial-get-an-api-key" target="_blank">
+                View tutorial ➝
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </Page>
   );

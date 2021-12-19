@@ -4,13 +4,15 @@ import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 
+import Tag from '@components/Tag';
+
 const Navigation = (props: any) => {
   return (
     <div className={styles.navigation}>
       <nav className={styles.container} style={props.style}>
         <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
           <a className={styles.logo} href="/">
-            Estuary
+            Estuary <Tag>Alpha</Tag>
           </a>
         </div>
         <div className={styles.right}>
