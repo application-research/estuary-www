@@ -3,7 +3,7 @@
 }
 
 .h1 {
-  font-size: 3rem;
+  font-size: 3.2rem;
   max-width: 768px;
   font-weight: 600;
 }
@@ -34,14 +34,14 @@
 }
 
 .link {
-  color: rgb(0, 144, 255);
+  color: var(--main-primary);
 
   &:hover {
-    color: rgb(0, 144, 255);
+    color: var(--main-primary);
   }
 
   &:visited {
-    color: rgb(0, 144, 255);
+    color: var(--main-primary);
   }
 }
 
@@ -87,7 +87,7 @@
 
   &:hover {
     cursor: pointer;
-    background: rgb(0, 144, 255);
+    background: var(--main-primary);
   }
 }
 

@@ -129,8 +129,8 @@ function EcosystemPage(props: any) {
     load();
   }, [width]);
 
-  const description = 'For ecosystem use.';
-  const title = 'Estuary: Ecosystem';
+  const description = 'Learn how well our Estuary node is performing and which collaborators are working with us.';
+  const title = 'Estuary: Ecosystem dashboard.';
 
   return (
     <Page title={title} description={description} url="https://estuary.tech/ecosystem">

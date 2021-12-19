@@ -171,6 +171,15 @@ function IndexPage(props: any) {
             >
               Apply to provide storage ➝
             </button>
+
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = 'https://estuary.tech/ecosystem';
+              }}
+            >
+              View performance dashboard ➝
+            </button>
           </div>
         ) : (
           <div className={styles.action}>
@@ -182,6 +191,22 @@ function IndexPage(props: any) {
             >
               View your files ➝
             </button>
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = 'https://docs.estuary.tech/get-provider-added';
+              }}
+            >
+              Apply to provide storage ➝
+            </button>
+            <button
+              className={styles.actionButton}
+              onClick={() => {
+                window.location.href = 'https://estuary.tech/ecosystem';
+              }}
+            >
+              View performance dashboard ➝
+            </button>
           </div>
         )}
       </div>
@@ -189,7 +214,7 @@ function IndexPage(props: any) {
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
           Users of this Estuary node have pinned <b>{state.totalFiles.toLocaleString()} files</b> to IPFS. That means this node pinned <b>{U.bytesToSize(state.totalStorage)}</b> of
-          data. To ensure the data is permanently available, our node automatically replicated the data 6 times onto Filecoin. So far&nbsp;
+          data. To ensure the data is permanently available, our node automatically replicates the data 6 times onto Filecoin. So far&nbsp;
           <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
         </h2>
 
