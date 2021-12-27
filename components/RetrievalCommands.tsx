@@ -17,7 +17,7 @@ function RetrievalCommands(props: { miner: string; dealId: string; cid: string; 
         <span className={styles.command}>{`# Lotus 1.13.2`}</span>
         <br />
         <br />
-        <span className={styles.command}>{`lotus client retrieve --miner {miner} --datamodel-path-selector {selector} {aggregatedIn} data-{dealId}`}</span>
+        <span className={styles.command}>{`lotus client retrieve --miner ${miner} --datamodel-path-selector ${selector} ${aggregatedIn} data-${dealId}`}</span>
       </React.Fragment>
     );
   }
@@ -26,12 +26,12 @@ function RetrievalCommands(props: { miner: string; dealId: string; cid: string; 
     <div className={styles.container}>
       {`# FILC`}
       <br />
-      <span className={styles.command}>{`filc retrieve {cid}`}</span>
+      <span className={styles.command}>{`filc retrieve ${cid}`}</span>
       <br />
       <br />
       {`# Lotus`}
       <br />
-      <span className={styles.command}>{`lotus client retrieve --miner {miner} {cid} data-{dealId}`}</span>
+      <span className={styles.command}>{`lotus client retrieve --miner ${miner} ${cid} data-${dealId}`}</span>
       {maybeLotus13}
     </div>
   );
