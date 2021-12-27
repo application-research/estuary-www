@@ -1,7 +1,10 @@
-.selectedTab {
-  background: rgba(0, 0, 0, 0.1);
+.container {
+  white-space: pre-wrap;
+  font-family: 'Mono';
+  width: 100%;
+  display: block;
 }
 
 .command {
-  white-space: pre-line;
+  opacity: 0.5;
 }

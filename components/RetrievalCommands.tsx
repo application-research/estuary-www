@@ -1,45 +1,40 @@
 import styles from '@components/RetrievalCommands.module.scss';
-import 'react-tabs/style/react-tabs.css';
 
 import * as React from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-function RetrievalCommands(props: {
-  miner: string,
-  dealId: string,
-  cid: string,
-  aggregatedIn?: string | null,
-  selector?: string | null,
-}) {
+function RetrievalCommands(props: { miner: string; dealId: string; cid: string; aggregatedIn?: string | null; selector?: string | null }) {
   const { miner, dealId, cid, aggregatedIn, selector } = props;
+
+  // NOTE(jim):
+  // Special case for lotus 1.13.2+
+  const isLotusVersion13 = aggregatedIn && selector;
+  let maybeLotus13 = ``;
+  if (isLotusVersion13) {
+    maybeLotus13 = (
+      <React.Fragment>
+        <br />
+        <br />
+        <span className={styles.command}>{`# Lotus 1.13.2`}</span>
+        <br />
+        <br />
+        <span className={styles.command}>{`lotus client retrieve --miner {miner} --datamodel-path-selector {selector} {aggregatedIn} data-{dealId}`}</span>
+      </React.Fragment>
+    );
+  }
+
   return (
-    <Tabs selectedTabClassName={styles.selectedTab}>
-      <TabList>
-        <Tab>filc</Tab>
-        {aggregatedIn && selector && (
-          <Tab>lotus 1.13.2+</Tab>
-        )}
-        <Tab>lotus</Tab>
-      </TabList>
-      <TabPanel>
-        <pre className={styles.command}>
-          filc retrieve {cid}
-        </pre>
-      </TabPanel>
-      {aggregatedIn && selector && (
-        <TabPanel>
-          <pre className={styles.command}>
-            lotus client retrieve --miner {miner} --datamodel-path-selector {selector} {aggregatedIn} data-{dealId}
-          </pre>
-        </TabPanel>
-      )}
-      <TabPanel>
-        <pre className={styles.command}>
-          lotus client retrieve --miner {miner} {cid} data-{dealId}
-        </pre>
-      </TabPanel>
-    </Tabs>
-  )
+    <div className={styles.container}>
+      {`# FILC`}
+      <br />
+      <span className={styles.command}>{`filc retrieve {cid}`}</span>
+      <br />
+      <br />
+      {`# Lotus`}
+      <br />
+      <span className={styles.command}>{`lotus client retrieve --miner {miner} {cid} data-{dealId}`}</span>
+      {maybeLotus13}
+    </div>
+  );
 }
 
 export default RetrievalCommands;

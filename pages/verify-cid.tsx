@@ -18,6 +18,7 @@ import RetrievalCommands from '@components/RetrievalCommands';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
+// NOTE(jim): test CIDs
 // QmYNSTn2XrxDsF3qFdeYKSxjodsbswJV3mj1ffEJZa2jQL
 // QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9
 
