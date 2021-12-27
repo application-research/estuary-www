@@ -8,7 +8,7 @@ function RetrievalCommands(props: { miner: string; dealId: string; cid: string; 
   // NOTE(jim):
   // Special case for lotus 1.13.2+
   const isLotusVersion13 = aggregatedIn && selector;
-  let maybeLotus13 = ``;
+  let maybeLotus13: any = ``;
   if (isLotusVersion13) {
     maybeLotus13 = (
       <React.Fragment>
