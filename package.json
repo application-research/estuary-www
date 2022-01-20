@@ -12,6 +12,7 @@
   "repository": "application-research/estuary-www",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.16.7",
     "@glif/filecoin-number": "^1.1.0-beta.17",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
