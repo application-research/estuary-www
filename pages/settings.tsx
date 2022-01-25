@@ -116,7 +116,7 @@ function SettingsPage(props: any) {
 
         <SingleColumnLayout>
           <H3>Change password</H3>
-          <P style={{ marginTop: 16 }}>Please enter your old password and your new password to change your password.</P>
+          <P style={{ marginTop: 16 }}>Please enter your new password to change your password.</P>
 
           <H4 style={{ marginTop: 32 }}>New password</H4>
           <Input
