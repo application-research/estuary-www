@@ -153,6 +153,10 @@ function EcosystemPage(props: any) {
             <Logos.GainForest style={{ margin: 22, height: 48, flexShrink: 0 }} />
             <Logos.NBFS style={{ margin: 22, height: 48, flexShrink: 0 }} />
             <img src="https://github.com/kodadot/kodadot-presskit/raw/main/v3/KODA_v3.png?raw=true" style={{ margin: 22, display: 'inlineFlex', height: 48, flexShrink: 0 }} />
+            <img
+              src="https://user-images.githubusercontent.com/310223/151883495-7e8bcfa2-6aa3-4941-954b-f05a4b7cabd8.png"
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
+            />
           </div>
         </div>
 
