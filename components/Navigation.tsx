@@ -32,7 +32,7 @@ const Navigation = (props: any) => {
             </a>
           ) : null}
 
-          <a href="https://estuary.tech/verify-cid" className={styles.webItem}>
+          <a href="/verify-cid" className={styles.webItem}>
             Verify
           </a>
 
