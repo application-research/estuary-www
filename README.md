@@ -10,10 +10,10 @@ Make sure NodeJS 10+ is installed. Then run:
 
 ```sh
 npm install
-npm run dev
+npm run dev-production
 ```
 
-Now view localhost:8080 in your browser.
+Now view localhost:4444 in your browser.
 
 ## Questions?
 
