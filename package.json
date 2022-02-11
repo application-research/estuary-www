@@ -5,7 +5,7 @@
     "node": "14.x"
   },
   "scripts": {
-    "dev": "next dev -p 4444",
+    "dev": "ESTUARY_API=http://localhost:3004 next dev -p 4444",
     "dev-production": "ESTUARY_API=https://api.estuary.tech next dev -p 4444",
     "build": "next build",
     "start": "NODE_ENV=production next start"
