@@ -33,7 +33,7 @@ const sendEscrow = async (state, setState, host) => {
     return;
   }
 
-  await getBalance(state, setState);
+  await getBalance(state, setState, host);
 };
 
 const getBalance = async (state, setState, host) => {
@@ -126,7 +126,7 @@ function AdminBalancePage(props) {
           />
 
           <div className={styles.actions}>
-            <Button loading={state.loading ? state.loading : undefined} onClick={() => sendEscrow(state, setState)}>
+            <Button loading={state.loading ? state.loading : undefined} onClick={() => sendEscrow(state, setState, props.api)}>
               Move amount
             </Button>
           </div>

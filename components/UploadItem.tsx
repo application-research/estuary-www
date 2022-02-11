@@ -16,7 +16,7 @@ export class PinStatusElement extends React.Component<any> {
   componentDidMount() {
     const checkPinStatus = () => {
       window.setTimeout(async () => {
-        const response = await R.get(`/pinning/pins/${this.props.id}`, props.api);
+        const response = await R.get(`/pinning/pins/${this.props.id}`, this.props.host);
         console.log(response);
 
         if (response.status === 'pinned') {
@@ -158,7 +158,7 @@ export default class UploadItem extends React.Component<any> {
     // Not sure if this will be an ongoing problem of tracking pin status.
     let maybePinStatusElement = null;
     if (this.state.final) {
-      maybePinStatusElement = <PinStatusElement id={this.state.final.estuaryId} />;
+      maybePinStatusElement = <PinStatusElement id={this.state.final.estuaryId} host={this.props.host} />;
     }
 
     return (

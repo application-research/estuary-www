@@ -251,7 +251,7 @@ export default class UploadFileContainer extends React.Component<any> {
     if (this.state.mode === 2) {
       cta = (
         <div className={styles.actions}>
-          <Button onClick={(e) => this.upload(e, props.api)}>Make storage deal</Button>
+          <Button onClick={this.upload}>Make storage deal</Button>
 
           <Button
             style={{
@@ -322,7 +322,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
         {cta}
 
-        <input className={styles.invisible} onChange={(e) => this.handleSelectFile(e, props.api)} type="file" id="FILE_UPLOAD_TARGET" />
+        <input className={styles.invisible} onChange={this.handleSelectFile} type="file" id="FILE_UPLOAD_TARGET" />
       </React.Fragment>
     );
   }

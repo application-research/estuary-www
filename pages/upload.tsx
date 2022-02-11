@@ -131,7 +131,7 @@ export default class UploadPage extends React.Component<any> {
                   </Button>
                 </div>
 
-                <UploadList ref={this.list} files={this.state.files} viewer={this.props.viewer} onRemove={this._handleRemove} />
+                <UploadList ref={this.list} files={this.state.files} viewer={this.props.viewer} onRemove={this._handleRemove} host={this.props.api} />
               </React.Fragment>
             ) : null}
           </SingleColumnLayout>
