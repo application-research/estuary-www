@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -42,7 +42,7 @@ function APIPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get('/user/api-keys');
+      const response = await R.get('/user/api-keys', props.api);
       console.log(response);
 
       if (response && !response.error) {
@@ -71,9 +71,9 @@ function APIPage(props: any) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 setState({ ...state, loading: true });
-                const request = await R.post(`/user/api-keys`, {});
+                const request = await R.post(`/user/api-keys`, {}, props.api);
 
-                const keys = await R.get('/user/api-keys');
+                const keys = await R.get('/user/api-keys', props.api);
                 if (keys && !keys.error) {
                   setState({ ...state, loading: false, keys });
                   return;
@@ -93,9 +93,9 @@ function APIPage(props: any) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 setState({ ...state, loading: true });
-                const request = await R.post(`/user/api-keys?expiry=false`, { expiry: false });
+                const request = await R.post(`/user/api-keys?expiry=false`, { expiry: false }, props.api);
 
-                const keys = await R.get('/user/api-keys');
+                const keys = await R.get('/user/api-keys', props.api);
                 if (keys && !keys.error) {
                   setState({ ...state, loading: false, keys });
                   return;
@@ -127,14 +127,14 @@ function APIPage(props: any) {
                     }
 
                     if (isExpired) {
-                      const response = await R.del(`/user/api-keys/${key.token}`);
+                      const response = await R.del(`/user/api-keys/${key.token}`, props.api);
                     }
                   } catch (e) {
                     console.log(e);
                   }
                 }
 
-                const keys = await R.get('/user/api-keys');
+                const keys = await R.get('/user/api-keys', props.api);
                 if (keys && !keys.error) {
                   setState({ ...state, keys, loading: false });
                 }
@@ -179,13 +179,13 @@ function APIPage(props: any) {
                                 return;
                               }
 
-                              const response = await R.del(`/user/api-keys/${k.token}`);
+                              const response = await R.del(`/user/api-keys/${k.token}`, props.api);
                               if (viewerToken === k.token) {
                                 window.location.href = '/';
                                 return;
                               }
 
-                              const keys = await R.get('/user/api-keys');
+                              const keys = await R.get('/user/api-keys', props.api);
                               if (keys && !keys.error) {
                                 setState({ ...state, keys });
                               }

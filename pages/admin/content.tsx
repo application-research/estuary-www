@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -48,7 +48,7 @@ function AdminContentPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get('/admin/cm/offload/candidates');
+      const response = await R.get('/admin/cm/offload/candidates', props.api);
       console.log(response);
 
       if (response && response.error) {
@@ -123,13 +123,13 @@ function AdminContentPage(props: any) {
                                   return;
                                 }
 
-                                const response = await R.post(`/admin/cm/offload/${data.id}`, {});
+                                const response = await R.post(`/admin/cm/offload/${data.id}`, {}, props.api);
 
                                 if (response && response.error) {
                                   return alert(response.error);
                                 }
 
-                                const content = await R.get('/admin/cm/offload/candidates');
+                                const content = await R.get('/admin/cm/offload/candidates', props.api);
 
                                 if (content && content.error) {
                                   return alert(content.error);

@@ -16,7 +16,7 @@ export class PinStatusElement extends React.Component<any> {
   componentDidMount() {
     const checkPinStatus = () => {
       window.setTimeout(async () => {
-        const response = await R.get(`/pinning/pins/${this.props.id}`);
+        const response = await R.get(`/pinning/pins/${this.props.id}`, props.api);
         console.log(response);
 
         if (response.status === 'pinned') {

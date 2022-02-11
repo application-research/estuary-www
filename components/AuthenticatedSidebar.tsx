@@ -56,7 +56,7 @@ function AuthenticatedLayout(props: any) {
         className={styles.item}
         onClick={async () => {
           const token = Cookies.get(C.auth);
-          const response = await R.del(`/user/api-keys/${token}`);
+          const response = await R.del(`/user/api-keys/${token}`, props.api);
           Cookies.remove(C.auth);
           window.location.href = '/';
         }}

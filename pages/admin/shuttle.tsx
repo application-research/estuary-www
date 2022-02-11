@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -49,7 +49,7 @@ function AdminShuttlePage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get('/admin/shuttle/list');
+      const response = await R.get('/admin/shuttle/list', props.api);
       console.log(response);
       setState({ ...state, shuttles: response && response.length ? response : [] });
     };
@@ -71,8 +71,8 @@ function AdminShuttlePage(props: any) {
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {
                 setState({ ...state, loading: true });
-                await R.post(`/admin/shuttle/init`, {});
-                const response = await R.get('/admin/shuttle/list');
+                await R.post(`/admin/shuttle/init`, {}, props.api);
+                const response = await R.get('/admin/shuttle/list', props.api);
                 console.log(response);
                 setState({ ...state, loading: false, shuttles: response && response.length ? response : [] });
               }}

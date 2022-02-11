@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -153,7 +153,7 @@ class ContentStatus extends React.Component<any, any> {
   };
 
   async componentDidMount() {
-    const status = await R.get(`/content/status/${this.props.id}`);
+    const status = await R.get(`/content/status/${this.props.id}`, this.props.host);
     if (status.error) {
       return;
     }
@@ -174,7 +174,7 @@ export default class Dashboard extends React.Component<any, any> {
   };
 
   async componentDidMount() {
-    const entities = await R.get(`/content/deals?offset=${this.state.offset}&limit=${this.state.limit}`);
+    const entities = await R.get(`/content/deals?offset=${this.state.offset}&limit=${this.state.limit}`, this.props.api);
     if (!entities || entities.error) {
       console.log(entities.error);
       return;
@@ -186,7 +186,7 @@ export default class Dashboard extends React.Component<any, any> {
   async getNext() {
     const offset = this.state.offset + INCREMENT;
     const limit = this.state.limit;
-    const next = await R.get(`/content/deals?offset=${offset}&limit=${limit}`);
+    const next = await R.get(`/content/deals?offset=${offset}&limit=${limit}`, this.props.api);
 
     if (!next || !next.length) {
       return;
@@ -201,7 +201,9 @@ export default class Dashboard extends React.Component<any, any> {
   }
 
   render() {
-    const statusElements = this.state.entities.length ? this.state.entities.map((s, index) => <ContentStatus viewer={this.props.viewer} id={s.id} key={s.id} root={s} />) : null;
+    const statusElements = this.state.entities.length
+      ? this.state.entities.map((s, index) => <ContentStatus host={this.props.api} viewer={this.props.viewer} id={s.id} key={s.id} root={s} />)
+      : null;
     const sidebarElement = <AuthenticatedSidebar active="DEALS" viewer={this.props.viewer} />;
     const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 

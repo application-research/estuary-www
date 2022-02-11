@@ -34,11 +34,11 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, viewer },
+    props: { host, protocol, viewer, api: process.env.ESTUARY_API },
   };
 }
 
-const onSubmit = async (event, state, setState) => {
+const onSubmit = async (event, state, setState, host) => {
   setState({ ...state, loading: true });
 
   if (U.isEmpty(state.new)) {
@@ -66,7 +66,7 @@ const onSubmit = async (event, state, setState) => {
 
   let response;
   try {
-    response = await R.put('/user/password', { newPasswordHash: newPasswordHash });
+    response = await R.put('/user/password', { newPasswordHash: newPasswordHash }, host);
     await U.delay(1000);
 
     if (response.error) {
@@ -137,11 +137,11 @@ function SettingsPage(props: any) {
             value={state.confirm}
             type="password"
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            onSubmit={(e) => onSubmit(e, { ...state }, setState)}
+            onSubmit={(e) => onSubmit(e, { ...state }, setState, props.api)}
           />
 
           <div className={styles.actions}>
-            <Button loading={state.loading} onClick={(e) => onSubmit(e, { ...state }, setState)}>
+            <Button loading={state.loading} onClick={(e) => onSubmit(e, { ...state }, setState, props.api)}>
               Change
             </Button>
           </div>

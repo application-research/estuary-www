@@ -30,11 +30,11 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, host, protocol },
+    props: { viewer, host, protocol, api: process.env.ESTUARY_API },
   };
 }
 
-async function handleRegister(state: any) {
+async function handleRegister(state: any, host) {
   if (U.isEmpty(state.password)) {
     return { error: 'Please provide a valid password.' };
   }
@@ -61,7 +61,7 @@ async function handleRegister(state: any) {
 
   let passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
-  let r = await fetch(`${C.api.host}/register`, {
+  let r = await fetch(`${host}/register`, {
     method: 'POST',
     body: JSON.stringify({
       passwordHash: passwordHash,
@@ -157,11 +157,14 @@ function SignUpPage(props: any) {
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
           onSubmit={async () => {
             setState({ ...state, loading: true });
-            const response = await handleRegister({
-              password: state.password,
-              username: state.username,
-              inviteCode: state.inviteCode,
-            });
+            const response = await handleRegister(
+              {
+                password: state.password,
+                username: state.username,
+                inviteCode: state.inviteCode,
+              },
+              props.api
+            );
             if (response && response.error) {
               alert(response.error);
               setState({ ...state, loading: false });
@@ -182,11 +185,14 @@ function SignUpPage(props: any) {
             loading={state.loading ? state.loading : undefined}
             onClick={async () => {
               setState({ ...state, loading: true });
-              const response = await handleRegister({
-                password: state.password,
-                username: state.username,
-                inviteCode: state.inviteCode,
-              });
+              const response = await handleRegister(
+                {
+                  password: state.password,
+                  username: state.username,
+                  inviteCode: state.inviteCode,
+                },
+                props.api
+              );
               if (response && response.error) {
                 alert(response.error);
                 setState({ ...state, loading: false });

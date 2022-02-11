@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
   };
 }
 
@@ -32,7 +32,7 @@ function LocalContentPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get(`/content/status/${props.id}`);
+      const response = await R.get(`/content/status/${props.id}`, props.api);
 
       console.log(response);
 

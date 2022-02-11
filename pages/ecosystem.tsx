@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -56,8 +56,8 @@ function EcosystemPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const miners = await R.get('/public/miners');
-      const stats = await R.get('/public/stats');
+      const miners = await R.get('/public/miners', props.api);
+      const stats = await R.get('/public/stats', props.api);
 
       if ((miners && miners.error) || (stats && stats.error)) {
         return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
@@ -71,7 +71,7 @@ function EcosystemPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const data = await R.get('/public/metrics/deals-on-chain');
+      const data = await R.get('/public/metrics/deals-on-chain', props.api);
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];

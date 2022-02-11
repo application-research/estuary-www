@@ -37,12 +37,16 @@ export default class UploadFileContainer extends React.Component<any> {
       return await this.upload();
     }
 
-    const response = await R.post('/deals/estimate', {
-      size: file.size,
-      replication: this.props.viewer.settings.replication,
-      durationBlks: this.props.viewer.settings.dealDuration,
-      verified: this.props.viewer.settings.verified,
-    });
+    const response = await R.post(
+      '/deals/estimate',
+      {
+        size: file.size,
+        replication: this.props.viewer.settings.replication,
+        durationBlks: this.props.viewer.settings.dealDuration,
+        verified: this.props.viewer.settings.verified,
+      },
+      this.props.host
+    );
 
     const local = await fetch('/api/fil-usd');
     const { price } = await local.json();
@@ -129,7 +133,7 @@ export default class UploadFileContainer extends React.Component<any> {
       }
     };
 
-    xhr.open('POST', `${C.api.host}/content/add`);
+    xhr.open('POST', `${this.props.host}/content/add`);
     xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     xhr.send(formData);
   };
@@ -247,7 +251,7 @@ export default class UploadFileContainer extends React.Component<any> {
     if (this.state.mode === 2) {
       cta = (
         <div className={styles.actions}>
-          <Button onClick={this.upload}>Make storage deal</Button>
+          <Button onClick={(e) => this.upload(e, props.api)}>Make storage deal</Button>
 
           <Button
             style={{
@@ -318,7 +322,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
         {cta}
 
-        <input className={styles.invisible} onChange={this.handleSelectFile} type="file" id="FILE_UPLOAD_TARGET" />
+        <input className={styles.invisible} onChange={(e) => this.handleSelectFile(e, props.api)} type="file" id="FILE_UPLOAD_TARGET" />
       </React.Fragment>
     );
   }

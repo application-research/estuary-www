@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -50,7 +50,7 @@ function AdminInvitesPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get('/admin/invites');
+      const response = await R.get('/admin/invites', props.api);
       console.log(response);
       setState({ ...state, invites: response && response.length ? response.reverse() : [] });
     };
@@ -76,8 +76,8 @@ function AdminInvitesPage(props: any) {
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
             onSubmit={async () => {
               setState({ ...state, loading: true });
-              await R.post(`/admin/invite/${state.key}`, {});
-              const response = await R.get('/admin/invites');
+              await R.post(`/admin/invite/${state.key}`, {}, props.api);
+              const response = await R.get('/admin/invites', props.api);
               console.log(response);
               setState({
                 ...state,
@@ -95,8 +95,8 @@ function AdminInvitesPage(props: any) {
                 if (U.isEmpty(state.key)) {
                   const generatedKey = `estuary-invite-${uuidv4()}`;
                   setState({ ...state, loading: true });
-                  await R.post(`/admin/invite/${generatedKey}`, {});
-                  const response = await R.get('/admin/invites');
+                  await R.post(`/admin/invite/${generatedKey}`, {}, props.api);
+                  const response = await R.get('/admin/invites', props.api);
                   console.log(response);
                   return setState({
                     ...state,
@@ -107,8 +107,8 @@ function AdminInvitesPage(props: any) {
                 }
 
                 setState({ ...state, loading: true });
-                await R.post(`/admin/invite/${state.key}`, {});
-                const response = await R.get('/admin/invites');
+                await R.post(`/admin/invite/${state.key}`, {}, props.api);
+                const response = await R.get('/admin/invites', props.api);
                 console.log(response);
                 setState({
                   ...state,

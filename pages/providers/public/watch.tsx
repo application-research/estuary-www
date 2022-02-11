@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -71,7 +71,7 @@ function WatchProvidersPage(props: any) {
           usedByEstuary: null,
         };
 
-        const response = await R.get(`/public/miners/stats/${provider}`);
+        const response = await R.get(`/public/miners/stats/${provider}`, props.api);
 
         if (response && !response.error) {
           candidate = { ...candidate, ...response };
@@ -81,7 +81,7 @@ function WatchProvidersPage(props: any) {
           candidate = { ...candidate, statError: response.error };
         }
 
-        const ask = await R.get(`/public/miners/storage/query/${provider}`);
+        const ask = await R.get(`/public/miners/storage/query/${provider}`, props.api);
 
         if (ask && !ask.error) {
           candidate = { ...candidate, ...ask };

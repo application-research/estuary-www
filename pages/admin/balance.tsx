@@ -16,7 +16,7 @@ import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
-const sendEscrow = async (state, setState) => {
+const sendEscrow = async (state, setState, host) => {
   setState({ ...state, loading: true });
 
   if (!window.confirm('Are you sure you want to transfer this amount?')) {
@@ -24,7 +24,7 @@ const sendEscrow = async (state, setState) => {
     return;
   }
 
-  const response = await R.post(`/admin/add-escrow/${state.amount}`, {});
+  const response = await R.post(`/admin/add-escrow/${state.amount}`, {}, host);
   console.log(response);
 
   if (response.error) {
@@ -36,8 +36,8 @@ const sendEscrow = async (state, setState) => {
   await getBalance(state, setState);
 };
 
-const getBalance = async (state, setState) => {
-  const response = await R.get('/admin/balance');
+const getBalance = async (state, setState, host) => {
+  const response = await R.get('/admin/balance', host);
   if (response.error) {
     console.log(response.error);
     return;
@@ -68,7 +68,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -86,7 +86,7 @@ function AdminBalancePage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      getBalance(state, setState);
+      getBalance(state, setState, props.api);
     };
 
     run();
@@ -122,7 +122,7 @@ function AdminBalancePage(props) {
             type="number"
             value={state.amount}
             onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            onSubmit={() => sendEscrow(state, setState)}
+            onSubmit={() => sendEscrow(state, setState, props.api)}
           />
 
           <div className={styles.actions}>

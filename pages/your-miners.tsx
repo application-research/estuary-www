@@ -35,17 +35,17 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, viewer },
+    props: { host, protocol, viewer, api: process.env.ESTUARY_API },
   };
 }
 
-const onGetMinerHex = async (e, state, setState) => {
+const onGetMinerHex = async (e, state, setState, host) => {
   if (U.isEmpty(state.miner)) {
     alert('Miner is required');
     return;
   }
 
-  const response = await R.get(`/user/miner/claim/${state.miner}`);
+  const response = await R.get(`/user/miner/claim/${state.miner}`, host);
 
   if (response && response.error) {
     alert('Failed to get hex message.');
@@ -56,7 +56,7 @@ const onGetMinerHex = async (e, state, setState) => {
   console.log(response);
 };
 
-const onClaimMiner = async (e, state, setState) => {
+const onClaimMiner = async (e, state, setState, host) => {
   if (U.isEmpty(state.miner)) {
     alert('Miner is required');
     return;
@@ -67,10 +67,14 @@ const onClaimMiner = async (e, state, setState) => {
     return;
   }
 
-  const response = await R.post(`/user/miner/claim`, {
-    miner: state.miner,
-    claim: state.signature,
-  });
+  const response = await R.post(
+    `/user/miner/claim`,
+    {
+      miner: state.miner,
+      claim: state.signature,
+    },
+    host
+  );
 
   if (response && response.error) {
     console.log(response.error);
@@ -131,7 +135,7 @@ function YourMinerPage(props: any) {
                                 return;
                               }
 
-                              const response = await R.put(`/user/miner/set-info/${data}`, { name: answer });
+                              const response = await R.put(`/user/miner/set-info/${data}`, { name: answer }, props.api);
 
                               if (response && response.error) {
                                 return alert(response.error);
@@ -149,7 +153,7 @@ function YourMinerPage(props: any) {
                             onClick={async () => {
                               const reason = window.prompt('Enter a reason (optional)');
 
-                              const response = await R.post(`/user/miner/suspend/${data}`, { reason });
+                              const response = await R.post(`/user/miner/suspend/${data}`, { reason }, props.api);
 
                               if (response && response.error) {
                                 return alert(response.error);
@@ -165,7 +169,7 @@ function YourMinerPage(props: any) {
                             className={tstyles.tdbutton}
                             style={{ margin: '0 8px 8px 0' }}
                             onClick={async () => {
-                              const response = await R.put(`/user/miner/unsuspend/${data}`, {});
+                              const response = await R.put(`/user/miner/unsuspend/${data}`, {}, props.api);
 
                               window.alert(`Provider unsuspended.  ${data} will receive deals from Estuary.`);
                               window.location.reload();
@@ -200,7 +204,7 @@ function YourMinerPage(props: any) {
 
           {U.isEmpty(state.hexmsg) ? (
             <div className={styles.actions}>
-              <Button loading={state.loading} onClick={(e) => onGetMinerHex(e, { ...state }, setState)}>
+              <Button loading={state.loading} onClick={(e) => onGetMinerHex(e, { ...state }, setState, props.api)}>
                 Get hex message
               </Button>
             </div>
@@ -222,7 +226,7 @@ function YourMinerPage(props: any) {
             />
 
             <div className={styles.actions}>
-              <Button loading={state.loading} onClick={(e) => onClaimMiner(e, { ...state }, setState)}>
+              <Button loading={state.loading} onClick={(e) => onClaimMiner(e, { ...state }, setState, props.api)}>
                 Claim
               </Button>
             </div>

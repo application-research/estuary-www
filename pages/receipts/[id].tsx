@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
   };
 }
 
@@ -32,7 +32,7 @@ function ReceiptPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get(`/deals/info/${props.id}`);
+      const response = await R.get(`/deals/info/${props.id}`, props.api);
 
       if (response && !response.error) {
         setState({ deal: { ...response.Proposal, ...response.State } });

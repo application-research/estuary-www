@@ -2,11 +2,11 @@ import Cookies from 'js-cookie';
 
 import * as C from '@common/constants';
 
-export const get = async (route): Promise<any> => {
+export const get = async (route, host = 'https://api.estuary.tech'): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
-    let r = await fetch(`${C.api.host}${route}`, {
+    let r = await fetch(`${host}${route}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -36,11 +36,11 @@ export const get = async (route): Promise<any> => {
   }
 };
 
-export const post = async (route, payload): Promise<any> => {
+export const post = async (route, payload, host = 'https://api.estuary.tech'): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
-    let r = await fetch(`${C.api.host}${route}`, {
+    let r = await fetch(`${host}${route}`, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -71,11 +71,11 @@ export const post = async (route, payload): Promise<any> => {
   }
 };
 
-export const put = async (route, payload): Promise<any> => {
+export const put = async (route, payload, host = 'https://api.estuary.tech'): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
-    let r = await fetch(`${C.api.host}${route}`, {
+    let r = await fetch(`${host}${route}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
       headers: {
@@ -106,11 +106,11 @@ export const put = async (route, payload): Promise<any> => {
   }
 };
 
-export const del = async (route: string, payload?: object): Promise<any> => {
+export const del = async (route: string, payload?: object, host = 'https://api.estuary.tech'): Promise<any> => {
   try {
     const token = Cookies.get(C.auth);
 
-    let r = await fetch(`${C.api.host}${route}`, {
+    let r = await fetch(`${host}${route}`, {
       method: 'DELETE',
       body: JSON.stringify(payload),
       headers: {

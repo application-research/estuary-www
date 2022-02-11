@@ -35,14 +35,14 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
 function AdminAnalyticsPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get('/admin/dealstats');
+      const response = await R.get('/admin/dealstats', props.api);
       if (response.error) {
         console.log(response.error);
         return;

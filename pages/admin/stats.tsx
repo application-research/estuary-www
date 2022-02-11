@@ -37,7 +37,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -60,16 +60,16 @@ function AdminStatsPage(props) {
 
   React.useEffect(() => {
     // TODO(why): Content stats can't be serialized to JSON.
-    // const response = await R.get("/content/stats");
+    // const response = await R.get("/content/stats", props.api);
     const run = async () => {
       const response = {};
-      const disk = await R.get('/admin/disk-info');
+      const disk = await R.get('/admin/disk-info', props.api);
       if (disk.error) {
         console.log(disk.error);
         return;
       }
 
-      let stats = await R.get('/admin/stats');
+      let stats = await R.get('/admin/stats', props.api);
       if (stats.error) {
         console.log(stats.error);
         stats = {};
@@ -97,7 +97,7 @@ function AdminStatsPage(props) {
               <Button
                 style={{ marginRight: 24, marginBottom: 24 }}
                 onClick={async () => {
-                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: true });
+                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: true }, props.api);
                   alert('Estuary will make storage deals until you disable deal making again.');
                   window.location.reload();
                 }}
@@ -108,7 +108,7 @@ function AdminStatsPage(props) {
               <Button
                 style={{ marginRight: 24, marginBottom: 24 }}
                 onClick={async () => {
-                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: false });
+                  const response = await R.post(`/admin/cm/dealmaking`, { enabled: false }, props.api);
                   alert('Estuary will suspend deal making until you enable deal making again.');
                   window.location.reload();
                 }}

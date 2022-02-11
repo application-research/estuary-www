@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, ...context.params },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
   };
 }
 
@@ -23,7 +23,7 @@ function MinerErrorPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get(`/public/miners/failures/${props.id}`);
+      const response = await R.get(`/public/miners/failures/${props.id}`, props.api);
       console.log(response);
 
       if (response && response.length) {

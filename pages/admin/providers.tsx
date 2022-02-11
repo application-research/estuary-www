@@ -39,13 +39,13 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
-const refresh = async (state, setState) => {
+const refresh = async (state, setState, host) => {
   let map = {};
-  const response = await R.get('/admin/miners/stats');
+  const response = await R.get('/admin/miners/stats', host);
 
   for (let m of response) {
     map[m.miner] = m;
@@ -53,7 +53,7 @@ const refresh = async (state, setState) => {
 
   console.log(map);
 
-  const list = await R.get('/public/miners');
+  const list = await R.get('/public/miners', host);
 
   const miners = list.map((each) => {
     if (map[each.addr]) {
@@ -79,7 +79,7 @@ function AdminMinersPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      await refresh(state, setState);
+      await refresh(state, setState, props.api);
     };
 
     run();
@@ -108,7 +108,7 @@ function AdminMinersPage(props) {
                 }
 
                 setState({ ...state, loading: true });
-                const request: any = await R.post(`/admin/miners/add/${state.miner}`, {});
+                const request: any = await R.post(`/admin/miners/add/${state.miner}`, {}, props.api);
                 if (request && request.error) {
                   alert(request.error);
                   setState({ ...state, miner: '', loading: false });
@@ -116,7 +116,7 @@ function AdminMinersPage(props) {
                 }
 
                 alert(`${state.miner} has been added.`);
-                await refresh(state, setState);
+                await refresh(state, setState, props.api);
               }}
             >
               Add
@@ -137,7 +137,7 @@ function AdminMinersPage(props) {
                 }
 
                 setState({ ...state, loading: true });
-                const request: any = await R.post(`/admin/miners/rm/${state.miner}`, {});
+                const request: any = await R.post(`/admin/miners/rm/${state.miner}`, {}, props.api);
                 if (request && request.error) {
                   alert(request.error);
                   setState({ ...state, miner: '', loading: false });
@@ -145,7 +145,7 @@ function AdminMinersPage(props) {
                 }
 
                 alert(`${state.miner} has been removed.`);
-                await refresh(state, setState);
+                await refresh(state, setState, props.api);
               }}
             >
               Remove
@@ -166,7 +166,7 @@ function AdminMinersPage(props) {
                 }
 
                 setState({ ...state, loading: true });
-                const request: any = await R.put(`/admin/miners/unsuspend/${state.miner}`, {});
+                const request: any = await R.put(`/admin/miners/unsuspend/${state.miner}`, {}, props.api);
                 if (request && request.error) {
                   alert(request.error);
                   setState({ ...state, miner: '', loading: false });
@@ -174,7 +174,7 @@ function AdminMinersPage(props) {
                 }
 
                 alert(`${state.miner} has been reinstated.`);
-                await refresh(state, setState);
+                await refresh(state, setState, props.api);
               }}
             >
               Reinstate
@@ -192,9 +192,13 @@ function AdminMinersPage(props) {
                 setState({ ...state, loading: true });
 
                 const reason = window.prompt('What is the reason?');
-                const request: any = await R.post(`/admin/miners/suspend/${state.miner}`, {
-                  reason: U.isEmpty(reason) ? 'N/A' : reason,
-                });
+                const request: any = await R.post(
+                  `/admin/miners/suspend/${state.miner}`,
+                  {
+                    reason: U.isEmpty(reason) ? 'N/A' : reason,
+                  },
+                  props.api
+                );
 
                 if (request && request.error) {
                   alert(request.error);
@@ -203,7 +207,7 @@ function AdminMinersPage(props) {
                 }
 
                 alert(`${state.miner} has been suspended for reason: ${reason}`);
-                await refresh(state, setState);
+                await refresh(state, setState, props.api);
               }}
             >
               Suspend

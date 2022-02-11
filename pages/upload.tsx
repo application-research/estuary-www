@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -74,12 +74,16 @@ export default class UploadPage extends React.Component<any> {
       });
     }
 
-    const response = await R.post('/deals/estimate', {
-      size: file.size,
-      replication: this.props.viewer.settings.replication,
-      durationBlks: this.props.viewer.settings.dealDuration,
-      verified: this.props.viewer.settings.verified,
-    });
+    const response = await R.post(
+      '/deals/estimate',
+      {
+        size: file.size,
+        replication: this.props.viewer.settings.replication,
+        durationBlks: this.props.viewer.settings.dealDuration,
+        verified: this.props.viewer.settings.verified,
+      },
+      this.props.api
+    );
 
     const local = await fetch('/api/fil-usd');
     const { price } = await local.json();
@@ -101,7 +105,7 @@ export default class UploadPage extends React.Component<any> {
           <SingleColumnLayout>
             <H2>Upload data</H2>
             <P style={{ marginTop: 16 }}>Add your public data to Estuary so anyone can retrieve it anytime.</P>
-            <UploadZone onFile={this._handleFile} onFlush={this._handleFlush} />
+            <UploadZone onFile={this._handleFile} onFlush={this._handleFlush} host={this.props.api} />
 
             {this.state.files.length ? (
               <React.Fragment>

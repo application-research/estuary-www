@@ -33,11 +33,11 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol },
+    props: { host, protocol, api: process.env.ESTUARY_API },
   };
 }
 
-async function handleSignIn(state: any) {
+async function handleSignIn(state: any, host) {
   if (U.isEmpty(state.username)) {
     return { error: 'Please provide a username.' };
   }
@@ -53,7 +53,7 @@ async function handleSignIn(state: any) {
   // NOTE(jim) We've added a new scheme to keep things safe for users.
   state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
-  let r = await fetch(`${C.api.host}/login`, {
+  let r = await fetch(`${host}/login`, {
     method: 'POST',
     body: JSON.stringify({ passwordHash: state.passwordHash, username: state.username }),
     headers: {
@@ -66,7 +66,7 @@ async function handleSignIn(state: any) {
     // behalf, but if they were authenticated using the old method, we can do one more retry.
     const retryHash = await Crypto.attemptHash(state.password);
 
-    let retry = await fetch(`${C.api.host}/login`, {
+    let retry = await fetch(`${host}/login`, {
       method: 'POST',
       body: JSON.stringify({ passwordHash: retryHash, username: state.username }),
       headers: {
@@ -94,7 +94,7 @@ async function handleSignIn(state: any) {
     console.log('Attempting legacy scheme revision on your behalf');
 
     try {
-      const response = await R.put('/user/password', { newPasswordHash: state.passwordHash });
+      const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
     } catch (e) {
       console.log('Failure:', e);
     }
@@ -151,7 +151,7 @@ function SignInPage(props: any) {
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
           onSubmit={async () => {
             setState({ ...state, loading: true });
-            const response = await handleSignIn(state);
+            const response = await handleSignIn(state, props.api);
             if (response && response.error) {
               alert(response.error);
               setState({ ...state, loading: false });
@@ -165,7 +165,7 @@ function SignInPage(props: any) {
             loading={state.loading ? state.loading : undefined}
             onClick={async () => {
               setState({ ...state, loading: true });
-              const response = await handleSignIn(state);
+              const response = await handleSignIn(state, props.api);
               if (response && response.error) {
                 alert(response.error);
                 setState({ ...state, loading: false });

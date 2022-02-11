@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -98,10 +98,14 @@ function UploadCIDPage(props: any) {
                   return setState({ ...state, loading: false });
                 }
 
-                const response = await R.post(`/content/add-ipfs`, {
-                  name: state.filename,
-                  root: state.cid,
-                });
+                const response = await R.post(
+                  `/content/add-ipfs`,
+                  {
+                    name: state.filename,
+                    root: state.cid,
+                  },
+                  props.api
+                );
                 console.log(response);
                 if (response && response.error) {
                   alert(response.error);
@@ -131,10 +135,14 @@ function UploadCIDPage(props: any) {
                     return setState({ ...state, loading: false });
                   }
 
-                  const response = await R.post(`/content/add-ipfs`, {
-                    name: state.filename,
-                    root: state.cid,
-                  });
+                  const response = await R.post(
+                    `/content/add-ipfs`,
+                    {
+                      name: state.filename,
+                      root: state.cid,
+                    },
+                    props.api
+                  );
                   console.log(response);
                   if (response && response.error) {
                     alert(response.error);

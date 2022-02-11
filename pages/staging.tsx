@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -38,7 +38,7 @@ function StagingPage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      const files = await R.get('/content/staging-zones');
+      const files = await R.get('/content/staging-zones', props.api);
       console.log(files);
 
       if (!files || files.error) {

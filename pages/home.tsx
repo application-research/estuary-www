@@ -34,14 +34,14 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
-const getNext = async (state, setState) => {
+const getNext = async (state, setState, host) => {
   const offset = state.offset + INCREMENT;
   const limit = state.limit;
-  const next = await R.get(`/content/stats?offset=${offset}&limit=${limit}`);
+  const next = await R.get(`/content/stats?offset=${offset}&limit=${limit}`, host);
 
   if (!next || !next.length) {
     return;
@@ -65,8 +65,8 @@ function HomePage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`);
-      const stats = await R.get('/user/stats');
+      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
+      const stats = await R.get('/user/stats', props.api);
 
       if (files && !files.error) {
         setState({ ...state, files, stats });
@@ -173,7 +173,7 @@ function HomePage(props: any) {
             </tbody>
           </table>
           {state.files && state.offset + state.limit === state.files.length ? (
-            <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState)}>
+            <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState, props.api)}>
               ➝ Next {INCREMENT}
             </ActionRow>
           ) : null}

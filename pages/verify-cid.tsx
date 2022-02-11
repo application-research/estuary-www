@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -59,10 +59,10 @@ const getURIWithParam = (baseUrl, params) => {
   return Url.toString();
 };
 
-const onCheckCID = async (state, setState) => {
+const onCheckCID = async (state, setState, host) => {
   setState({ ...state, working: true, data: null });
   await U.delay(2000);
-  const response = await R.get(`/public/by-cid/${state.cid}`);
+  const response = await R.get(`/public/by-cid/${state.cid}`, host);
 
   if (response.error) {
     return setState({ ...state, working: false, data: null });
@@ -94,7 +94,7 @@ function VerifyCIDPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const stats = await R.get('/public/stats');
+      const stats = await R.get('/public/stats', props.api);
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
 
@@ -119,7 +119,7 @@ function VerifyCIDPage(props: any) {
         return;
       }
 
-      onCheckCID(state, setState);
+      onCheckCID(state, setState, props.api);
     }, 1000);
 
     return () => clearTimeout(timeoutId);
@@ -191,7 +191,7 @@ function VerifyCIDPage(props: any) {
             value={state.cid}
             readOnly={state.working}
             name="cid"
-            onSubmit={() => onCheckCID(state, setState)}
+            onSubmit={() => onCheckCID(state, setState, props.api)}
           />
 
           {state.data && state.data.content ? (

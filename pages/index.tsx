@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer },
+    props: { viewer, api: process.env.ESTUARY_API },
   };
 }
 
@@ -45,8 +45,8 @@ function IndexPage(props: any) {
       let miners;
       let stats;
       try {
-        miners = await R.get('/public/miners');
-        stats = await R.get('/public/stats');
+        miners = await R.get('/public/miners', props.api);
+        stats = await R.get('/public/stats', props.api);
       } catch (e) {}
 
       if ((miners && miners.error) || (stats && stats.error)) {
@@ -63,7 +63,7 @@ function IndexPage(props: any) {
     async function load() {
       let data;
       try {
-        data = await R.get('/public/metrics/deals-on-chain');
+        data = await R.get('/public/metrics/deals-on-chain', props.api);
       } catch (e) {
         console.log(e);
         return null;

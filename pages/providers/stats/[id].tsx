@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, ...context.params },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
   };
 }
 
@@ -43,7 +43,7 @@ function MinerStatsPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get(`/public/miners/stats/${props.id}`);
+      const response = await R.get(`/public/miners/stats/${props.id}`, props.api);
       let iex;
       try {
         const iexResponse = await fetch('https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d');
@@ -59,7 +59,7 @@ function MinerStatsPage(props: any) {
       const next = { ...state, ...response, iex, loading: 3 };
       setState(next);
 
-      const ask = await R.get(`/public/miners/storage/query/${props.id}`);
+      const ask = await R.get(`/public/miners/storage/query/${props.id}`, props.api);
       setState({ ...next, ...ask });
     };
 

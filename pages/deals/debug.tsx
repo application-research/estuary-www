@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
   };
 }
 
@@ -32,7 +32,7 @@ function DealDebugPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const response = await R.get(`/deals/failures`);
+      const response = await R.get(`/deals/failures`, props.api);
 
       if (response && response.length) {
         return setState({ logs: response });
