@@ -40,7 +40,19 @@ export const regex = {
   password: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
 };
 
-// TODO(jim): support offline development
+function getAPIHost(): string {
+  if (process.env.ESTUARY_API) {
+    return process.env.ESTUARY_API;
+  }
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return 'https://api.estuary.tech';
+    default:
+      return 'http://localhost:3004';
+  }
+}
+
 export const api = {
-  host: 'https://api.estuary.tech',
+  host: getAPIHost(),
 };
