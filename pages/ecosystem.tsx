@@ -147,7 +147,6 @@ function EcosystemPage(props: any) {
           <p className={S.ecosystemParagraph}>Collaborators</p>
           <div style={{ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <Logos.Zora height="48px" style={{ margin: 22, flexShrink: 0 }} />
-            <Logos.QRI height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.IA height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.Portrait height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.GainForest style={{ margin: 22, height: 48, flexShrink: 0 }} />
