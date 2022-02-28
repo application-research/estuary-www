@@ -180,6 +180,10 @@ function EcosystemPage(props: any) {
               src="https://user-images.githubusercontent.com/310223/155955145-274a768d-eec4-4dcf-9435-0af7ea2595ff.png"
               style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
             />
+            <img
+              src="https://user-images.githubusercontent.com/310223/156037345-f93054de-d222-47e9-9653-cd957fc0fcc5.svg"
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
+            />
           </div>
         </div>
 
