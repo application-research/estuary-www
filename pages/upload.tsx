@@ -100,7 +100,7 @@ export default class UploadPage extends React.Component<any> {
     const sidebarElement = <AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />;
 
     return (
-      <Page title="Estuary: Upload data" description="Upload your data to the Filecoin Network." url="https://estuary.tech/upload">
+      <Page title="Estuary: Upload data" description="Upload your data to the Filecoin Network." url="/upload">
         <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <SingleColumnLayout>
             <H2>Upload data</H2>

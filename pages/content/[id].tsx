@@ -49,7 +49,7 @@ function LocalContentPage(props) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title={`Estuary: Content: ID: ${props.id}`} description={`Content status for local ID: ${props.id}`} url={`https://estuary.tech/content/${props.id}`}>
+    <Page title={`Estuary: Content: ID: ${props.id}`} description={`Content status for local ID: ${props.id}`} url={`/content/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <React.Fragment>
           <table className={tstyles.table}>

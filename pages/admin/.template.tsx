@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
 
 function EstuaryTemplate(props) {
   return (
-    <Page title="Estuary: Admin: Template" description="" url="https://estuary.tech">
+    <Page title="Estuary: Admin: Template" description="" url="/">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="ADMIN_TEMPLATE" />} sidebar={<AuthenticatedSidebar viewer={props.viewer} />}>
         <SingleColumnLayout>
           <H2>Template</H2>

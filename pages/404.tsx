@@ -13,7 +13,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 
 function ErrorPage(props: any) {
   return (
-    <Page title="Estuary: 404" description="This page does not exist." url="https://estuary.tech">
+    <Page title="Estuary: 404" description="This page does not exist." url="">
       <AuthenticatedLayout
         navigation={<Navigation isAuthenticated active="404" />}
         sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}

@@ -47,7 +47,7 @@ function DealDebugPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="DEALS_DEBUG" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Deals: Debug" description={`Debug storage deals on Estuary.`} url={`https://estuary.tech/deals/debug`}>
+    <Page title="Estuary: Deals: Debug" description={`Debug storage deals on Estuary.`} url={`/deals/debug`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="DEALS_DEBUG" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

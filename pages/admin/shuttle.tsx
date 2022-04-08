@@ -60,7 +60,7 @@ function AdminShuttlePage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar active="ADMIN_SHUTTLE" viewer={props.viewer} /> : null;
 
   return (
-    <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url="https://estuary.tech/admin/shuttle">
+    <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url="/admin/shuttle">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Create Shuttle</H2>

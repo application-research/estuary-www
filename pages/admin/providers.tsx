@@ -88,7 +88,7 @@ function AdminMinersPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Add storage provider" description="Add a storage provider to make Filecoin storage deals with" url="https://estuary.tech/admin/providers">
+    <Page title="Estuary: Admin: Add storage provider" description="Add a storage provider to make Filecoin storage deals with" url="/admin/providers">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Storage providers</H2>

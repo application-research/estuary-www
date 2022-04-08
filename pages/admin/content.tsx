@@ -64,7 +64,7 @@ function AdminContentPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Content" description="Manage the content on Estuary" url="https://estuary.tech/admin/content">
+    <Page title="Estuary: Admin: Content" description="Manage the content on Estuary" url="/admin/content">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Content</H2>

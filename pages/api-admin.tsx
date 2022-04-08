@@ -56,7 +56,7 @@ function APIPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="API" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: API" description="Generate and manage your API keys." url="https://estuary.tech/api">
+    <Page title="Estuary: API" description="Generate and manage your API keys." url="/api">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>API</H2>

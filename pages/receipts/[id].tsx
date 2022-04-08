@@ -50,7 +50,7 @@ function ReceiptPage(props) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title={`Estuary: Receipts: ID: ${props.id}`} description={`Receipt for deal ID: ${props.id}`} url={`https://estuary.tech/receipts/${props.id}`}>
+    <Page title={`Estuary: Receipts: ID: ${props.id}`} description={`Receipt for deal ID: ${props.id}`} url={`/receipts/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="DEAL_BY_ID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>

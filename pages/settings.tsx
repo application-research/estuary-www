@@ -96,7 +96,7 @@ function SettingsPage(props: any) {
 
   if (!viewer) {
     return (
-      <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="https://estuary.tech/settings">
+      <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="/settings">
         <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <div style={{ padding: 24 }}>
             <LoaderSpinner /> This page will finish loading if you have Fission authentication enabled...
@@ -107,7 +107,7 @@ function SettingsPage(props: any) {
   }
 
   return (
-    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="https://estuary.tech/settings">
+    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="/settings">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Settings</H2>

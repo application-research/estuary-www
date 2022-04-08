@@ -95,7 +95,7 @@ function AdminBalancePage(props) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_BALANCE" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Manage Balance" description="The balance remaining in the Estuary node for Filecoin deals." url="https://estuary.tech/admin/balance">
+    <Page title="Estuary: Admin: Manage Balance" description="The balance remaining in the Estuary node for Filecoin deals." url="/admin/balance">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Manage Balance</H2>

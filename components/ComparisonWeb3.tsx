@@ -360,7 +360,7 @@ function ComparisonWeb3(props: any) {
               <br />
               <br />
               Example:{' '}
-              <a href="https://estuary.tech/providers/stats/f02620" target="_blank">
+              <a href="/providers/stats/f02620" target="_blank">
                 here
               </a>
               .
@@ -379,7 +379,7 @@ function ComparisonWeb3(props: any) {
               <br />
               <br />
               Example:{' '}
-              <a href="https://estuary.tech/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" target="_blank">
+              <a href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" target="_blank">
                 here
               </a>
               .

@@ -50,7 +50,7 @@ function DealPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
 
   return (
-    <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`https://estuary.tech/deals/${props.id}`}>
+    <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`/deals/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="DEAL_BY_ID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>
@@ -115,7 +115,7 @@ function DealPage(props: any) {
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
                     <a className={tstyles.cta} href={`/proposals/${state.deal.propCid}`}>
-                      https://estuary.tech/proposals/{state.deal.propCid}
+                      /proposals/{state.deal.propCid}
                     </a>
                   </td>
                 </tr>

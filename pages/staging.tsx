@@ -56,7 +56,7 @@ function StagingPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="STAGING" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url="https://estuary.tech/staging">
+    <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url="/staging">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Staging zone</H2>

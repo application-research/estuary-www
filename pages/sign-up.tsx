@@ -116,7 +116,7 @@ function SignUpPage(props: any) {
   }, []);
 
   return (
-    <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url="https://estuary.tech/sign-up">
+    <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url="/sign-up">
       <Navigation active="SIGN_UP" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign up</H2>

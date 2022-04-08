@@ -126,7 +126,7 @@ function SignInPage(props: any) {
   const signIn = null;
 
   return (
-    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url="https://estuary.tech/sign-in">
+    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url="/sign-in">
       <Navigation active="SIGN_IN" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>

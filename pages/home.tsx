@@ -82,7 +82,7 @@ function HomePage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Home" description="Analytics about Filecoin and your data." url="https://estuary.tech/home">
+    <Page title="Estuary: Home" description="Analytics about Filecoin and your data." url="/home">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {/* <AlertPanel title="Storage deals are experiencing delays">
           Currently Filecoin deals are experiencing delays that are effecting the accuracy of receipts and status reporting. We are waiting for patches in the Lotus implementation

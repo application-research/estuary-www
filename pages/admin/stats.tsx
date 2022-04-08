@@ -86,7 +86,7 @@ function AdminStatsPage(props) {
   console.log(props.viewer);
 
   return (
-    <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="https://estuary.tech/stats">
+    <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="/stats">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>System modes</H2>

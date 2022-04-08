@@ -143,7 +143,7 @@ function ComparisonPage(props: any) {
   const description = 'A comparison of Estuary and popular cloud storage options.';
 
   return (
-    <Page title="Estuary: Comparisons" description={description} url="https://estuary.tech/comparisons">
+    <Page title="Estuary: Comparisons" description={description} url="/comparisons">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>

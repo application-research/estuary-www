@@ -112,7 +112,7 @@ function WatchProvidersPage(props: any) {
   console.log(state.providers);
 
   return (
-    <Page title="Estuary: Providers" description="This is a providers page." url="https://estuary.tech/providers/public/watch">
+    <Page title="Estuary: Providers" description="This is a providers page." url="/providers/public/watch">
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
         <div className={styles.group} style={{ paddingTop: 88, paddingBottom: 88 }}>
           {state.providers && state.providers.length ? (

@@ -33,7 +33,7 @@ function TemplatePage(props: any) {
     <Page
       title="Estuary: Template"
       description="This is a template page."
-      url="https://estuary.tech"
+      url="/"
     >
       <AuthenticatedLayout
         navigation={<Navigation isAuthenticated active="TEMPLATE" />}

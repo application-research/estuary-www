@@ -60,7 +60,7 @@ function AdminUsersPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_USERS" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Users" description="All the users using this Estuary node." url="https://estuary.tech/admin/users">
+    <Page title="Estuary: Admin: Users" description="All the users using this Estuary node." url="/admin/users">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Users</H2>

@@ -71,7 +71,7 @@ function MinerStatsPage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (
-    <Page title={`Estuary: Public: Providers: ${props.id}`} description={`Stats for storage provider: ${props.id}`} url={`https://estuary.tech/providers/stats/${props.id}`}>
+    <Page title={`Estuary: Public: Providers: ${props.id}`} description={`Stats for storage provider: ${props.id}`} url={`/providers/stats/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {state.loading > 1 ? (
           <SingleColumnLayout>

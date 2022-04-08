@@ -63,7 +63,7 @@ function ImpersonatePage(props: any) {
   const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 
   return (
-    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="https://estuary.tech/settings">
+    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="/settings">
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Impersonate</H2>

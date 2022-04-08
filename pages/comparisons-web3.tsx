@@ -143,7 +143,7 @@ function ComparisonsWeb3Page(props: any) {
   const description = 'A comparison of Estuary to other popular Web3 storage solutions.';
 
   return (
-    <Page title="Estuary: Comparisons of Estuary to others" description={description} url="https://estuary.tech/comparisons-web3">
+    <Page title="Estuary: Comparisons of Estuary to others" description={description} url="/comparisons-web3">
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>

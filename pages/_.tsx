@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
 
 function TemplatePage(props: any) {
   return (
-    <Page title="Estuary: Navigation" description="Mobile site navigation" url="https://estuary.tech">
+    <Page title="Estuary: Navigation" description="Mobile site navigation" url="">
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} active="TEMPLATE" />}>
         <AuthenticatedSidebar viewer={props.viewer} />
       </AuthenticatedLayout>
