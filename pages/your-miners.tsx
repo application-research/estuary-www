@@ -98,7 +98,7 @@ function YourMinerPage(props: any) {
   console.log(viewer);
 
   return (
-    <Page title="Estuary: Your miners (WIP)" description="Claim and manage your storage provider.">
+    <Page title="Estuary: Your miners (WIP)" description="Claim and manage your storage provider." url={`${props.site}/your-miners`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Your miners</H2>
