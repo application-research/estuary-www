@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -88,7 +88,7 @@ function AdminMinersPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_MINERS" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Add storage provider" description="Add a storage provider to make Filecoin storage deals with" url="/admin/providers">
+    <Page title="Estuary: Admin: Add storage provider" description="Add a storage provider to make Filecoin storage deals with" url={`{$props.site}/admin/providers`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Storage providers</H2>

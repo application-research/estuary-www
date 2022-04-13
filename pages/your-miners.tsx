@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, viewer, api: process.env.ESTUARY_API },
+    props: { host, protocol, viewer, api: process.env.ESTUARY_API, site: `https://${host}` },
   };
 }
 

@@ -208,7 +208,7 @@ export default class Dashboard extends React.Component<any, any> {
     const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 
     return (
-      <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url="/deals">
+      <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url={`${this.props.site}/deals`}>
         <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
           <PageHeader>
             <H2>Deals</H2>

@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer },
+    props: { viewer, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -33,7 +33,7 @@ function TemplatePage(props: any) {
     <Page
       title="Estuary: Template"
       description="This is a template page."
-      url="/"
+      url={props.site}
     >
       <AuthenticatedLayout
         navigation={<Navigation isAuthenticated active="TEMPLATE" />}

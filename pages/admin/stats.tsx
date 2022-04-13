@@ -37,7 +37,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -86,7 +86,7 @@ function AdminStatsPage(props) {
   console.log(props.viewer);
 
   return (
-    <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url="/stats">
+    <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url={`${props.site}/stats`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>System modes</H2>

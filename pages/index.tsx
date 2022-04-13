@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -134,7 +134,7 @@ function IndexPage(props: any) {
   }, []);
 
   return (
-    <Page title="Estuary" description={description} url="/">
+    <Page title="Estuary" description={description} url={props.site}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
       <div className={styles.heading}>
         <h1 className={styles.h1}>

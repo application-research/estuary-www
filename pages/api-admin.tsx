@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -56,7 +56,7 @@ function APIPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="API" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: API" description="Generate and manage your API keys." url="/api">
+    <Page title="Estuary: API" description="Generate and manage your API keys." url={`${props.site}/api`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>API</H2>

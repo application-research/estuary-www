@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -56,7 +56,7 @@ function StagingPage(props) {
   const sidebarElement = <AuthenticatedSidebar active="STAGING" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url="/staging">
+    <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url={`${props.site}/staging`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Staging zone</H2>

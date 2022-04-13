@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, ...context.params, api: process.env.ESTUARY_API },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -39,7 +39,7 @@ function MinerErrorPage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (
-    <Page title="Estuary: Public: Providers: Errors" description={`Errors for storage provider: ${props.id}`} url={`/providers/errors/${props.id}`}>
+    <Page title="Estuary: Public: Providers: Errors" description={`Errors for storage provider: ${props.id}`} url={`${props.site}/providers/errors/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} active="INDEX" />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

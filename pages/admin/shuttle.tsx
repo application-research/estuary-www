@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -60,7 +60,7 @@ function AdminShuttlePage(props: any) {
   const sidebarElement = props.viewer ? <AuthenticatedSidebar active="ADMIN_SHUTTLE" viewer={props.viewer} /> : null;
 
   return (
-    <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url="/admin/shuttle">
+    <Page title="Estuary: Admin: Shuttle" description="Create shuttles." url={`${props.site}/admin/shuttle`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated={props.viewer} isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Create Shuttle</H2>

@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
   };
 }
 
@@ -143,7 +143,7 @@ function ComparisonPage(props: any) {
   const description = 'A comparison of Estuary and popular cloud storage options.';
 
   return (
-    <Page title="Estuary: Comparisons" description={description} url="/comparisons">
+    <Page title="Estuary: Comparisons" description={description} url={`${props.site}/comparisons`}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
