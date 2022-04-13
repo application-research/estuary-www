@@ -107,7 +107,7 @@ function SettingsPage(props: any) {
   }
 
   return (
-    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url="/settings">
+    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url={`${props.site}/settings`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Settings</H2>
