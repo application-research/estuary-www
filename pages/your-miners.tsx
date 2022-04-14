@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, viewer, api: process.env.ESTUARY_API },
+    props: { host, protocol, viewer, api: process.env.ESTUARY_API, hostname: `https://${host}` },
   };
 }
 
@@ -98,7 +98,7 @@ function YourMinerPage(props: any) {
   console.log(viewer);
 
   return (
-    <Page title="Estuary: Your miners (WIP)" description="Claim and manage your storage provider.">
+    <Page title="Estuary: Your miners (WIP)" description="Claim and manage your storage provider." url={`${props.hostname}/your-miners`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Your miners</H2>

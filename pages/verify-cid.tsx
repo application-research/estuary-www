@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -174,7 +174,7 @@ function VerifyCIDPage(props: any) {
   }
 
   return (
-    <Page title="Estuary: Verify CID" description={description} url="https://estuary.tech">
+    <Page title="Estuary: Verify CID" description={description} url={props.hostname}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>
@@ -236,14 +236,14 @@ function VerifyCIDPage(props: any) {
                   <div key={d.ID} style={{ marginTop: 16 }}>
                     <StatRow title="Provider">
                       {d.miner}{' '}
-                      <a href={`https://estuary.tech/providers/stats/${d.miner}`} target="_blank">
+                      <a href={`/providers/stats/${d.miner}`} target="_blank">
                         (view provider)
                       </a>
                     </StatRow>
                     <StatRow title="Success date">{U.toDate(d.sealedAt)}</StatRow>
                     <StatRow title="Retrieval deal ID">
                       {d.dealId}{' '}
-                      <a href={`https://estuary.tech/receipts/${d.dealId}`} target="_blank">
+                      <a href={`/receipts/${d.dealId}`} target="_blank">
                         (view receipt)
                       </a>
                     </StatRow>

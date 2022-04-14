@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -208,7 +208,7 @@ export default class Dashboard extends React.Component<any, any> {
     const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 
     return (
-      <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url="https://estuary.tech/deals">
+      <Page title="Estuary: Deals" description="Check the status of your Filecoin storage deals" url={`${this.props.hostname}/deals`}>
         <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
           <PageHeader>
             <H2>Deals</H2>

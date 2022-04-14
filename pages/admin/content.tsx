@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -64,7 +64,7 @@ function AdminContentPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_CONTENT" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Content" description="Manage the content on Estuary" url="https://estuary.tech/admin/content">
+    <Page title="Estuary: Admin: Content" description="Manage the content on Estuary" url={`${props.hostname}/admin/content`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Content</H2>

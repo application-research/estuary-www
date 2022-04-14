@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -55,7 +55,7 @@ function UploadCIDPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="UPLOAD_CID" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Upload: CID" description="Use an existing IPFS CID to make storage deals." url="https://estuary.tech/upload-cid">
+    <Page title="Estuary: Upload: CID" description="Use an existing IPFS CID to make storage deals." url={`${props.hostname}/upload-cid`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         {!state.success ? (
           <SingleColumnLayout>

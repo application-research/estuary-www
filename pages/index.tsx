@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -134,7 +134,7 @@ function IndexPage(props: any) {
   }, []);
 
   return (
-    <Page title="Estuary" description={description} url="https://estuary.tech">
+    <Page title="Estuary" description={description} url={props.hostname}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
       <div className={styles.heading}>
         <h1 className={styles.h1}>
@@ -175,7 +175,7 @@ function IndexPage(props: any) {
             <button
               className={styles.actionButton}
               onClick={() => {
-                window.location.href = 'https://estuary.tech/ecosystem';
+                window.location.href = '/ecosystem';
               }}
             >
               View performance dashboard ➝
@@ -202,7 +202,7 @@ function IndexPage(props: any) {
             <button
               className={styles.actionButton}
               onClick={() => {
-                window.location.href = 'https://estuary.tech/ecosystem';
+                window.location.href = '/ecosystem';
               }}
             >
               View performance dashboard ➝
@@ -229,7 +229,7 @@ function IndexPage(props: any) {
             CID
           </a>{' '}
           is on chain by visiting the{' '}
-          <a href="https://estuary.tech/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
+          <a href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
             verify page
           </a>
           .

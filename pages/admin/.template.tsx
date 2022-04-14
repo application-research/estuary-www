@@ -36,13 +36,13 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
 function EstuaryTemplate(props) {
   return (
-    <Page title="Estuary: Admin: Template" description="" url="https://estuary.tech">
+    <Page title="Estuary: Admin: Template" description="" url={props.hostname}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="ADMIN_TEMPLATE" />} sidebar={<AuthenticatedSidebar viewer={props.viewer} />}>
         <SingleColumnLayout>
           <H2>Template</H2>
