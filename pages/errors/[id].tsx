@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -48,7 +48,7 @@ function DealErrorPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Deals: Errors" description={`Errors for storage deal ID: ${props.id}`} url={`${props.site}/errors/${props.id}`}>
+    <Page title="Estuary: Deals: Errors" description={`Errors for storage deal ID: ${props.id}`} url={`${props.hostname}/errors/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="INDEX" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

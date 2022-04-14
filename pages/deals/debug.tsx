@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -47,7 +47,7 @@ function DealDebugPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="DEALS_DEBUG" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Deals: Debug" description={`Debug storage deals on Estuary.`} url={`${props.site}/deals/debug`}>
+    <Page title="Estuary: Deals: Debug" description={`Debug storage deals on Estuary.`} url={`${props.hostname}/deals/debug`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated active="DEALS_DEBUG" isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <table className={tstyles.table}>
           <tbody className={tstyles.tbody}>

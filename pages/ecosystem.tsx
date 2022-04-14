@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -133,7 +133,7 @@ function EcosystemPage(props: any) {
   const title = 'Estuary: Ecosystem dashboard.';
 
   return (
-    <Page title={title} description={description} url={`${props.site}/ecosystem`}>
+    <Page title={title} description={description} url={`${props.hostname}/ecosystem`}>
       <div className={S.ecosystem}>
         <div className={S.ecosystemHeading}>
           <EstuarySVG height="64px" />

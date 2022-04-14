@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -174,7 +174,7 @@ function VerifyCIDPage(props: any) {
   }
 
   return (
-    <Page title="Estuary: Verify CID" description={description} url={props.site}>
+    <Page title="Estuary: Verify CID" description={description} url={props.hostname}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
 
       <SingleColumnLayout style={{ textAlign: 'center', marginBottom: 24 }}>

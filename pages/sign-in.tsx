@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, api: process.env.ESTUARY_API, site: `https://${host}` },
+    props: { host, protocol, api: process.env.ESTUARY_API, hostname: `https://${host}` },
   };
 }
 
@@ -126,7 +126,7 @@ function SignInPage(props: any) {
   const signIn = null;
 
   return (
-    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.site}/sign-in`}>
+    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>

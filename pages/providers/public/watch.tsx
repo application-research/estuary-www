@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -112,7 +112,7 @@ function WatchProvidersPage(props: any) {
   console.log(state.providers);
 
   return (
-    <Page title="Estuary: Providers" description="This is a providers page." url={`${props.site}/providers/public/watch`}>
+    <Page title="Estuary: Providers" description="This is a providers page." url={`${props.hostname}/providers/public/watch`}>
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
         <div className={styles.group} style={{ paddingTop: 88, paddingBottom: 88 }}>
           {state.providers && state.providers.length ? (

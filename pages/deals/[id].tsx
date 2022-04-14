@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -50,7 +50,7 @@ function DealPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
 
   return (
-    <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`${props.site}/deals/${props.id}`}>
+    <Page title={`Estuary: Deal: ${props.id}`} description={`Deal status and transfer information`} url={`${props.hostname}/deals/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} active="DEAL_BY_ID" />} sidebar={sidebarElement}>
         {state.deal ? (
           <React.Fragment>

@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -63,7 +63,7 @@ function ImpersonatePage(props: any) {
   const navigationElement = <Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />;
 
   return (
-    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url={`${props.site}/settings`}>
+    <Page title="Estuary: Settings: Account" description="Update your settings for your account." url={`${props.hostname}/settings`}>
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>
         <SingleColumnLayout>
           <H2>Impersonate</H2>

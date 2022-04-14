@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, ...context.params, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, ...context.params, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -49,7 +49,7 @@ function LocalContentPage(props) {
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
   return (
-    <Page title={`Estuary: Content: ID: ${props.id}`} description={`Content status for local ID: ${props.id}`} url={`${props.site}/content/${props.id}`}>
+    <Page title={`Estuary: Content: ID: ${props.id}`} description={`Content status for local ID: ${props.id}`} url={`${props.hostname}/content/${props.id}`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <React.Fragment>
           <table className={tstyles.table}>

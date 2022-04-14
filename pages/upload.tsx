@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -100,7 +100,7 @@ export default class UploadPage extends React.Component<any> {
     const sidebarElement = <AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />;
 
     return (
-      <Page title="Estuary: Upload data" description="Upload your data to the Filecoin Network." url={`${this.props.site}/upload`}>
+      <Page title="Estuary: Upload data" description="Upload your data to the Filecoin Network." url={`${this.props.hostname}/upload`}>
         <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <SingleColumnLayout>
             <H2>Upload data</H2>

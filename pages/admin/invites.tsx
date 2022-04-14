@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, site: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -61,7 +61,7 @@ function AdminInvitesPage(props: any) {
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_INVITES" viewer={props.viewer} />;
 
   return (
-    <Page title="Estuary: Admin: Invite" description="Create invite keys for new users." url={`${props.site}/admin/invite`}>
+    <Page title="Estuary: Admin: Invite" description="Create invite keys for new users." url={`${props.hostname}/admin/invite`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
         <PageHeader>
           <H2>Create Invite</H2>
