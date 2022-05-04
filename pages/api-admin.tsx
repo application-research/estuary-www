@@ -194,6 +194,18 @@ function APIPage(props: any) {
                           >
                             {isExpired ? 'Delete expired' : `Revoke`}
                           </button>
+                            {isExpired ?
+                              console.log("Can't copy expired key")
+                              :
+                              <button style={{margin: '1px'}}
+                                onClick={async () => {
+                                  navigator.clipboard.writeText(k.token).then(() => {
+                                    alert("API Key copied to clipboard");
+                                  });
+                                }}
+                                className={tstyles.tdbutton}
+                              >Copy</button>
+                            }
                         </td>
                       </tr>
                     );
