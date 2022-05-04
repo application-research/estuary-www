@@ -141,7 +141,7 @@ async function handleSignIn(state: any, host) {
 function SignInPage(props: any) {
 
 
-  const [state, setState] = React.useState({ loading: false, fissionLoading: false, username: '', password: '', key: '' });
+  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '' });
 
   const authorise = null;
   const authScenario = null;
@@ -224,15 +224,19 @@ function SignInPage(props: any) {
         <div className={styles.actions}>
           <Button
             style={{ width: '100%' }}
-
+            loading={state.authLoading ? state.authLoading : undefined}
             onClick={async () => {
-              setState({ ...state, loading: true });
+              setState({ ...state, authLoading: true });
               if(U.isEmpty(state.key)){
                 alert('Please enter an API key');
-                setState({ ...state, loading: false });
+                setState({ ...state, authLoading: false });
                 return;
               }
-              await handleTokenAuthenticate(state, props.api);
+              await handleTokenAuthenticate(state, props.api).then((response) => {
+                if(response.status == 403){
+                  setState({ ...state, authLoading: false });
+                }
+              });
             }}
           >
             Authenticate
