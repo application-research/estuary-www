@@ -222,7 +222,7 @@ function VerifyCIDPage(props: any) {
             </React.Fragment>
           )}
 
-          {state.data && state.data.deals ? (
+          {state.data && state.data.deals && state.data.deals.length > 0 ? (
             <React.Fragment>
               <div className={S.scustom} style={{ marginTop: 48 }}>
                 <H3>✅ This CID is sealed on Filecoin</H3>
