@@ -19,6 +19,7 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 const ENABLE_SIGN_IN_WITH_FISSION = false;
 
 export async function getServerSideProps(context) {
+
   const viewer = await U.getViewerFromHeader(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
@@ -37,7 +38,24 @@ export async function getServerSideProps(context) {
   };
 }
 
+async function handleTokenAuthenticate(state: any, host) {
+  let response = await fetch(`${host}/user/stats`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.key}`,
+    },
+  });
+  if (response && response.status === 403) {
+    alert("Invalid API key");
+  }else {
+    Cookies.set(C.auth, state.key);
+    window.location.reload();
+  }
+  return response;
+}
 async function handleSignIn(state: any, host) {
+
   if (U.isEmpty(state.username)) {
     return { error: 'Please provide a username.' };
   }
@@ -118,7 +136,11 @@ async function handleSignIn(state: any, host) {
   return;
 }
 
+
+
 function SignInPage(props: any) {
+
+
   const [state, setState] = React.useState({ loading: false, fissionLoading: false, username: '', password: '', key: '' });
 
   const authorise = null;
@@ -202,15 +224,15 @@ function SignInPage(props: any) {
         <div className={styles.actions}>
           <Button
             style={{ width: '100%' }}
-            onClick={async () => {
-              if (U.isEmpty(state.key)) {
-                alert('Please provide a valid key');
-                return null;
-              }
 
-              console.log('Impersonating...');
-              Cookies.set(C.auth, state.key);
-              window.location.reload();
+            onClick={async () => {
+              setState({ ...state, loading: true });
+              if(U.isEmpty(state.key)){
+                alert('Please enter an API key');
+                setState({ ...state, loading: false });
+                return;
+              }
+              await handleTokenAuthenticate(state, props.api);
             }}
           >
             Authenticate
