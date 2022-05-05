@@ -98,7 +98,7 @@ function StagingPage(props) {
                     <th className={tstyles.th}>Max items</th>
                   </tr>
                   <tr className={tstyles.tr}>
-                    <td className={tstyles.td}>{U.formatNumber(bucket.curSize)}</td>
+                    <td className={tstyles.td}>{U.bytesToSize(bucket.curSize)}</td>
                     <td className={tstyles.td}>{U.bytesToSize(bucket.maxSize)}</td>
                     <td className={tstyles.td}>{U.bytesToSize(bucket.minSize)}</td>
                     <td className={tstyles.td}>{U.formatNumber(bucket.maxItems)}</td>
