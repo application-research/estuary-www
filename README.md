@@ -26,6 +26,8 @@ issues when running the app.
 
 ### Issue: Unhandled Runtime error
 This happens when estuary-www failed to connect to estuary backend. Make sure that ESTUARY_API is set to estuary host ip and port.
+![image](https://user-images.githubusercontent.com/4479171/168707524-afd12111-e84c-4746-a291-6d5b3a3121c9.png)
+
 - If you are running a single local estuary node, this will use http://localhost:3004. 
 - You will need to set the ESTUARY_API to http://localhost:3004 (export ESTUARY_API=http://localhost:3004). 
 - Running `npm run dev` will automatically set the ESTUARY_API to localhost.
