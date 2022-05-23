@@ -128,16 +128,16 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
           </span>
         ) : null}
       </div>
-      {viewer && viewer.settings ? (
+      {content && content.replication ? (
         <React.Fragment>
-          {successCount === viewer.settings.replication ? (
+          {successCount === content.replication ? (
             <div className={styles.titleSection} style={{ backgroundColor: `var(--status-success-bright)`, fontFamily: 'MonoMedium' }}>
               Your data is backed up to the Filecoin Network
             </div>
           ) : (
             <div className={styles.titleSection} style={{ fontFamily: 'MonoMedium' }}>
               <LoaderSpinner style={{ border: `2px solid rgba(0, 0, 0, 0.1)`, borderTop: `2px solid #000` }} />
-              &nbsp; Estuary is working on {viewer.settings.replication} successful on chain deals. {successCount} / {viewer.settings.replication}
+              &nbsp; Estuary is working on {content.replication} successful on chain deals. {successCount} / {content.replication}
             </div>
           )}
         </React.Fragment>
