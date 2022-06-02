@@ -147,8 +147,8 @@ function HomePage(props: any) {
                     const fileURL = `https://dweb.link/ipfs/${data.cid['/']}`;
 
                     let name = '...';
-                    if (data && data.file) {
-                      name = data.file;
+                    if (data && data.filename) {
+                      name = data.filename;
                     }
                     if (name === 'aggregate') {
                       name = '/';
