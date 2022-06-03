@@ -119,18 +119,22 @@ export default class UploadItem extends React.Component<any> {
     };
 
     xhr.onloadend = (event: any) => {
-      if (event.target && event.target.status === 200 && event.target.response) {
-        let json = {};
+      if (!event.target || !event.target.response) {
+        return
+      }
+      
+      startTime = null;
+      secondsElapsed = 0;
+      if (event.target.status === 200) {
+        let json = {}
         try {
           json = JSON.parse(event.target.response);
         } catch (e) {
           console.log(e);
         }
-
-        startTime = null;
-        secondsElapsed = 0;
-
         this.setState({ ...this.state, final: json });
+      } else {
+        alert(`[${event.target.status}]Error during the upload: ${event.target.response}`);
       }
     };
 
