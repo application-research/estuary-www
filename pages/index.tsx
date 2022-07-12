@@ -36,6 +36,7 @@ function IndexPage(props: any) {
     totalStorage: 0,
     totalFiles: 0,
     dealsOnChain: 0,
+    totalObjectsRef: 0,
     ready: false,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
@@ -50,7 +51,7 @@ function IndexPage(props: any) {
       } catch (e) {}
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, ready: true });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, totalObjectsRef: 0, ready: true });
       }
 
       setState({ ...state, ...stats, miners, ready: true });
@@ -213,18 +214,24 @@ function IndexPage(props: any) {
 
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
-          Users of this Estuary node have pinned{' '}
+          Estuary.tech is a demonstration of what an Estuary node can do. Users of this Estuary node have pinned{' '}
           <b>
-            {state.totalFiles.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) files & directories
+            {state.totalFiles.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) root level CIDs
           </b>{' '}
-          to IPFS, where the object count is many multiples larger. To ensure the data is permanently available, our node automatically replicates the data 6 times onto Filecoin.
-          So far&nbsp;
+          to IPFS.{' '}
+          {state.totalObjectsRef ? (
+            <span>
+              Within those root CIDs, there exists a total of <b>{state.totalObjectsRef.toLocaleString()} object references</b>.
+            </span>
+          ) : null}{' '}
+          To ensure the data is permanently available, our node automatically replicates the data <b>6 times</b> onto the Filecoin Network. So far&nbsp;
           <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
         </h2>
 
         <h2 className={styles.h2} style={{ marginTop: 48 }}>
-          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. When this node successfully stores data, any user of this
-          node can verify their{' '}
+          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. Storage providers who are on our main Estuary Node's list
+          have graciously accepted all data as it comes their way, which really helps us test and improve the Filecoin network. When this node successfully stores data, any user of
+          this node can verify their{' '}
           <a href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
             CID
           </a>{' '}
