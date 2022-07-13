@@ -241,12 +241,6 @@ function EcosystemPage(props: any) {
           </div>
         </div>
 
-        <div className={S.ecosystemSection}>
-          <div className={S.ecosystemStatCard}>
-            <div className={S.ecosystemStatValue}>{state.totalStorageMiner}</div>
-            <div className={S.ecosystemStatText}>Total storage providers</div>
-          </div>
-        </div>
       </div>
 
       {graph.data ? (
