@@ -52,7 +52,8 @@ function EcosystemPage(props: any) {
     totalFiles: 0,
     dealsOnChain: 0,
     totalUsers: 0,
-    totalStorageMiner: 0
+    totalStorageMiner: 0,
+    totalObjectsRef: 0,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
@@ -62,7 +63,7 @@ function EcosystemPage(props: any) {
       const stats = await R.get('/public/stats', props.api);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, totalObjectsRef: 0 });
       }
 
       setState({ ...state, miners, ...stats });
@@ -200,21 +201,28 @@ function EcosystemPage(props: any) {
         <div className={S.ecosystemSection}>
           <div className={S.ecosystemStatCard}>
             <div className={S.ecosystemStatValue}>{state.totalFiles.toLocaleString()}</div>
-            <div className={S.ecosystemStatText}>Total files uploaded by all users using the primary Estuary node</div>
+            <div className={S.ecosystemStatText}>Total root CIDs uploaded to Estuary. This value does not include sub objects references.</div>
+          </div>
+        </div>
+
+        <div className={S.ecosystemSection}>
+          <div className={S.ecosystemStatCard}>
+            <div className={S.ecosystemStatValue}>{state.totalObjectsRef.toLocaleString()}</div>
+            <div className={S.ecosystemStatText}>Total number of object references provided by every root CID in the network.</div>
           </div>
         </div>
 
         <div className={S.ecosystemSection}>
           <div className={S.ecosystemStatCard}>
             <div className={S.ecosystemStatValue}>{state.dealsOnChain.toLocaleString()}</div>
-            <div className={S.ecosystemStatText}>Active storage deals on the Filecoin Network</div>
+            <div className={S.ecosystemStatText}>Active successful storage deals on the Filecoin Network</div>
           </div>
         </div>
 
         <div className={S.ecosystemSection}>
           <div className={S.ecosystemStatCard}>
             <div className={S.ecosystemStatValue}>{U.bytesToSize(state.totalStorage)}</div>
-            <div className={S.ecosystemStatText}>Total pinned IPFS storage for hot retrieval from IPFS gateways</div>
+            <div className={S.ecosystemStatText}>Total pinned IPFS storage for hot retrieval from any IPFS gateway. This data is not stored on Filecoin</div>
           </div>
         </div>
 
@@ -222,7 +230,7 @@ function EcosystemPage(props: any) {
           <div className={S.ecosystemSection}>
             <div className={S.ecosystemStatCard}>
               <div className={S.ecosystemStatValue}>{U.bytesToSize(graph.dealsSealedBytes)}</div>
-              <div className={S.ecosystemStatText}>Total sealed storage on Filecoin including replication</div>
+              <div className={S.ecosystemStatText}>Total sealed storage contributed to Filecoin including a 6x replication</div>
             </div>
           </div>
         ) : null}
