@@ -49,7 +49,7 @@ function EcosystemPage(props: any) {
   const [state, setState] = React.useState({
     miners: [],
     totalStorage: 0,
-    totalFiles: 0,
+    totalFilesStored: 0,
     dealsOnChain: 0,
     totalUsers: 0,
     totalStorageMiner: 0,
@@ -63,7 +63,7 @@ function EcosystemPage(props: any) {
       const stats = await R.get('/public/stats', props.api);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, totalObjectsRef: 0 });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0 });
       }
 
       setState({ ...state, miners, ...stats });
@@ -200,7 +200,7 @@ function EcosystemPage(props: any) {
 
         <div className={S.ecosystemSection}>
           <div className={S.ecosystemStatCard}>
-            <div className={S.ecosystemStatValue}>{state.totalFiles.toLocaleString()}</div>
+            <div className={S.ecosystemStatValue}>{state.totalFilesStored.toLocaleString()}</div>
             <div className={S.ecosystemStatText}>Total root CIDs uploaded to Estuary. This value does not include sub objects references.</div>
           </div>
         </div>
