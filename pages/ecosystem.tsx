@@ -51,6 +51,8 @@ function EcosystemPage(props: any) {
     totalStorage: 0,
     totalFiles: 0,
     dealsOnChain: 0,
+    totalUsers: 0,
+    totalStorageMiner: 0,
     totalObjectsRef: 0,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
@@ -239,6 +241,14 @@ function EcosystemPage(props: any) {
             <div className={S.ecosystemStatText}>Total storage providers receiving deals from our Estuary node</div>
           </div>
         </div>
+
+        <div className={S.ecosystemSection}>
+          <div className={S.ecosystemStatCard}>
+            <div className={S.ecosystemStatValue}>{state.totalUsers}</div>
+            <div className={S.ecosystemStatText}>Total registered users</div>
+          </div>
+        </div>
+
       </div>
 
       {graph.data ? (
