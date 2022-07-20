@@ -85,7 +85,7 @@ function VerifyCIDPage(props: any) {
   const [width, height] = useWindowSize();
   const [state, setState] = React.useState({
     totalStorage: 0,
-    totalFiles: 0,
+    totalFilesStored: 0,
     dealsOnChain: 0,
     cid: '',
     data: null,
@@ -274,7 +274,7 @@ function VerifyCIDPage(props: any) {
 
       <div className={S.stats}>
         <div className={S.sc}>
-          <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : "0"}</div>
+          <div className={S.scn}>{state.totalFilesStored ? state.totalFilesStored.toLocaleString() : "0"}</div>
           <div className={S.scl}>Total files</div>
         </div>
         <div className={S.sc}>

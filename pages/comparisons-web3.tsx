@@ -47,7 +47,7 @@ function ComparisonsWeb3Page(props: any) {
   const [state, setState] = React.useState({
     miners: [],
     totalStorage: 0,
-    totalFiles: 0,
+    totalFilesStored: 0,
     dealsOnChain: 0,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
@@ -58,7 +58,7 @@ function ComparisonsWeb3Page(props: any) {
       const stats = await R.get('/public/stats', props.api);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0 });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0 });
       }
 
       setState({ ...state, miners, ...stats });
@@ -165,7 +165,7 @@ function ComparisonsWeb3Page(props: any) {
 
       <div className={S.stats}>
         <div className={S.sc}>
-          <div className={S.scn}>{state.totalFiles ? state.totalFiles.toLocaleString() : '0'}</div>
+          <div className={S.scn}>{state.totalFilesStored ? state.totalFilesStored.toLocaleString() : '0'}</div>
           <div className={S.scl}>Total files</div>
         </div>
         <div className={S.sc}>

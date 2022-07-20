@@ -34,7 +34,7 @@ function IndexPage(props: any) {
   const [state, setState] = React.useState({
     miners: [],
     totalStorage: 0,
-    totalFiles: 0,
+    totalFilesStored: 0,
     dealsOnChain: 0,
     totalObjectsRef: 0,
     ready: false,
@@ -51,7 +51,7 @@ function IndexPage(props: any) {
       } catch (e) {}
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFiles: 0, totalObjectsRef: 0, ready: true });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, ready: true });
       }
 
       setState({ ...state, ...stats, miners, ready: true });
@@ -216,7 +216,7 @@ function IndexPage(props: any) {
         <h2 className={styles.h2}>
           Estuary.tech is a demonstration of what an Estuary node can do. Users of this Estuary node have pinned{' '}
           <b>
-            {state.totalFiles.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) root level CIDs
+            {state.totalFilesStored.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) root level CIDs
           </b>{' '}
           to IPFS.{' '}
           {state.totalObjectsRef ? (
