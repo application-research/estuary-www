@@ -147,9 +147,19 @@ function HomePage(props: any) {
                     const fileURL = `https://dweb.link/ipfs/${data.cid['/']}`;
 
                     let name = '...';
+
+                    // TODO(jim): If name exists, we use this field. As of 08-2-2022 this is the new direction
+                    // for the database field.
                     if (data && data.name) {
                       name = data.name;
                     }
+
+                    // TODO(alvin): For legacy database, we use filename. Once filename is fully removed
+                    // we can remove this field.
+                    if (data && data.filename) {
+                      name = data.filename;
+                    }
+
                     if (name === 'aggregate') {
                       name = '/';
                     }
