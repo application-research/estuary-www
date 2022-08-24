@@ -154,51 +154,69 @@ function EcosystemPage(props: any) {
             <Logos.Portrait height="48px" style={{ margin: 22, flexShrink: 0 }} />
             <Logos.GainForest style={{ margin: 22, height: 48, flexShrink: 0 }} />
             <Logos.NBFS style={{ margin: 22, height: 48, flexShrink: 0 }} />
+            <a href="https://kodadot.xyz/" target="_blank">
             <img src="https://github.com/kodadot/kodadot-presskit/raw/main/v3/KODA_v3.png?raw=true" style={{ margin: 22, display: 'inlineFlex', height: 48, flexShrink: 0 }} />
+            </a>
+            <a href="https://pulse.opsci.io/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/151883495-7e8bcfa2-6aa3-4941-954b-f05a4b7cabd8.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://wallet.glif.io/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/153525013-3bd18d54-8e51-4efe-b035-f4a7df7d313e.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://chainsafe.io/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/153525038-d81a0f8f-80c6-4306-b614-b4b80234f2ba.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://opendata.cityofnewyork.us/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/153525071-dc6b481b-ba8d-4f3b-8df3-cc1e692bbe81.svg"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://app.gala.games/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/155954935-1cdacc87-0702-4fd4-aacf-b74cead78b6f.jpg"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://www.vividlabs.com/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/156037345-f93054de-d222-47e9-9653-cd957fc0fcc5.svg"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://sxxfuture.com/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/174445569-8d5f8311-ec29-40a6-97a0-9db5aba87246.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://gitopia.com/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/104923168/184664511-b96e850e-5e52-453a-9b58-72ddcd21718f.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://mirror.xyz/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/310223/174463542-d9fed43e-b3a6-4385-8d14-48bcd4b05a7f.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-              />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://hashaxis.com/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/104923168/184872595-0ee235cb-ef64-4be7-8c4f-9c5dd51304c2.jpg"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://green.filecoin.io/" target="_blank">
             <img
               src="https://user-images.githubusercontent.com/19626270/183493007-101fbb38-c59f-4008-b490-42b80952ca5e.png"
-              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }}
-            />
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
+            <a href="https://www.labdao.xyz/" target="_blank">
+            <img
+              src="https://user-images.githubusercontent.com/104923168/185168424-5d049508-442b-4a29-a9c2-d1cea3485d4f.jpg"
+              style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
           </div>
         </div>
 
