@@ -108,7 +108,7 @@ function AdminBalancePage(props) {
             {U.inFIL(state.balance)}
           </Block>
           <Block style={{ marginTop: 2 }} label="Verified data cap">
-            {U.bytesToSize(state.verifiedClientBalance)}
+            {state.verifiedClientBalance !== null ? U.bytesToSize(state.verifiedClientBalance) : 0}
           </Block>
 
           <H3 style={{ marginTop: 56 }}>Move Filecoin into Estuary Escrow</H3>
