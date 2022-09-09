@@ -341,7 +341,7 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
+              <a className={styles.actionButtonLink} href="https://api.estuary.tech/gw/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
                 Try it ➝
               </a>
             </div>

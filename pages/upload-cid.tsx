@@ -76,8 +76,8 @@ function UploadCIDPage(props: any) {
             {U.isEmpty(state.cid) ? null : (
               <aside className={styles.formAside}>
                 Check your CID:{' '}
-                <a href={`https://dweb.link/ipfs/${state.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.cid}
+                <a href={`https://api.estuary.tech/gw/ipfs/${state.cid}`} target="_blank">
+                  https://api.estuary.tech/gw/ipfs/{state.cid}
                 </a>
                 .
               </aside>

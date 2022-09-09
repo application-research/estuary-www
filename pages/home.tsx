@@ -144,7 +144,7 @@ function HomePage(props: any) {
               </tr>
               {state.files && state.files.length
                 ? state.files.map((data, index) => {
-                    const fileURL = `https://dweb.link/ipfs/${data.cid['/']}`;
+                    const fileURL = `https://api.estuary.tech/gw/ipfs/${data.cid['/']}`;
 
                     let name = '...';
 
