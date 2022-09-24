@@ -147,7 +147,7 @@ async function handleSignIn(state: any, host) {
 function SignInPage(props: any) {
 
 
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '', adminLogin: 'false' });
+  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '', adminLogin: false });
 
   const authorise = null;
   const authScenario = null;
@@ -190,13 +190,7 @@ function SignInPage(props: any) {
         <div className={styles.actions} style={{ marginTop: 10 }}>
           <input
             type="checkbox"
-            onClick={() => {
-              if (state.adminLogin === 'false') {
-                setState({ ...state, adminLogin: 'true' });
-              } else {
-                setState({ ...state, adminLogin: 'false' });
-              }
-            }}
+            onClick={() => setState({ ...state, adminLogin: !this.adminLogin})}
           /><p style={{ fontSize:12, marginTop:1 }}>This user was created using estuary CLI</p>
         </div>
 
