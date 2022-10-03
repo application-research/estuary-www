@@ -190,7 +190,7 @@ function SignInPage(props: any) {
         <div className={styles.actions} style={{ marginTop: 10 }}>
           <input
             type="checkbox"
-            onClick={() => setState({ ...state, adminLogin: !this.adminLogin})}
+            onClick={() => setState({ ...state, adminLogin: !state.adminLogin})}
           /><p style={{ fontSize:12, marginTop:1 }}>This user was created using estuary CLI</p>
         </div>
 
