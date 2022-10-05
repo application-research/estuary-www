@@ -140,11 +140,11 @@ function AdminInvitesPage(props: any) {
                       <tr key={data.code} className={tstyles.tr} style={{ opacity: !U.isEmpty(data.claimedBy) ? 0.2 : 1 }}>
                         <td className={tstyles.td}>
                           <div>
-                            https://{window.location.hostname}/sign-up?invite={data.code}{' '}
+                            https://{window.location.host}/sign-up?invite={data.code}{' '}
                             <button
                               style={{ float: 'right', opacity: 0.5, outline: 'None', fontFamily: 'mono', marginRight: '1rem' }}
                               onClick={(e) => {
-                                navigator.clipboard.writeText(`https://${window.location.hostname}/sign-up?invite=${data.code}`);
+                                navigator.clipboard.writeText(`https://${window.location.host}/sign-up?invite=${data.code}`);
                                 e.target.textContent = 'Copied!';
                                 setTimeout((e) => (e.target.textContent = 'Copy'), 1000, e);
                               }}
