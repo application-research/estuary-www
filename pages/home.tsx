@@ -18,6 +18,7 @@ import ActionRow from '@components/ActionRow';
 import AlertPanel from '@components/AlertPanel';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+import FilesTable from '@root/components/FilesTable';
 
 const INCREMENT = 1000;
 
@@ -126,62 +127,12 @@ function HomePage(props: any) {
             </table>
           </div>
         ) : null}
-
+        
         <div className={styles.group}>
-          <table className={tstyles.table}>
-            <tbody className={tstyles.tbody}>
-              <tr className={tstyles.tr}>
-                <th className={tstyles.th} style={{ width: '96px' }}>
-                  Local ID
-                </th>
-                <th className={tstyles.th} style={{ width: '30%' }}>
-                  Name
-                </th>
-                <th className={tstyles.th}>Retrieval link</th>
-                <th className={tstyles.th} style={{ width: '120px' }}>
-                  Files
-                </th>
-              </tr>
-              {state.files && state.files.length
-                ? state.files.map((data, index) => {
-                    const fileURL = `https://dweb.link/ipfs/${data.cid['/']}`;
-
-                    let name = '...';
-
-                    // TODO(jim): If name exists, we use this field. As of 08-2-2022 this is the new direction
-                    // for the database field.
-                    if (data && data.name) {
-                      name = data.name;
-                    }
-
-                    // TODO(alvin): For legacy database, we use filename. Once filename is fully removed
-                    // we can remove this field.
-                    if (data && data.filename) {
-                      name = data.filename;
-                    }
-
-                    if (name === 'aggregate') {
-                      name = '/';
-                    }
-
-                    return (
-                      <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
-                        <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
-                          {String(data.id).padStart(9, '0')}
-                        </td>
-                        <td className={tstyles.td}>{name}</td>
-                        <td className={tstyles.tdcta}>
-                          <a href={fileURL} target="_blank" className={tstyles.cta}>
-                            {fileURL}
-                          </a>
-                        </td>
-                        <td className={tstyles.td}>{data.aggregatedFiles + 1}</td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
+          {state.files && state.files.length ? (
+            <FilesTable files={state.files}/>
+          ) : null}
+          
           {state.files && state.offset + state.limit === state.files.length ? (
             <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState, props.api)}>
               ➝ Next {INCREMENT}
