@@ -9,8 +9,8 @@ const FilesTable = ({ files }) => {
         Header: 'Local id',
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => <div style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
-        width: '10%',
-        maxWidth: '10%',
+        width: '8%',
+        maxWidth: '8%',
         disableFilters: true,
       },
 
@@ -48,8 +48,8 @@ const FilesTable = ({ files }) => {
       {
         Header: 'Files',
         accessor: (data) => data.aggregatedFiles + 1,
-        width: '5%',
-        maxWidth: '5%',
+        width: '8%',
+        maxWidth: '8%',
         disableFilters: true,
       },
     ],
