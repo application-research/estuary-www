@@ -9,8 +9,12 @@
     "dev-docker": "next dev -p 4444",
     "dev-production": "ESTUARY_API=https://api.estuary.tech next dev -p 4444",
     "build": "next build",
+    "check-types": "tsc --noemit",
     "start": "NODE_ENV=production next start"
   },
+  "pre-commit": [
+    "check-types"
+  ],
   "repository": "application-research/estuary-www",
   "license": "MIT",
   "dependencies": {
@@ -30,6 +34,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
+    "pre-commit": "^1.2.2",
     "typescript": "^4.5.2"
   }
 }
