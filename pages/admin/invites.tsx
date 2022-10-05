@@ -146,8 +146,8 @@ function AdminInvitesPage(props: any) {
                               style={{ float: 'right', opacity: 0.5, outline: 'None', fontFamily: 'mono', marginRight: '1rem' }}
                               onClick={(e) => {
                                 navigator.clipboard.writeText(inviteLink);
-                                e.target.textContent = 'Copied!';
-                                setTimeout((e) => (e.target.textContent = 'Copy'), 1000, e);
+                                e.currentTarget.textContent = 'Copied!';
+                                setTimeout((button) => (button.textContent = 'Copy'), 1000, e.currentTarget);
                               }}
                             >
                               Copy
