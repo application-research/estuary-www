@@ -217,6 +217,11 @@ function EcosystemPage(props: any) {
               src="https://user-images.githubusercontent.com/104923168/185168424-5d049508-442b-4a29-a9c2-d1cea3485d4f.jpg"
               style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
             </a>
+            <a href="https://w3bmint.xyz/" target="_blank">
+              <img
+                src="https://user-images.githubusercontent.com/4479171/192295992-b39be4bb-afac-4b58-8c43-2232c52982cb.png"
+                style={{ height: 48, flexShrink: 0, display: 'inlineFlex', margin: 22 }} />
+            </a>
           </div>
         </div>
 

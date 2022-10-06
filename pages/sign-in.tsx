@@ -68,8 +68,14 @@ async function handleSignIn(state: any, host) {
     return { error: 'Your username must be 1-48 characters or digits.' };
   }
 
-  // NOTE(jim) We've added a new scheme to keep things safe for users.
-  state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
+  if(state.adminLogin == 'true'){
+    state.passwordHash = state.password;
+  }else {
+    // NOTE(jim) We've added a new scheme to keep things safe for users.
+    state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
+  }
+
+
 
   let r = await fetch(`${host}/login`, {
     method: 'POST',
@@ -141,7 +147,7 @@ async function handleSignIn(state: any, host) {
 function SignInPage(props: any) {
 
 
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '' });
+  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '', adminLogin: 'false' });
 
   const authorise = null;
   const authScenario = null;
@@ -181,7 +187,21 @@ function SignInPage(props: any) {
           }}
         />
 
+        <div className={styles.actions} style={{ marginTop: 10 }}>
+          <input
+            type="checkbox"
+            onClick={() => {
+              if (state.adminLogin === 'false') {
+                setState({ ...state, adminLogin: 'true' });
+              } else {
+                setState({ ...state, adminLogin: 'false' });
+              }
+            }}
+          /><p style={{ fontSize:12, marginTop:1 }}>This user was created using estuary CLI</p>
+        </div>
+
         <div className={styles.actions}>
+
           <Button
             style={{ width: '100%' }}
             loading={state.loading ? state.loading : undefined}
