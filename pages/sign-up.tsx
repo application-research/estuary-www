@@ -47,13 +47,13 @@ async function handleRegister(state: any, host) {
 
   // make sure this field isn't empty
   if (U.isEmpty(state.confirmPassword)) {
-    return { error: 'Please confirm password.' };
+    return { error: 'Please enter your password again.' };
   }
 
   // add password confirmation
   if (U.isValidconfirmPassword(state.confirmPassword) !== state.password) {
     return {
-      error: 'Password does not match',
+      error: 'Passwords do not match',
     };
   }
 
@@ -171,7 +171,7 @@ function SignUpPage(props: any) {
           name="confirmPassword"
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
-        <aside className={styles.formAside}>Confirm Password</aside>
+        <aside className={styles.formAside}>Enter your password again</aside>
 
         <H4 style={{ marginTop: 24 }}>Invite code</H4>
         <Input
