@@ -51,9 +51,9 @@ async function handleRegister(state: any, host) {
   }
 
   // add password confirmation
-  if (!U.isValidconfirmPassword(state.confirmPassword)) {
+  if (U.isValidconfirmPassword(state.confirmPassword) != state.password) {
     return {
-      error: 'Please provide a password thats at least 8 characters with at least one letter and one number',
+      error: 'Password does not match',
     };
   }
 
@@ -165,13 +165,13 @@ function SignUpPage(props: any) {
         <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
         <Input
           style={{ marginTop: 8 }}
-          placeholder="Confirm Password"
+          placeholder="Type in your password"
           type="password"
           value={state.confirmPassword}
-          name="password"
+          name="confirmPassword"
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
         />
-        <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
+        <aside className={styles.formAside}>Confirm Password</aside>
 
         <H4 style={{ marginTop: 24 }}>Invite code</H4>
         <Input
@@ -188,6 +188,7 @@ function SignUpPage(props: any) {
                 password: state.password,
                 username: state.username,
                 // add confirm password
+                confirmPassword: state.confirmPassword,
                 inviteCode: state.inviteCode,
               },
               props.api
@@ -216,6 +217,8 @@ function SignUpPage(props: any) {
                 {
                   password: state.password,
                   username: state.username,
+                  // add confirm password
+                  confirmPassword: state.confirmPassword,
                   inviteCode: state.inviteCode,
                 },
                 props.api
