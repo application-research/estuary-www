@@ -51,7 +51,7 @@ async function handleRegister(state: any, host) {
   }
 
   // add password confirmation
-  if (U.isValidconfirmPassword(state.confirmPassword) != state.password) {
+  if (U.isValidconfirmPassword(state.confirmPassword) !== state.password) {
     return {
       error: 'Password does not match',
     };
