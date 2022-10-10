@@ -39,6 +39,11 @@ export const isValidPassword = (password) => {
   return C.regex.password.test(password);
 };
 
+// add password confirmation
+export const isValidconfirmPassword = (confirmPassword) => {
+  return C.regex.confirmPassword.test(confirmPassword);
+};
+
 export function debounce(func, timeout = 600) {
   let timer;
   return (...args) => {
