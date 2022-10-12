@@ -161,7 +161,7 @@ function SignUpPage(props: any) {
         />
         <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
 
-        {/* add validate paassword */}
+        {/* add confirm password */}
         <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
         <Input
           style={{ marginTop: 8 }}
