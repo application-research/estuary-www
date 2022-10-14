@@ -39,10 +39,6 @@ export const isValidPassword = (password) => {
   return C.regex.password.test(password);
 };
 
-export const isValidconfirmPassword = (confirmPassword) => {
-  return C.regex.password.test(confirmPassword);
-};
-
 export function debounce(func, timeout = 600) {
   let timer;
   return (...args) => {
