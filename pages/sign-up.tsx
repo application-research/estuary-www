@@ -45,6 +45,18 @@ async function handleRegister(state: any, host) {
     };
   }
 
+  // make sure this field isn't empty
+  if (U.isEmpty(state.confirmPassword)) {
+    return { error: 'Please enter your password again.' };
+  }
+
+  // add password confirmation
+  if (!U.isValidPassword(state.confirmPassword || state.confirmPassword !== state.password)) {
+    return {
+      error: 'Passwords do not match',
+    };
+  }
+
   if (U.isEmpty(state.username)) {
     return { error: 'Please provide a username.' };
   }
@@ -58,6 +70,7 @@ async function handleRegister(state: any, host) {
       error: 'Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.',
     };
   }
+
 
   let passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
@@ -98,6 +111,7 @@ function SignUpPage(props: any) {
     inviteCode: '',
     username: '',
     password: '',
+    confirmPassword: '',
     loading: false,
     fissionLoading: false,
   });
@@ -147,6 +161,17 @@ function SignUpPage(props: any) {
         />
         <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
 
+        <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
+        <Input
+          style={{ marginTop: 8 }}
+          placeholder="Type in your password"
+          type="password"
+          value={state.confirmPassword}
+          name="confirmPassword"
+          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+        />
+        <aside className={styles.formAside}>Enter your password again</aside>
+
         <H4 style={{ marginTop: 24 }}>Invite code</H4>
         <Input
           style={{ marginTop: 8 }}
@@ -161,6 +186,7 @@ function SignUpPage(props: any) {
               {
                 password: state.password,
                 username: state.username,
+                confirmPassword: state.confirmPassword,
                 inviteCode: state.inviteCode,
               },
               props.api
@@ -189,6 +215,7 @@ function SignUpPage(props: any) {
                 {
                   password: state.password,
                   username: state.username,
+                  confirmPassword: state.confirmPassword,
                   inviteCode: state.inviteCode,
                 },
                 props.api
