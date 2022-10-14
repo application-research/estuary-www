@@ -38,8 +38,6 @@ export const regex = {
   username: /^[a-zA-Z0-9]{1,32}$/,
   // NOTE(jim): eight characters, at least one letter and one number.
   password: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
-  // NOTE(stef): eight characters, at least one letter and one number.
-  confirmPassword: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
 };
 
 function getAPIHost(): string {
