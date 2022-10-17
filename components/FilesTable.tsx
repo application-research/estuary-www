@@ -1,8 +1,13 @@
 import tstyles from '@pages/table.module.scss';
 import { useMemo } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import Button from '@components/Button';
+import * as R from '@common/requests';
 
 const FilesTable = ({ files }) => {
+  const deleteButtonStyles = {
+    'background-color': '#8B0000',
+  };
   const columns = useMemo(
     () => [
       {
@@ -50,6 +55,34 @@ const FilesTable = ({ files }) => {
         accessor: (data) => data.aggregatedFiles + 1,
         width: '8%',
         maxWidth: '8%',
+        disableFilters: true,
+      },
+      {
+        Header: 'Delete',
+        accessor: (data) => String(data.id).padStart(9, '0'),
+        Cell: ({ value }) => (
+          <div style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
+            {' '}
+            <Button
+              htmlFor="FILE_UPLOAD_TARGET"
+              onClick={async () => {
+                const confirm = window.confirm('Are you sure you want to delete this file?');
+                if (!confirm) {
+                  return;
+                }
+
+                R.del(`/pinning/pins/${value}`);
+              }}
+              type="file"
+              style={deleteButtonStyles}
+            >
+              Delete
+            </Button>
+          </div>
+        ),
+        // accessor: (data) => data.aggregatedFiles + 1,
+        width: '9%',
+        maxWidth: '9%',
         disableFilters: true,
       },
     ],
