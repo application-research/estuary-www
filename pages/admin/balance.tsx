@@ -36,6 +36,16 @@ const sendEscrow = async (state, setState, host) => {
   await getBalance(state, setState, host);
 };
 
+const getFilAddress = async (state, setState, host) => {
+  const response = await R.get('/admin/fil-address', host);
+  if (response.error) {
+    console.log(response.error);
+    return;
+  }
+
+  setState({ ...state, account: response });
+};
+
 const getBalance = async (state, setState, host) => {
   const response = await R.get('/admin/balance', host);
   if (response.error) {
@@ -86,6 +96,7 @@ function AdminBalancePage(props) {
 
   React.useEffect(() => {
     const run = async () => {
+      getFilAddress(state, setState, props.api);
       getBalance(state, setState, props.api);
     };
 
