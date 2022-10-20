@@ -63,7 +63,6 @@ const FilesTable = ({ files, setFiles }) => {
           <div style={{ fontSize: 12, fontFamily: 'Mono' }}>
             {' '}
             <Button
-              htmlFor="FILE_UPLOAD_TARGET"
               onClick={async () => {
                 const confirm = window.confirm('Are you sure you want to delete this file?');
                 if (!confirm) {
