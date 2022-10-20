@@ -17,7 +17,7 @@ Now view [localhost:4444](http://localhost:4444) in your browser.
 
 **Note:** If you are using another port for your estuary node other than the default port (`localhost:3004`), you can set the `ESTUARY_API` environment variable to point to the right URL. for example. to change to port 9999
 ```bash
-$ c
+$ ESTUARY_API=http://localhost:9999 npm run dev
 ```
 
 ## Troubleshooting
