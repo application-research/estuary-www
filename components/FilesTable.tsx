@@ -4,10 +4,9 @@ import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import Button from '@components/Button';
 import * as R from '@common/requests';
 
-const FilesTable = ({ files }) => {
-  const deleteButtonStyles = {
-    'background-color': '#8B0000',
-  };
+const FilesTable = ({ files, setFiles }) => {
+  const dataRows = useMemo(() => files, [files]);
+
   const columns = useMemo(
     () => [
       {
@@ -61,7 +60,7 @@ const FilesTable = ({ files }) => {
         Header: 'Delete',
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => (
-          <div style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
+          <div style={{ fontSize: 12, fontFamily: 'Mono' }}>
             {' '}
             <Button
               htmlFor="FILE_UPLOAD_TARGET"
@@ -70,11 +69,12 @@ const FilesTable = ({ files }) => {
                 if (!confirm) {
                   return;
                 }
-
-                R.del(`/pinning/pins/${value}`);
+                await R.del(`/pinning/pins/${value}`).then(() => {
+                  setFiles();
+                });
               }}
               type="file"
-              style={deleteButtonStyles}
+              style={{ backgroundColor: '#f54b42' }}
             >
               Delete
             </Button>
@@ -86,10 +86,10 @@ const FilesTable = ({ files }) => {
         disableFilters: true,
       },
     ],
-    []
+    [dataRows]
   );
 
-  const tableInstance = useTable({ columns, data: files, initialState: { pageIndex: 0, pageSize: 10 } }, useFilters, useSortBy, usePagination);
+  const tableInstance = useTable({ columns, data: dataRows, initialState: { pageIndex: 0, pageSize: 10 } }, useFilters, useSortBy, usePagination);
 
   const {
     getTableProps,

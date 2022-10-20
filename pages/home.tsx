@@ -65,23 +65,23 @@ function HomePage(props: any) {
   });
 
   React.useEffect(() => {
-    const run = async () => {
-      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
-      const stats = await R.get('/user/stats', props.api);
-
-      if (files && !files.error) {
-        setState({ ...state, files, stats });
-      }
-    };
-
     run();
   }, []);
 
-  console.log(props.viewer);
-  console.log(state);
-
   const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
 
+  const updateFiles = () => {
+    run();
+  };
+
+  const run = async () => {
+    const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
+    const stats = await R.get('/user/stats', props.api);
+
+    if (files && !files.error) {
+      setState({ ...state, files, stats });
+    }
+  };
   return (
     <Page title="Estuary: Home" description="Analytics about Filecoin and your data." url={`${props.hostname}/home`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
@@ -127,12 +127,10 @@ function HomePage(props: any) {
             </table>
           </div>
         ) : null}
-        
+
         <div className={styles.group}>
-          {state.files && state.files.length ? (
-            <FilesTable files={state.files}/>
-          ) : null}
-          
+          {state.files && state.files.length ? <FilesTable files={state.files} setFiles={updateFiles} /> : null}
+
           {state.files && state.offset + state.limit === state.files.length ? (
             <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState, props.api)}>
               ➝ Next {INCREMENT}
