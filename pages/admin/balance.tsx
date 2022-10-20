@@ -41,7 +41,7 @@ const getFilAddress = async (state, host) => {
   const response = await R.get('/admin/fil-address', host);
   if (response.error) {
     console.log(response.error);
-    return;
+    return state;
   }
 
   return { ...state, account: response };
@@ -51,7 +51,7 @@ const getBalance = async (state, host) => {
   const response = await R.get('/admin/balance', host);
   if (response.error) {
     console.log(response.error);
-    return;
+    return state;
   }
 
   return { ...state, ...response };
