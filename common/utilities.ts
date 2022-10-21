@@ -13,6 +13,10 @@ export const formatNumber = (number: any): string => {
   return Number(number).toLocaleString();
 };
 
+export const formatBoolean = (bool: boolean): string => {
+  return bool ? `Yes` : `No`;
+}
+
 export const pad = (num: number, size: number): any => {
   let s = num + '';
   while (s.length < size) s = '0' + s;

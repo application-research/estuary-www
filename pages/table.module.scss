@@ -44,6 +44,10 @@
   text-overflow: ellipsis;
 }
 
+.multiline {
+  white-space: pre-wrap;
+}
+
 .tdcta {
   overflow: hidden;
   text-overflow: ellipsis;

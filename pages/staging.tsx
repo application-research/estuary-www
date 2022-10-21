@@ -15,6 +15,7 @@ import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+import StagingZoneReadinessTable from '@root/components/StagingZoneReadinessTable';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -105,6 +106,7 @@ function StagingPage(props) {
                   </tr>
                 </tbody>
               </table>
+              <StagingZoneReadinessTable readiness={bucket.readiness} />
             </div>
 
             {bucket.contents && bucket.contents.length ? (
