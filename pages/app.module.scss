@@ -198,3 +198,7 @@
     color: var(--main-text);
   }
 }
+
+.multiline {
+  white-space: pre-wrap;
+}
