@@ -29,21 +29,32 @@ const sendEscrow = async (state, setState, host) => {
 
   if (response.error) {
     alert('Something went wrong, please try again.');
-    setState({ ...state, loading: false, amount: 0 });
+    setState({ ...state, amount: 0, loading: false });
     return;
   }
 
-  await getBalance(state, setState, host);
+  let newState = await getBalance(state, host);
+  setState({ ...state, ...newState, amount: 0, loading: false });
 };
 
-const getBalance = async (state, setState, host) => {
+const getFilAddress = async (state, host) => {
+  const response = await R.get('/admin/fil-address', host);
+  if (response.error) {
+    console.log(response.error);
+    return state;
+  }
+
+  return { ...state, account: response };
+};
+
+const getBalance = async (state, host) => {
   const response = await R.get('/admin/balance', host);
   if (response.error) {
     console.log(response.error);
-    return;
+    return state;
   }
 
-  setState({ ...state, ...response, amount: 0, loading: false });
+  return { ...state, ...response };
 };
 
 export async function getServerSideProps(context) {
@@ -86,7 +97,10 @@ function AdminBalancePage(props) {
 
   React.useEffect(() => {
     const run = async () => {
-      getBalance(state, setState, props.api);
+      let newState = { account: null, amount: 0, loading: false };
+      newState = await getFilAddress(newState, props.api);
+      newState = await getBalance(newState, props.api);
+      setState({ ...state, ...newState });
     };
 
     run();
