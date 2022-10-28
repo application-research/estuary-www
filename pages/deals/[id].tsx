@@ -44,7 +44,7 @@ function DealPage(props: any) {
 
   let fileURL;
   if (state.transfer) {
-    fileURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
+    fileURL = `${C.gateway}/ipfs/${state.transfer.baseCid}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;

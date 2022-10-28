@@ -94,7 +94,7 @@ function AdminContentPage(props: any) {
               </tr>
               {state.content && state.content.length
                 ? state.content.map((data, index) => {
-                    const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                    const fileURL = `${C.gateway}/ipfs/${data.cid}`;
                     return (
                       <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>

@@ -56,3 +56,5 @@ function getAPIHost(): string {
 export const api = {
   host: getAPIHost(),
 };
+
+export const gateway = "https://strn.pl";

@@ -199,8 +199,8 @@ function VerifyCIDPage(props: any) {
               {statusElement}
               <StatRow title="CID">{state.data.content.cid}</StatRow>
               <StatRow title="Retrieval URL">
-                <a href={`https://dweb.link/ipfs/${state.data.content.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.data.content.cid}
+                <a href={`${C.gateway}/ipfs/${state.data.content.cid}`} target="_blank">
+                  ${C.gateway}/ipfs/{state.data.content.cid}
                 </a>
               </StatRow>
               <StatRow title="Estuary Node ID">{state.data.content.id}</StatRow>
@@ -215,8 +215,8 @@ function VerifyCIDPage(props: any) {
               {statusElement}
 
               <StatRow title="Retrieval URL">
-                <a href={`https://dweb.link/ipfs/${state.cid.trim()}`} target="_blank">
-                  https://dweb.link/ipfs/{state.cid.trim()}
+                <a href={`${C.gateway}/ipfs/${state.cid.trim()}`} target="_blank">
+                  ${C.gateway}/ipfs/{state.cid.trim()}
                 </a>
               </StatRow>
             </React.Fragment>
@@ -253,7 +253,8 @@ function VerifyCIDPage(props: any) {
                         dealId={d.dealId}
                         cid={state.data.content.cid}
                         aggregatedIn={state.data.aggregatedIn?.cid}
-                        selector={state.data.selector} />
+                        selector={state.data.selector}
+                      />
                     </StatRow>
                   </div>
                 );
@@ -274,7 +275,7 @@ function VerifyCIDPage(props: any) {
 
       <div className={S.stats}>
         <div className={S.sc}>
-          <div className={S.scn}>{state.totalFilesStored ? state.totalFilesStored.toLocaleString() : "0"}</div>
+          <div className={S.scn}>{state.totalFilesStored ? state.totalFilesStored.toLocaleString() : '0'}</div>
           <div className={S.scl}>Total files</div>
         </div>
         <div className={S.sc}>

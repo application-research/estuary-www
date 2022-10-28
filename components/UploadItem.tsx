@@ -120,13 +120,13 @@ export default class UploadItem extends React.Component<any> {
 
     xhr.onloadend = (event: any) => {
       if (!event.target || !event.target.response) {
-        return
+        return;
       }
-      
+
       startTime = null;
       secondsElapsed = 0;
       if (event.target.status === 200) {
-        let json = {}
+        let json = {};
         try {
           json = JSON.parse(event.target.response);
         } catch (e) {
@@ -172,7 +172,9 @@ export default class UploadItem extends React.Component<any> {
             <ActionRow isHeading style={{ fontSize: '0.9rem', fontWeight: 500, background: `var(--status-success-bright)` }}>
               {this.props.file.data.name} uploaded to our node!
             </ActionRow>
-            <ActionRow>https://dweb.link/ipfs/{this.state.final.cid}</ActionRow>
+            <ActionRow>
+              ${C.gateway}/ipfs/{this.state.final.cid}
+            </ActionRow>
             {maybePinStatusElement}
             {this.props.file.estimation ? (
               <ActionRow style={{ background: `var(--status-success-bright)` }}>Filecoin Deals are being mmade for {this.props.file.data.name}.</ActionRow>

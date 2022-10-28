@@ -66,7 +66,7 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
       <div className={styles.empty}>Estuary has not performed any deals for this file, yet.</div>
     );
 
-  const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
+  const retrievalURL = content ? `${C.gateway}/ipfs/${content.cid}` : null;
 
   let name = '...';
   if (content && content.name) {

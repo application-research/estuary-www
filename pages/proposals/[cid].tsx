@@ -44,7 +44,7 @@ function ProposalPage(props: any) {
 
   let fileURL;
   if (state.deal) {
-    fileURL = `https://dweb.link/ipfs/${state.deal.Label}`;
+    fileURL = `${C.gateway}/ipfs/${state.deal.Label}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;

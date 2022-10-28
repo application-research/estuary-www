@@ -3,6 +3,7 @@ import tstyles from '@pages/table.module.scss';
 
 import * as React from 'react';
 import * as U from '@common/utilities';
+import * as C from '@common/constants';
 import * as R from '@common/requests';
 
 import ProgressCard from '@components/ProgressCard';
@@ -129,7 +130,7 @@ function StagingPage(props) {
                     </tr>
 
                     {bucket.contents.map((data, index) => {
-                      const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                      const fileURL = `${C.gateway}/ipfs/${data.cid}`;
                       return (
                         <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
                           <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
