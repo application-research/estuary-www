@@ -17,6 +17,7 @@ import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
+import Modal from '@root/components/Modal';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -39,6 +40,7 @@ function APIPage(props: any) {
   const viewerToken = Cookie.get(C.auth);
   console.log(viewerToken);
   const [state, setState] = React.useState({ keys: [], loading: false });
+  const [showCreateKeyModal, setShowCreateKeyModal] = React.useState(false);
 
   React.useEffect(() => {
     const run = async () => {
@@ -51,7 +53,7 @@ function APIPage(props: any) {
     };
 
     run();
-  }, []);
+  }, [showCreateKeyModal]);
 
   const sidebarElement = <AuthenticatedSidebar active="API" viewer={props.viewer} />;
 
@@ -69,20 +71,34 @@ function APIPage(props: any) {
                 marginRight: 24,
               }}
               loading={state.loading ? state.loading : undefined}
-              onClick={async () => {
-                setState({ ...state, loading: true });
-                const request = await R.post(`/user/api-keys`, {}, props.api);
-
-                const keys = await R.get('/user/api-keys', props.api);
-                if (keys && !keys.error) {
-                  setState({ ...state, loading: false, keys });
-                  return;
-                }
+              onClick={() => {
+                console.log('click');
+                setShowCreateKeyModal(true);
               }}
+              // async () => {
+              // setState({ ...state, loading: true });
+              // const request = await R.post(`/user/api-keys`, {}, props.api);
+
+              // const keys = await R.get('/user/api-keys', props.api);
+              // if (keys && !keys.error) {
+              //   setState({ ...state, loading: false, keys });
+              //   return;
+              // }
             >
               Create key
             </Button>
-
+            {showCreateKeyModal && (
+              <Modal
+                title="Create Key"
+                onClose={() => {
+                  console.log('close');
+                  setShowCreateKeyModal(false);
+                }}
+                show={showCreateKeyModal}
+              >
+                <p>This is modal body</p>
+              </Modal>
+            )}
             <Button
               style={{
                 marginBottom: 24,
@@ -104,7 +120,6 @@ function APIPage(props: any) {
             >
               Create permanent key
             </Button>
-
             <Button
               style={{
                 marginBottom: 24,
@@ -127,7 +142,7 @@ function APIPage(props: any) {
                     }
 
                     if (isExpired) {
-                      const response = await R.del(`/user/api-keys/${key.token}`, props.api);
+                      const response = await R.del(`/user/api-keys/${key.tokenHash ? key.tokenHash : key.token}`, props.api);
                     }
                   } catch (e) {
                     console.log(e);
@@ -149,6 +164,9 @@ function APIPage(props: any) {
           <table className={tstyles.table}>
             <tbody className={tstyles.tbody}>
               <tr className={tstyles.tr}>
+                <th className={tstyles.th} style={{ width: '136px' }}>
+                  Label
+                </th>
                 <th className={tstyles.th} style={{ width: '328px' }}>
                   Key
                 </th>
@@ -164,7 +182,10 @@ function APIPage(props: any) {
                     const isExpired = expiryDate < currentDate;
 
                     return (
-                      <tr key={k.token} className={tstyles.tr}>
+                      <tr key={k.tokenHash ? k.tokenHash : k.token} className={tstyles.tr}>
+                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
+                          {k.label}
+                        </td>
                         <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
                           {k.token} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
                         </td>
@@ -179,7 +200,7 @@ function APIPage(props: any) {
                                 return;
                               }
 
-                              const response = await R.del(`/user/api-keys/${k.token}`, props.api);
+                              const response = await R.del(`/user/api-keys/${k.tokenHash ? k.tokenHash : k.token}`, props.api);
                               if (viewerToken === k.token) {
                                 window.location.href = '/';
                                 return;
@@ -194,18 +215,21 @@ function APIPage(props: any) {
                           >
                             {isExpired ? 'Delete expired' : `Revoke`}
                           </button>
-                            {isExpired ?
-                              console.log("Can't copy expired key")
-                              :
-                              <button style={{margin: '1px'}}
-                                onClick={async () => {
-                                  navigator.clipboard.writeText(k.token).then(() => {
-                                    alert("API Key copied to clipboard");
-                                  });
-                                }}
-                                className={tstyles.tdbutton}
-                              >Copy</button>
-                            }
+                          {isExpired ? (
+                            console.log("Can't copy expired key")
+                          ) : (
+                            <button
+                              style={{ margin: '1px' }}
+                              onClick={async () => {
+                                navigator.clipboard.writeText(k.token).then(() => {
+                                  alert('API Key copied to clipboard');
+                                });
+                              }}
+                              className={tstyles.tdbutton}
+                            >
+                              Copy
+                            </button>
+                          )}
                         </td>
                       </tr>
                     );
