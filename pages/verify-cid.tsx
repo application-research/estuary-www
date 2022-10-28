@@ -2,6 +2,7 @@ import S from '@pages/index.module.scss';
 
 import * as React from 'react';
 import * as U from '@common/utilities';
+import * as C from '@common/constants';
 import * as R from '@common/requests';
 
 import Page from '@components/Page';

@@ -3,6 +3,7 @@ import tstyles from '@pages/table.module.scss';
 
 import * as React from 'react';
 import * as U from '@common/utilities';
+import * as C from '@common/constants';
 import * as R from '@common/requests';
 
 import Navigation from '@components/Navigation';
