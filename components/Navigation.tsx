@@ -3,6 +3,7 @@ import styles from '@components/Navigation.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
+import EstuarySVG from '@components/EstuarySVG';
 
 import Tag from '@components/Tag';
 
@@ -12,8 +13,9 @@ const Navigation = (props: any) => {
       <nav className={styles.container} style={props.style}>
         <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
           <a className={styles.logo} href="/">
-            Estuary <Tag>Alpha</Tag>
+          <EstuarySVG height="48px" />
           </a>
+            <Tag>Alpha</Tag>
         </div>
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
