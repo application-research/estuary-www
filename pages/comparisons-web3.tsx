@@ -192,7 +192,7 @@ function ComparisonsWeb3Page(props: any) {
 
         <div className={S.actions}>
           <Button
-            href="https://docs.estuary.tech/feedback"
+            href="https://application-research.github.io/estuary-documentation/feedback"
             target="_blank"
             style={{
               background: `var(--main-primary)`,

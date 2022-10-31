@@ -199,7 +199,7 @@ function SignUpPage(props: any) {
         />
         <aside className={styles.formAside}>
           Need an invite key?{' '}
-          <a href="https://docs.estuary.tech" target="_blank">
+          <a href="https://application-research.github.io/estuary-documentation/Learn/get-invite-key" target="_blank">
             Learn how to get one.
           </a>
           .
@@ -242,7 +242,7 @@ function SignUpPage(props: any) {
         </div>
         <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
           By creating an account or by using Estuary you unconditionally agree to our{' '}
-          <a href="https://docs.estuary.tech/terms" target="_blank">
+          <a href="https://application-research.github.io/estuary-documentation/terms" target="_blank">
             Terms of Service
           </a>
           .

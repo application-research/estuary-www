@@ -36,7 +36,7 @@ const Navigation = (props: any) => {
             Verify
           </a>
 
-          <a href="https://docs.estuary.tech" className={styles.webItem}>
+          <a href="https://application-research.github.io/estuary-documentation/" className={styles.webItem}>
             Documentation
           </a>
 

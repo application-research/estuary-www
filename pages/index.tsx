@@ -158,7 +158,7 @@ function IndexPage(props: any) {
             <button
               className={styles.actionButton}
               onClick={() => {
-                window.location.href = 'https://docs.estuary.tech/get-invite-key';
+                window.location.href = 'https://application-research.github.io/estuary-documentation/get-invite-key';
               }}
             >
               Get an invite ➝
@@ -167,7 +167,7 @@ function IndexPage(props: any) {
             <button
               className={styles.actionButton}
               onClick={() => {
-                window.location.href = 'https://docs.estuary.tech/get-provider-added';
+                window.location.href = 'https://application-research.github.io/estuary-documentation/get-provider-added';
               }}
             >
               Apply to provide storage ➝
@@ -195,7 +195,7 @@ function IndexPage(props: any) {
             <button
               className={styles.actionButton}
               onClick={() => {
-                window.location.href = 'https://docs.estuary.tech/get-provider-added';
+                window.location.href = 'https://application-research.github.io/estuary-documentation/get-provider-added';
               }}
             >
               Apply to provide storage ➝
@@ -253,7 +253,7 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech" target="_blank">
+              <a className={styles.actionButtonLink} href="https://application-research.github.io/estuary-documentation/" target="_blank">
                 Read docs ➝
               </a>
             </div>
@@ -356,7 +356,7 @@ function IndexPage(props: any) {
               <p className={styles.p}>Check our FAQ for answers to your questions</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/faq" target="_blank">
+              <a className={styles.actionButtonLink} href="https://application-research.github.io/estuary-documentation/Learn/faq" target="_blank">
                 Read FAQ ➝
               </a>
             </div>
@@ -371,7 +371,7 @@ function IndexPage(props: any) {
               <p className={styles.p}>Do you have questions about Estuary? Ask your question using this form, everyone on the team will see it.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/feedback" target="_blank">
+              <a className={styles.actionButtonLink} href="https://application-research.github.io/estuary-documentation/feedback" target="_blank">
                 Give feedback ➝
               </a>
             </div>
@@ -469,7 +469,7 @@ function IndexPage(props: any) {
               <p className={styles.p}>Want to follow a step by step guide to learn how to use Estuary? Try our tutorial.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/tutorial-get-an-api-key" target="_blank">
+              <a className={styles.actionButtonLink} href="https://application-research.github.io/estuary-documentation/Tutorial/tutorial-get-an-api-key" target="_blank">
                 View tutorial ➝
               </a>
             </div>
