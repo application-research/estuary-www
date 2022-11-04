@@ -79,15 +79,6 @@ function APIPage(props: any) {
               onClick={() => {
                 setShowCreateKeyModal(true);
               }}
-              // async () => {
-              // setState({ ...state, loading: true });
-              // const request = await R.post(`/user/api-keys`, {}, props.api);
-
-              // const keys = await R.get('/user/api-keys', props.api);
-              // if (keys && !keys.error) {
-              //   setState({ ...state, loading: false, keys });
-              //   return;
-              // }
             >
               Create key
             </Button>
@@ -95,7 +86,6 @@ function APIPage(props: any) {
               <Modal
                 title="Create Key"
                 onClose={() => {
-                  console.log('close');
                   setShowCreateKeyModal(false);
                 }}
                 show={showCreateKeyModal}
