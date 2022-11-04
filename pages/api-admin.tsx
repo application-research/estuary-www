@@ -18,6 +18,8 @@ import Button from '@components/Button';
 
 import { H1, H2, H3, H4, P } from '@components/Typography';
 import Modal from '@root/components/Modal';
+import Input from '@root/components/Input';
+import CreateKeyModalBody from '@root/components/CreateKeyModalBody';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -35,6 +37,8 @@ export async function getServerSideProps(context) {
     props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
+
+const REDACTED_TOKEN_STRING = '•'.repeat(42);
 
 function APIPage(props: any) {
   const viewerToken = Cookie.get(C.auth);
@@ -72,7 +76,6 @@ function APIPage(props: any) {
               }}
               loading={state.loading ? state.loading : undefined}
               onClick={() => {
-                console.log('click');
                 setShowCreateKeyModal(true);
               }}
               // async () => {
@@ -96,7 +99,7 @@ function APIPage(props: any) {
                 }}
                 show={showCreateKeyModal}
               >
-                <p>This is modal body</p>
+                <CreateKeyModalBody />
               </Modal>
             )}
             <Button
@@ -167,7 +170,7 @@ function APIPage(props: any) {
                 <th className={tstyles.th} style={{ width: '136px' }}>
                   Label
                 </th>
-                <th className={tstyles.th} style={{ width: '328px' }}>
+                <th className={tstyles.th} style={{ width: '488px' }}>
                   Key
                 </th>
                 <th className={tstyles.th}>Expiry</th>
@@ -187,7 +190,7 @@ function APIPage(props: any) {
                           {k.label}
                         </td>
                         <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
-                          {k.token} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
+                          {k.token ? k.token : REDACTED_TOKEN_STRING} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
                         </td>
                         <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
                           {U.toDate(k.expiry)}
