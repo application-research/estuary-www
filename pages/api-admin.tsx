@@ -20,6 +20,7 @@ import { H1, H2, H3, H4, P } from '@components/Typography';
 import Modal from '@root/components/Modal';
 import Input from '@root/components/Input';
 import CreateKeyModalBody from '@root/components/CreateKeyModalBody';
+import CopyButton from '@root/components/CopyButton';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -170,11 +171,11 @@ function APIPage(props: any) {
                 <th className={tstyles.th} style={{ width: '136px' }}>
                   Label
                 </th>
-                <th className={tstyles.th} style={{ width: '488px' }}>
+                <th className={tstyles.th} style={{ width: '448px' }}>
                   Key
                 </th>
                 <th className={tstyles.th}>Expiry</th>
-                <th className={tstyles.th} style={{ width: '136px' }}>
+                <th className={tstyles.th} style={{ width: '152px' }}>
                   Options
                 </th>
               </tr>
@@ -218,21 +219,7 @@ function APIPage(props: any) {
                           >
                             {isExpired ? 'Delete expired' : `Revoke`}
                           </button>
-                          {isExpired ? (
-                            console.log("Can't copy expired key")
-                          ) : (
-                            <button
-                              style={{ margin: '1px' }}
-                              onClick={async () => {
-                                navigator.clipboard.writeText(k.token).then(() => {
-                                  alert('API Key copied to clipboard');
-                                });
-                              }}
-                              className={tstyles.tdbutton}
-                            >
-                              Copy
-                            </button>
-                          )}
+                          {!isExpired && k.token ? <CopyButton content={k.token} /> : <></>}
                         </td>
                       </tr>
                     );

@@ -7,6 +7,7 @@ import Button from './Button';
 import Input from './Input';
 import { useEffect, useState } from 'react';
 import { P } from './Typography';
+import CopyButton from './CopyButton';
 
 function CreateKeyModalBody(props: any) {
   const [state, setState] = useState({ token: null, label: null, loading: false, copied: false });
@@ -46,16 +47,7 @@ function CreateKeyModalBody(props: any) {
           <P style={{ width: '412px', display: 'inline-block' }}>
             <b>{state.token}</b>
           </P>
-          <button
-            onClick={async () => {
-              navigator.clipboard.writeText(state.token).then(() => {
-                setState({ ...state, copied: true });
-              });
-            }}
-            className={tstyles.tdbutton}
-          >
-            {state.copied ? 'Copied' : 'Copy'}
-          </button>
+          <CopyButton content={state.token} />
         </div>
       </React.Fragment>
     );
