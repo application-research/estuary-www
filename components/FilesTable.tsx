@@ -34,7 +34,11 @@ const FilesTable = ({ files }) => {
 
       {
         Header: 'Retrieval Link',
-        accessor: (data) => `https://dweb.link/ipfs/${data.cid['/']}`,
+        accessor: (data) => {
+          if (data.name !== 'aggregate') {
+            return `https://dweb.link/ipfs/${data.cid['/']}`
+          }
+        },
         Cell: ({ value }) => (
           <a href={value} target="_blank" className={tstyles.cta}>
             {value}
