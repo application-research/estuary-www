@@ -13,14 +13,14 @@
 }
 
 .modalContent {
-  width: 532px;
+  width: 620px;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
 }
 
 .modalHeader {
   position: relative;
-  padding: 10px;
+  padding: 16px 16px 0px 16px;
 }
 
 .modalTitle {
@@ -28,14 +28,14 @@
 }
 
 .modalBody {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .closeButton {
   border: none;
   display: inline-block;
-  padding: 8px 16px;
+  padding: 16px 16px;
   vertical-align: middle;
   overflow: hidden;
   text-decoration: none;
