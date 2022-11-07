@@ -209,7 +209,7 @@ function APIPage(props: any) {
                           >
                             {isExpired ? 'Delete expired' : `Revoke`}
                           </button>
-                          {!isExpired && k.token ? <CopyButton content={k.token} /> : <></>}
+                          {!isExpired && k.token ? <CopyButton content={k.token} /> : null}
                         </td>
                       </tr>
                     );
