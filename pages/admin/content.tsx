@@ -4,6 +4,7 @@ import tstyles from '@pages/table.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
 
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -94,7 +95,7 @@ function AdminContentPage(props: any) {
               </tr>
               {state.content && state.content.length
                 ? state.content.map((data, index) => {
-                    const fileURL = `https://dweb.link/ipfs/${data.cid}`;
+                    const fileURL = `${C.api.host}/gw/ipfs/${data.cid}`;
                     return (
                       <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>

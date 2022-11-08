@@ -2,6 +2,8 @@ import tstyles from '@pages/table.module.scss';
 import { useMemo } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
+import * as C from '@common/constants';
+
 const FilesTable = ({ files }) => {
   const columns = useMemo(
     () => [
@@ -36,7 +38,7 @@ const FilesTable = ({ files }) => {
         Header: 'Retrieval Link',
         accessor: (data) => {
           if (data.name !== 'aggregate') {
-            return `https://dweb.link/ipfs/${data.cid['/']}`
+            return `${C.api.host}/gw/ipfs/${data.cid['/']}`;
           }
         },
         Cell: ({ value }) => (

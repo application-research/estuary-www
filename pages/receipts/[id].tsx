@@ -4,6 +4,7 @@ import tstyles from '@pages/table.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
 
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -44,7 +45,7 @@ function ReceiptPage(props) {
 
   let fileURL;
   if (state.deal) {
-    fileURL = `https://dweb.link/ipfs/${state.deal.Label}`;
+    fileURL = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;

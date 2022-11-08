@@ -4,6 +4,7 @@ import tstyles from '@pages/table.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
 
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -44,7 +45,7 @@ function DealPage(props: any) {
 
   let fileURL;
   if (state.transfer) {
-    fileURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
+    fileURL = `${C.api.host}/gw/ipfs/${state.transfer.baseCid}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
