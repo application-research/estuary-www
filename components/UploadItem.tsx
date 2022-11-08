@@ -173,7 +173,9 @@ export default class UploadItem extends React.Component<any> {
               {this.props.file.data.name} uploaded to our node!
             </ActionRow>
             <ActionRow>
-              {C.api.host}/gw/ipfs/{this.state.final.cid}
+              <a href={`${C.api.host}/gw/ipfs/${this.state.final.cid}`} target="_blank">
+                {C.api.host}/gw/{this.state.final.cid}
+              </a>
             </ActionRow>
             {maybePinStatusElement}
             {this.props.file.estimation ? (
