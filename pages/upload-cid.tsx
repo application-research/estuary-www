@@ -4,6 +4,7 @@ import tstyles from '@pages/table.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
 
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -76,8 +77,8 @@ function UploadCIDPage(props: any) {
             {U.isEmpty(state.cid) ? null : (
               <aside className={styles.formAside}>
                 Check your CID:{' '}
-                <a href={`https://dweb.link/ipfs/${state.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.cid}
+                <a href={`${C.api.host}/gw/ipfs/${state.cid}`} target="_blank">
+                  {C.api.host}/gw/{state.cid}
                 </a>
                 .
               </aside>
