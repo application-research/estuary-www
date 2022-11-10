@@ -66,7 +66,8 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
       <div className={styles.empty}>Estuary has not performed any deals for this file, yet.</div>
     );
 
-  const retrievalURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
+  const estuaryRetrievalUrl = content ? U.formatEstuaryRetrievalUrl(content.cid) : null;
+  const dwebRetrievalUrl = content ? U.formatDwebRetrievalUrl(content.cid) : null;
 
   let name = '...';
   if (content && content.name) {
@@ -87,7 +88,10 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
               Name
             </th>
             <th className={tstyles.th} style={{ width: '50%' }}>
-              Retrieval CID
+              Estuary retrieval url
+            </th>
+            <th className={tstyles.th} style={{ width: '50%' }}>
+              Dweb retrieval url
             </th>
             <th className={tstyles.th} style={{ width: '12.5%' }}>
               ID
@@ -100,8 +104,14 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
             <td className={tstyles.td}>{name}</td>
 
             <td className={tstyles.tdcta}>
-              <a className={tstyles.cta} href={retrievalURL} target="_blank">
-                {retrievalURL}
+              <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                {estuaryRetrievalUrl}
+              </a>
+            </td>
+
+            <td className={tstyles.tdcta}>
+              <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                {dwebRetrievalUrl}
               </a>
             </td>
 

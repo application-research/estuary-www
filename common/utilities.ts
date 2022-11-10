@@ -4,6 +4,14 @@ import * as Cookies from '@vendor/cookie-cutter';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
 
+export const formatEstuaryRetrievalUrl = (cid: string) => {
+  return `${C.api.host}/gw/ipfs/${cid}`
+}
+
+export const formatDwebRetrievalUrl = (cid: string) => {
+  return `https://dweb.link/ipfs/${cid}`
+}
+
 export const nanoToHours = (number: any): string => {
   const ms = Number(number) / 1000000;
   return (Number(ms) / (1000 * 60 * 60)).toFixed(1);

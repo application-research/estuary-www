@@ -2,6 +2,8 @@ import tstyles from '@pages/table.module.scss';
 import { useMemo } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
+import * as U from '@common/utilities';
+
 const FilesTable = ({ files }) => {
   const columns = useMemo(
     () => [
@@ -33,10 +35,27 @@ const FilesTable = ({ files }) => {
       },
 
       {
-        Header: 'Retrieval Link',
+        Header: 'Estuary retrieval url',
         accessor: (data) => {
           if (data.name !== 'aggregate') {
-            return `https://dweb.link/ipfs/${data.cid['/']}`
+            return U.formatEstuaryRetrievalUrl(data.cid['/']);
+          }
+        },
+        Cell: ({ value }) => (
+          <a href={value} target="_blank" className={tstyles.cta}>
+            {value}
+          </a>
+        ),
+        width: '55%',
+        maxWidth: '55%',
+        Filter: DefaultColumnFilter,
+      },
+
+      {
+        Header: 'Dweb retrieval url',
+        accessor: (data) => {
+          if (data.name !== 'aggregate') {
+            return U.formatDwebRetrievalUrl(data.cid['/']);
           }
         },
         Cell: ({ value }) => (

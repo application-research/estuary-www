@@ -4,6 +4,7 @@ import tstyles from '@pages/table.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
 
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
@@ -42,10 +43,8 @@ function DealPage(props: any) {
     run();
   }, []);
 
-  let fileURL;
-  if (state.transfer) {
-    fileURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
-  }
+  const estuaryRetrievalUrl = state.transfer ? U.formatEstuaryRetrievalUrl(state.transfer.baseCid) : null;
+  const dwebRetrievalUrl = state.transfer ? U.formatDwebRetrievalUrl(state.transfer.baseCid) : null;
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
 
@@ -125,14 +124,34 @@ function DealPage(props: any) {
             <table className={tstyles.table}>
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Base CID + retrieval link</th>
+                  <th className={tstyles.th}>Estuary retrieval url</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  {!U.isEmpty(fileURL) ? (
+                  {!U.isEmpty(estuaryRetrievalUrl) ? (
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={fileURL} target="_blank">
-                        {fileURL}
+                      <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                        {estuaryRetrievalUrl}
+                      </a>
+                    </td>
+                  ) : (
+                    <td className={tstyles.td}>Does not exist</td>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Dweb retrieval url</th>
+                </tr>
+
+                <tr className={tstyles.tr}>
+                  {!U.isEmpty(dwebRetrievalUrl) ? (
+                    <td className={tstyles.tdcta}>
+                      <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                        {dwebRetrievalUrl}
                       </a>
                     </td>
                   ) : (
