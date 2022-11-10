@@ -35,7 +35,7 @@ const FilesTable = ({ files }) => {
       },
 
       {
-        Header: 'Retrieval url',
+        Header: 'Estuary retrieval url',
         accessor: (data) => {
           if (data.name !== 'aggregate') {
             return `${C.api.host}/gw/ipfs/${data.cid['/']}`;
