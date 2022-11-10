@@ -1,15 +1,13 @@
-import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
-import * as C from '@common/constants';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -43,12 +41,8 @@ function ProposalPage(props: any) {
     run();
   }, []);
 
-  let estuaryRetrievalUrl;
-  let dwebRetrievalUrl;
-  if (state.deal) {
-    estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
-    dwebRetrievalUrl = `https://dweb.link/ipfs/${state.deal.Label}`;
-  }
+  const estuaryRetrievalUrl = state.deal ? U.formatEstuaryRetrievalUrl(state.deal.Label) : null;
+  const dwebRetrievalUrl = state.deal ? U.formatDwebRetrievalUrl(state.deal.Label) : null;
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 

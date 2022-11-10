@@ -43,12 +43,8 @@ function DealPage(props: any) {
     run();
   }, []);
 
-  let estuaryRetrievalUrl;
-  let dwebRetrievalUrl;
-  if (state.transfer) {
-    estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${state.transfer.baseCid}`;
-    dwebRetrievalUrl = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
-  }
+  const estuaryRetrievalUrl = state.transfer ? U.formatEstuaryRetrievalUrl(state.transfer.baseCid) : null;
+  const dwebRetrievalUrl = state.transfer ? U.formatDwebRetrievalUrl(state.transfer.baseCid) : null;
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
 

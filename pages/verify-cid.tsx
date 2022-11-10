@@ -3,14 +3,10 @@ import S from '@pages/index.module.scss';
 import * as React from 'react';
 import * as U from '@common/utilities';
 import * as R from '@common/requests';
-import * as C from '@common/constants';
 
 import Page from '@components/Page';
 import Navigation from '@components/Navigation';
-import Card from '@components/Card';
 import Button from '@components/Button';
-import FeatureRow from '@components/FeatureRow';
-import MarketingCube from '@components/MarketingCube';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Input from '@components/Input';
 import StatRow from '@components/StatRow';
@@ -174,6 +170,10 @@ function VerifyCIDPage(props: any) {
     );
   }
 
+  const cid = state.data && state.data.content ? state.data.content.id : state.cid;
+  const estuaryRetrievalUrl = U.formatEstuaryRetrievalUrl(cid);
+  const dwebRetrievalUrl = U.formatDwebRetrievalUrl(cid);
+
   return (
     <Page title="Estuary: Verify CID" description={description} url={props.hostname}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
@@ -200,13 +200,13 @@ function VerifyCIDPage(props: any) {
               {statusElement}
               <StatRow title="CID">{state.data.content.cid}</StatRow>
               <StatRow title="Estuary retrieval url">
-                <a href={`${C.api.host}/gw/ipfs/${state.data.content.cid}`} target="_blank">
-                  ${C.api.host}/gw/ipfs/{state.data.content.cid}
+                <a href={estuaryRetrievalUrl} target="_blank">
+                  {estuaryRetrievalUrl}
                 </a>
               </StatRow>
               <StatRow title="Dweb retrieval url">
-                <a href={`https://dweb.link/ipfs/${state.data.content.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.data.content.cid}
+                <a href={dwebRetrievalUrl} target="_blank">
+                  {dwebRetrievalUrl}
                 </a>
               </StatRow>
               <StatRow title="Estuary Node ID">{state.data.content.id}</StatRow>
@@ -221,13 +221,13 @@ function VerifyCIDPage(props: any) {
               {statusElement}
 
               <StatRow title="Estuary retrieval url">
-                <a href={`${C.api.host}/gw/ipfs/${state.cid.trim()}`} target="_blank">
-                  ${C.api.host}/gw/ipfs/{state.cid.trim()}
+                <a href={estuaryRetrievalUrl} target="_blank">
+                  {estuaryRetrievalUrl}
                 </a>
               </StatRow>
               <StatRow title="Dweb retrieval url">
-                <a href={`https://dweb.link/ipfs/${state.data.content.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.data.content.cid}
+                <a href={dwebRetrievalUrl} target="_blank">
+                  {dwebRetrievalUrl}
                 </a>
               </StatRow>
             </React.Fragment>

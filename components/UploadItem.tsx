@@ -165,6 +165,9 @@ export default class UploadItem extends React.Component<any> {
       maybePinStatusElement = <PinStatusElement id={this.state.final.estuaryId} host={this.props.host} />;
     }
 
+    const estuaryRetrievalUrl = this.state.final ? U.formatEstuaryRetrievalUrl(this.state.final.cid) : null;
+    const dwebRetrievalUrl = this.state.final ? U.formatDwebRetrievalUrl(this.state.final.cid) : null;
+
     return (
       <section className={styles.item}>
         {this.state.final ? (
@@ -173,13 +176,13 @@ export default class UploadItem extends React.Component<any> {
               {this.props.file.data.name} uploaded to our node!
             </ActionRow>
             <ActionRow>
-              <a href={`${C.api.host}/gw/ipfs/${this.state.final.cid}`} target="_blank">
-                {C.api.host}/gw/{this.state.final.cid}
+              <a href={estuaryRetrievalUrl} target="_blank">
+                {estuaryRetrievalUrl}
               </a>
             </ActionRow>
             <ActionRow>
-              <a href={`https://dweb.link/ipfs/${this.state.final.cid}`} target="_blank">
-                https://dweb.link/{this.state.final.cid}
+              <a href={dwebRetrievalUrl} target="_blank">
+                {dwebRetrievalUrl}
               </a>
             </ActionRow>
             {maybePinStatusElement}

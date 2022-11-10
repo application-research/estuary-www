@@ -133,8 +133,8 @@ function StagingPage(props) {
                     </tr>
 
                     {bucket.contents.map((data, index) => {
-                      const estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${data.cid}`;
-                      const dwebRetrievalUrl = `https://dweb.link/ipfs/${data.cid}`;
+                      const estuaryRetrievalUrl = U.formatEstuaryRetrievalUrl(data.cid);
+                      const dwebRetrievalUrl = U.formatDwebRetrievalUrl(data.cid);
                       return (
                         <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
                           <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>

@@ -66,8 +66,8 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
       <div className={styles.empty}>Estuary has not performed any deals for this file, yet.</div>
     );
 
-  const retrievalURL = content ? `${C.api.host}/gw/ipfs/${content.cid}` : null;
-  const dwebRetrievalUrl = content ? `https://dweb.link/ipfs/${content.cid}` : null;
+  const estuaryRetrievalUrl = content ? U.formatEstuaryRetrievalUrl(content.cid) : null;
+  const dwebRetrievalUrl = content ? U.formatDwebRetrievalUrl(content.cid) : null;
 
   let name = '...';
   if (content && content.name) {
@@ -104,8 +104,8 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
             <td className={tstyles.td}>{name}</td>
 
             <td className={tstyles.tdcta}>
-              <a className={tstyles.cta} href={retrievalURL} target="_blank">
-                {retrievalURL}
+              <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                {estuaryRetrievalUrl}
               </a>
             </td>
 

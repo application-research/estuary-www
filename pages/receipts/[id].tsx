@@ -43,12 +43,8 @@ function ReceiptPage(props) {
     run();
   }, []);
 
-  let estuaryRetrievalUrl;
-  let dwebRetrievalUrl;
-  if (state.deal) {
-    estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
-    dwebRetrievalUrl = `https://dweb.link/ipfs/${state.deal.Label}`;
-  }
+  const estuaryRetrievalUrl = state.deal ? U.formatEstuaryRetrievalUrl(state.deal.Label) : null;
+  const dwebRetrievalUrl = state.deal ? U.formatDwebRetrievalUrl(state.deal.Label) : null;
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
 
