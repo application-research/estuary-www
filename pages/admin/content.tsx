@@ -95,8 +95,8 @@ function AdminContentPage(props: any) {
               </tr>
               {state.content && state.content.length
                 ? state.content.map((data, index) => {
-                    const fileURL = `${C.api.host}/gw/ipfs/${data.cid}`;
-                    const dwebURL = `https://dweb.link/ipfs/${data.cid}`;
+                    const estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${data.cid}`;
+                    const dwebRetrievalUrl = `https://dweb.link/ipfs/${data.cid}`;
                     return (
                       <tr className={tstyles.tr} key={`${data.id}-${data.name}-${data.cid}`}>
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>
@@ -108,11 +108,11 @@ function AdminContentPage(props: any) {
                         </td>
 
                         <td className={tstyles.tdcta}>
-                          <a href={fileURL} target="_blank" className={tstyles.cta}>
-                            {fileURL}
+                          <a href={estuaryRetrievalUrl} target="_blank" className={tstyles.cta}>
+                            {estuaryRetrievalUrl}
                           </a>
-                          <a href={dwebURL} target="_blank" className={tstyles.cta}>
-                            {dwebURL}
+                          <a href={dwebRetrievalUrl} target="_blank" className={tstyles.cta}>
+                            {dwebRetrievalUrl}
                           </a>
                         </td>
                         <td className={tstyles.td}>{data.replication} times</td>

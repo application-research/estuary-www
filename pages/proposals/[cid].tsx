@@ -43,11 +43,11 @@ function ProposalPage(props: any) {
     run();
   }, []);
 
-  let fileURL;
-  let dwebURL;
+  let estuaryRetrievalUrl;
+  let dwebRetrievalUrl;
   if (state.deal) {
-    fileURL = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
-    dwebURL = `https://dweb.link/ipfs/${state.deal.Label}`;
+    estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
+    dwebRetrievalUrl = `https://dweb.link/ipfs/${state.deal.Label}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
@@ -77,8 +77,8 @@ function ProposalPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={fileURL} target="_blank">
-                      {fileURL}
+                    <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                      {estuaryRetrievalUrl}
                     </a>
                   </td>
                 </tr>
@@ -93,8 +93,8 @@ function ProposalPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={dwebURL} target="_blank">
-                      {dwebURL}
+                    <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                      {dwebRetrievalUrl}
                     </a>
                   </td>
                 </tr>

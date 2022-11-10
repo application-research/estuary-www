@@ -43,11 +43,11 @@ function DealPage(props: any) {
     run();
   }, []);
 
-  let fileURL;
-  let dwebURL;
+  let estuaryRetrievalUrl;
+  let dwebRetrievalUrl;
   if (state.transfer) {
-    fileURL = `${C.api.host}/gw/ipfs/${state.transfer.baseCid}`;
-    dwebURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
+    estuaryRetrievalUrl = `${C.api.host}/gw/ipfs/${state.transfer.baseCid}`;
+    dwebRetrievalUrl = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
@@ -132,10 +132,10 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  {!U.isEmpty(fileURL) ? (
+                  {!U.isEmpty(estuaryRetrievalUrl) ? (
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={fileURL} target="_blank">
-                        {fileURL}
+                      <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                        {estuaryRetrievalUrl}
                       </a>
                     </td>
                   ) : (
@@ -152,10 +152,10 @@ function DealPage(props: any) {
                 </tr>
 
                 <tr className={tstyles.tr}>
-                  {!U.isEmpty(dwebURL) ? (
+                  {!U.isEmpty(dwebRetrievalUrl) ? (
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={dwebURL} target="_blank">
-                        {dwebURL}
+                      <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                        {dwebRetrievalUrl}
                       </a>
                     </td>
                   ) : (
