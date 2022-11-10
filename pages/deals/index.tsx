@@ -67,6 +67,7 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
     );
 
   const retrievalURL = content ? `${C.api.host}/gw/ipfs/${content.cid}` : null;
+  const dwebURL = content ? `https://dweb.link/ipfs/${content.cid}` : null;
 
   let name = '...';
   if (content && content.name) {
@@ -87,7 +88,10 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
               Name
             </th>
             <th className={tstyles.th} style={{ width: '50%' }}>
-              Retrieval CID
+              Estuary retrieval url
+            </th>
+            <th className={tstyles.th} style={{ width: '50%' }}>
+              Dweb retrieval url
             </th>
             <th className={tstyles.th} style={{ width: '12.5%' }}>
               ID
@@ -102,6 +106,12 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
             <td className={tstyles.tdcta}>
               <a className={tstyles.cta} href={retrievalURL} target="_blank">
                 {retrievalURL}
+              </a>
+            </td>
+
+            <td className={tstyles.tdcta}>
+              <a className={tstyles.cta} href={dwebURL} target="_blank">
+                {dwebURL}
               </a>
             </td>
 

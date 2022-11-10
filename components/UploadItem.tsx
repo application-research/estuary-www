@@ -177,6 +177,11 @@ export default class UploadItem extends React.Component<any> {
                 {C.api.host}/gw/{this.state.final.cid}
               </a>
             </ActionRow>
+            <ActionRow>
+              <a href={`https://dweb.link/ipfs/${this.state.final.cid}`} target="_blank">
+                https://dweb.link/{this.state.final.cid}
+              </a>
+            </ActionRow>
             {maybePinStatusElement}
             {this.props.file.estimation ? (
               <ActionRow style={{ background: `var(--status-success-bright)` }}>Filecoin Deals are being mmade for {this.props.file.data.name}.</ActionRow>

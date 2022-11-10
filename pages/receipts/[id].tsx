@@ -44,8 +44,10 @@ function ReceiptPage(props) {
   }, []);
 
   let fileURL;
+  let dwebURL;
   if (state.deal) {
     fileURL = `${C.api.host}/gw/ipfs/${state.deal.Label}`;
+    dwebURL = `https://dweb.link/ipfs/${state.deal.Label}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} />;
@@ -70,13 +72,29 @@ function ReceiptPage(props) {
             <table className={tstyles.table}>
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>CID + retrieval link</th>
+                  <th className={tstyles.th}>Estuary retrieval url</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
                     <a className={tstyles.cta} href={fileURL} target="_blank">
                       {fileURL}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Dweb retrieval url</th>
+                </tr>
+
+                <tr className={tstyles.tr}>
+                  <td className={tstyles.tdcta}>
+                    <a className={tstyles.cta} href={dwebURL} target="_blank">
+                      {dwebURL}
                     </a>
                   </td>
                 </tr>

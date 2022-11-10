@@ -122,7 +122,8 @@ function StagingPage(props) {
                       <th className={tstyles.th} style={{ width: '30%' }}>
                         Name
                       </th>
-                      <th className={tstyles.th}>Retrieval link</th>
+                      <th className={tstyles.th}>Estuary retrieval url</th>
+                      <th className={tstyles.th}>Dweb retrieval url</th>
                       <th className={tstyles.th} style={{ width: '104px' }}>
                         Size
                       </th>
@@ -133,6 +134,7 @@ function StagingPage(props) {
 
                     {bucket.contents.map((data, index) => {
                       const fileURL = `${C.api.host}/gw/ipfs/${data.cid}`;
+                      const dwebURL = `https://dweb.link/ipfs/${data.cid}`;
                       return (
                         <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
                           <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
@@ -142,6 +144,11 @@ function StagingPage(props) {
                           <td className={tstyles.tdcta}>
                             <a href={fileURL} target="_blank" className={tstyles.cta}>
                               {fileURL}
+                            </a>
+                          </td>
+                          <td className={tstyles.tdcta}>
+                            <a className={tstyles.cta} href={dwebURL} target="_blank">
+                              {dwebURL}
                             </a>
                           </td>
                           <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>

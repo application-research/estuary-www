@@ -199,9 +199,14 @@ function VerifyCIDPage(props: any) {
             <React.Fragment>
               {statusElement}
               <StatRow title="CID">{state.data.content.cid}</StatRow>
-              <StatRow title="Retrieval URL">
+              <StatRow title="Estuary retrieval url">
                 <a href={`${C.api.host}/gw/ipfs/${state.data.content.cid}`} target="_blank">
                   ${C.api.host}/gw/ipfs/{state.data.content.cid}
+                </a>
+              </StatRow>
+              <StatRow title="Dweb retrieval url">
+                <a href={`https://dweb.link/ipfs/${state.data.content.cid}`} target="_blank">
+                  https://dweb.link/ipfs/{state.data.content.cid}
                 </a>
               </StatRow>
               <StatRow title="Estuary Node ID">{state.data.content.id}</StatRow>
@@ -215,9 +220,14 @@ function VerifyCIDPage(props: any) {
             <React.Fragment>
               {statusElement}
 
-              <StatRow title="Retrieval URL">
+              <StatRow title="Estuary retrieval url">
                 <a href={`${C.api.host}/gw/ipfs/${state.cid.trim()}`} target="_blank">
                   ${C.api.host}/gw/ipfs/{state.cid.trim()}
+                </a>
+              </StatRow>
+              <StatRow title="Dweb retrieval url">
+                <a href={`https://dweb.link/ipfs/${state.data.content.cid}`} target="_blank">
+                  https://dweb.link/ipfs/{state.data.content.cid}
                 </a>
               </StatRow>
             </React.Fragment>

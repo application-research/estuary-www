@@ -35,10 +35,27 @@ const FilesTable = ({ files }) => {
       },
 
       {
-        Header: 'Retrieval Link',
+        Header: 'Retrieval url',
         accessor: (data) => {
           if (data.name !== 'aggregate') {
             return `${C.api.host}/gw/ipfs/${data.cid['/']}`;
+          }
+        },
+        Cell: ({ value }) => (
+          <a href={value} target="_blank" className={tstyles.cta}>
+            {value}
+          </a>
+        ),
+        width: '55%',
+        maxWidth: '55%',
+        Filter: DefaultColumnFilter,
+      },
+
+      {
+        Header: 'Dweb retrieval url',
+        accessor: (data) => {
+          if (data.name !== 'aggregate') {
+            return `https://dweb.link/ipfs/${data.cid['/']}`;
           }
         },
         Cell: ({ value }) => (

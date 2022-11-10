@@ -44,8 +44,10 @@ function DealPage(props: any) {
   }, []);
 
   let fileURL;
+  let dwebURL;
   if (state.transfer) {
     fileURL = `${C.api.host}/gw/ipfs/${state.transfer.baseCid}`;
+    dwebURL = `https://dweb.link/ipfs/${state.transfer.baseCid}`;
   }
 
   const sidebarElement = <AuthenticatedSidebar viewer={props.viewer} active="DEAL_BY_ID" />;
@@ -126,7 +128,7 @@ function DealPage(props: any) {
             <table className={tstyles.table}>
               <tbody className={tstyles.tbody}>
                 <tr className={tstyles.tr}>
-                  <th className={tstyles.th}>Base CID + retrieval link</th>
+                  <th className={tstyles.th}>Estuary retrieval url</th>
                 </tr>
 
                 <tr className={tstyles.tr}>
@@ -134,6 +136,26 @@ function DealPage(props: any) {
                     <td className={tstyles.tdcta}>
                       <a className={tstyles.cta} href={fileURL} target="_blank">
                         {fileURL}
+                      </a>
+                    </td>
+                  ) : (
+                    <td className={tstyles.td}>Does not exist</td>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+
+            <table className={tstyles.table}>
+              <tbody className={tstyles.tbody}>
+                <tr className={tstyles.tr}>
+                  <th className={tstyles.th}>Dweb retrieval url</th>
+                </tr>
+
+                <tr className={tstyles.tr}>
+                  {!U.isEmpty(dwebURL) ? (
+                    <td className={tstyles.tdcta}>
+                      <a className={tstyles.cta} href={dwebURL} target="_blank">
+                        {dwebURL}
                       </a>
                     </td>
                   ) : (
