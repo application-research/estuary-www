@@ -150,7 +150,7 @@ function IndexPage(props: any) {
           .
         </h1>
         <p className={styles.caption}>
-          Store your public data and guarantee it is available to everyone around the world. Our technology will repair lost data and guarantee data replication.
+          Store your public data and guarantee it is available to everyone around the world. Our technology will restore lost data and guarantee data replication.
         </p>
 
         {!props.viewer ? (
