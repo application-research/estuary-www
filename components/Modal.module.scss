@@ -1,0 +1,50 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  pointer-events: visible;
+}
+
+.modalContent {
+  width: 620px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.modalHeader {
+  position: relative;
+  padding: 16px 16px 0px 16px;
+}
+
+.modalTitle {
+  margin: 0;
+}
+
+.modalBody {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.closeButton {
+  border: none;
+  display: inline-block;
+  padding: 16px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background-color: inherit;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
