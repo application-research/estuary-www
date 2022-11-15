@@ -40,7 +40,7 @@ export const post = async (route, payload, host = C.api.host): Promise<any> => {
   try {
 
     const token = Cookies.get(C.auth);
-    console.log(`${host}${route}`);
+
     let r = await fetch(`${host}${route}`, {
       method: 'POST',
       body: JSON.stringify(payload),
