@@ -40,19 +40,6 @@ export const regex = {
   password: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
 };
 
-
-function getMetricsHost(): string {
-  if (process.env.ESTUARY_METRICS_API) {
-    return process.env.ESTUARY_METRICS_API;
-  }
-
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      return 'https://metrics-api.estuary.tech';
-    default:
-      return 'http://localhost:3030';
-  }
-}
 function getAPIHost(): string {
   if (process.env.ESTUARY_API) {
     return process.env.ESTUARY_API;
@@ -68,5 +55,4 @@ function getAPIHost(): string {
 
 export const api = {
   host: getAPIHost(),
-  metricsHost: getMetricsHost()
 };
