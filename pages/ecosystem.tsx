@@ -94,7 +94,10 @@ function EcosystemPage(props: any) {
         "Uuid": "8ceea3cd-7608-4428-8d6b-99f2acc80ce3",
         "Name": "Shuttle-8"
       },
-
+      {
+        "Uuid": "43cfdfa5-6037-4520-9e4c-c46f4d3686a1",
+        "Name": "Autoretrieve Server"
+      },
       {
         "Uuid": "a8e5d22b-13ef-4dc9-adcf-a3b2bb4a8863",
         "Name": "Upload Proxy Server"
