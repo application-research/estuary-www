@@ -6,18 +6,9 @@ import * as R from '@common/requests';
 import * as Logos from '@components/PartnerLogoSVG';
 
 import Page from '@components/Page';
-import Navigation from '@components/Navigation';
-import Card from '@components/Card';
-import Button from '@components/Button';
-import FeatureRow from '@components/FeatureRow';
-import MarketingCube from '@components/MarketingCube';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import ComparisonWeb3 from '@components/ComparisonWeb3';
 import Chart from '@components/Chart';
 import EstuarySVG from '@components/EstuarySVG';
-
-import { H1, H2, H3, H4, P } from '@components/Typography';
-import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
+import * as C from '@common/constants';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -54,21 +45,79 @@ function EcosystemPage(props: any) {
     totalUsers: 0,
     totalStorageMiner: 0,
     totalObjectsRef: 0,
+    environmentDevices: null,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
+
+  // get current date and 30 days before
+  var today = new Date();
+  var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+
+  // reformat date
+  var before = today.getDate() + "-"+ (today.getMonth() + 1)+ "-"+ today.getFullYear()
+  var after = priorDate.getDate() + "-"+ (priorDate.getMonth() + 1)+ "-"+ priorDate.getFullYear()
+
+  //  static payload
+  var staticEnvironmentPayload = {
+    "createdBefore": before,
+    "createdAfter": after,
+    "uuids": [{
+      "Uuid": "766557e4-1c14-4bef-a5b2-d974bbb2d848",
+      "Name": "Estuary API"
+    },
+      {
+        "Uuid": "60352064-7b2c-4597-baf6-9df128e9242b",
+        "Name": "Shuttle-1"
+      },
+      {
+        "Uuid": "ed16760d-ec36-4d71-b46f-378428c1d774",
+        "Name": "Shuttle-2"
+      },
+
+      {
+        "Uuid": "266fbb9d-56a1-4dea-9b99-9f28054c5522",
+        "Name": "Shuttle-4"
+      },
+      {
+        "Uuid": "266fbb9d-56a1-4dea-9b99-9f28054c5522",
+        "Name": "Shuttle-5"
+      },
+      {
+        "Uuid": "266fbb9d-56a1-4dea-9b99-9f28054c5522",
+        "Name": "Shuttle-6"
+      },
+      {
+        "Uuid": "3c924716-f30e-4afd-a073-98204e4a96a7",
+        "Name": "Shuttle-7"
+      },
+      {
+        "Uuid": "8ceea3cd-7608-4428-8d6b-99f2acc80ce3",
+        "Name": "Shuttle-8"
+      },
+
+      {
+        "Uuid": "a8e5d22b-13ef-4dc9-adcf-a3b2bb4a8863",
+        "Name": "Upload Proxy Server"
+      },
+      {
+        "Uuid": "e4d0efb1-1b5b-4aaf-a6ed-37c4a6cc2c6f",
+        "Name": "Backup Server"
+      }
+    ]
+  };
 
   React.useEffect(() => {
     const run = async () => {
       const miners = await R.get('/public/miners', props.api);
       const stats = await R.get('/public/stats', props.api);
+      const environment = await R.post('/api/v1/environment/equinix/list/usages',staticEnvironmentPayload,C.api.metricsHost);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0 });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, environmentDevices: environment });
       }
-
-      setState({ ...state, miners, ...stats });
+      setState({ ...state, miners, ...stats,environmentDevices : environment });
     };
-
+    console.log(state.environmentDevices);
     run();
   }, []);
 
@@ -275,7 +324,40 @@ function EcosystemPage(props: any) {
             <div className={S.ecosystemStatText}>Total registered users</div>
           </div>
         </div>
-
+        <br/>
+        <div className={S.ecosystemHeading}>
+          <p className={S.ecosystemParagraph}>Environment Hosting Cost (last 30 days)</p>
+          {/*{state.environmentDevices}*/}
+          {state.environmentDevices != undefined && state.environmentDevices['device_usages'] != undefined ? (
+              state.environmentDevices['device_usages'].map((device) => {
+                return (
+                  <div className={S.ecosystemSection}>
+                    <div className={S.ecosystemStatCard}>
+                      <div className={S.ecosystemStatValue}>{device["usages"][0]["total"]} USD</div>
+                      <div className={S.ecosystemStatText}>{device["Info"]["name"]}</div>
+                    </div>
+                  </div>
+                );
+          })
+          ) : (
+            <div className={S.ecosystemSection}>
+              <div className={S.ecosystemStatCard}>
+                <div className={S.ecosystemStatText}>Stats not available</div>
+              </div>
+            </div>
+          )}
+          <p className={S.ecosystemParagraph}>Total Cost (last 30 days)</p>
+          <div className={S.ecosystemSection}>
+            <div className={S.ecosystemStatCard}>
+              <div className={S.ecosystemStatValue}>
+                {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? (
+                  Math.floor(state.environmentDevices["total"]) + " USD"
+                ): (
+                      <div className={S.ecosystemStatText}>Stats not available</div>
+                )} </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {graph.data ? (
