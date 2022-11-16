@@ -63,6 +63,9 @@ function DealErrorPage(props: any) {
                 provider
               </th>
               <th className={tstyles.th} style={{ width: 120 }}>
+                deal uuid
+              </th>
+              <th className={tstyles.th} style={{ width: 120 }}>
                 phase
               </th>
               <th className={tstyles.th}>message</th>
@@ -79,6 +82,7 @@ function DealErrorPage(props: any) {
                         {log.miner}
                       </a>
                     </td>
+                    <td className={tstyles.td}>{log.deal_uuid}</td>
                     <td className={tstyles.td}>{log.phase}</td>
                     <td className={tstyles.td}>{log.message}</td>
                   </tr>
