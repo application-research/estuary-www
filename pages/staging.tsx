@@ -1,21 +1,18 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
-import * as C from '@common/constants';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import ProgressCard from '@components/ProgressCard';
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import PageHeader from '@components/PageHeader';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H3, P } from '@components/Typography';
 import StagingZoneReadinessTable from '@root/components/StagingZoneReadinessTable';
 
 export async function getServerSideProps(context) {
@@ -75,34 +72,26 @@ function StagingPage(props) {
         {state.files.map((bucket, index) => (
           <div key={`ephemeral-staging-bucket-${index}`} style={{ marginBottom: 64 }}>
             <PageHeader>
-              <H3>ephemeral-staging-bucket-{index}</H3>
+              <H3 style={{ maxWidth: '800px' }}>
+                ephemeral-staging-bucket-{index} ({U.toDate(bucket.zoneOpened)})
+              </H3>
             </PageHeader>
 
             <div className={styles.group}>
               <table className={tstyles.table}>
                 <tbody className={tstyles.tbody}>
                   <tr className={tstyles.tr}>
-                    <th className={tstyles.th}>Opening</th>
-                    <th className={tstyles.th}>Closing</th>
-                  </tr>
-                  <tr className={tstyles.tr}>
-                    <td className={tstyles.td}>{U.toDate(bucket.zoneOpened)}</td>
-                    <td className={tstyles.td}>{U.toDate(bucket.closeTime)}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table className={tstyles.table}>
-                <tbody className={tstyles.tbody}>
-                  <tr className={tstyles.tr}>
                     <th className={tstyles.th}>Size</th>
-                    <th className={tstyles.th}>Max Size</th>
-                    <th className={tstyles.th}>Min size</th>
+                    <th className={tstyles.th}>Items</th>
+                    <th className={tstyles.th}>Accepted size range</th>
                     <th className={tstyles.th}>Max items</th>
                   </tr>
                   <tr className={tstyles.tr}>
                     <td className={tstyles.td}>{U.bytesToSize(bucket.curSize)}</td>
-                    <td className={tstyles.td}>{U.bytesToSize(bucket.maxSize)}</td>
-                    <td className={tstyles.td}>{U.bytesToSize(bucket.minSize)}</td>
+                    <td className={tstyles.td}>{bucket.contents.length}</td>
+                    <td className={tstyles.td}>
+                      {U.bytesToSize(bucket.minSize)} - {U.bytesToSize(bucket.maxSize)}
+                    </td>
                     <td className={tstyles.td}>{U.formatNumber(bucket.maxItems)}</td>
                   </tr>
                 </tbody>
