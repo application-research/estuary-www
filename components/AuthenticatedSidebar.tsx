@@ -52,7 +52,6 @@ function AuthenticatedLayout(props: any) {
       <span
         className={styles.item}
         onClick={async () => {
-          const token = Cookies.get(C.auth);
           Cookies.remove(C.auth);
           window.location.href = '/';
         }}
