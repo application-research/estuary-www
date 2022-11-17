@@ -1,10 +1,7 @@
 import styles from '@components/AuthenticatedSidebar.module.scss';
 import Cookies from 'js-cookie';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
-import * as R from '@common/requests';
 
 function AuthenticatedLayout(props: any) {
   let perms = 0;
@@ -56,7 +53,6 @@ function AuthenticatedLayout(props: any) {
         className={styles.item}
         onClick={async () => {
           const token = Cookies.get(C.auth);
-          const response = await R.del(`/user/api-keys/${token}`, props.api);
           Cookies.remove(C.auth);
           window.location.href = '/';
         }}
