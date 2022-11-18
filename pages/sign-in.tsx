@@ -218,7 +218,7 @@ function SignInPage(props: any) {
           placeholder="ex: ESTxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxARY"
           name="key"
           value={state.key}
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.trim() })}
         />
 
         <div className={styles.actions}>
