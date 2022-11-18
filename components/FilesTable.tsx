@@ -1,30 +1,33 @@
 import tstyles from '@pages/files-table.module.scss';
 import styles from '@pages/app.module.scss';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
 const FilesTable = ({ files }) => {
+  const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
   const columns = useMemo(
     () => [
       {
+        id: 'Local Id',
         Header: 'Local id',
         accessor: (data) => String(data.id).padStart(9, '0'),
-        Cell: ({ value }) => <div style={{fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
+        Cell: ({ value }) => <div style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
         disableFilters: true,
         width: '20%',
       },
 
       {
+        id: 'Name',
         Header: 'Name',
         accessor: (data) => {
+          if (data.name === 'aggregate') {
+            return './';
+          }
           if (data.name) {
             return data.name;
           }
           if (data.filename) {
             return data.filename;
-          }
-          if (data.name === 'aggregate') {
-            return '/';
           }
         },
         width: '30%',
@@ -32,14 +35,13 @@ const FilesTable = ({ files }) => {
       },
 
       {
+        id: 'Retrieval Link',
         Header: 'Retrieval Link',
         accessor: (data) => {
-          
-            return data.cid != null ? `https://api.estuary.tech/gw/ipfs/${data.cid['/']}` : '/'
-          
+          return data.cid != null ? gateway+data.cid['/'] : '/';
         },
         Cell: ({ value }) => (
-          <a href={value} style={{overflowWrap:'break-word'}}target="_blank" className={tstyles.cta}>
+          <a href={value} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
             {value}
           </a>
         ),
@@ -48,13 +50,14 @@ const FilesTable = ({ files }) => {
       },
 
       {
+        id: 'Files',
         Header: 'Files',
         accessor: (data) => data.aggregatedFiles + 1,
         disableFilters: true,
         width: '15%',
       },
     ],
-    []
+    [gateway]
   );
 
   const tableInstance = useTable({ columns, data: files, initialState: { pageIndex: 0, pageSize: 10 } }, useFilters, useSortBy, usePagination);
@@ -82,7 +85,7 @@ const FilesTable = ({ files }) => {
 
     return (
       <input
-        className='filter' 
+        className={tstyles.filter}
         value={filterValue || ''}
         onChange={(e) => {
           setFilter(e.target.value || undefined);
@@ -91,10 +94,16 @@ const FilesTable = ({ files }) => {
       />
     );
   }
-
   return (
     <React.Fragment>
       <table className={tstyles.table} {...getTableProps()}>
+      <div className={tstyles.gateway}>
+        <label>Gateway:</label>
+        <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
+          <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+          <option value="https://dweb.link/ipfs/">Dweb</option>
+        </select>
+      </div>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className={tstyles.tr} {...headerGroup.getHeaderGroupProps()}>
@@ -109,12 +118,34 @@ const FilesTable = ({ files }) => {
                     },
                   ])}
                 >
-                  <div {...column.getSortByToggleProps()} className={tstyles.hContainer}>
+                  <div className={tstyles.hContainer}>
                     <div className={tstyles.hInnerContainer}>
-                      <div className={tstyles.hTitle}><div>{column.render('Header')}</div> <div>{column.canFilter ? column.render('Filter') : null}</div></div>
-                      <div className={tstyles.sortIcon}>{column.isSorted ? (column.isSortedDesc ? (<div><div>▲</div><div>▽</div></div>) : (<div><div>△</div><div>▼</div></div>) ) : <div><div>▲</div><div>▼</div></div>}</div>
+                      <div className={tstyles.hTitle}>
+                        <div>{column.render('Header')}</div> <div>{column.canFilter ? column.render('Filter') : null}</div>
+                      </div>
+                      <div {...column.getSortByToggleProps()}>
+                        <div className={tstyles.sortIcon}>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <div>
+                                <div>▲</div>
+                                <div>▽</div>
+                              </div>
+                            ) : (
+                              <div>
+                                <div>△</div>
+                                <div>▼</div>
+                              </div>
+                            )
+                          ) : (
+                            <div>
+                              <div>▲</div>
+                              <div>▼</div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    
                   </div>
                 </th>
               ))}
@@ -127,20 +158,14 @@ const FilesTable = ({ files }) => {
             return (
               <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
                 {row.cells.map((cell) => {
-                  return (
-                    <td
-                      className={tstyles.td}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
+                  return <td className={tstyles.td}>{cell.render('Cell')}</td>;
                 })}
               </tr>
             );
           })}
         </tbody>
       </table>
-      <div className="pagination" style={{ fontSize: "1em", fontFamily: 'Mono', padding: '0.5rem' }}>
+      <div className="pagination" style={{ fontSize: '1em', fontFamily: 'Mono', padding: '0.5rem' }}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -185,7 +210,7 @@ const FilesTable = ({ files }) => {
           ))}
         </select>
       </div>
-      </React.Fragment>
+    </React.Fragment>
   );
 };
 
