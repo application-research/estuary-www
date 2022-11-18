@@ -1,0 +1,143 @@
+.table {
+  width: 100%;
+  background: var(--main-background-table);
+  color: var(--main-background-table-text-color);
+  
+  font-size: 16px;
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    font-size: 0.85em;
+  }
+  height: 100%;
+
+  table-layout: fixed;
+}
+
+.sortIcon{
+  margin-left:auto;
+}
+
+.hContainer {
+  height: 5em;
+  position: relative;
+}
+
+.hTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.filter {
+  width: '50%';
+  padding: '0.2rem';
+  font-Size: '0.7rem';
+  border: '1px solid #ccc';
+  font-Family : 'Mono';
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    font-size: 0.85em;
+  }
+}
+
+.tbody {
+  font-size: 0.85em;
+}
+
+.tr {
+  background: var(--main-background-table-cell);
+}
+
+.th {
+  padding: 6px 6px 6px 6px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+  font-size: 11px;
+  font-family: "Mono";
+  overflow: auto;
+  text-overflow: ellipsis;
+  background: rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 1248px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    font-size: 10px;
+  }
+}
+
+.td {
+  padding: 8px 8px 8px 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tdcta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1px;
+  transition: 200ms ease all;
+  background: #fff;
+}
+
+.cta {
+  display: block;
+  padding: 8px 8px 8px 14px;
+  transition: 200ms ease all;
+  color: var(--main-background-table-text-color);
+  text-decoration: none;
+  cursor: pointer;
+  height: 100%;
+  font-weight: 500;
+
+  &:visited {
+    color: var(--main-background-table-text-color);
+  }
+
+  &:hover {
+    color: var(--main-primary);
+  }
+}
+
+.tdbutton {
+  font-family: "Mono";
+  text-transform: uppercase;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  cursor: pointer;
+}
+
+.hInnerContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position:absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
