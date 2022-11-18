@@ -72,27 +72,25 @@ function StagingPage(props) {
         {state.files.map((bucket, index) => (
           <div key={`ephemeral-staging-bucket-${index}`} style={{ marginBottom: 64 }}>
             <PageHeader>
-              <H3 style={{ maxWidth: '800px' }}>
-                ephemeral-staging-bucket-{index} ({U.toDate(bucket.zoneOpened)})
-              </H3>
+              <H3>ephemeral-staging-bucket-{index}</H3>
             </PageHeader>
 
             <div className={styles.group}>
               <table className={tstyles.table}>
                 <tbody className={tstyles.tbody}>
                   <tr className={tstyles.tr}>
-                    <th className={tstyles.th}>Size</th>
+                    <th className={tstyles.th}>Created at</th>
                     <th className={tstyles.th}>Items</th>
+                    <th className={tstyles.th}>Size</th>
                     <th className={tstyles.th}>Accepted size range</th>
-                    <th className={tstyles.th}>Max items</th>
                   </tr>
                   <tr className={tstyles.tr}>
-                    <td className={tstyles.td}>{U.bytesToSize(bucket.curSize)}</td>
+                    <td className={tstyles.td}>{U.toDate(bucket.zoneOpened)}</td>
                     <td className={tstyles.td}>{bucket.contents.length}</td>
+                    <td className={tstyles.td}>{U.bytesToSize(bucket.curSize)}</td>
                     <td className={tstyles.td}>
                       {U.bytesToSize(bucket.minSize)} - {U.bytesToSize(bucket.maxSize)}
                     </td>
-                    <td className={tstyles.td}>{U.formatNumber(bucket.maxItems)}</td>
                   </tr>
                 </tbody>
               </table>
