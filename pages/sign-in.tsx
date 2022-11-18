@@ -48,7 +48,11 @@ async function handleTokenAuthenticate(state: any, host) {
   });
   if (response && response.status === 403) {
     alert("Invalid API key");
-  }else {
+  }
+  else if (response && response.status === 401) {
+    alert('Expired API key');
+  }
+  else {
     Cookies.set(C.auth, state.key);
     window.location.reload();
   }
