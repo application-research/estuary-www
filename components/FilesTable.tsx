@@ -1,82 +1,66 @@
-import tstyles from '@pages/table.module.scss';
-import { useMemo } from 'react';
+import tstyles from '@pages/files-table.module.scss';
+import styles from '@pages/app.module.scss';
+import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
 import * as U from '@common/utilities';
 
 const FilesTable = ({ files }) => {
+  const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
   const columns = useMemo(
     () => [
       {
+        id: 'Local Id',
         Header: 'Local id',
         accessor: (data) => String(data.id).padStart(9, '0'),
-        Cell: ({ value }) => <div style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
-        width: '8%',
-        maxWidth: '8%',
+        Cell: ({ value }) => <div style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
         disableFilters: true,
+        width: '20%',
       },
 
       {
+        id: 'Name',
         Header: 'Name',
         accessor: (data) => {
+          if (data.name === 'aggregate') {
+            return './';
+          }
           if (data.name) {
             return data.name;
           }
           if (data.filename) {
             return data.filename;
           }
-          if (data.name === 'aggregate') {
-            return '/';
-          }
         },
         width: '30%',
-        maxWidth: '30%',
         Filter: DefaultColumnFilter,
       },
 
       {
-        Header: 'Estuary retrieval url',
+
+        id: 'Retrieval Link',
+        Header: 'Retrieval Link',
         accessor: (data) => {
-          if (data.name !== 'aggregate') {
-            return U.formatEstuaryRetrievalUrl(data.cid['/']);
-          }
+          return data.cid != null ? gateway+data.cid['/'] : '/';
         },
         Cell: ({ value }) => (
-          <a href={value} target="_blank" className={tstyles.cta}>
+          <a href={value} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
             {value}
           </a>
         ),
-        width: '55%',
-        maxWidth: '55%',
+        width: '35%',
         Filter: DefaultColumnFilter,
       },
 
       {
-        Header: 'Dweb retrieval url',
-        accessor: (data) => {
-          if (data.name !== 'aggregate') {
-            return U.formatDwebRetrievalUrl(data.cid['/']);
-          }
-        },
-        Cell: ({ value }) => (
-          <a href={value} target="_blank" className={tstyles.cta}>
-            {value}
-          </a>
-        ),
-        width: '55%',
-        maxWidth: '55%',
-        Filter: DefaultColumnFilter,
-      },
-
-      {
+        id: 'Files',
         Header: 'Files',
         accessor: (data) => data.aggregatedFiles + 1,
-        width: '8%',
-        maxWidth: '8%',
         disableFilters: true,
+        width: '15%',
       },
     ],
-    []
+    [gateway]
   );
 
   const tableInstance = useTable({ columns, data: files, initialState: { pageIndex: 0, pageSize: 10 } }, useFilters, useSortBy, usePagination);
@@ -104,7 +88,7 @@ const FilesTable = ({ files }) => {
 
     return (
       <input
-        style={{ width: '50%', padding: '0.2rem', margin: '0.3rem 0', fontSize: '0.7rem', border: '1px solid #ccc', fontFamily: 'Mono' }}
+        className={tstyles.filter}
         value={filterValue || ''}
         onChange={(e) => {
           setFilter(e.target.value || undefined);
@@ -113,10 +97,16 @@ const FilesTable = ({ files }) => {
       />
     );
   }
-
   return (
-    <div>
+    <React.Fragment>
       <table className={tstyles.table} {...getTableProps()}>
+      <div className={tstyles.gateway}>
+        <label>Gateway:</label>
+        <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
+          <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+          <option value="https://dweb.link/ipfs/">Dweb</option>
+        </select>
+      </div>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className={tstyles.tr} {...headerGroup.getHeaderGroupProps()}>
@@ -126,17 +116,40 @@ const FilesTable = ({ files }) => {
                   {...column.getHeaderProps([
                     {
                       style: {
-                        minWidth: column.minWidth,
                         width: column.width,
                       },
                     },
                   ])}
                 >
-                  <div {...column.getSortByToggleProps()}>
-                    {column.render('Header')}
-                    {column.isSorted ? (column.isSortedDesc ? ' ↑' : ' ↓') : ' ↕'}
+                  <div className={tstyles.hContainer}>
+                    <div className={tstyles.hInnerContainer}>
+                      <div className={tstyles.hTitle}>
+                        <div>{column.render('Header')}</div> <div>{column.canFilter ? column.render('Filter') : null}</div>
+                      </div>
+                      <div {...column.getSortByToggleProps()}>
+                        <div className={tstyles.sortIcon}>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <div>
+                                <div>▲</div>
+                                <div>▽</div>
+                              </div>
+                            ) : (
+                              <div>
+                                <div>△</div>
+                                <div>▼</div>
+                              </div>
+                            )
+                          ) : (
+                            <div>
+                              <div>▲</div>
+                              <div>▼</div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
                 </th>
               ))}
             </tr>
@@ -148,26 +161,14 @@ const FilesTable = ({ files }) => {
             return (
               <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
                 {row.cells.map((cell) => {
-                  return (
-                    <td
-                      className={tstyles.td}
-                      {...cell.getCellProps({
-                        style: {
-                          minWidth: cell.column.minWidth,
-                          width: cell.column.width,
-                        },
-                      })}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
+                  return <td className={tstyles.td}>{cell.render('Cell')}</td>;
                 })}
               </tr>
             );
           })}
         </tbody>
       </table>
-      <div className="pagination" style={{ fontSize: 12, fontFamily: 'Mono', padding: '0.5rem' }}>
+      <div className="pagination" style={{ fontSize: '1em', fontFamily: 'Mono', padding: '0.5rem' }}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -212,7 +213,7 @@ const FilesTable = ({ files }) => {
           ))}
         </select>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
