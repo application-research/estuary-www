@@ -2,7 +2,7 @@
   width: 100%;
   background: var(--main-background-table);
   color: var(--main-background-table-text-color);
-  
+
   font-size: 16px;
 
   @media (max-width: 1248px) {
@@ -16,13 +16,14 @@
   @media (max-width: 960px) {
     font-size: 0.8em;
   }
+
   height: 100%;
 
   table-layout: fixed;
 }
 
-.sortIcon{
-  margin-left:auto;
+.sortIcon {
+  margin-left: auto;
 }
 
 .hContainer {
@@ -30,21 +31,20 @@
   position: relative;
 }
 
-.hTitle {
-
-}
+.hTitle {}
 
 .filter {
 
   padding: '0.4rem';
   font-Size: '0.7rem';
   border: '1px solid #ccc';
-  font-Family : 'Mono';
+  font-Family: 'Mono';
   outline: non;
   width: 80%;
+
   @media (max-width: 1248px) {
     font-size: 16px;
-    
+
   }
 
   @media (max-width: 1024px) {
@@ -77,7 +77,7 @@
   background: rgba(0, 0, 0, 0.1);
 
   font-size: 14px;
-  
+
   @media (max-width: 1024px) {
     font-size: 14px;
   }
@@ -133,15 +133,17 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  position:absolute;
-  top:50%;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.gateway{
+.gateway {
   font-family: "Mono";
-  padding : 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+
   @media (max-width: 1248px) {
     font-size: 16px;
   }
@@ -153,12 +155,11 @@
   @media (max-width: 960px) {
     font-size: 0.85em;
   }
-  
-  display: flex;
-
 }
-.gatewayInput{
+
+.gatewayInput {
   font-family: "Mono";
+
   @media (max-width: 1248px) {
     font-size: 16px;
   }
