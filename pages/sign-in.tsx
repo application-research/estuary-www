@@ -48,7 +48,11 @@ async function handleTokenAuthenticate(state: any, host) {
   });
   if (response && response.status === 403) {
     alert("Invalid API key");
-  }else {
+  }
+  else if (response && response.status === 401) {
+    alert('Expired API key');
+  }
+  else {
     Cookies.set(C.auth, state.key);
     window.location.reload();
   }
@@ -218,7 +222,7 @@ function SignInPage(props: any) {
           placeholder="ex: ESTxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxARY"
           name="key"
           value={state.key}
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.trim() })}
         />
 
         <div className={styles.actions}>

@@ -38,6 +38,7 @@ export const get = async (route, host = C.api.host): Promise<any> => {
 
 export const post = async (route, payload, host = C.api.host): Promise<any> => {
   try {
+
     const token = Cookies.get(C.auth);
 
     let r = await fetch(`${host}${route}`, {
@@ -55,6 +56,7 @@ export const post = async (route, payload, host = C.api.host): Promise<any> => {
     }
 
     const j = await r.json();
+
     if (!j) {
       return { error: 'No response from the server.' };
     }
@@ -63,9 +65,9 @@ export const post = async (route, payload, host = C.api.host): Promise<any> => {
       return { error: j.error };
     }
 
-    console.log(route, j);
     return j;
   } catch (e) {
+    console.log(e);
     console.log(route, e);
     return { error: 'Something went wrong on our end' };
   }

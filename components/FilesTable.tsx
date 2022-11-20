@@ -3,6 +3,8 @@ import styles from '@pages/app.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
+import * as U from '@common/utilities';
+
 const FilesTable = ({ files }) => {
   const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
   const columns = useMemo(
@@ -35,6 +37,7 @@ const FilesTable = ({ files }) => {
       },
 
       {
+
         id: 'Retrieval Link',
         Header: 'Retrieval Link',
         accessor: (data) => {

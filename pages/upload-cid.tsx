@@ -1,22 +1,19 @@
 import styles from '@pages/app.module.scss';
-import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import ActionRow from '@components/ActionRow';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import Block from '@components/Block';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import SingleColumnLayout from '@components/SingleColumnLayout';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -53,6 +50,8 @@ function UploadCIDPage(props: any) {
   });
 
   const sidebarElement = <AuthenticatedSidebar active="UPLOAD_CID" viewer={props.viewer} />;
+  const estuaryRetrievalUrl = !U.isEmpty(state.cid) ? U.formatEstuaryRetrievalUrl(state.cid) : null;
+  const dwebRetrievalUrl = !U.isEmpty(state.cid) ? U.formatDwebRetrievalUrl(state.cid) : null;
 
   return (
     <Page title="Estuary: Upload: CID" description="Use an existing IPFS CID to make storage deals." url={`${props.hostname}/upload-cid`}>
@@ -75,11 +74,19 @@ function UploadCIDPage(props: any) {
             />
             {U.isEmpty(state.cid) ? null : (
               <aside className={styles.formAside}>
-                Check your CID:{' '}
-                <a href={`https://dweb.link/ipfs/${state.cid}`} target="_blank">
-                  https://dweb.link/ipfs/{state.cid}
-                </a>
-                .
+                Check your CID
+                <div>
+                  <H4>Estuary retrieval url</H4>
+                  <a href={estuaryRetrievalUrl} target="_blank">
+                    {estuaryRetrievalUrl}
+                  </a>
+                </div>
+                <div>
+                  <H4>Dweb retrieval url</H4>
+                  <a href={dwebRetrievalUrl} target="_blank">
+                    {dwebRetrievalUrl}
+                  </a>
+                </div>
               </aside>
             )}
 
