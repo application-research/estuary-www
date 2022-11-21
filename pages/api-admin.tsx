@@ -172,50 +172,52 @@ function APIPage(props: any) {
                 </th>
               </tr>
               {state.keys && state.keys.length
-                ? state.keys.map((k, index) => {
-                    const expiryDate = new Date(k.expiry);
-                    const currentDate = new Date();
-                    const isExpired = expiryDate < currentDate;
+                ? state.keys
+                    .filter((k) => !k.isSession)
+                    .map((k, index) => {
+                      const expiryDate = new Date(k.expiry);
+                      const currentDate = new Date();
+                      const isExpired = expiryDate < currentDate;
 
-                    return (
-                      <tr key={k.tokenHash ? k.tokenHash : k.token} className={tstyles.tr}>
-                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
-                          {k.label}
-                        </td>
-                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
-                          {k.token ? k.token : REDACTED_TOKEN_STRING} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
-                        </td>
-                        <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
-                          {U.toDate(k.expiry)}
-                        </td>
-                        <td className={tstyles.td}>
-                          <button
-                            onClick={async () => {
-                              const confirm = window.confirm('Are you sure you want to delete this key?');
-                              if (!confirm) {
-                                return;
-                              }
+                      return (
+                        <tr key={k.tokenHash ? k.tokenHash : k.token} className={tstyles.tr}>
+                          <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
+                            {k.label}
+                          </td>
+                          <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
+                            {k.token ? k.token : REDACTED_TOKEN_STRING} {viewerToken === k.token ? <strong>(current browser session)</strong> : null}
+                          </td>
+                          <td style={{ opacity: isExpired ? 0.2 : 1 }} className={tstyles.td}>
+                            {U.toDate(k.expiry)}
+                          </td>
+                          <td className={tstyles.td}>
+                            <button
+                              onClick={async () => {
+                                const confirm = window.confirm('Are you sure you want to delete this key?');
+                                if (!confirm) {
+                                  return;
+                                }
 
-                              const response = await R.del(`/user/api-keys/${k.tokenHash ? k.tokenHash : k.token}`, props.api);
-                              if (viewerToken === k.token) {
-                                window.location.href = '/';
-                                return;
-                              }
+                                const response = await R.del(`/user/api-keys/${k.tokenHash ? k.tokenHash : k.token}`, props.api);
+                                if (viewerToken === k.token) {
+                                  window.location.href = '/';
+                                  return;
+                                }
 
-                              const keys = await R.get('/user/api-keys', props.api);
-                              if (keys && !keys.error) {
-                                setState({ ...state, keys });
-                              }
-                            }}
-                            className={tstyles.tdbutton}
-                          >
-                            {isExpired ? 'Delete expired' : `Revoke`}
-                          </button>
-                          {!isExpired && k.token ? <CopyButton content={k.token} /> : null}
-                        </td>
-                      </tr>
-                    );
-                  })
+                                const keys = await R.get('/user/api-keys', props.api);
+                                if (keys && !keys.error) {
+                                  setState({ ...state, keys });
+                                }
+                              }}
+                              className={tstyles.tdbutton}
+                            >
+                              {isExpired ? 'Delete expired' : `Revoke`}
+                            </button>
+                            {!isExpired && k.token ? <CopyButton content={k.token} /> : null}
+                          </td>
+                        </tr>
+                      );
+                    })
                 : null}
             </tbody>
           </table>
