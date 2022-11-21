@@ -101,6 +101,7 @@ const FilesTable = ({ files }) => {
           <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
             <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
             <option value="https://dweb.link/ipfs/">Dweb</option>
+            <option value="https://strn.pl/ipfs/">Saturn</option>
           </select>
         </div>
         <thead>
