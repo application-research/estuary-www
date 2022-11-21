@@ -1,9 +1,6 @@
 import tstyles from '@pages/files-table.module.scss';
-import styles from '@pages/app.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-
-import * as U from '@common/utilities';
 
 const FilesTable = ({ files }) => {
   const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
@@ -37,11 +34,10 @@ const FilesTable = ({ files }) => {
       },
 
       {
-
         id: 'Retrieval Link',
         Header: 'Retrieval Link',
         accessor: (data) => {
-          return data.cid != null ? gateway+data.cid['/'] : '/';
+          return data.cid != null ? gateway + data.cid['/'] : '/';
         },
         Cell: ({ value }) => (
           <a href={value} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
@@ -100,13 +96,14 @@ const FilesTable = ({ files }) => {
   return (
     <React.Fragment>
       <table className={tstyles.table} {...getTableProps()}>
-      <div className={tstyles.gateway}>
-        <label>Gateway:</label>
-        <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
-          <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
-          <option value="https://dweb.link/ipfs/">Dweb</option>
-        </select>
-      </div>
+        <div className={tstyles.gateway}>
+          <label>Gateway:</label>
+          <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
+            <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+            <option value="https://dweb.link/ipfs/">Dweb</option>
+            <option value="https://strn.pl/ipfs/">Saturn</option>
+          </select>
+        </div>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className={tstyles.tr} {...headerGroup.getHeaderGroupProps()}>
