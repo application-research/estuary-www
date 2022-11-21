@@ -62,7 +62,7 @@ function DealErrorPage(props: any) {
               <th className={tstyles.th} style={{ width: 120 }}>
                 provider
               </th>
-              <th className={tstyles.th} style={{ width: 120 }}>
+              <th className={tstyles.th} style={{ width: 140 }}>
                 deal uuid
               </th>
               <th className={tstyles.th} style={{ width: 120 }}>
