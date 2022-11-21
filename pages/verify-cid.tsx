@@ -170,7 +170,7 @@ function VerifyCIDPage(props: any) {
     );
   }
 
-  const cid = state.data && state.data.content ? state.data.content.id : state.cid;
+  const cid = state.data && state.data.content ? state.data.content.cid : state.cid;
   const estuaryRetrievalUrl = U.formatEstuaryRetrievalUrl(cid);
   const dwebRetrievalUrl = U.formatDwebRetrievalUrl(cid);
 
