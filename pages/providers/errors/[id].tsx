@@ -53,7 +53,7 @@ function MinerErrorPage(props: any) {
               <th className={tstyles.th} style={{ width: 104 }}>
                 Provider
               </th>
-              <th className={tstyles.th} style={{ width: 104 }}>
+              <th className={tstyles.th} style={{ width: 140 }}>
                 Deal UUID
               </th>
               <th className={tstyles.th} style={{ width: 96 }}>
