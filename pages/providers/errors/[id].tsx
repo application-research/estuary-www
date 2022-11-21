@@ -71,7 +71,7 @@ function MinerErrorPage(props: any) {
                         {log.miner}
                       </a>
                     </td>
-                    <td className={tstyles.td}>4658ab8f-026c-4249-b3ad-eac2104ae84b{log.deal_uuid}</td>
+                    <td className={tstyles.td}>{log.deal_uuid}</td>
                     <td className={tstyles.td}>{log.phase}</td>
                     <td className={tstyles.td}>
                       <strong>[{log.minerVersion}]</strong> {log.message}
