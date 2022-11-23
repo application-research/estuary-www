@@ -1,8 +1,7 @@
 .graphArea {
-  background: #000;
-  padding-bottom: 24px;
-  overflow: hidden;
+  background: var(--main-page-background-dark-mode);
   display: block;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -24,12 +23,12 @@
   align-items: center;
   height: 56px;
   background: #393939;
-  color: #ffffff;
+  color: var(--text-white);
   transition: 200ms ease all;
   text-decoration: none;
 
   &:hover {
-    color: #ffffff;
+    color: var(--text-white);
   }
 }
 
@@ -188,7 +187,7 @@
   min-width: 10%;
   height: 100%;
   width: 100%;
-  background: #ffffff;
+  background: var(--text-white);
   padding: 48px;
   overflow: hidden;
   display: flex;
@@ -215,16 +214,25 @@
 }
 
 .f {
-  background: #262626;
+  padding-bottom: 80px;
+  font-family: "Mono";
+}
+
+.f a{
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fb {
-  background: #161616;
+  background: var(--main-page-background-dark-mode);
+  border-top: 1px solid var(--text-space-gray);
+  color: var(--text-white)
 }
 
 .fa {
   font-size: 1.225rem;
-  color: #fff;
+  color: var(--text-white);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -236,7 +244,7 @@
 
 .fam {
   font-size: 1.225rem;
-  color: #fff;
+  color: var(--text-white);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -264,7 +272,8 @@
 
 a.flink {
   &:hover {
-    background: var(--main-primary);
+    background: var(--main-table-hover);
+    color: var(--text-black);
     cursor: pointer;
   }
 }
@@ -275,13 +284,25 @@ a.flink {
   display: flex;
   align-items: center;
   height: 56px;
-  background: #393939;
-  color: #ffffff;
+  color: var(--text-white);
   transition: 200ms ease all;
   text-decoration: none;
+  border-bottom: 1px solid var(--text-space-gray);
 
   &:hover {
-    color: #ffffff;
+    color: var(--text-white);
+  }
+}
+
+@media (max-width: 960px) {
+  .flink{
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 568px) {
+  .flink{
+    font-size: 12px;
   }
 }
 
@@ -292,17 +313,13 @@ a.flink {
   height: 56px;
   display: flex;
   align-items: center;
-  color: #ffffff;
+  color: var(--text-white);
   text-decoration: none;
   transition: 200ms ease all;
+  font-family: "Mono";
 
   &:hover {
-    color: #ffffff;
-    background: #000;
-  }
-
-  &:visited {
-    color: #ffffff;
+    cursor: pointer;
   }
 }
 
@@ -317,7 +334,7 @@ a.flink {
 }
 
 .scustom {
-  background: #fff;
+  background: var(--text-white);
   display: block;
   padding: 24px 24px 22px 24px;
   margin-bottom: 24px;
@@ -326,7 +343,7 @@ a.flink {
 }
 
 .sc {
-  background: #fff;
+  background: var(--text-white);
   height: 128px;
   width: 220px;
   display: inline-flex;
@@ -352,17 +369,191 @@ a.flink {
 }
 
 .ecosystem {
-  background: rgba(0, 0, 0, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--main-page-background-dark-mode);
+  padding-left: 10vw;
+  padding-right: 10vw;
 }
 
-.ecosystemParagraph {
-  color: rgba(128, 128, 128, 1);
-  padding: 0 24px 0 24px;
-  font-size: 24px;
+.ecosystemEstuaryLogo{
+  padding-left: 8.4vw;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@media (max-width: 600px) {
+  .ecosystemEstuaryLogo{
+    padding-left: 5vw;
+    top: 40px;
+    padding-left: 6vw;
+  };
+}
+
+.ecosystemH2 {
+  color:white;
+  padding-bottom: 32px;
+  font-size: 32px;
+  font-weight: 600;
+  font-family: "Mono";
+}
+
+.ecosystemH3{
+  color: var(--text-white);
+  font-size: 16px;
+  font-style: "Mono";
+  font-weight: light;
 }
 
 .ecosystemHeading {
+  color: var(--text-white);
+  font-size: 24px;
+}
+
+.ecosystemLogo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width:20%;
+  height: 168px;
+  padding:88px;
+  border: 1px solid var(--text-space-gray);
+
+  @media (max-width: 1256px) {
+    width: 25%;
+  }
+
+  @media (max-width: 1024px) {
+    width: 10%;
+  }
+
+  @media (max-width: 960px){
+    width: 50%;
+  }
+
+  @media (max-width: 568px){
+    width: 100%;
+  }
+}
+
+.ecosystemLogoBox:hover{
+  -moz-transition: background-color 0.1s;
+  -o-transition: background-color 0.1s;
+  -webkit-transition: background-color 0.1s;
+  background: var(--text-space-gray);
+  border-radius: 4px;
+  padding: 24px; 
+}
+
+.ecosystemNav{
+  background-color: var(--main-page-background-dark-mode);
+  border-bottom: 1px solid var(--text-space-gray);
+  font-size: 14px;
+  font-style: "Mono";
+  height: 80px;
+  overflow: hidden;
+  position: -webkit-sticky;
+  position: sticky; 
+  top: 0;
+  width: 100%;
+}
+
+.ecosystemNav .ecosystemNavList {
+  float: right;
+  margin-right: 10vw;
+}
+
+.ecosystemNav .ecosystemNavList .ecosystemNavListItem{
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+
+.ecosystemNavListItem:active{
+  scroll-behavior: smooth;
+}
+
+.ecosystemNav .ecosystemNavList .ecosystemNavListItem .ecosystemNavLink{
+  border-radius: 4px;
+  color: var(--text-white);
+  font-family: 'Mono';
+  font-size: 16px;
+  padding: 7px 13px; 
+  text-decoration: none;
+}
+
+.ecosystemNavLink:hover {
+  background: var(--text-space-gray);
+  transition: .5s;
+}
+
+@media (max-width: 598px){
+  .ecosystemNavLink{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 952px){
+  .ecosystemNav .ecosystemNavList .ecosystemNavListItem .ecosystemNavLink{
+    font-size: 12px;
+  }
+}
+
+.ecosystemNavList{
+  padding: 0;
+  margin: 0; 
+  list-style: none; 
+}
+
+.ecosystemNav .ecosystemNavList .ecosystemNavItem{
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+
+@media (max-width: 598px){
+  .ecosystemNav {
+    height: 120px;
+  }
+
+  .ecosystemNav .ecosystemNavList {
+    float: left;
+    margin-left: 6.5vw;
+    margin-top: 40px;
+  }
+}
+
+.ecosystemNav .ecosystemNavList .ecosystemNavItem .ecosystemNavLink{
+  color: white;
+}
+
+.ecosystemNavLink{
+  font-style: "Mono";
+  font-size: 14px;
+}
+
+.ecosystemParagraph {
+  color: var(--text-space-gray);
+  font-size: 32px;
+}
+
+.ecosystemPerformance{
+  column-gap: 48px;
+  display: grid;
+  grid-gap: 48px;
+  grid-template-columns:  repeat(3, minmax(0, 1fr)); 
+  row-gap: 48px;
+
+  @media (max-width: 960px){
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); 
+    grid-gap: 12px;
+  }
+
+  @media (max-width: 481px){
+    grid-template-columns: repeat(1, minmax(0, 1fr)); 
+    grid-gap: 24px;
+  }
 }
 
 .ecosystemSection {
@@ -371,13 +562,14 @@ a.flink {
   display: inline-flex;
 }
 
-.ecosystemStatCard {
-  padding: 20px;
-}
-
 .ecosystemStatValue {
+  color: white;
   font-size: 32px;
   font-weight: 600;
+
+  @media (max-width: 960px){
+    font-size: 24px;
+  }
 }
 
 .ecosystemStatText {
@@ -388,6 +580,14 @@ a.flink {
   color: rgba(99, 99, 99, 1);
 }
 
-.ecosystemParagraph {
-  padding: 20px;
+.ecosystemImage{
+  height: 35px;
+
+  @media (max-width: 1256px) {
+    height:30px;
+  }
+
+  @media (max-width: 960px){
+    height: 30px;
+  }
 }
