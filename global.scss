@@ -113,7 +113,10 @@ img {
 
 html,
 body {
+  --border-white:#ffffff;
+  --border-fainted-white: rgba(255, 255, 255, 0.5);
   --main-background: rgba(246, 246, 246, 1);
+  --main-background-white: #ffffff;
   --main-background-foreground: rgba(240, 240, 240, 1);
   --main-background-input: #ffffff;
 
@@ -122,11 +125,12 @@ body {
   --main-background-table-cell: #f9f9f9;
   --main-background-navigation-admin: #f2f4f8;
   --main-background-navigation-hover: #f4f4f4;
+  --main-page-background-dark-mode: #171722;
 
   --main-text: #000000;
   --main-text-details: #8d8d8d;
   --main-primary: rgba(0, 2, 255, 1);
-
+  --main-table-hover: #ffffff;
   --main-border-input: rgba(0, 0, 0, 0.4);
   --main-border: rgba(0, 0, 0, 0.2);
 
@@ -157,6 +161,10 @@ body {
   --status-success: #46c34c;
   --status-success-bright: rgba(12, 255, 0, 1);
   --status-error: #cb1b3f;
+
+  --text-white: #ffffff;
+  --text-black: #000000;
+  --text-space-gray: #373842;
 
   font-family: -apple-system, BlinkMacSystemFont, helvetica neue, helvetica, sans-serif;
   background: var(--main-background);
