@@ -113,7 +113,7 @@ function EcosystemPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const miners = await R.get('/public/miners', props.api);
-      const stats = await R.get('/public/stats', props.api);
+      const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const environment = await R.post('/api/v1/environment/equinix/list/usages', staticEnvironmentPayload, C.api.metricsHost);
 
       if ((miners && miners.error) || (stats && stats.error)) {
