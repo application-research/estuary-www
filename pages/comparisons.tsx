@@ -69,7 +69,7 @@ function ComparisonPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const data = await R.get('/public/metrics/deals-on-chain', props.api);
+      const data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost)
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];
