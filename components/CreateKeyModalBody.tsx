@@ -1,19 +1,23 @@
 import styles from '@pages/app.module.scss';
 
-import * as React from 'react';
 import * as R from '@common/requests';
-import Button from './Button';
-import Input from './Input';
 import { useState } from 'react';
-import { H4, P } from './Typography';
+import Button from './Button';
 import CopyButton from './CopyButton';
+import Input from './Input';
+import { H4, P } from './Typography';
 
 function CreateKeyModalBody(props: any) {
   const [state, setState] = useState({ token: null, label: null, loading: false, copied: false });
 
   const onSubmit = async () => {
     setState({ ...state, loading: true });
-    const authToken = await R.post(`/user/api-keys?label=${state.label}`, {}, props.api);
+    var authToken;
+    if (props.expiry == false) {
+      authToken = await R.post(`/user/api-keys?expiry=false&label=${state.label}`, { expiry: false }, props.api);
+    } else {
+      authToken = await R.post(`/user/api-keys?label=${state.label}`, {}, props.api);
+    }
     setState({ ...state, token: authToken.token, loading: false });
   };
   if (!state.token) {

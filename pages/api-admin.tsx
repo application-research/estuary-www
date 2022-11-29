@@ -1,26 +1,23 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Cookie from 'js-cookie';
-import ProgressCard from '@components/ProgressCard';
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import PageHeader from '@components/PageHeader';
+import Cookie from 'js-cookie';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
-import Modal from '@root/components/Modal';
-import Input from '@root/components/Input';
-import CreateKeyModalBody from '@root/components/CreateKeyModalBody';
+import { H2, P } from '@components/Typography';
 import CopyButton from '@root/components/CopyButton';
+import CreateKeyModalBody from '@root/components/CreateKeyModalBody';
+import Modal from '@root/components/Modal';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -46,6 +43,7 @@ function APIPage(props: any) {
   console.log(viewerToken);
   const [state, setState] = React.useState({ keys: [], loading: false });
   const [showCreateKeyModal, setShowCreateKeyModal] = React.useState(false);
+  const [showCreatePermanentKeyModal, setShowCreatePermanentKeyModal] = React.useState(false);
 
   React.useEffect(() => {
     const run = async () => {
@@ -58,7 +56,7 @@ function APIPage(props: any) {
     };
 
     run();
-  }, [showCreateKeyModal]);
+  }, [showCreateKeyModal, showCreatePermanentKeyModal]);
 
   const sidebarElement = <AuthenticatedSidebar active="API" viewer={props.viewer} />;
 
@@ -101,19 +99,23 @@ function APIPage(props: any) {
                 color: 'var(--main-button-text-secondary)',
               }}
               loading={state.loading ? state.loading : undefined}
-              onClick={async () => {
-                setState({ ...state, loading: true });
-                const request = await R.post(`/user/api-keys?expiry=false`, { expiry: false }, props.api);
-
-                const keys = await R.get('/user/api-keys', props.api);
-                if (keys && !keys.error) {
-                  setState({ ...state, loading: false, keys });
-                  return;
-                }
+              onClick={() => {
+                setShowCreatePermanentKeyModal(true);
               }}
             >
               Create permanent key
             </Button>
+            {showCreatePermanentKeyModal && (
+              <Modal
+                title="Create Permanent Key"
+                onClose={() => {
+                  setShowCreatePermanentKeyModal(false);
+                }}
+                show={showCreatePermanentKeyModal}
+              >
+                <CreateKeyModalBody expiry={false} />
+              </Modal>
+            )}
             <Button
               style={{
                 marginBottom: 24,
