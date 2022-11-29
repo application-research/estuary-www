@@ -12,7 +12,7 @@ import Input from '@components/Input';
 import StatRow from '@components/StatRow';
 import LoaderSpinner from '@components/LoaderSpinner';
 import RetrievalCommands from '@components/RetrievalCommands';
-
+import * as C from '@common/constants';
 import { H1, H2, H3, H4, P } from '@components/Typography';
 
 // NOTE(jim): test CIDs
@@ -91,7 +91,7 @@ function VerifyCIDPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const stats = await R.get('/public/stats', props.api);
+      const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
 

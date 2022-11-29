@@ -12,7 +12,7 @@ import FeatureRow from '@components/FeatureRow';
 import MarketingCube from '@components/MarketingCube';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Chart from '@components/Chart';
-
+import * as C from '@common/constants';
 import { H1, H2, H3, H4, P } from '@components/Typography';
 import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
 
@@ -47,7 +47,7 @@ function IndexPage(props: any) {
       let stats;
       try {
         miners = await R.get('/public/miners', props.api);
-        stats = await R.get('/public/stats', props.api);
+        stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       } catch (e) {}
 
       if ((miners && miners.error) || (stats && stats.error)) {
