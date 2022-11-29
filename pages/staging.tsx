@@ -102,8 +102,8 @@ function StagingPage(props) {
                 <table className={tstyles.table}>
                   <tbody className={tstyles.tbody}>
                     <tr className={tstyles.tr}>
-                      <th className={tstyles.th} style={{ width: '80px' }}>
-                        #
+                      <th className={tstyles.th} style={{ width: '88px' }}>
+                        Local ID
                       </th>
 
                       <th className={tstyles.th} style={{ width: '30%' }}>
@@ -123,9 +123,9 @@ function StagingPage(props) {
                       const estuaryRetrievalUrl = U.formatEstuaryRetrievalUrl(data.cid);
                       const dwebRetrievalUrl = U.formatDwebRetrievalUrl(data.cid);
                       return (
-                        <tr key={`${data.cid['/']}-${index}`} className={tstyles.tr}>
+                        <tr key={`${data.cid['/']}-${data.id}`} className={tstyles.tr}>
                           <td className={tstyles.td} style={{ fontSize: 12, fontFamily: 'Mono', opacity: 0.4 }}>
-                            {String(index).padStart(7, '0')}
+                            {String(data.id).padStart(9, '0')}
                           </td>
                           <td className={tstyles.td}>{data.name}</td>
                           <td className={tstyles.tdcta}>
