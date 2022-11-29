@@ -64,7 +64,6 @@ function IndexPage(props: any) {
     async function load() {
       let data;
       try {
-        //data = await R.get('/public/metrics/deals-on-chain', props.api);
         data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost)
 
       } catch (e) {
