@@ -41,9 +41,8 @@ function CreateKeyModalBody(props: any) {
     return (
       <div className={styles.group} style={{ paddingTop: '16px' }}>
         <P style={{ maxWidth: '620px' }}>
-          Copy and save the following API key corresponding to your "<b>{state.label}</b>" label.
-          {/* once db is omitting token, add language: "For security purposes, we do not store this API key. If it is lost or compromised, please revoke
-          and create a new key." */}
+          Copy and save the following API key corresponding to your "<b>{state.label}</b>" label. For security purposes, we do not store this API key. If it is lost or compromised,
+          please revoke it and create a new key.
         </P>
         <H4 style={{ marginTop: '16px', width: '488px', display: 'inline-block' }}>{state.token}</H4>
         <CopyButton content={state.token} />
