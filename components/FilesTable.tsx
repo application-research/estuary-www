@@ -1,3 +1,4 @@
+import * as U from '@common/utilities';
 import tstyles from '@pages/files-table.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
@@ -10,7 +11,7 @@ const FilesTable = ({ files }) => {
         id: 'Local Id',
         Header: 'Local id',
         accessor: (data) => String(data.id).padStart(9, '0'),
-        Cell: ({ value }) => <div style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
+        Cell: ({ value }) => <span style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</span>,
         disableFilters: true,
         width: '10%',
       },
@@ -29,7 +30,7 @@ const FilesTable = ({ files }) => {
             return data.filename;
           }
         },
-        width: '30%',
+        width: '17%',
         Filter: DefaultColumnFilter,
       },
 
@@ -44,7 +45,25 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
-        width: '60%',
+        width: '50%',
+        Filter: DefaultColumnFilter,
+      },
+      {
+        id: 'Size',
+        Header: 'Size',
+        accessor: (data) => {
+          return U.bytesToSize(data.size);
+        },
+        width: '8%',
+        Filter: DefaultColumnFilter,
+      },
+      {
+        id: 'Created At',
+        Header: 'Created At',
+        accessor: (data) => {
+          return U.toDate(data.createdAt);
+        },
+        width: '25%',
         Filter: DefaultColumnFilter,
       },
     ],
