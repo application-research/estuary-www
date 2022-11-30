@@ -147,15 +147,13 @@ const FilesTable = ({ files }) => {
         <tbody className={tstyles.tbody} {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row);
-            if (row.values.Name != './') {
-              return (
-                <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
-                  {row.cells.map((cell) => {
-                    return <td className={tstyles.td}>{cell.render('Cell')}</td>;
-                  })}
-                </tr>
-              );
-            }
+            return (
+              <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
+                {row.cells.map((cell) => {
+                  return <td className={tstyles.td}>{cell.render('Cell')}</td>;
+                })}
+              </tr>
+            );
           })}
         </tbody>
       </table>
