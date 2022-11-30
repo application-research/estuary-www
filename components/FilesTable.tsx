@@ -155,13 +155,15 @@ const FilesTable = ({ files }) => {
         <tbody className={tstyles.tbody} {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row);
-            return (
-              <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
-                {row.cells.map((cell) => {
-                  return <td className={tstyles.td}>{cell.render('Cell')}</td>;
-                })}
-              </tr>
-            );
+            if (row.values.Name != './') {
+              return (
+                <tr className={tstyles.tr} {...row.getRowProps([{ style: {} }])}>
+                  {row.cells.map((cell) => {
+                    return <td className={tstyles.td}>{cell.render('Cell')}</td>;
+                  })}
+                </tr>
+              );
+            }
           })}
         </tbody>
       </table>
