@@ -12,7 +12,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => <div style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
         disableFilters: true,
-        width: '20%',
+        width: '10%',
       },
 
       {
@@ -44,16 +44,8 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
-        width: '35%',
+        width: '60%',
         Filter: DefaultColumnFilter,
-      },
-
-      {
-        id: 'Files',
-        Header: 'Files',
-        accessor: (data) => data.aggregatedFiles + 1,
-        disableFilters: true,
-        width: '15%',
       },
     ],
     [gateway]
@@ -95,15 +87,15 @@ const FilesTable = ({ files }) => {
   }
   return (
     <React.Fragment>
+      <div className={tstyles.gateway}>
+        <label>Gateway:</label>
+        <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
+          <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+          <option value="https://dweb.link/ipfs/">Dweb</option>
+          <option value="https://strn.pl/ipfs/">Saturn</option>
+        </select>
+      </div>
       <table className={tstyles.table} {...getTableProps()}>
-        <div className={tstyles.gateway}>
-          <label>Gateway:</label>
-          <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
-            <option value="https://gateway.estuary.tech/gw/ipfs/">Estuary.tech</option>
-            <option value="https://dweb.link/ipfs/">Dweb</option>
-            <option value="https://strn.pl/ipfs/">Saturn</option>
-          </select>
-        </div>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className={tstyles.tr} {...headerGroup.getHeaderGroupProps()}>
