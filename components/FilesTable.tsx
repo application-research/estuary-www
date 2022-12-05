@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 
 const FilesTable = ({ files }) => {
-  const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
+  const [gateway, setGateway] = useState('https://gateway.estuary.tech/gw/file/');
   const columns = useMemo(
     () => [
       {
@@ -99,7 +99,7 @@ const FilesTable = ({ files }) => {
         <div className={tstyles.gateway}>
           <label>Gateway:</label>
           <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
-            <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+            <option value="https://gateway.estuary.tech/gw/file/">Estuary.tech</option>
             <option value="https://dweb.link/ipfs/">Dweb</option>
             <option value="https://strn.pl/ipfs/">Saturn</option>
           </select>
