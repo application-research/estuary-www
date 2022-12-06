@@ -13,7 +13,6 @@ import Page from '@components/Page';
 import PageHeader from '@components/PageHeader';
 
 import { H2, H3, P } from '@components/Typography';
-import StagingZoneReadinessTable from '@root/components/StagingZoneReadinessTable';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -60,8 +59,8 @@ function StagingPage(props) {
         <PageHeader>
           <H2>Staging zone</H2>
           <P style={{ marginTop: 16 }}>
-            When you upload data under the size of {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged here. After a few hours a storage deal will
-            be made.
+            When you upload data under the size of {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, the data will be staged here. After the total size of staged data
+            reaches this size, a storage deal will be made within a few minutes.
           </P>
 
           <div className={styles.actions}>
@@ -94,7 +93,6 @@ function StagingPage(props) {
                   </tr>
                 </tbody>
               </table>
-              <StagingZoneReadinessTable readiness={bucket.readiness} />
             </div>
 
             {bucket.contents && bucket.contents.length ? (
