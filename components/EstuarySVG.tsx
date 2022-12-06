@@ -1,4 +1,4 @@
-export const EstuarySVG = (props) => {
+const EstuarySVG = (props) => {
   return (
     <svg {...props} width="218" height="38" viewBox="0 0 218 38" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 1.5H22.1L20.1 7.8H7.5V15.4H18V21.7H7.5V30.1H22.2V36.4H0V1.5Z" fill="white" />

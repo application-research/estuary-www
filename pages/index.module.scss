@@ -2,7 +2,6 @@
   background: var(--main-page-background-dark-mode);
   display: block;
   overflow: hidden;
-  width: 100%;
 }
 
 .form {
@@ -283,6 +282,7 @@ a.flink {
   padding: 0 15px 0 15px;
   text-decoration: none;
   transition: 200ms ease all;
+ 
 
   &:hover {
     color: var(--text-white);
@@ -448,49 +448,102 @@ a.flink {
 }
 
 .ecosystemPerformance{
-  column-gap: 48px;
   display: grid;
-  grid-gap: 48px;
-  grid-template-columns:  repeat(3, minmax(0, 1fr)); 
-  row-gap: 48px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
 
-  @media (max-width: 960px){
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); 
-    grid-gap: 24px;
+.ecosystemSectionWithIcon {
+  grid-column: span 2;
+  border: 1px dashed var(--text-space-gray);
+
+  @media (max-width: 992px){
+    grid-column: span 4;
   }
 
-  @media (max-width: 481px){
-    grid-template-columns: repeat(1, minmax(0, 1fr)); 
-    grid-gap: 24px;
+  @media (max-width: 768px){
+    grid-column: span 4;
   }
 }
 
 .ecosystemSection {
-  max-width: 480px;
-  width: 100%;
-  display: inline-flex;
+  grid-column: span 2;
+
+  @media (max-width: 992px){
+    grid-column: span 4;
+  }
+
+  @media (max-width: 768px){
+    grid-column: span 4;
+  }
+}
+
+.ecosystemStatCardWithIcon{
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+}
+
+.ecosystemStatCard{
+  height: 150px;
+}
+
+.ecosystemStatValueWithIcon {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 32px;
+  font-weight: 600;
+  justify-content: center;
+  padding: 24px;
+  width: 70%;
+
+  @media (max-width: 1200px){
+    font-size: 24px;
+  }
+
+  @media (max-width: 768px){
+    font-size: 20px;
+  }
 }
 
 .ecosystemStatValue {
   color: white;
+  display: flex;
   font-size: 32px;
   font-weight: 600;
+  justify-content: center;
+  padding: 24px;
 
-  @media (max-width: 960px){
+  @media (max-width: 1200px){
     font-size: 24px;
+  }
+
+  @media (max-width: 768px){
+    font-size: 20px;
   }
 }
 
 .ecosystemStatText {
-  font-size: 14px;
+  font-size: 12px;
   font-family: 'Mono';
   margin-top: 8px;
   text-transform: uppercase;
   color: rgba(99, 99, 99, 1);
+  
+  @media (max-width: 768px){
+    font-size: 12px;
+    max-width: 75%;
+  }
 }
 
-////////@at-root.collaborations
+.ecosystemStatIcon{
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  height: 150px;
+}
+
 .collaborations{
   display: flex;
   flex-wrap: wrap;
@@ -520,10 +573,4 @@ a.flink {
     padding: 1em;
     flex-direction: column;
   }
-}
-
-
-.ecosystemStatIcon{
-  margin-left: auto;
-  margin-right: auto;
 }

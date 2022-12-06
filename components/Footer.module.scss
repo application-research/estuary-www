@@ -21,14 +21,14 @@
     color: var(--color-green);
     font-family: 'Parabole';
     -webkit-font-smoothing: antialiased;
-    
+    font-size: 24px;
+
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 20px;
         margin-bottom: 8px;
     }
 
     @media (max-width: 1920px) {
-        font-size: 20px;
         margin-bottom: 16px;
     }
 }
