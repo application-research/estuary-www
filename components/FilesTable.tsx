@@ -30,7 +30,7 @@ const FilesTable = ({ files }) => {
             return data.filename;
           }
         },
-        width: '17%',
+        width: '15%',
         Filter: DefaultColumnFilter,
       },
 
@@ -45,7 +45,7 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
-        width: '50%',
+        width: '55%',
         Filter: DefaultColumnFilter,
       },
       {
@@ -63,7 +63,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => {
           return U.toDate(data.createdAt);
         },
-        width: '25%',
+        width: '22%',
         Filter: DefaultColumnFilter,
       },
     ],
