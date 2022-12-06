@@ -8,6 +8,11 @@
   src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/JetBrainsMono-Medium.woff2') format('woff');
 }
 
+@font-face {
+  font-family: 'Parabole';
+  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/Parabole-Regular.woff') format('woff');
+}
+
 html,
 body,
 div,
@@ -112,9 +117,13 @@ img {
 }
 
 html,
-body {
+body { 
+  --line-height: 1.5;
+ 
   --border-white:#ffffff;
   --border-fainted-white: rgba(255, 255, 255, 0.5);
+
+  --color-green:  #76FF01;
   --main-background: rgba(246, 246, 246, 1);
   --main-background-white: #ffffff;
   --main-background-foreground: rgba(240, 240, 240, 1);
@@ -139,6 +148,9 @@ body {
   --main-button-background-secondary: rgba(0, 0, 0, 1);
   --main-button-background-fission: #6446fa;
   --main-button-text-secondary: #ffffff;
+
+  --main-page-margin: 10vw;
+  --main-page-row-gap: 80px;
 
   --status-0: #387bf9;
   --status-1: #387bf9;
