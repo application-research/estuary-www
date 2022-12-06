@@ -1,3 +1,4 @@
+import * as U from '@common/utilities';
 import tstyles from '@pages/files-table.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
@@ -10,9 +11,9 @@ const FilesTable = ({ files }) => {
         id: 'Local Id',
         Header: 'Local id',
         accessor: (data) => String(data.id).padStart(9, '0'),
-        Cell: ({ value }) => <div style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</div>,
+        Cell: ({ value }) => <span style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</span>,
         disableFilters: true,
-        width: '20%',
+        width: '7.8em',
       },
 
       {
@@ -29,7 +30,7 @@ const FilesTable = ({ files }) => {
             return data.filename;
           }
         },
-        width: '30%',
+        width: '25%',
         Filter: DefaultColumnFilter,
       },
 
@@ -44,16 +45,26 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
-        width: '35%',
+        width: '40%',
         Filter: DefaultColumnFilter,
       },
-
       {
-        id: 'Files',
-        Header: 'Files',
-        accessor: (data) => data.aggregatedFiles + 1,
-        disableFilters: true,
-        width: '15%',
+        id: 'Size',
+        Header: 'Size',
+        accessor: (data) => {
+          return U.bytesToSize(data.size);
+        },
+        width: '7em',
+        Filter: DefaultColumnFilter,
+      },
+      {
+        id: 'Created At',
+        Header: 'Created At',
+        accessor: (data) => {
+          return U.toDate(data.createdAt);
+        },
+        width: '30%',
+        Filter: DefaultColumnFilter,
       },
     ],
     [gateway]
@@ -95,15 +106,15 @@ const FilesTable = ({ files }) => {
   }
   return (
     <React.Fragment>
+      <div className={tstyles.gateway}>
+        <label>Gateway:</label>
+        <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
+          <option value="https://api.estuary.tech/gw/ipfs/">Estuary.tech</option>
+          <option value="https://dweb.link/ipfs/">Dweb</option>
+          <option value="https://strn.pl/ipfs/">Saturn</option>
+        </select>
+      </div>
       <table className={tstyles.table} {...getTableProps()}>
-        <div className={tstyles.gateway}>
-          <label>Gateway:</label>
-          <select className={tstyles.gatewayInput} value={gateway} onChange={(e) => setGateway(e.target.value)}>
-            <option value="https://gateway.estuary.tech/gw/ipfs/">Estuary.tech</option>
-            <option value="https://dweb.link/ipfs/">Dweb</option>
-            <option value="https://strn.pl/ipfs/">Saturn</option>
-          </select>
-        </div>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr className={tstyles.tr} {...headerGroup.getHeaderGroupProps()}>
