@@ -13,7 +13,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => <span style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</span>,
         disableFilters: true,
-        width: '10em',
+        width: '7.8em',
       },
 
       {
@@ -30,7 +30,7 @@ const FilesTable = ({ files }) => {
             return data.filename;
           }
         },
-        width: '20%',
+        width: '25%',
         Filter: DefaultColumnFilter,
       },
 
@@ -45,7 +45,7 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
-        width: '45%',
+        width: '40%',
         Filter: DefaultColumnFilter,
       },
       {
@@ -54,7 +54,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => {
           return U.bytesToSize(data.size);
         },
-        width: '15%',
+        width: '7em',
         Filter: DefaultColumnFilter,
       },
       {
@@ -63,7 +63,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => {
           return U.toDate(data.createdAt);
         },
-        width: '20%',
+        width: '30%',
         Filter: DefaultColumnFilter,
       },
     ],

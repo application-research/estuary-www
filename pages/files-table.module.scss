@@ -80,9 +80,12 @@
 }
 
 .td {
-  padding: 8px 8px 8px 14px;
+  padding: 1em;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (max-width: 960px) {
+    padding: 0.5em;
+  }
 }
 
 .tdcta {
@@ -95,7 +98,6 @@
 
 .cta {
   display: block;
-  padding: 8px 8px 8px 14px;
   transition: 200ms ease all;
   color: var(--main-background-table-text-color);
   text-decoration: none;
