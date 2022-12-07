@@ -2,7 +2,6 @@
   background: var(--main-page-background-dark-mode);
   display: block;
   overflow: hidden;
-  width: 100%;
 }
 
 .form {
@@ -169,7 +168,7 @@
   }
 
   @media (max-width: 1024px) {
-    width: 40%;
+    max-width: max-content;
     padding-bottom: 24px;
     padding-top: 24px;
   }
@@ -213,15 +212,8 @@
   text-align: right;
 }
 
-.f {
+.ecosystemPerformanceTable{
   padding-bottom: 80px;
-  font-family: "Mono";
-}
-
-.f a{
-  font-size: 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .fb {
@@ -279,15 +271,18 @@ a.flink {
 }
 
 .flink {
-  display: block;
-  padding: 0 15px 0 15px;
-  display: flex;
   align-items: center;
-  height: 56px;
-  color: var(--text-white);
-  transition: 200ms ease all;
-  text-decoration: none;
   border-bottom: 1px solid var(--text-space-gray);
+  color: var(--text-white);
+  display: block;
+  display: flex;
+  font-family: 'Mono';
+  font-size: 16px;
+  height: 56px;
+  padding: 0 15px 0 15px;
+  text-decoration: none;
+  transition: 200ms ease all;
+ 
 
   &:hover {
     color: var(--text-white);
@@ -309,7 +304,6 @@ a.flink {
 .fcta {
   display: block;
   font-size: 1.225rem;
-  padding: 0 16px 0 16px;
   height: 56px;
   display: flex;
   align-items: center;
@@ -321,6 +315,13 @@ a.flink {
   &:hover {
     cursor: pointer;
   }
+}
+
+@media (max-width: 600px) {
+  .fcta {
+    font-size: 12px;
+    white-space: nowrap;
+  };
 }
 
 .stats {
@@ -370,38 +371,32 @@ a.flink {
 
 .ecosystem {
   background: var(--main-page-background-dark-mode);
-  padding-left: 10vw;
-  padding-right: 10vw;
-}
+  padding-left: var(--main-page-margin);
+  padding-right: var(--main-page-margin);
+  display: grid;
+  row-gap: var(--main-page-row-gap);
+  position: relative;
+  z-index: 3;
 
-.ecosystemEstuaryLogo{
-  padding-left: 8.4vw;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-@media (max-width: 600px) {
-  .ecosystemEstuaryLogo{
+  @media (max-width: 768px) {
     padding-left: 5vw;
-    top: 40px;
-    padding-left: 6vw;
-  };
+    padding-right: 5vw;
+  }
 }
 
 .ecosystemH2 {
-  color:white;
+  color:var(--text-white);
   padding-bottom: 32px;
   font-size: 32px;
   font-weight: 600;
-  font-family: "Mono";
+  font-family: "Parabole";
+  letter-spacing: .1rem;
 }
 
 .ecosystemH3{
   color: var(--text-white);
   font-size: 16px;
-  font-style: "Mono";
+  font-style: "Parabole";
   font-weight: light;
 }
 
@@ -414,122 +409,37 @@ a.flink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width:20%;
+  width:25%;
   height: 168px;
   padding:88px;
-  border: 1px solid var(--text-space-gray);
+  border: 1px dashed var(--text-space-gray);
 
-  @media (max-width: 1256px) {
+  @media (max-width: 1920px){
     width: 25%;
   }
 
-  @media (max-width: 1024px) {
-    width: 10%;
-  }
-
-  @media (max-width: 960px){
+  @media (max-width: 992px){
     width: 50%;
   }
 
   @media (max-width: 568px){
     width: 100%;
   }
+
 }
 
 .ecosystemLogoBox:hover{
   -moz-transition: background-color 0.1s;
   -o-transition: background-color 0.1s;
   -webkit-transition: background-color 0.1s;
+  transition: .5s;
   background: var(--text-space-gray);
   border-radius: 4px;
   padding: 24px; 
-}
 
-.ecosystemNav{
-  background-color: var(--main-page-background-dark-mode);
-  border-bottom: 1px solid var(--text-space-gray);
-  font-size: 14px;
-  font-style: "Mono";
-  height: 80px;
-  overflow: hidden;
-  position: -webkit-sticky;
-  position: sticky; 
-  top: 0;
-  width: 100%;
-}
-
-.ecosystemNav .ecosystemNavList {
-  float: right;
-  margin-right: 10vw;
-}
-
-.ecosystemNav .ecosystemNavList .ecosystemNavListItem{
-  display: inline-block;
-  line-height: 80px;
-  margin: 0 5px;
-}
-
-.ecosystemNavListItem:active{
-  scroll-behavior: smooth;
-}
-
-.ecosystemNav .ecosystemNavList .ecosystemNavListItem .ecosystemNavLink{
-  border-radius: 4px;
-  color: var(--text-white);
-  font-family: 'Mono';
-  font-size: 16px;
-  padding: 7px 13px; 
-  text-decoration: none;
-}
-
-.ecosystemNavLink:hover {
-  background: var(--text-space-gray);
-  transition: .5s;
-}
-
-@media (max-width: 598px){
-  .ecosystemNavLink{
-    font-size: 20px;
+  @media (max-width: 960px) {
+    padding: 8px;
   }
-}
-
-@media (max-width: 952px){
-  .ecosystemNav .ecosystemNavList .ecosystemNavListItem .ecosystemNavLink{
-    font-size: 12px;
-  }
-}
-
-.ecosystemNavList{
-  padding: 0;
-  margin: 0; 
-  list-style: none; 
-}
-
-.ecosystemNav .ecosystemNavList .ecosystemNavItem{
-  display: inline-block;
-  line-height: 80px;
-  margin: 0 5px;
-}
-
-@media (max-width: 598px){
-  .ecosystemNav {
-    height: 120px;
-  }
-
-  .ecosystemNav .ecosystemNavList {
-    float: left;
-    margin-left: 6.5vw;
-    margin-top: 40px;
-  }
-}
-
-.ecosystemNav .ecosystemNavList .ecosystemNavItem .ecosystemNavLink{
-  color: white;
-}
-
-.ecosystemNavLink{
-  font-style: "Mono";
-  font-size: 14px;
 }
 
 .ecosystemParagraph {
@@ -538,56 +448,129 @@ a.flink {
 }
 
 .ecosystemPerformance{
-  column-gap: 48px;
   display: grid;
-  grid-gap: 48px;
-  grid-template-columns:  repeat(3, minmax(0, 1fr)); 
-  row-gap: 48px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
 
-  @media (max-width: 960px){
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); 
-    grid-gap: 12px;
+.ecosystemSectionWithIcon {
+  grid-column: span 2;
+  border: 1px dashed var(--text-space-gray);
+
+  @media (max-width: 992px){
+    grid-column: span 4;
   }
 
-  @media (max-width: 481px){
-    grid-template-columns: repeat(1, minmax(0, 1fr)); 
-    grid-gap: 24px;
+  @media (max-width: 768px){
+    grid-column: span 4;
   }
 }
 
 .ecosystemSection {
-  max-width: 480px;
-  width: 100%;
-  display: inline-flex;
+  grid-column: span 2;
+
+  @media (max-width: 992px){
+    grid-column: span 4;
+  }
+
+  @media (max-width: 768px){
+    grid-column: span 4;
+  }
+}
+
+.ecosystemStatCardWithIcon{
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+}
+
+.ecosystemStatCard{
+  height: 150px;
+}
+
+.ecosystemStatValueWithIcon {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 32px;
+  font-weight: 600;
+  justify-content: center;
+  padding: 24px;
+  width: 70%;
+
+  @media (max-width: 1200px){
+    font-size: 24px;
+  }
+
+  @media (max-width: 768px){
+    font-size: 20px;
+  }
 }
 
 .ecosystemStatValue {
   color: white;
+  display: flex;
   font-size: 32px;
   font-weight: 600;
+  justify-content: center;
+  padding: 24px;
 
-  @media (max-width: 960px){
+  @media (max-width: 1200px){
     font-size: 24px;
+  }
+
+  @media (max-width: 768px){
+    font-size: 20px;
   }
 }
 
 .ecosystemStatText {
-  font-size: 14px;
+  font-size: 12px;
   font-family: 'Mono';
   margin-top: 8px;
   text-transform: uppercase;
   color: rgba(99, 99, 99, 1);
+  
+  @media (max-width: 768px){
+    font-size: 12px;
+    max-width: 75%;
+  }
 }
 
-.ecosystemImage{
-  height: 35px;
+.ecosystemStatIcon{
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  height: 150px;
+}
 
-  @media (max-width: 1256px) {
-    height:30px;
-  }
+.collaborations{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:row;
+  gap: 24px;
+}
 
-  @media (max-width: 960px){
-    height: 30px;
+.container{
+  display: 'flex'; 
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 168px;
+  width: 33%;
+  border: 1px dashed var(--text-space-gray);
+  padding: 2.25em; 
+  align-items: center;
+  text-align: center; 
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1em;
+    flex-direction: column;
   }
 }

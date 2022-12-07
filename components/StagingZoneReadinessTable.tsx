@@ -1,7 +1,6 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
 import * as U from '@common/utilities';
 
 function StagingZoneReadinessTable(props: any) {

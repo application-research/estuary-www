@@ -1,23 +1,19 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import ProgressCard from '@components/ProgressCard';
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
+import ActionRow from '@components/ActionRow';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import PageHeader from '@components/PageHeader';
 import Button from '@components/Button';
-import ActionRow from '@components/ActionRow';
-import AlertPanel from '@components/AlertPanel';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import PageHeader from '@components/PageHeader';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, P } from '@components/Typography';
 import FilesTable from '@root/components/FilesTable';
 
 const INCREMENT = 1000;
@@ -133,6 +129,7 @@ function HomePage(props: any) {
         ) : null}
 
         <div className={styles.group}>
+        
           {state.files && state.files.length ? <FilesTable files={state.files} setFiles={updateFiles} /> : null}
 
           {state.files && state.offset + state.limit === state.files.length ? (
