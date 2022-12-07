@@ -8,44 +8,36 @@ const FilesTable = ({ files }) => {
   const columns = useMemo(
     () => [
       {
-        id: 'Local Id',
-        Header: 'Local id',
+        id: 'Id',
+        Header: 'id',
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => <span style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</span>,
         disableFilters: true,
-        width: '7.8em',
+        width: '2.8em',
       },
 
       {
         id: 'Name',
         Header: 'Name',
         accessor: (data) => {
+          let name = ""
           if (data.name === 'aggregate') {
-            return './';
+            name = './';
+          } else if (data.name) {
+            name = data.name;
+          } else {
+            name = data.filename;
           }
-          if (data.name) {
-            return data.name;
-          }
-          if (data.filename) {
-            return data.filename;
-          }
-        },
-        width: '25%',
-        Filter: DefaultColumnFilter,
-      },
 
-      {
-        id: 'Retrieval Link',
-        Header: 'Retrieval Link',
-        accessor: (data) => {
-          return data.cid != null ? gateway + data.cid['/'] : '/';
+          const lk = data.cid != null ? gateway + data.cid['/'] : '/';
+          return {name, lk}
         },
         Cell: ({ value }) => (
-          <a href={value} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
-            {value}
+          <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
+            {value.name}
           </a>
         ),
-        width: '40%',
+        width: '45%',
         Filter: DefaultColumnFilter,
       },
       {
@@ -54,7 +46,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => {
           return U.bytesToSize(data.size);
         },
-        width: '7em',
+        width: '3em',
         Filter: DefaultColumnFilter,
       },
       {
