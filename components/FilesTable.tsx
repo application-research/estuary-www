@@ -13,7 +13,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => String(data.id).padStart(9, '0'),
         Cell: ({ value }) => <span style={{ fontFamily: 'Mono', opacity: 0.4 }}>{value}</span>,
         disableFilters: true,
-        width: '2.8em',
+        width: '7.8em',
       },
 
       {
@@ -46,7 +46,7 @@ const FilesTable = ({ files }) => {
         accessor: (data) => {
           return U.bytesToSize(data.size);
         },
-        width: '3em',
+        width: '7em',
         Filter: DefaultColumnFilter,
       },
       {
