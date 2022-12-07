@@ -1,23 +1,21 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
-import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import ProgressCard from '@components/ProgressCard';
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
-import LoaderSpinner from '@components/LoaderSpinner';
-import PageHeader from '@components/PageHeader';
+import ActionRow from '@components/ActionRow';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Button from '@components/Button';
-import ActionRow from '@components/ActionRow';
-import AlertPanel from '@components/AlertPanel';
+import LoaderSpinner from '@components/LoaderSpinner';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import PageHeader from '@components/PageHeader';
+import ProgressCard from '@components/ProgressCard';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, P } from '@components/Typography';
 
 const INCREMENT = 100;
 
@@ -34,7 +32,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 

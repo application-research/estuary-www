@@ -42,8 +42,8 @@ export const regex = {
 
 
 function getMetricsHost(): string {
-  if (process.env.ESTUARY_METRICS_API) {
-    return process.env.ESTUARY_METRICS_API;
+  if (process.env.NEXT_PUBLIC_ESTUARY_METRICS_API) {
+    return process.env.NEXT_PUBLIC_ESTUARY_METRICS_API;
   }
 
   switch (process.env.NODE_ENV) {
@@ -54,8 +54,8 @@ function getMetricsHost(): string {
   }
 }
 function getAPIHost(): string {
-  if (process.env.ESTUARY_API) {
-    return process.env.ESTUARY_API;
+  if (process.env.NEXT_PUBLIC_ESTUARY_API) {
+    return process.env.NEXT_PUBLIC_ESTUARY_API;
   }
 
   switch (process.env.NODE_ENV) {

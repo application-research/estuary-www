@@ -1,22 +1,19 @@
 import styles from '@pages/app.module.scss';
 import tstyles from '@pages/table.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import PageHeader from '@components/PageHeader';
-import Block from '@components/Block';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import PageHeader from '@components/PageHeader';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H4, P } from '@components/Typography';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function getServerSideProps(context) {
@@ -41,7 +38,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -136,7 +133,10 @@ function AdminInvitesPage(props: any) {
               </tr>
               {state.invites && state.invites.length
                 ? state.invites.map((data, index) => {
-                    const inviteLink = window.location.hostname === 'localhost' ?  `http://${window.location.host}/sign-up?invite=${data.code}` : `https://${window.location.hostname}/sign-up?invite=${data.code}`;
+                    const inviteLink =
+                      window.location.hostname === 'localhost'
+                        ? `http://${window.location.host}/sign-up?invite=${data.code}`
+                        : `https://${window.location.hostname}/sign-up?invite=${data.code}`;
                     return (
                       <tr key={data.code} className={tstyles.tr} style={{ opacity: !U.isEmpty(data.claimedBy) ? 0.2 : 1 }}>
                         <td className={tstyles.td}>

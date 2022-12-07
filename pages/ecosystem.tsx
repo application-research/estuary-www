@@ -1,13 +1,13 @@
 import S from '@pages/index.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
 import * as Logos from '@components/PartnerLogoSVG';
+import * as React from 'react';
 
-import Page from '@components/Page';
-import Chart from '@components/Chart';
 import * as C from '@common/constants';
+import Chart from '@components/Chart';
+import Page from '@components/Page';
 
 import Footer from '@root/components/Footer';
 import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -130,7 +130,7 @@ function EcosystemPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost)
+      const data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost);
 
       let dealsAttempted = 0;
       let dealsAttemptedSet = [];

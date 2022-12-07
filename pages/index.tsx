@@ -1,20 +1,12 @@
 import styles from '@pages/new-index.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Page from '@components/Page';
-import Navigation from '@components/Navigation';
-import Card from '@components/Card';
-import Button from '@components/Button';
-import FeatureRow from '@components/FeatureRow';
-import MarketingCube from '@components/MarketingCube';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import Chart from '@components/Chart';
 import * as C from '@common/constants';
-import { H1, H2, H3, H4, P } from '@components/Typography';
-import { MarketingUpload, MarketingProgress, MarketingGraph } from '@components/Marketing';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
 
 const curl = `curl \n-X POST https://api.estuary.tech/content/add \n-H "Authorization: Bearer YOUR_API_KEY" \n-H "Accept: application/json" \n-H "Content-Type: multipart/form-data" \n-F "data=@PATH_TO_FILE"`;
 
@@ -24,7 +16,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
@@ -64,8 +56,7 @@ function IndexPage(props: any) {
     async function load() {
       let data;
       try {
-        data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost)
-
+        data = await R.get('/api/v1/stats/deal-metrics', C.api.metricsHost);
       } catch (e) {
         console.log(e);
         return null;
