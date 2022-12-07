@@ -1,8 +1,10 @@
 import tstyles from '@pages/files-table.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import Button from '@components/Button';
+import * as R from '@common/requests';
 
-const FilesTable = ({ files }) => {
+const FilesTable = ({ files, setFiles }) => {
   const [gateway, setGateway] = useState('https://api.estuary.tech/gw/ipfs/');
   const columns = useMemo(
     () => [
@@ -54,6 +56,32 @@ const FilesTable = ({ files }) => {
         accessor: (data) => data.aggregatedFiles + 1,
         disableFilters: true,
         width: '15%',
+      },
+      {
+        Header: 'Delete',
+        accessor: (data) => String(data.id).padStart(9, '0'),
+        Cell: ({ value }) => (
+          <div style={{ fontSize: 12, fontFamily: 'Mono' }}>
+            {' '}
+            <Button
+              onClick={async () => {
+                const confirm = window.confirm('Are you sure you want to delete this file?');
+                if (!confirm) {
+                  return;
+                }
+                await R.del(`/pinning/pins/${value}`).then(setFiles);
+              }}
+              type="file"
+              style={{ backgroundColor: '#f54b42' }}
+            >
+              Delete
+            </Button>
+          </div>
+        ),
+        // accessor: (data) => data.aggregatedFiles + 1,
+        width: '9%',
+        maxWidth: '9%',
+        disableFilters: true,
       },
     ],
     [gateway]

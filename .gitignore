@@ -10,3 +10,4 @@ DS_STORE
 /**/*/.next
 /out
 tsconfig.tsbuildinfo
+.env.local

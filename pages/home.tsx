@@ -65,17 +65,21 @@ function HomePage(props: any) {
   });
 
   React.useEffect(() => {
-    const run = async () => {
-      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
-      const stats = await R.get('/user/stats', props.api);
-
-      if (files && !files.error) {
-        setState({ ...state, files, stats });
-      }
-    };
-
     run();
   }, []);
+
+  const run = async () => {
+    const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
+    const stats = await R.get('/user/stats', props.api);
+
+    if (files && !files.error) {
+      setState({ ...state, files, stats });
+    }
+  };
+
+  const updateFiles = () => {
+    run();
+  };
 
   console.log(props.viewer);
   console.log(state);
@@ -127,12 +131,10 @@ function HomePage(props: any) {
             </table>
           </div>
         ) : null}
-        
+
         <div className={styles.group}>
-          {state.files && state.files.length ? (
-            <FilesTable files={state.files}/>
-          ) : null}
-          
+          {state.files && state.files.length ? <FilesTable files={state.files} setFiles={updateFiles} /> : null}
+
           {state.files && state.offset + state.limit === state.files.length ? (
             <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState, props.api)}>
               ➝ Next {INCREMENT}

@@ -38,7 +38,6 @@ export const get = async (route, host = C.api.host): Promise<any> => {
 
 export const post = async (route, payload, host = C.api.host): Promise<any> => {
   try {
-
     const token = Cookies.get(C.auth);
 
     let r = await fetch(`${host}${route}`, {
