@@ -42,7 +42,6 @@ export const regex = {
 
 
 function getMetricsHost(): string {
-  console.log(process.env);
   if (process.env.NEXT_PUBLIC_ESTUARY_METRICS_API) {
     return process.env.NEXT_PUBLIC_ESTUARY_METRICS_API;
   }
