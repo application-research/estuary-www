@@ -10,7 +10,7 @@
     "dev-production": "ESTUARY_API=https://api.estuary.tech next dev -p 4444",
     "build": "next build",
     "check-types": "tsc --noemit",
-    "start": "NODE_ENV=production next start", 
+    "start": "NODE_ENV=production next start",
     "test": "jest"
   },
   "pre-commit": [
@@ -30,6 +30,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-table": "^7.8.0",
+    "react-use": "^17.4.0",
     "sass": "1.54.3",
     "uuid": "^8.3.2"
   },
