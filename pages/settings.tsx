@@ -1,23 +1,20 @@
 import styles from '@pages/app.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
-import * as R from '@common/requests';
-import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
+import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import ProgressCard from '@components/ProgressCard';
-import Navigation from '@components/Navigation';
-import Page from '@components/Page';
 import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
 import LoaderSpinner from '@components/LoaderSpinner';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import SingleColumnLayout from '@components/SingleColumnLayout';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,7 +31,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { host, protocol, viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 

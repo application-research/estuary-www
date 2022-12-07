@@ -1,19 +1,19 @@
 import S from '@pages/index.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Page from '@components/Page';
-import Navigation from '@components/Navigation';
-import Button from '@components/Button';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import Input from '@components/Input';
-import StatRow from '@components/StatRow';
-import LoaderSpinner from '@components/LoaderSpinner';
-import RetrievalCommands from '@components/RetrievalCommands';
 import * as C from '@common/constants';
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import Button from '@components/Button';
+import Input from '@components/Input';
+import LoaderSpinner from '@components/LoaderSpinner';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import RetrievalCommands from '@components/RetrievalCommands';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import StatRow from '@components/StatRow';
+import { H1, H2, H3, P } from '@components/Typography';
 
 // NOTE(jim): test CIDs
 // QmYNSTn2XrxDsF3qFdeYKSxjodsbswJV3mj1ffEJZa2jQL
@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
   return {
-    props: { viewer, api: process.env.ESTUARY_API, hostname: `https://${context.req.headers.host}` },
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 

@@ -1,25 +1,23 @@
 import styles from '@pages/app.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
-import * as R from '@common/requests';
-import * as Flags from '@common/flags';
 import * as Crypto from '@common/crypto';
+import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Cookies from 'js-cookie';
-import Page from '@components/Page';
-import Navigation from '@components/Navigation';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Cookies from 'js-cookie';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H3, H4, P } from '@components/Typography';
 
 const ENABLE_SIGN_IN_WITH_FISSION = false;
 
 export async function getServerSideProps(context) {
-
   const viewer = await U.getViewerFromHeader(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
@@ -34,7 +32,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { host, protocol, api: process.env.ESTUARY_API, hostname: `https://${host}` },
+    props: { host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
 }
 
@@ -43,23 +41,20 @@ async function handleTokenAuthenticate(state: any, host) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${state.key}`,
+      Authorization: `Bearer ${state.key}`,
     },
   });
   if (response && response.status === 403) {
-    alert("Invalid API key");
-  }
-  else if (response && response.status === 401) {
+    alert('Invalid API key');
+  } else if (response && response.status === 401) {
     alert('Expired API key');
-  }
-  else {
+  } else {
     Cookies.set(C.auth, state.key);
     window.location.reload();
   }
   return response;
 }
 async function handleSignIn(state: any, host) {
-
   if (U.isEmpty(state.username)) {
     return { error: 'Please provide a username.' };
   }
@@ -140,11 +135,7 @@ async function handleSignIn(state: any, host) {
   return;
 }
 
-
-
 function SignInPage(props: any) {
-
-
   const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '' });
 
   const authorise = null;
@@ -231,13 +222,13 @@ function SignInPage(props: any) {
             loading={state.authLoading ? state.authLoading : undefined}
             onClick={async () => {
               setState({ ...state, authLoading: true });
-              if(U.isEmpty(state.key)){
+              if (U.isEmpty(state.key)) {
                 alert('Please enter an API key');
                 setState({ ...state, authLoading: false });
                 return;
               }
               await handleTokenAuthenticate(state, props.api).then((response) => {
-                if(response.status == 403){
+                if (response.status == 403) {
                   setState({ ...state, authLoading: false });
                 }
               });

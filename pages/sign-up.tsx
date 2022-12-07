@@ -1,19 +1,18 @@
 import styles from '@pages/app.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
-import * as Flags from '@common/flags';
 import * as Crypto from '@common/crypto';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Cookies from 'js-cookie';
-import Page from '@components/Page';
-import Navigation from '@components/Navigation';
-import SingleColumnLayout from '@components/SingleColumnLayout';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import Navigation from '@components/Navigation';
+import Page from '@components/Page';
+import SingleColumnLayout from '@components/SingleColumnLayout';
+import Cookies from 'js-cookie';
 
-import { H1, H2, H3, H4, P } from '@components/Typography';
+import { H2, H3, H4, P } from '@components/Typography';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -30,7 +29,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { viewer, host, protocol, api: process.env.ESTUARY_API, hostname: `https://${host}` },
+    props: { viewer, host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
 }
 
@@ -70,7 +69,6 @@ async function handleRegister(state: any, host) {
       error: 'Your username must be 1-48 uppercase or lowercase characters or digits with no spaces.',
     };
   }
-
 
   let passwordHash = await Crypto.attemptHashWithSalt(state.password);
 
