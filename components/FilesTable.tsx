@@ -15,7 +15,6 @@ const FilesTable = ({ files }) => {
         disableFilters: true,
         width: '7.8em',
       },
-
       {
         id: 'Name',
         Header: 'Name',
@@ -45,6 +44,15 @@ const FilesTable = ({ files }) => {
             {value}
           </a>
         ),
+        width: '40%',
+        Filter: DefaultColumnFilter,
+      },
+      {
+        id: 'Pinning Status',
+        Header: 'Pinning Status',
+        accessor: (data) => {
+          return data.pinningStatus;
+        },
         width: '40%',
         Filter: DefaultColumnFilter,
       },
