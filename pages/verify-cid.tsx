@@ -13,7 +13,7 @@ import Page from '@components/Page';
 import RetrievalCommands from '@components/RetrievalCommands';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import StatRow from '@components/StatRow';
-import { H1, H2, H3, P } from '@components/Typography';
+import { CodeBlock, H1, H2, H3, P } from '@components/Typography';
 
 // NOTE(jim): test CIDs
 // QmYNSTn2XrxDsF3qFdeYKSxjodsbswJV3mj1ffEJZa2jQL
@@ -62,7 +62,7 @@ const onCheckCID = async (state, setState, host) => {
   const response = await R.get(`/public/by-cid/${state.cid}`, host);
 
   if (response.error) {
-    return setState({ ...state, working: false, data: null });
+    return setState({ ...state, working: false, data: {error: response.error} });
   }
 
   if (history.pushState) {
@@ -129,6 +129,10 @@ function VerifyCIDPage(props: any) {
     status = 2;
   }
 
+  if (state.data && state.data.error) {
+    status = 5;
+  }
+
   if (state.working) {
     status = 1;
   }
@@ -166,6 +170,16 @@ function VerifyCIDPage(props: any) {
       <div className={S.scustom} style={{ marginTop: 48 }}>
         <H3>This CID is not found</H3>
         <P style={{ marginTop: 8 }}>It might be pinned by a IPFS Node, you can use the dweb.link URL to check</P>
+      </div>
+    );
+  }
+
+  if (status === 5) {
+    statusElement = (
+      <div className={S.scustom} style={{ marginTop: 48 }}>
+        <H3>Request Error</H3>
+        <P style={{ marginTop: 8 }}>There was an error verifying this CID</P>
+        <CodeBlock style={{ marginTop: 8, fontSize: 10}}>{state.data.error.code}: {state.data.error.details}</CodeBlock>
       </div>
     );
   }
