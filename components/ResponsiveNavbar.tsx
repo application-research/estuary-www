@@ -3,7 +3,11 @@ import styles from '@components/ResponsiveNavbar.module.scss';
 import { BreakpointEnum, useBreakpoint } from '@common/use-breakpoint';
 import * as React from 'react';
 
-const navItems = [{ name: 'Collaborators', href: '#collaborators' }, { name: 'Performance', href: '#performance' }, { name: 'Deals', href: '#deals' }];
+const navItems = [
+  { name: 'Collaborators', href: '#collaborators' },
+  { name: 'Performance', href: '#performance' },
+  { name: 'Deals', href: '#deals' },
+];
 
 function MobileNav({ navItems }) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -64,7 +68,7 @@ function DesktopNav({ navItems }) {
 
 function ResponsiveNavbar(props: any) {
   return (
-    <nav className={styles.stickyNavbar} style={{}}>
+    <nav className={styles.stickyNavbar}>
       <MobileNav navItems={navItems} />
       <DesktopNav navItems={navItems} />
     </nav>

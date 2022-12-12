@@ -405,14 +405,14 @@ function EcosystemPage(props: any) {
               : null}
 
             <div className={S.ecosystemShuttleData}>
+              <div className={S.ecosystemStatText}>Total Cost</div>
+
               <div className={S.ecosystemSection}>
                 <div className={S.ecosystemStatCard}>
                   <div className={S.ecosystemStatValue}>
                     {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? Math.floor(state.environmentDevices['total']) + ' USD' : null}
                   </div>
-                  {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? (
-                    <div className={S.ecosystemStatLabel}>Total Cost (last 30 days)</div>
-                  ) : null}
+                  {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? <div className={S.ecosystemStatLabel}>Last 30 days</div> : null}
                 </div>
               </div>
             </div>

@@ -508,6 +508,7 @@ a.flink {
 
   @media (max-width: 768px){
     font-size: 20px;
+    padding: 8px 8px 8px 0px;
   }
 }
 
@@ -537,7 +538,7 @@ a.flink {
   
   @media (max-width: 768px){
     font-size: 12px;
-    max-width: 75%;
+    max-width: 75ch;
   }
 }
 
@@ -596,6 +597,5 @@ a.flink {
   color: var(--color-green);
   font-family: "Mono";
   font-size: 12px;
-  margin-top: 8px;
   text-transform: uppercase;
 }
