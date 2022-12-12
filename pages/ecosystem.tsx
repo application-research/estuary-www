@@ -386,17 +386,17 @@ function EcosystemPage(props: any) {
               </div>
             </div>
           </div>
-          <div className={S.ecosystemPerformance}>
+          <div className={S.ecosystemPerformance} style={{ marginTop: '40px' }}>
             {/*{state.environmentDevices}*/}
             {state.environmentDevices != undefined && state.environmentDevices['device_usages'] != undefined
               ? state.environmentDevices['device_usages'].map((device) => {
                   return (
-                    <div>
+                    <div className={S.ecosystemShuttleData}>
                       <div className={S.ecosystemStatText}>Environment Hosting Cost (last 30 days)</div>
                       <div className={S.ecosystemSection}>
                         <div className={S.ecosystemStatCard}>
                           <div className={S.ecosystemStatValue}>{device['usages'][0]['total']} USD</div>
-                          <div className={S.ecosystemStatText}>{device['Info']['name']}</div>
+                          <div className={S.ecosystemStatLabel}>{device['Info']['name']}</div>
                         </div>
                       </div>
                     </div>
@@ -404,16 +404,15 @@ function EcosystemPage(props: any) {
                 })
               : null}
 
-            <div className={S.ecosystemSection}>
-              <div className={S.ecosystemStatCard}>
-                <div className={S.ecosystemStatValue}>
-                  {/* delete line below*/}
-                  <div className={S.ecosystemStatText}>Total Cost (last 30 days)</div>
-
+            <div className={S.ecosystemShuttleData}>
+              <div className={S.ecosystemSection}>
+                <div className={S.ecosystemStatCard}>
+                  <div className={S.ecosystemStatValue}>
+                    {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? Math.floor(state.environmentDevices['total']) + ' USD' : null}
+                  </div>
                   {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? (
-                    <div className={S.ecosystemStatText}>Total Cost (last 30 days)</div>
+                    <div className={S.ecosystemStatLabel}>Total Cost (last 30 days)</div>
                   ) : null}
-                  {state.environmentDevices != undefined && state.environmentDevices['total'] != undefined ? Math.floor(state.environmentDevices['total']) + ' USD' : null}
                 </div>
               </div>
             </div>

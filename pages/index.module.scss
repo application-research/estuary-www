@@ -468,7 +468,7 @@ a.flink {
 
 .ecosystemSection {
   grid-column: span 2;
-
+  
   @media (max-width: 992px){
     grid-column: span 4;
   }
@@ -485,7 +485,11 @@ a.flink {
 }
 
 .ecosystemStatCard{
-  height: 150px;
+  height: 100px;
+
+  @media (max-width: 1024px){
+    height: 100px;
+  }
 }
 
 .ecosystemStatValueWithIcon {
@@ -512,8 +516,8 @@ a.flink {
   display: flex;
   font-size: 32px;
   font-weight: 600;
-  justify-content: center;
-  padding: 24px;
+  justify-content: left;
+  padding: 24px 0 24px 0;
 
   @media (max-width: 1200px){
     font-size: 24px;
@@ -573,4 +577,25 @@ a.flink {
     padding: 1em;
     flex-direction: column;
   }
+}
+
+.ecosystemShuttleData{
+  border: 1px dashed var(--text-space-gray);
+  padding: 16px 24px 24px 24px;
+
+  @media (max-width: 1024px) {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 420px) {
+    grid-column: span 4;
+  }
+}
+
+.ecosystemStatLabel{
+  color: var(--color-green);
+  font-family: "Mono";
+  font-size: 12px;
+  margin-top: 8px;
+  text-transform: uppercase;
 }
