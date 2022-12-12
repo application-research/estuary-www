@@ -11,7 +11,10 @@ import Page from '@components/Page';
 import PageHeader from '@components/PageHeader';
 
 import { H2, P } from '@components/Typography';
+import ActionRow from '@root/components/ActionRow';
 import FilesTable from '@root/components/FilesTable';
+
+const INCREMENT = 1000;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -31,6 +34,23 @@ export async function getServerSideProps(context) {
 }
 
 function StagingZonePage(props) {
+  const getNext = async (state, setState) => {
+    const offset = state.offset + INCREMENT;
+    const limit = state.limit;
+    const next = await R.get(`/content/staging-zones/${props.id}/contents?offset=${offset}&limit=${limit}`, props.api);
+
+    if (!next || !next.length) {
+      return;
+    }
+
+    setState({
+      ...state,
+      offset: offset,
+      limit: limit,
+      contents: [...state.contents, ...next],
+    });
+  };
+
   const [state, setState] = React.useState({
     contentID: null,
     zoneOpened: null,
@@ -38,28 +58,27 @@ function StagingZonePage(props) {
     maxSize: null,
     curSize: null,
     contents: [],
+    limit: INCREMENT,
+    offset: 0,
   });
 
   React.useEffect(() => {
-    console.log(props);
     const run = async () => {
       const zone = await R.get(`/content/staging-zones/${props.id}`, props.api);
-      console.log(zone);
+      delete zone.contents; // remove omitted key to avoid accidentally emptying contents state
+      const contents = await R.get(`/content/staging-zones/${props.id}/contents?offset=${state.offset}&limit=${state.limit}`, props.api);
 
-      if (!zone || zone.error) {
+      if (!zone || zone.error || !contents || contents.error) {
         return;
       }
 
-      setState({ state, ...zone });
+      setState({ ...state, ...zone, contents: contents });
     };
 
     run();
   }, []);
 
-  console.log(props.viewer);
-
   const sidebarElement = <AuthenticatedSidebar active="STAGING" viewer={props.viewer} />;
-
   return (
     <Page title="Estuary: Staging" description="Data before a Filecoin deal is made" url={`${props.hostname}/staging`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
@@ -96,6 +115,12 @@ function StagingZonePage(props) {
 
         <div className={styles.group}>
           <FilesTable files={state.contents} />
+
+          {state.contents && state.offset + state.limit === state.contents.length ? (
+            <ActionRow style={{ paddingLeft: 16, paddingRight: 16 }} onClick={() => getNext(state, setState)}>
+              ➝ Next {INCREMENT}
+            </ActionRow>
+          ) : null}
         </div>
       </AuthenticatedLayout>
     </Page>
