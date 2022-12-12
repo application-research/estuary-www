@@ -83,7 +83,9 @@ function StagingPage(props) {
                 return (
                   <tr className={tstyles.tr}>
                     <td className={tstyles.td}>
-                      <a href={zoneHref}>{zone.contentID}</a>
+                      <a href={zoneHref} className={tstyles.cta}>
+                        {zone.contentID}
+                      </a>
                     </td>
                     <td className={tstyles.td}>{U.toDate(zone.zoneOpened)}</td>
                     <td className={tstyles.td}>{zone.contents.length}</td>
