@@ -74,7 +74,6 @@ function StagingPage(props) {
               <tr className={tstyles.tr}>
                 <th className={tstyles.th}>Zone ID</th>
                 <th className={tstyles.th}>Created at</th>
-                <th className={tstyles.th}>Items</th>
                 <th className={tstyles.th}>Size</th>
                 <th className={tstyles.th}>Accepted size range</th>
               </tr>
@@ -88,7 +87,6 @@ function StagingPage(props) {
                       </a>
                     </td>
                     <td className={tstyles.td}>{U.toDate(zone.zoneOpened)}</td>
-                    <td className={tstyles.td}>{zone.contents.length}</td>
                     <td className={tstyles.td}>{U.bytesToSize(zone.curSize)}</td>
                     <td className={tstyles.td}>
                       {U.bytesToSize(zone.minSize)} - {U.bytesToSize(zone.maxSize)}
