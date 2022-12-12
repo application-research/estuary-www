@@ -20,7 +20,7 @@ const FilesTable = ({ files }) => {
         id: 'Name',
         Header: 'Name',
         accessor: (data) => {
-          let name = ""
+          let name = '';
           if (data.name === 'aggregate') {
             name = './';
           } else if (data.name) {
@@ -29,8 +29,8 @@ const FilesTable = ({ files }) => {
             name = data.filename;
           }
 
-          const lk = data.cid != null ? gateway + data.cid['/'] : '/';
-          return {name, lk}
+          const lk = data.cid != null ? gateway + (data.cid['/'] || data.cid) : '/';
+          return { name, lk };
         },
         Cell: ({ value }) => (
           <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
