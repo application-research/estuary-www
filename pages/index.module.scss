@@ -212,14 +212,14 @@
   text-align: right;
 }
 
-.ecosystemPerformanceTable{
+.ecosystemPerformanceTable {
   padding-bottom: 80px;
 }
 
 .fb {
   background: var(--main-page-background-dark-mode);
   border-top: 1px solid var(--text-space-gray);
-  color: var(--text-white)
+  color: var(--text-white);
 }
 
 .fa {
@@ -282,7 +282,6 @@ a.flink {
   padding: 0 15px 0 15px;
   text-decoration: none;
   transition: 200ms ease all;
- 
 
   &:hover {
     color: var(--text-white);
@@ -290,13 +289,13 @@ a.flink {
 }
 
 @media (max-width: 960px) {
-  .flink{
+  .flink {
     font-size: 16px;
   }
 }
 
 @media (max-width: 568px) {
-  .flink{
+  .flink {
     font-size: 12px;
   }
 }
@@ -310,7 +309,7 @@ a.flink {
   color: var(--text-white);
   text-decoration: none;
   transition: 200ms ease all;
-  font-family: "Mono";
+  font-family: 'Mono';
 
   &:hover {
     cursor: pointer;
@@ -321,7 +320,7 @@ a.flink {
   .fcta {
     font-size: 12px;
     white-space: nowrap;
-  };
+  }
 }
 
 .stats {
@@ -385,18 +384,18 @@ a.flink {
 }
 
 .ecosystemH2 {
-  color:var(--text-white);
+  color: var(--text-white);
   padding-bottom: 32px;
   font-size: 32px;
   font-weight: 600;
-  font-family: "Parabole";
-  letter-spacing: .1rem;
+  font-family: 'Parabole';
+  letter-spacing: 0.1rem;
 }
 
-.ecosystemH3{
+.ecosystemH3 {
   color: var(--text-white);
   font-size: 16px;
-  font-style: "Parabole";
+  font-style: 'Parabole';
   font-weight: light;
 }
 
@@ -409,33 +408,32 @@ a.flink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width:25%;
+  width: 25%;
   height: 168px;
-  padding:88px;
+  padding: 88px;
   border: 1px dashed var(--text-space-gray);
 
-  @media (max-width: 1920px){
+  @media (max-width: 1920px) {
     width: 25%;
   }
 
-  @media (max-width: 992px){
+  @media (max-width: 992px) {
     width: 50%;
   }
 
-  @media (max-width: 568px){
+  @media (max-width: 568px) {
     width: 100%;
   }
-
 }
 
-.ecosystemLogoBox:hover{
+.ecosystemLogoBox:hover {
   -moz-transition: background-color 0.1s;
   -o-transition: background-color 0.1s;
   -webkit-transition: background-color 0.1s;
-  transition: .5s;
+  transition: 0.5s;
   background: var(--text-space-gray);
   border-radius: 4px;
-  padding: 24px; 
+  padding: 24px;
 
   @media (max-width: 960px) {
     padding: 8px;
@@ -447,7 +445,7 @@ a.flink {
   font-size: 32px;
 }
 
-.ecosystemPerformance{
+.ecosystemPerformance {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
@@ -457,37 +455,37 @@ a.flink {
   grid-column: span 2;
   border: 1px dashed var(--text-space-gray);
 
-  @media (max-width: 992px){
+  @media (max-width: 992px) {
     grid-column: span 4;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     grid-column: span 4;
   }
 }
 
 .ecosystemSection {
   grid-column: span 2;
-  
-  @media (max-width: 992px){
+
+  @media (max-width: 992px) {
     grid-column: span 4;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     grid-column: span 4;
   }
 }
 
-.ecosystemStatCardWithIcon{
+.ecosystemStatCardWithIcon {
   display: flex;
   flex-direction: row;
   height: 150px;
 }
 
-.ecosystemStatCard{
+.ecosystemStatCard {
   height: 100px;
 
-  @media (max-width: 1024px){
+  @media (max-width: 1024px) {
     height: 100px;
   }
 }
@@ -502,11 +500,11 @@ a.flink {
   padding: 24px;
   width: 70%;
 
-  @media (max-width: 1200px){
+  @media (max-width: 1200px) {
     font-size: 24px;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     font-size: 20px;
     padding: 8px 8px 8px 0px;
   }
@@ -520,11 +518,11 @@ a.flink {
   justify-content: left;
   padding: 24px 0 24px 0;
 
-  @media (max-width: 1200px){
+  @media (max-width: 1200px) {
     font-size: 24px;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     font-size: 20px;
   }
 }
@@ -535,44 +533,44 @@ a.flink {
   margin-top: 8px;
   text-transform: uppercase;
   color: rgba(99, 99, 99, 1);
-  
-  @media (max-width: 768px){
+
+  @media (max-width: 768px) {
     font-size: 12px;
     max-width: 75ch;
   }
 }
 
-.ecosystemStatIcon{
+.ecosystemStatIcon {
   margin-left: auto;
   margin-right: auto;
   width: auto;
   height: 150px;
 }
 
-.collaborations{
+.collaborations {
   display: flex;
   flex-wrap: wrap;
-  flex-direction:row;
+  flex-direction: row;
   gap: 24px;
 }
 
-.container{
-  display: 'flex'; 
+.container {
+  display: 'flex';
   display: inline-flex;
   flex-wrap: wrap;
 }
 
-.column{
+.column {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 168px;
   width: 33%;
   border: 1px dashed var(--text-space-gray);
-  padding: 2.25em; 
+  padding: 2.25em;
   align-items: center;
-  text-align: center; 
-  
+  text-align: center;
+
   @media (max-width: 768px) {
     width: 100%;
     padding: 1em;
@@ -580,7 +578,7 @@ a.flink {
   }
 }
 
-.ecosystemShuttleData{
+.ecosystemShuttleData {
   border: 1px dashed var(--text-space-gray);
   padding: 16px 24px 24px 24px;
 
@@ -593,9 +591,9 @@ a.flink {
   }
 }
 
-.ecosystemStatLabel{
+.ecosystemStatLabel {
   color: var(--color-green);
-  font-family: "Mono";
+  font-family: 'Mono';
   font-size: 12px;
   text-transform: uppercase;
 }
