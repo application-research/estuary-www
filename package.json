@@ -20,8 +20,6 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.18.9",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@glif/filecoin-number": "^1.1.0-beta.17",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
