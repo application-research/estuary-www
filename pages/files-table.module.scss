@@ -80,7 +80,8 @@
 }
 
 .td {
-  padding: 1em;
+  line-height: 1.5em;
+  padding: 0.5em;
   overflow: hidden;
   text-overflow: ellipsis;
   @media (max-width: 960px) {
