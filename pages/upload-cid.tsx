@@ -109,7 +109,7 @@ function UploadCIDPage(props: any) {
                   `/content/add-ipfs`,
                   {
                     filename: state.filename,
-                    root: state.cid,
+                    cid: state.cid,
                   },
                   props.api
                 );
@@ -146,7 +146,7 @@ function UploadCIDPage(props: any) {
                     `/content/add-ipfs`,
                     {
                       name: state.filename,
-                      root: state.cid,
+                      cid: state.cid,
                     },
                     props.api
                   );
