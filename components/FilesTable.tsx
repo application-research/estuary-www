@@ -2,6 +2,7 @@ import * as U from '@common/utilities';
 import tstyles from '@pages/files-table.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import PinStatusIcon from './PinStatusIcon';
 
 const FilesTable = ({ files }) => {
   const [gateway, setGateway] = useState('https://gateway.estuary.tech/gw/ipfs/');
@@ -15,7 +16,6 @@ const FilesTable = ({ files }) => {
         disableFilters: true,
         width: '7.8em',
       },
-
       {
         id: 'Name',
         Header: 'Name',
@@ -30,12 +30,16 @@ const FilesTable = ({ files }) => {
           }
 
           const lk = data.cid != null ? gateway + (data.cid['/'] || data.cid) : '/';
-          return { name, lk };
+          const pinStatus = data.pinningStatus;
+          return { name, lk, pinStatus };
         },
         Cell: ({ value }) => (
-          <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
-            {value.name}
-          </a>
+          <div style={{ display: 'block' }}>
+            <PinStatusIcon pinningStatus={value.pinStatus} />
+            <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
+              {value.name}
+            </a>
+          </div>
         ),
         width: '45%',
         Filter: DefaultColumnFilter,

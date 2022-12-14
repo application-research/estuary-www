@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
 const getNext = async (state, setState, host) => {
   const offset = state.offset + INCREMENT;
   const limit = state.limit;
-  const next = await R.get(`/content/stats?offset=${offset}&limit=${limit}`, host);
+  const next = await R.get(`/content/contents?offset=${offset}&limit=${limit}`, host);
 
   if (!next || !next.length) {
     return;
@@ -62,7 +62,7 @@ function HomePage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const files = await R.get(`/content/stats?offset=${state.offset}&limit=${state.limit}`, props.api);
+      const files = await R.get(`/content/contents?offset=${state.offset}&limit=${state.limit}`, props.api);
       const stats = await R.get('/user/stats', props.api);
 
       if (files && !files.error) {
