@@ -1,0 +1,44 @@
+.collaborations {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.container {
+  display: 'flex';
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.column {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 168px;
+  width: 33%;
+  border: 1px dashed var(--text-space-gray);
+  padding: 2.25em;
+  align-items: center;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1em;
+    flex-direction: column;
+  }
+}
+
+.ecosystemLogoBox:hover {
+  -moz-transition: background-color 0.1s;
+  -o-transition: background-color 0.1s;
+  -webkit-transition: background-color 0.1s;
+  transition: 0.5s;
+  background: var(--text-space-gray);
+  border-radius: 4px;
+  padding: 24px;
+
+  @media (max-width: 960px) {
+    padding: 8px;
+  }
+}

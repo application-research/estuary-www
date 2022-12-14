@@ -32,26 +32,14 @@ const MultilineChart = (options: any) => {
       .call(xAxis);
     xAxisGroup.select('.domain').remove();
     xAxisGroup.selectAll('line').attr('stroke', 'rgba(255, 255, 255, 0.2)');
-    xAxisGroup
-      .selectAll('text')
-      .attr('opacity', 0.5)
-      .attr('color', 'white')
-      .attr('font-size', '12px')
-      .attr('font-family', 'Mono')
-      .attr('text-transform', 'Uppercase');
+    xAxisGroup.selectAll('text').attr('opacity', 0.5).attr('color', 'white').attr('font-size', '12px').attr('font-family', 'Mono').attr('text-transform', 'Uppercase');
 
     // YAXIS
     const yAxis = d3.axisLeft(yScale).tickFormat((d) => d);
     const yAxisGroup = svg.append('g').call(yAxis);
     yAxisGroup.select('.domain').remove();
     yAxisGroup.selectAll('line').attr('stroke', 'rgba(255, 255, 255, 0.2)');
-    yAxisGroup
-      .selectAll('text')
-      .attr('opacity', 0.5)
-      .attr('color', 'white')
-      .attr('font-size', '12px')
-      .attr('font-family', 'Mono')
-      .attr('text-transform', 'Uppercase');
+    yAxisGroup.selectAll('text').attr('opacity', 0.5).attr('color', 'white').attr('font-size', '12px').attr('font-family', 'Mono').attr('text-transform', 'Uppercase');
 
     const line = d3
       .line()
