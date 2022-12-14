@@ -108,12 +108,12 @@ function UploadCIDPage(props: any) {
                 const response = await R.post(
                   `/content/add-ipfs`,
                   {
-                    filename: state.filename,
+                    name: state.filename ? state.filename : state.cid,
                     cid: state.cid,
                   },
                   props.api
                 );
-                console.log(response);
+
                 if (response && response.error) {
                   alert(response.error);
                   return setState({ success: false, filename: '', cid: '', loading: false });
@@ -145,12 +145,12 @@ function UploadCIDPage(props: any) {
                   const response = await R.post(
                     `/content/add-ipfs`,
                     {
-                      name: state.filename,
+                      name: state.filename ? state.filename : state.cid,
                       cid: state.cid,
                     },
                     props.api
                   );
-                  console.log(response);
+
                   if (response && response.error) {
                     alert(response.error);
                     return setState({ success: false, filename: '', cid: '', loading: false });
