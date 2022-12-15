@@ -76,21 +76,23 @@ function StagingPage(props) {
                 <th className={tstyles.th}>Created at</th>
                 <th className={tstyles.th}>Size</th>
                 <th className={tstyles.th}>Accepted size range</th>
+                <th className={tstyles.th}>Status</th>
               </tr>
               {state.zones.map((zone, index) => {
-                var zoneHref = `/staging/${zone.contentID}`;
+                var zoneHref = `/staging/${zone.id}`;
                 return (
                   <tr className={tstyles.tr}>
                     <td className={tstyles.td}>
                       <a href={zoneHref} className={tstyles.cta}>
-                        {zone.contentID}
+                        {zone.id}
                       </a>
                     </td>
-                    <td className={tstyles.td}>{U.toDate(zone.zoneOpened)}</td>
+                    <td className={tstyles.td}>{U.toDate(zone.CreatedAt)}</td>
                     <td className={tstyles.td}>{U.bytesToSize(zone.curSize)}</td>
                     <td className={tstyles.td}>
                       {U.bytesToSize(zone.minSize)} - {U.bytesToSize(zone.maxSize)}
                     </td>
+                    <td className={tstyles.td}>{zone.status}</td>
                   </tr>
                 );
               })}
