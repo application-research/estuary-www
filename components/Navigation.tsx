@@ -1,49 +1,46 @@
 import styles from '@components/Navigation.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
-import * as C from '@common/constants';
-
 import Tag from '@components/Tag';
+import Link from 'next/link';
 
 const Navigation = (props: any) => {
   return (
     <div className={styles.navigation}>
       <nav className={styles.container} style={props.style}>
         <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
-          <a className={styles.logo} href="/">
+          <Link className={styles.logo} href="/">
             Estuary <Tag>Alpha</Tag>
-          </a>
+          </Link>
         </div>
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
-            <a href="/sign-up" className={styles.item}>
+            <Link href="/sign-up" className={styles.item}>
               Sign up
-            </a>
+            </Link>
           ) : null}
           {!props.isAuthenticated && props.active !== 'SIGN_IN' ? (
-            <a href="/sign-in" className={styles.item}>
+            <Link href="/sign-in" className={styles.item}>
               Sign in
-            </a>
+            </Link>
           ) : null}
           {props.isAuthenticated && props.active === 'INDEX' ? (
-            <a href="/home" className={styles.item}>
+            <Link href="/home" className={styles.item}>
               Home
-            </a>
+            </Link>
           ) : null}
 
-          <a href="/verify-cid" className={styles.webItem}>
+          <Link href="/verify-cid" className={styles.webItem}>
             Verify
-          </a>
+          </Link>
 
-          <a href="https://docs.estuary.tech" className={styles.webItem}>
+          <Link href="https://docs.estuary.tech" className={styles.webItem}>
             Documentation
-          </a>
+          </Link>
 
           {props.isAuthenticated ? (
-            <a href="/_" className={styles.mobileItem}>
+            <Link href="/_" className={styles.mobileItem}>
               Menu
-            </a>
+            </Link>
           ) : null}
         </div>
       </nav>

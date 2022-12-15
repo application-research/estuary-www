@@ -14,6 +14,7 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H4, P } from '@components/Typography';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -77,15 +78,15 @@ function UploadCIDPage(props: any) {
                 Check your CID
                 <div>
                   <H4>Estuary retrieval url</H4>
-                  <a href={estuaryRetrievalUrl} target="_blank">
+                  <Link href={estuaryRetrievalUrl} target="_blank">
                     {estuaryRetrievalUrl}
-                  </a>
+                  </Link>
                 </div>
                 <div>
                   <H4>Dweb retrieval url</H4>
-                  <a href={dwebRetrievalUrl} target="_blank">
+                  <Link href={dwebRetrievalUrl} target="_blank">
                     {dwebRetrievalUrl}
-                  </a>
+                  </Link>
                 </div>
               </aside>
             )}

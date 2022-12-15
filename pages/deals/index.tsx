@@ -16,6 +16,7 @@ import PageHeader from '@components/PageHeader';
 import ProgressCard from '@components/ProgressCard';
 
 import { H2, P } from '@components/Typography';
+import Link from 'next/link';
 
 const INCREMENT = 100;
 
@@ -102,15 +103,15 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
             <td className={tstyles.td}>{name}</td>
 
             <td className={tstyles.tdcta}>
-              <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+              <Link className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
                 {estuaryRetrievalUrl}
-              </a>
+              </Link>
             </td>
 
             <td className={tstyles.tdcta}>
-              <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+              <Link className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
                 {dwebRetrievalUrl}
-              </a>
+              </Link>
             </td>
 
             <td className={tstyles.td}>{id}</td>
@@ -126,9 +127,9 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
       ) : null}
       <div className={styles.titleSection}>
         Estuary made {dealElements.length} {U.pluralize('attempt', dealElements.length)}&nbsp;
-        <a href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
+        <Link href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
           (view logs)
-        </a>
+        </Link>
         &nbsp;
         {failureCount > 0 ? (
           <span style={{ color: `var(--main-text)`, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setState({ ...state, showFailures: !state.showFailures })}>

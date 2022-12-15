@@ -8,6 +8,7 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -78,14 +79,14 @@ function DealPage(props: any) {
                   <td className={tstyles.td}>{state.deal.ID}</td>
                   <td className={tstyles.td}>{state.deal.content}</td>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/receipts/${state.deal.dealId}`}>
+                    <Link className={tstyles.cta} href={`/receipts/${state.deal.dealId}`}>
                       {state.deal.dealId}
-                    </a>
+                    </Link>
                   </td>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/providers/stats/${state.deal.miner}`}>
+                    <Link className={tstyles.cta} href={`/providers/stats/${state.deal.miner}`}>
                       {state.deal.miner}
-                    </a>
+                    </Link>
                   </td>
                 </tr>
               </tbody>
@@ -111,9 +112,9 @@ function DealPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <a className={tstyles.cta} href={`/proposals/${state.deal.propCid}`}>
+                    <Link className={tstyles.cta} href={`/proposals/${state.deal.propCid}`}>
                       /proposals/{state.deal.propCid}
-                    </a>
+                    </Link>
                   </td>
                 </tr>
               </tbody>
@@ -128,9 +129,9 @@ function DealPage(props: any) {
                 <tr className={tstyles.tr}>
                   {!U.isEmpty(estuaryRetrievalUrl) ? (
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                      <Link className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
                         {estuaryRetrievalUrl}
-                      </a>
+                      </Link>
                     </td>
                   ) : (
                     <td className={tstyles.td}>Does not exist</td>
@@ -148,9 +149,9 @@ function DealPage(props: any) {
                 <tr className={tstyles.tr}>
                   {!U.isEmpty(dwebRetrievalUrl) ? (
                     <td className={tstyles.tdcta}>
-                      <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                      <Link className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
                         {dwebRetrievalUrl}
-                      </a>
+                      </Link>
                     </td>
                   ) : (
                     <td className={tstyles.td}>Does not exist</td>

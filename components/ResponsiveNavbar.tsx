@@ -1,9 +1,14 @@
-import EstuarySVG from '@root/components/EstuarySVG';
-import styles from '@components/ResponsiveNavbar.module.scss';
 import { BreakpointEnum, useBreakpoint } from '@common/use-breakpoint';
+import styles from '@components/ResponsiveNavbar.module.scss';
+import EstuarySVG from '@root/components/EstuarySVG';
+import Link from 'next/link';
 import * as React from 'react';
 
-const navItems = [{ name: 'Collaborators', href: '#collaborators' }, { name: 'Performance', href: '#performance' }, { name: 'Deals', href: '#deals' }];
+const navItems = [
+  { name: 'Collaborators', href: '#collaborators' },
+  { name: 'Performance', href: '#performance' },
+  { name: 'Deals', href: '#deals' },
+];
 
 function MobileNav({ navItems }) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -19,9 +24,9 @@ function MobileNav({ navItems }) {
 
   return (
     <div className={styles.displayMobileNav}>
-      <a className={styles.navBranding} href="https://estuary.tech/" target="_blank">
+      <Link className={styles.navBranding} href="https://estuary.tech/" target="_blank">
         <EstuarySVG height="64px" color="var(--text-white)" className={styles.logo} />
-      </a>
+      </Link>
 
       <div className={isOpen ? styles.activeMobileMenu : styles.mobileMenu} aria-label="Open Navigation" onClick={() => setIsOpen((prev) => !prev)} />
 
@@ -29,9 +34,9 @@ function MobileNav({ navItems }) {
         {navItems.map((item, index) => {
           return (
             <li key={index} className={styles.navItemMobile}>
-              <a className={styles.navLink} href={`${item.href}`}>
+              <Link className={styles.navLink} href={`${item.href}`}>
                 {item.name}
-              </a>
+              </Link>
             </li>
           );
         })}
@@ -43,17 +48,17 @@ function MobileNav({ navItems }) {
 function DesktopNav({ navItems }) {
   return (
     <div className={styles.navbar}>
-      <a className={styles.logoDesktop} href="https://estuary.tech/" target="_blank">
+      <Link className={styles.logoDesktop} href="https://estuary.tech/" target="_blank">
         <EstuarySVG height="64px" color="var(--text-white)" className={styles.logo} />
-      </a>
+      </Link>
 
       <ul className={styles.navMenu}>
         {navItems.map((item, index) => {
           return (
             <li key={index} className={styles.navItem}>
-              <a className={styles.navLink} href={`${item.href}`}>
+              <Link className={styles.navLink} href={`${item.href}`}>
                 {item.name}
-              </a>
+              </Link>
             </li>
           );
         })}

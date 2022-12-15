@@ -1,9 +1,9 @@
-import * as React from 'react';
 import * as U from '@common/utilities';
 
 import styles from '@components/Button.module.scss';
 
 import LoaderSpinner from '@components/LoaderSpinner';
+import Link from 'next/link';
 
 const Button = (props: any) => {
   if (props.loading) {
@@ -19,7 +19,7 @@ const Button = (props: any) => {
   }
 
   if (!U.isEmpty(props.href)) {
-    return <a href={props.href} className={styles.button} children={props.children} {...props} />;
+    return <Link href={props.href} className={styles.button} children={props.children} {...props} />;
   }
 
   return <button style={props.style} className={styles.button} onClick={props.onClick} children={props.children} />;

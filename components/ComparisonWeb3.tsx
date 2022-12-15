@@ -1,9 +1,6 @@
 import styles from '@components/Comparison.module.scss';
 import tstyles from '@pages/table.module.scss';
-
-import * as React from 'react';
-import * as U from '@common/utilities';
-import * as C from '@common/constants';
+import Link from 'next/link';
 
 function ComparisonWeb3(props: any) {
   return (
@@ -360,9 +357,9 @@ function ComparisonWeb3(props: any) {
               <br />
               <br />
               Example:{' '}
-              <a href="/providers/stats/f02620" target="_blank">
+              <Link href="/providers/stats/f02620" target="_blank">
                 here
-              </a>
+              </Link>
               .
             </td>
 
@@ -379,9 +376,9 @@ function ComparisonWeb3(props: any) {
               <br />
               <br />
               Example:{' '}
-              <a href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" target="_blank">
+              <Link href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" target="_blank">
                 here
-              </a>
+              </Link>
               .
             </td>
 
