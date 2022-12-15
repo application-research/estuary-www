@@ -20,6 +20,7 @@ const FilesTable = ({ files }) => {
         id: 'Name',
         Header: 'Name',
         accessor: (data) => {
+          const cid = data.cid != null ? data.cid['/'] || data.cid : null;
           let name = '';
           if (data.name === 'aggregate') {
             name = './';
@@ -28,8 +29,11 @@ const FilesTable = ({ files }) => {
           } else {
             name = data.filename;
           }
+          if (!name) {
+            name = cid;
+          }
 
-          const lk = data.cid != null ? gateway + (data.cid['/'] || data.cid) : '/';
+          const lk = cid != null ? gateway + cid : null;
           const pinStatus = data.pinningStatus;
           return { name, lk, pinStatus };
         },
