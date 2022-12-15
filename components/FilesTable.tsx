@@ -2,6 +2,7 @@ import * as U from '@common/utilities';
 import tstyles from '@pages/files-table.module.scss';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
+import DealStatusIcon from './DealStatusIcon';
 import PinStatusIcon from './PinStatusIcon';
 
 const FilesTable = ({ files }) => {
@@ -35,10 +36,12 @@ const FilesTable = ({ files }) => {
 
           const lk = cid != null ? gateway + cid : null;
           const pinStatus = data.pinningStatus;
-          return { name, lk, pinStatus };
+          const dealStatus = 'sealed';
+          return { name, lk, pinStatus, dealStatus };
         },
         Cell: ({ value }) => (
           <div style={{ display: 'block' }}>
+            <DealStatusIcon dealStatus={value.dealStatus} />
             <PinStatusIcon pinningStatus={value.pinStatus} />
             <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
               {value.name}
