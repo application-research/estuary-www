@@ -83,7 +83,7 @@ function EcosystemPage(props: any) {
         Name: 'Shuttle-4',
       },
       {
-        Uuid: '266fbb9d-56a1-4dea-9b99-9f28054c5522',
+        Uuid: '20e7cd76-c65c-48a1-871e-39b692f051b3',
         Name: 'Shuttle-5',
       },
       {
