@@ -52,11 +52,14 @@ function StagingZonePage(props) {
   };
 
   const [state, setState] = React.useState({
+    id: null,
     contentID: null,
-    zoneOpened: null,
+    createdAt: null,
     minSize: null,
     maxSize: null,
     curSize: null,
+    status:"",
+    message: "",
     contents: [],
     limit: INCREMENT,
     offset: 0,
@@ -98,14 +101,18 @@ function StagingZonePage(props) {
                 <th className={tstyles.th}>Created at</th>
                 <th className={tstyles.th}>Size</th>
                 <th className={tstyles.th}>Accepted size range</th>
+                <th className={tstyles.th}>Status</th>
+                <th className={tstyles.th}>Message</th>
               </tr>
               <tr className={tstyles.tr}>
-                <td className={tstyles.td}>{state.contentID}</td>
-                <td className={tstyles.td}>{U.toDate(state.zoneOpened)}</td>
+                <td className={tstyles.td}>{state.id}</td>
+                <td className={tstyles.td}>{U.toDate(state.createdAt)}</td>
                 <td className={tstyles.td}>{U.bytesToSize(state.curSize)}</td>
                 <td className={tstyles.td}>
                   {U.bytesToSize(state.minSize)} - {U.bytesToSize(state.maxSize)}
                 </td>
+                <td className={tstyles.td}>{state.status}</td>
+                <td className={tstyles.td}>{state.message}</td>
               </tr>
             </tbody>
           </table>
