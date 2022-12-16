@@ -1,12 +1,15 @@
 import styles from '@components/PinStatusIcon.module.scss';
 import { BalanceOutlined, GppGoodOutlined, LinkOutlined, PhotoSizeSelectSmallOutlined, SafetyCheckOutlined, UploadOutlined } from '@mui/icons-material';
-import { Tooltip } from '@mui/material';
+import { Link, Tooltip } from '@mui/material';
 
 function DealStatusIcon(props: any) {
   if (props.dealStatus == 'staged') {
+    const zoneHref = `/staging/${props.zone}`;
     return (
       <Tooltip title={props.dealStatus} placement="left" arrow>
-        <PhotoSizeSelectSmallOutlined color="disabled" fontSize="small" className={styles.statusIcon} />
+        <Link href={zoneHref}>
+          <PhotoSizeSelectSmallOutlined color="disabled" fontSize="small" className={styles.statusIcon} />
+        </Link>
       </Tooltip>
     );
   } else if (props.dealStatus == 'asking') {

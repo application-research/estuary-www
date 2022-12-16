@@ -37,11 +37,12 @@ const FilesTable = ({ files }) => {
           const lk = cid != null ? gateway + cid : null;
           const pinStatus = data.pinningStatus;
           const dealStatus = 'staged';
-          return { name, lk, pinStatus, dealStatus };
+          const zone = data.aggregatedIn;
+          return { name, lk, pinStatus, dealStatus, zone };
         },
         Cell: ({ value }) => (
           <div style={{ display: 'block' }}>
-            <DealStatusIcon dealStatus={value.dealStatus} />
+            <DealStatusIcon dealStatus={value.dealStatus} zone={value.zone} />
             <PinStatusIcon pinningStatus={value.pinStatus} />
             <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
               {value.name}
