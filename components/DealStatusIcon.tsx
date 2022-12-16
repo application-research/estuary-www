@@ -6,11 +6,11 @@ function DealStatusIcon(props: any) {
   if (props.dealStatus == 'staged') {
     const zoneHref = `/staging/${props.zone}`;
     return (
-      <Tooltip title={props.dealStatus} placement="left" arrow>
-        <Link href={zoneHref}>
+      <Link href={zoneHref}>
+        <Tooltip title={props.dealStatus} placement="left" arrow>
           <PhotoSizeSelectSmallOutlined color="disabled" fontSize="small" className={styles.statusIcon} />
-        </Link>
-      </Tooltip>
+        </Tooltip>
+      </Link>
     );
   } else if (props.dealStatus == 'asking') {
     return (
