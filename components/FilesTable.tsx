@@ -36,7 +36,7 @@ const FilesTable = ({ files }) => {
 
           const lk = cid != null ? gateway + cid : null;
           const pinStatus = data.pinningStatus;
-          const dealStatus = 'sealed';
+          const dealStatus = 'staged';
           return { name, lk, pinStatus, dealStatus };
         },
         Cell: ({ value }) => (

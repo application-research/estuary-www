@@ -1,9 +1,15 @@
 import styles from '@components/PinStatusIcon.module.scss';
-import { BalanceOutlined, GppGoodOutlined, LinkOutlined, SafetyCheckOutlined, UploadOutlined } from '@mui/icons-material';
+import { BalanceOutlined, GppGoodOutlined, LinkOutlined, PhotoSizeSelectSmallOutlined, SafetyCheckOutlined, UploadOutlined } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 
 function DealStatusIcon(props: any) {
-  if (props.dealStatus == 'asking') {
+  if (props.dealStatus == 'staged') {
+    return (
+      <Tooltip title={props.dealStatus} placement="left" arrow>
+        <PhotoSizeSelectSmallOutlined color="disabled" fontSize="small" className={styles.statusIcon} />
+      </Tooltip>
+    );
+  } else if (props.dealStatus == 'asking') {
     return (
       <Tooltip title={props.dealStatus} placement="left" arrow>
         <BalanceOutlined color="action" fontSize="small" className={styles.statusIcon} />
