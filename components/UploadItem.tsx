@@ -34,13 +34,11 @@ export class PinStatusElement extends React.Component<any> {
   }
 
   render() {
-    let maybePinStatusElement = null;
-
     if (this.state.pinned) {
       return (
         <React.Fragment>
           <ActionRow>This CID is pinned.</ActionRow>
-          <ActionRow>Delegate {this.state.delegates[0]}</ActionRow>
+          <ActionRow>Delegate {this.state.delegates && this.state.delegates.length > 0 ? this.state.delegates[0] : ""}</ActionRow>
         </React.Fragment>
       );
     }
