@@ -87,7 +87,7 @@ function StagingPage(props) {
                         {zone.id}
                       </a>
                     </td>
-                    <td className={tstyles.td}>{U.toDate(zone.CreatedAt)}</td>
+                    <td className={tstyles.td}>{U.toDate(zone.createdAt)}</td>
                     <td className={tstyles.td}>{U.bytesToSize(zone.curSize)}</td>
                     <td className={tstyles.td}>
                       {U.bytesToSize(zone.minSize)} - {U.bytesToSize(zone.maxSize)}
