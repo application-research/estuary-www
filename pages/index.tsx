@@ -7,6 +7,7 @@ import * as React from 'react';
 import * as C from '@common/constants';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
+import Link from 'next/link';
 
 const curl = `curl \n-X POST https://api.estuary.tech/content/add \n-H "Authorization: Bearer YOUR_API_KEY" \n-H "Accept: application/json" \n-H "Content-Type: multipart/form-data" \n-F "data=@PATH_TO_FILE"`;
 
@@ -132,13 +133,13 @@ function IndexPage(props: any) {
       <div className={styles.heading}>
         <h1 className={styles.h1}>
           A reliable way to upload public data onto{' '}
-          <a className={styles.link} href="https://filecoin.io" target="_blank">
+          <Link className={styles.link} href="https://filecoin.io" target="_blank">
             Filecoin
-          </a>{' '}
+          </Link>{' '}
           and pin it to{' '}
-          <a className={styles.link} href="https://ipfs.io" target="_blank">
+          <Link className={styles.link} href="https://ipfs.io" target="_blank">
             IPFS
-          </a>
+          </Link>
           .
         </h1>
         <p className={styles.caption}>
@@ -224,13 +225,13 @@ function IndexPage(props: any) {
           This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. Storage providers who are on our main Estuary Node's list
           have graciously accepted all data as it comes their way, which really helps us test and improve the Filecoin network. When this node successfully stores data, any user of
           this node can verify their{' '}
-          <a href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
+          <Link href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
             CID
-          </a>{' '}
+          </Link>{' '}
           is on chain by visiting the{' '}
-          <a href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
+          <Link href="/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" className={styles.link}>
             verify page
-          </a>
+          </Link>
           .
         </h2>
       </div>
@@ -245,9 +246,9 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://docs.estuary.tech" target="_blank">
                 Read docs ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -261,9 +262,9 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://github.com/application-research/estuary" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://github.com/application-research/estuary" target="_blank">
                 View source ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -277,9 +278,9 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="/ecosystem" target="_blank">
+              <Link className={styles.actionButtonLink} href="/ecosystem" target="_blank">
                 View dashboard ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -293,9 +294,9 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://www.twitter.com/aresearchgroup" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://www.twitter.com/aresearchgroup" target="_blank">
                 Follow on Twitter ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -333,9 +334,9 @@ function IndexPage(props: any) {
             </div>
 
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://dweb.link/ipfs/QmSX2wCbAeMVXB3Gdfd23MnLW5wxpzE41dG7W1S4d5RXPi" target="_blank">
                 Try it ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -348,9 +349,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>Check our FAQ for answers to your questions</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/faq" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://docs.estuary.tech/faq" target="_blank">
                 Read FAQ ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -363,9 +364,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>Do you have questions about Estuary? Ask your question using this form, everyone on the team will see it.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/feedback" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://docs.estuary.tech/feedback" target="_blank">
                 Give feedback ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -378,9 +379,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>Check out our repositories on GitHub to contribute to our tools to use IPFS, Filecoin and Libp2p.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://github.com/application-research" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://github.com/application-research" target="_blank">
                 GitHub ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -393,9 +394,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>Filecoin is an open-source cloud storage marketplace, protocol, and incentive layer.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://filecoin.io" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://filecoin.io" target="_blank">
                 Learn more ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -408,9 +409,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>This project is maintained by the Application Research Group.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://arg.protocol.ai" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://arg.protocol.ai" target="_blank">
                 Learn more ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -446,9 +447,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>This website is open source. You can make contributions here.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://github.com/application-research/estuary-www" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://github.com/application-research/estuary-www" target="_blank">
                 View source ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -461,9 +462,9 @@ function IndexPage(props: any) {
               <p className={styles.p}>Want to follow a step by step guide to learn how to use Estuary? Try our tutorial.</p>
             </div>
             <div className={styles.action}>
-              <a className={styles.actionButtonLink} href="https://docs.estuary.tech/tutorial-get-an-api-key" target="_blank">
+              <Link className={styles.actionButtonLink} href="https://docs.estuary.tech/tutorial-get-an-api-key" target="_blank">
                 View tutorial ➝
-              </a>
+              </Link>
             </div>
           </div>
         </div>

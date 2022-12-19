@@ -15,6 +15,7 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H3, H4, P } from '@components/Typography';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -155,7 +156,7 @@ function SettingsPage(props: any) {
               <H4 style={{ marginTop: 24 }}>Fission Filecoin address</H4>
               <Input style={{ marginTop: 8 }} readOnly value={address ? address : ''} />
               <aside className={styles.formAside}>
-                This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <a href="/fission">Fission's website</a>.
+                This address is provided to your account when you <strong>sign in with Fission</strong>. To learn more visit <Link href="/fission">Fission's website</Link>.
               </aside>
             </React.Fragment>
           ) : null}
@@ -176,8 +177,8 @@ function SettingsPage(props: any) {
           <H4 style={{ marginTop: 24 }}>Max staging wait (nanoseconds)</H4>
           <Input style={{ marginTop: 8 }} readOnly value={viewer.settings.maxStagingWait} />
           <aside className={styles.formAside}>
-            The amount of time Estuary waits before making deals for a <a href="/staging">staging zone</a>. Currently Estuary waits {U.nanoToHours(viewer.settings.maxStagingWait)}{' '}
-            hours.
+            The amount of time Estuary waits before making deals for a <Link href="/staging">staging zone</Link>. Currently Estuary waits{' '}
+            {U.nanoToHours(viewer.settings.maxStagingWait)} hours.
           </aside>
 
           <H4 style={{ marginTop: 24 }}>Staging threshold (bytes)</H4>

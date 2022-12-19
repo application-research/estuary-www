@@ -13,6 +13,7 @@ import Page from '@components/Page';
 import PageHeader from '@components/PageHeader';
 
 import { H2, P } from '@components/Typography';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -83,9 +84,9 @@ function StagingPage(props) {
                 return (
                   <tr className={tstyles.tr}>
                     <td className={tstyles.td}>
-                      <a href={zoneHref} className={tstyles.cta}>
-                        {zone.id}
-                      </a>
+                      <Link href={zoneHref} className={tstyles.cta}>
+                        {zone.id}{' '}
+                      </Link>
                     </td>
                     <td className={tstyles.td}>{U.toDate(zone.createdAt)}</td>
                     <td className={tstyles.td}>{U.bytesToSize(zone.curSize)}</td>
