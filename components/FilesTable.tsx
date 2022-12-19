@@ -36,7 +36,7 @@ const FilesTable = ({ files }) => {
 
           const lk = cid != null ? gateway + cid : null;
           const pinStatus = data.pinningStatus;
-          const dealStatus = 'staged';
+          const dealStatus = 'preparing'; // temp until actual field exists
           const zone = data.aggregatedIn;
           return { name, lk, pinStatus, dealStatus, zone };
         },

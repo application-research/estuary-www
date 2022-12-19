@@ -1,9 +1,18 @@
 import styles from '@components/PinStatusIcon.module.scss';
-import { BalanceOutlined, GppGoodOutlined, LinkOutlined, PhotoSizeSelectSmallOutlined, SafetyCheckOutlined, UploadOutlined } from '@mui/icons-material';
+import {
+  BalanceOutlined,
+  GppBadOutlined,
+  GppGoodOutlined,
+  LinkOutlined,
+  PhotoSizeSelectSmallOutlined,
+  RemoveModeratorOutlined,
+  SafetyCheckOutlined,
+  UploadOutlined,
+} from '@mui/icons-material';
 import { Link, Tooltip } from '@mui/material';
 
 function DealStatusIcon(props: any) {
-  if (props.dealStatus == 'staged') {
+  if (props.dealStatus == 'preparing') {
     const zoneHref = `/staging/${props.zone}`;
     return (
       <Link href={zoneHref}>
@@ -12,7 +21,7 @@ function DealStatusIcon(props: any) {
         </Tooltip>
       </Link>
     );
-  } else if (props.dealStatus == 'asking') {
+  } else if (props.dealStatus == 'proposing') {
     return (
       <Tooltip title={props.dealStatus} placement="left" arrow>
         <BalanceOutlined color="action" fontSize="small" className={styles.statusIcon} />
@@ -40,6 +49,18 @@ function DealStatusIcon(props: any) {
     return (
       <Tooltip title={props.dealStatus} placement="left" arrow>
         <SafetyCheckOutlined color="warning" fontSize="small" className={styles.statusIcon} />
+      </Tooltip>
+    );
+  } else if (props.dealStatus == 'slashed') {
+    return (
+      <Tooltip title={props.dealStatus} placement="left" arrow>
+        <RemoveModeratorOutlined color="error" fontSize="small" className={styles.statusIcon} />
+      </Tooltip>
+    );
+  } else if (props.dealStatus == 'expired') {
+    return (
+      <Tooltip title={props.dealStatus} placement="left" arrow>
+        <GppBadOutlined color="disabled" fontSize="small" className={styles.statusIcon} />
       </Tooltip>
     );
   }
