@@ -2,7 +2,7 @@
   "name": "estuary-www",
   "version": "0.0.5",
   "engines": {
-    "node": "19.x"
+    "node": "14.x"
 },
   "scripts": {
     "dev": "NEXT_PUBLIC_ESTUARY_API=http://localhost:3004 next dev -p 4444",
