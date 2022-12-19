@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "engines": {
     "node": ">=16.8"
-},
+  },
   "scripts": {
     "dev": "NEXT_PUBLIC_ESTUARY_API=http://localhost:3004 next dev -p 4444",
     "dev-docker": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-http://localhost:3004} next dev -p 4444",
