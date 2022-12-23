@@ -103,19 +103,15 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
             <td className={tstyles.td}>{name}</td>
 
             <td className={tstyles.tdcta}>
-              {estuaryRetrievalUrl ? (
-                <Link className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
-                  {estuaryRetrievalUrl}
-                </Link>
-              ) : null}
+              <Link className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                {estuaryRetrievalUrl}
+              </Link>
             </td>
 
             <td className={tstyles.tdcta}>
-              {dwebRetrievalUrl ? (
-                <Link className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
-                  {dwebRetrievalUrl}
-                </Link>
-              ) : null}
+              <Link className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                {dwebRetrievalUrl}
+              </Link>
             </td>
 
             <td className={tstyles.td}>{id}</td>
@@ -131,11 +127,9 @@ export const ContentCard = ({ content, deals, id, root, failuresCount, viewer })
       ) : null}
       <div className={styles.titleSection}>
         Estuary made {dealElements.length} {U.pluralize('attempt', dealElements.length)}&nbsp;
-        {dealErrorURL ? (
-          <Link href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
-            (view logs)
-          </Link>
-        ) : null}
+        <Link href={dealErrorURL} style={{ color: `var(--main-text)` }} target="_blank">
+          (view logs)
+        </Link>
         &nbsp;
         {failureCount > 0 ? (
           <span style={{ color: `var(--main-text)`, textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setState({ ...state, showFailures: !state.showFailures })}>

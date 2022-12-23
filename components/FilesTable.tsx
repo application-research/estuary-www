@@ -41,13 +41,9 @@ const FilesTable = ({ files }) => {
         Cell: ({ value }) => (
           <div style={{ display: 'block' }}>
             <PinStatusIcon pinningStatus={value.pinStatus} />
-            {value.lk ? (
-              <Link href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
-                {value.name}
-              </Link>
-            ) : (
-              value.name
-            )}
+            <Link href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
+              {value.name}
+            </Link>
           </div>
         ),
         width: '45%',
