@@ -1,10 +1,9 @@
 import styles from '@components/AuthenticatedSidebar.module.scss';
 import Cookies from 'js-cookie';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import Link from 'next/link';
 
 function AuthenticatedLayout(props: any) {
   let perms = 0;
@@ -17,23 +16,23 @@ function AuthenticatedLayout(props: any) {
       <div className={styles.title} style={{ marginTop: 40 }}>
         Home
       </div>
-      <a className={styles.item} href="/home" style={props.active === 'FILES' ? { color: `var(--main-primary)` } : null}>
+      <Link className={styles.item} href="/home" style={props.active === 'FILES' ? { color: `var(--main-primary)` } : null}>
         Files
-      </a>
-      <a className={styles.item} href="/upload" style={props.active === 'UPLOAD' ? { color: `var(--main-primary)` } : null}>
+      </Link>
+      <Link className={styles.item} href="/upload" style={props.active === 'UPLOAD' ? { color: `var(--main-primary)` } : null}>
         Upload
-      </a>
-      <a className={styles.item} href="/upload-cid" style={props.active === 'UPLOAD_CID' ? { color: `var(--main-primary)` } : null}>
+      </Link>
+      <Link className={styles.item} href="/upload-cid" style={props.active === 'UPLOAD_CID' ? { color: `var(--main-primary)` } : null}>
         Pin CID
-      </a>
+      </Link>
 
       <div className={styles.title}>Developers</div>
-      <a className={styles.item} href="/staging" style={props.active === 'STAGING' ? { color: `var(--main-primary)` } : null}>
+      <Link className={styles.item} href="/staging" style={props.active === 'STAGING' ? { color: `var(--main-primary)` } : null}>
         Staging
-      </a>
-      <a className={styles.item} href="/deals" style={props.active === 'DEALS' ? { color: `var(--main-primary)` } : null}>
+      </Link>
+      <Link className={styles.item} href="/deals" style={props.active === 'DEALS' ? { color: `var(--main-primary)` } : null}>
         Deals
-      </a>
+      </Link>
       <a className={styles.item} href="/deals/debug" style={props.active === 'DEALS_DEBUG' ? { color: `var(--main-primary)` } : null}>
         Debug
       </a>
