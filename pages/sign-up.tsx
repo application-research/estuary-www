@@ -13,7 +13,6 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 
 import { H2, H3, H4, P } from '@components/Typography';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -198,9 +197,9 @@ function SignUpPage(props: any) {
         />
         <aside className={styles.formAside}>
           Need an invite key?{' '}
-          <Link href="https://docs.estuary.tech" target="_blank">
+          <a href="https://docs.estuary.tech" target="_blank">
             Learn how to get one.
-          </Link>
+          </a>
           .
         </aside>
 
@@ -241,9 +240,9 @@ function SignUpPage(props: any) {
         </div>
         <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
           By creating an account or by using Estuary you unconditionally agree to our{' '}
-          <Link href="https://docs.estuary.tech/terms" target="_blank">
+          <a href="https://docs.estuary.tech/terms" target="_blank">
             Terms of Service
-          </Link>
+          </a>
           .
         </aside>
       </SingleColumnLayout>

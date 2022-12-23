@@ -1,8 +1,8 @@
 import styles from '@components/ProgressCard.module.scss';
 
-import * as C from '@common/constants';
+import * as React from 'react';
 import * as U from '@common/utilities';
-import Link from 'next/link';
+import * as C from '@common/constants';
 
 const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) => {
   let topStyle = { background: null };
@@ -32,27 +32,27 @@ const ProgressCard = ({ deal, transfer, chain, marketing, message, contentId }) 
       <div className={styles.container}>
         <div className={styles.items} style={topStyle}>
           {deal.miner ? (
-            <Link className={styles.title} href={minerStatsURL} target="_blank">
+            <a className={styles.title} href={minerStatsURL} target="_blank">
               {deal.miner}
-            </Link>
+            </a>
           ) : null}
           <div className={styles.plain} style={{ textTransform: 'none' }}>
             {message}
           </div>
           {dealURL ? (
-            <Link className={styles.item} href={dealURL}>
+            <a className={styles.item} href={dealURL}>
               → Status
-            </Link>
+            </a>
           ) : null}
           {proposalURL ? (
-            <Link className={styles.item} href={proposalURL}>
+            <a className={styles.item} href={proposalURL}>
               → Proposal receipt
-            </Link>
+            </a>
           ) : null}
           {receiptURL ? (
-            <Link className={styles.item} href={receiptURL}>
+            <a className={styles.item} href={receiptURL}>
               → Filecoin deal receipt
-            </Link>
+            </a>
           ) : null}
         </div>
       </div>

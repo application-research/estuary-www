@@ -14,7 +14,6 @@ import RetrievalCommands from '@components/RetrievalCommands';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import StatRow from '@components/StatRow';
 import { CodeBlock, H1, H2, H3, P } from '@components/Typography';
-import Link from 'next/link';
 
 // NOTE(jim): test CIDs
 // QmYNSTn2XrxDsF3qFdeYKSxjodsbswJV3mj1ffEJZa2jQL
@@ -63,7 +62,7 @@ const onCheckCID = async (state, setState, host) => {
   const response = await R.get(`/public/by-cid/${state.cid}`, host);
 
   if (response.error) {
-    return setState({ ...state, working: false, data: { error: response.error } });
+    return setState({ ...state, working: false, data: {error: response.error} });
   }
 
   if (history.pushState) {
@@ -180,9 +179,7 @@ function VerifyCIDPage(props: any) {
       <div className={S.scustom} style={{ marginTop: 48 }}>
         <H3>Request Error</H3>
         <P style={{ marginTop: 8 }}>There was an error verifying this CID</P>
-        <CodeBlock style={{ marginTop: 8, fontSize: 10 }}>
-          {state.data.error.code}: {state.data.error.details}
-        </CodeBlock>
+        <CodeBlock style={{ marginTop: 8, fontSize: 10}}>{state.data.error.code}: {state.data.error.details}</CodeBlock>
       </div>
     );
   }
@@ -217,14 +214,14 @@ function VerifyCIDPage(props: any) {
               {statusElement}
               <StatRow title="CID">{state.data.content.cid}</StatRow>
               <StatRow title="Estuary retrieval url">
-                <Link href={estuaryRetrievalUrl} target="_blank">
+                <a href={estuaryRetrievalUrl} target="_blank">
                   {estuaryRetrievalUrl}
-                </Link>
+                </a>
               </StatRow>
               <StatRow title="Dweb retrieval url">
-                <Link href={dwebRetrievalUrl} target="_blank">
+                <a href={dwebRetrievalUrl} target="_blank">
                   {dwebRetrievalUrl}
-                </Link>
+                </a>
               </StatRow>
               <StatRow title="Estuary Node ID">{state.data.content.id}</StatRow>
               <StatRow title="Size">
@@ -238,14 +235,14 @@ function VerifyCIDPage(props: any) {
               {statusElement}
 
               <StatRow title="Estuary retrieval url">
-                <Link href={estuaryRetrievalUrl} target="_blank">
+                <a href={estuaryRetrievalUrl} target="_blank">
                   {estuaryRetrievalUrl}
-                </Link>
+                </a>
               </StatRow>
               <StatRow title="Dweb retrieval url">
-                <Link href={dwebRetrievalUrl} target="_blank">
+                <a href={dwebRetrievalUrl} target="_blank">
                   {dwebRetrievalUrl}
-                </Link>
+                </a>
               </StatRow>
             </React.Fragment>
           )}
@@ -264,16 +261,16 @@ function VerifyCIDPage(props: any) {
                   <div key={d.ID} style={{ marginTop: 16 }}>
                     <StatRow title="Provider">
                       {d.miner}{' '}
-                      <Link href={`/providers/stats/${d.miner}`} target="_blank">
+                      <a href={`/providers/stats/${d.miner}`} target="_blank">
                         (view provider)
-                      </Link>
+                      </a>
                     </StatRow>
                     <StatRow title="Success date">{U.toDate(d.sealedAt)}</StatRow>
                     <StatRow title="Retrieval deal ID">
                       {d.dealId}{' '}
-                      <Link href={`/receipts/${d.dealId}`} target="_blank">
+                      <a href={`/receipts/${d.dealId}`} target="_blank">
                         (view receipt)
-                      </Link>
+                      </a>
                     </StatRow>
                     <StatRow title="CLI retrieval">
                       <RetrievalCommands
@@ -323,9 +320,9 @@ function VerifyCIDPage(props: any) {
       </div>
 
       <div className={S.fb} style={{ marginTop: 188 }}>
-        <Link href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
+        <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
           ➝ Built by ARG
-        </Link>
+        </a>
       </div>
     </Page>
   );

@@ -8,7 +8,6 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -72,9 +71,9 @@ function ProposalPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <Link className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
+                    <a className={tstyles.cta} href={estuaryRetrievalUrl} target="_blank">
                       {estuaryRetrievalUrl}
-                    </Link>
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -88,9 +87,9 @@ function ProposalPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <Link className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
+                    <a className={tstyles.cta} href={dwebRetrievalUrl} target="_blank">
                       {dwebRetrievalUrl}
-                    </Link>
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -168,9 +167,9 @@ function ProposalPage(props: any) {
 
                 <tr className={tstyles.tr}>
                   <td className={tstyles.tdcta}>
-                    <Link className={tstyles.cta} href={`/providers/stats/${state.deal.Provider}`}>
+                    <a className={tstyles.cta} href={`/providers/stats/${state.deal.Provider}`}>
                       {state.deal.Provider}
-                    </Link>
+                    </a>
                   </td>
                 </tr>
               </tbody>
