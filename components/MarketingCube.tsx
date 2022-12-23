@@ -1,11 +1,12 @@
 import styles from '@components/MarketingCube.module.scss';
 
+import * as React from 'react';
 import * as U from '@common/utilities';
-import Link from 'next/link';
+import * as C from '@common/constants';
 
 function MarketingCube(props: any) {
   return (
-    <Link className={styles.scene} href="/sign-up">
+    <a className={styles.scene} href="/sign-up">
       <div className={styles.cube}>
         <div className={U.classNames(styles.face, styles.front)}>{props.children}</div>
         <div className={U.classNames(styles.face, styles.back)}>{props.children}</div>
@@ -14,7 +15,7 @@ function MarketingCube(props: any) {
         <div className={U.classNames(styles.face, styles.top)}>{props.children}</div>
         <div className={U.classNames(styles.face, styles.bottom)}>{props.children}</div>
       </div>
-    </Link>
+    </a>
   );
 }
 

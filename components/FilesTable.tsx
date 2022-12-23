@@ -1,6 +1,5 @@
 import * as U from '@common/utilities';
 import tstyles from '@pages/files-table.module.scss';
-import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import PinStatusIcon from './PinStatusIcon';
@@ -41,9 +40,9 @@ const FilesTable = ({ files }) => {
         Cell: ({ value }) => (
           <div style={{ display: 'block' }}>
             <PinStatusIcon pinningStatus={value.pinStatus} />
-            <Link href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
+            <a href={value.lk} style={{ overflowWrap: 'break-word' }} target="_blank" className={tstyles.cta}>
               {value.name}
-            </Link>
+            </a>
           </div>
         ),
         width: '45%',

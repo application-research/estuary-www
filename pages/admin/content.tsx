@@ -12,7 +12,6 @@ import Page from '@components/Page';
 import PageHeader from '@components/PageHeader';
 
 import { H2, P } from '@components/Typography';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -98,18 +97,18 @@ function AdminContentPage(props: any) {
                         <td className={tstyles.td}>{data.name === 'aggregate' ? '/' : data.name}</td>
 
                         <td className={tstyles.tdcta}>
-                          <Link className={tstyles.cta} href={`/content/${data.id}`}>
+                          <a className={tstyles.cta} href={`/content/${data.id}`}>
                             {data.id}
-                          </Link>
+                          </a>
                         </td>
 
                         <td className={tstyles.tdcta}>
-                          <Link href={estuaryRetrievalUrl} target="_blank" className={tstyles.cta}>
+                          <a href={estuaryRetrievalUrl} target="_blank" className={tstyles.cta}>
                             {estuaryRetrievalUrl}
-                          </Link>
-                          <Link href={dwebRetrievalUrl} target="_blank" className={tstyles.cta}>
+                          </a>
+                          <a href={dwebRetrievalUrl} target="_blank" className={tstyles.cta}>
                             {dwebRetrievalUrl}
-                          </Link>
+                          </a>
                         </td>
                         <td className={tstyles.td}>{data.replication} times</td>
                         <td className={tstyles.td}>{U.bytesToSize(data.size)}</td>

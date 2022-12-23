@@ -1,12 +1,11 @@
 import styles from '@components/Footer.module.scss';
-import Link from 'next/link';
 
 function FooterLink({ children, href }: { href: string, children: React.ReactNode }) {
   return (
     <li className={styles.listItemLink}>
-      <Link className={styles.footerLink} style={{ textDecoration: 'none' }} href={href} target="_blank">
+      <a className={styles.footerLink} style={{ textDecoration: 'none' }} href={href} target="_blank">
         {children}
-      </Link>
+      </a>
     </li>
   );
 }
@@ -41,14 +40,14 @@ function Footer() {
       <section className={styles.footerBranding}>
         <div className={styles.footerBrandingContent}>
           <div className={styles.footerLeft}>
-            <Link href="https://estuary.tech/" target="_blank">
+            <a href="https://estuary.tech/" target="_blank">
               <img className={styles.footerLogo} height="24px" src="https://user-images.githubusercontent.com/28320272/204942093-88d8027a-2e0f-4d41-877e-1a462ab15c8d.svg" />
-            </Link>
+            </a>
           </div>
           <div className={styles.footerRight}>
-            <Link href={'https://arg.protocol.ai'} style={{ textDecoration: 'none', color: 'black', whiteSpace: 'nowrap' }}>
+            <a href={'https://arg.protocol.ai'} style={{ textDecoration: 'none', color: 'black', whiteSpace: 'nowrap' }}>
               @2022 ARG
-            </Link>
+            </a>
           </div>
         </div>
       </section>

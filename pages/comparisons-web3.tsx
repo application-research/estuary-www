@@ -12,7 +12,6 @@ import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import { H1, H2, P } from '@components/Typography';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -250,24 +249,24 @@ function ComparisonsWeb3Page(props: any) {
           return (
             <div className={S.fam} key={each.addr}>
               <div className={S.fcol4}>
-                <Link className={S.flink} href={`/providers/stats/${each.addr}`}>
+                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
                   {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
-                </Link>
+                </a>
               </div>
               <div className={S.fcol4}>
-                <Link className={S.flink} href={`/providers/stats/${each.addr}`}>
+                <a className={S.flink} href={`/providers/stats/${each.addr}`}>
                   ➝ {each.addr}/stats
-                </Link>
+                </a>
               </div>
               <div className={S.fcol4}>
-                <Link className={S.flink} href={`/providers/deals/${each.addr}`}>
+                <a className={S.flink} href={`/providers/deals/${each.addr}`}>
                   ➝ {each.addr}/deals
-                </Link>
+                </a>
               </div>
               <div className={S.fcol4}>
-                <Link className={S.flink} href={`/providers/errors/${each.addr}`}>
+                <a className={S.flink} href={`/providers/errors/${each.addr}`}>
                   ➝ {each.addr}/errors
-                </Link>
+                </a>
               </div>
             </div>
           );
@@ -275,9 +274,9 @@ function ComparisonsWeb3Page(props: any) {
       </footer>
 
       <div className={S.fb}>
-        <Link href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
+        <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
           ➝ Built by ARG
-        </Link>
+        </a>
       </div>
     </Page>
   );

@@ -1,8 +1,8 @@
 import styles from '@pages/table.module.scss';
 
-import * as U from '@common/utilities';
-import Link from 'next/link';
 import * as React from 'react';
+import * as C from '@common/constants';
+import * as U from '@common/utilities';
 
 export default class MinerTable extends React.Component<any> {
   static defaultProps = {
@@ -29,16 +29,16 @@ export default class MinerTable extends React.Component<any> {
               return (
                 <tr className={styles.tr} key={`${miner.miner}-${index}`}>
                   <td className={styles.tdcta}>
-                    <Link className={styles.cta} href={`/providers/stats/${miner.addr}`}>
+                    <a className={styles.cta} href={`/providers/stats/${miner.addr}`}>
                       {miner.addr} {!U.isEmpty(miner.name) ? `(${miner.name})` : ''}
-                    </Link>
+                    </a>
                   </td>
 
                   {miner.totalDeals ? (
                     <td className={styles.tdcta}>
-                      <Link className={styles.cta} href={`/providers/deals/${miner.addr}`}>
+                      <a className={styles.cta} href={`/providers/deals/${miner.addr}`}>
                         {miner.totalDeals} deals
-                      </Link>
+                      </a>
                     </td>
                   ) : (
                     <td className={styles.td} />
@@ -46,9 +46,9 @@ export default class MinerTable extends React.Component<any> {
                   {miner.confirmedDeals ? <td className={styles.td}>{miner.confirmedDeals} deals</td> : <td className={styles.td} />}
                   {miner.failedDeals ? (
                     <td className={styles.tdcta}>
-                      <Link className={styles.cta} href={`/providers/errors/${miner.addr}`} target="_blank">
+                      <a className={styles.cta} href={`/providers/errors/${miner.addr}`} target="_blank">
                         {miner.failedDeals} deals
-                      </Link>
+                      </a>
                     </td>
                   ) : (
                     <td className={styles.td} />
@@ -80,9 +80,9 @@ export default class MinerTable extends React.Component<any> {
               return (
                 <tr className={styles.tr} key={`${miner.miner}-${index}`} style={suspended}>
                   <td className={styles.tdcta}>
-                    <Link className={styles.cta} href={`/providers/stats/${miner.addr}`}>
+                    <a className={styles.cta} href={`/providers/stats/${miner.addr}`}>
                       {miner.addr}
-                    </Link>
+                    </a>
                   </td>
                   <td className={styles.td} style={suspended}>
                     {miner.suspendedReason}

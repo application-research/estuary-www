@@ -1,15 +1,14 @@
 import styles from '@components/UploadItem.module.scss';
 
+import * as React from 'react';
+import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
-import * as U from '@common/utilities';
-import * as React from 'react';
 
+import Cookies from 'js-cookie';
+import ProgressBlock from '@components/ProgressBlock';
 import ActionRow from '@components/ActionRow';
 import LoaderSpinner from '@components/LoaderSpinner';
-import ProgressBlock from '@components/ProgressBlock';
-import Cookies from 'js-cookie';
-import Link from 'next/link';
 
 export class PinStatusElement extends React.Component<any> {
   state = { pinned: false, delegates: ['none'] };
@@ -175,14 +174,14 @@ export default class UploadItem extends React.Component<any> {
               {this.props.file.data.name} uploaded to our node!
             </ActionRow>
             <ActionRow>
-              <Link href={estuaryRetrievalUrl} target="_blank">
+              <a href={estuaryRetrievalUrl} target="_blank">
                 {estuaryRetrievalUrl}
-              </Link>
+              </a>
             </ActionRow>
             <ActionRow>
-              <Link href={dwebRetrievalUrl} target="_blank">
+              <a href={dwebRetrievalUrl} target="_blank">
                 {dwebRetrievalUrl}
-              </Link>
+              </a>
             </ActionRow>
             {maybePinStatusElement}
             {this.props.file.estimation ? (

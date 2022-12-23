@@ -8,7 +8,6 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -73,14 +72,14 @@ function DealDebugPage(props: any) {
                       {U.toDate(log.CreatedAt)}
                     </td>
                     <td className={tstyles.tdcta}>
-                      <Link className={tstyles.cta} href={`/content/${log.content}`}>
+                      <a className={tstyles.cta} href={`/content/${log.content}`}>
                         {log.content}
-                      </Link>
+                      </a>
                     </td>
                     <td className={tstyles.tdcta}>
-                      <Link className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
+                      <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}
-                      </Link>
+                      </a>
                     </td>
                     <td className={tstyles.td}>{log.phase}</td>
                     <td className={tstyles.td}>{log.message}</td>
