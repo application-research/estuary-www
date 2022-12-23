@@ -1,28 +1,26 @@
-import Link from 'next/link';
-
 export const GainForest = (props: any) => {
   return (
-    <Link href="https://www.gainforest.app/" target="_blank">
+    <a href="https://www.gainforest.app/" target="_blank">
       <img src="https://user-images.githubusercontent.com/28320272/202937959-1dfe1c3f-a409-4e69-8ea4-934f7203c3fa.png" alt="" style={{ ...props.style }} />
-    </Link>
+    </a>
   );
 };
 
 export const NBFS = (props: any) => {
   return (
-    <Link href="https://nbfspool.com/#/" target="_blank">
+    <a href="https://nbfspool.com/#/" target="_blank">
       <img
         className={props.className}
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMUAAAA7CAMAAAD8fr6rAAACfFBMVEVHcEz///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////88FegUAAAA03RSTlMAEDDgIGDwgEDAcFCQoNABCQKwBCLuMv7XAzPW7X79Q1sYREeDiidUFAw4vDy2BynG6yHfiXdIFblF6sf68Z6W9lH86S6PdhuOQR7LPQtk92gWwW8GhDdc4av7yYdsxVXeWU8rE/inaW6lI5V9NTkOqBw7LZ8RbY0k7CYlmE2Byk7RtefkVqJYrYZrc0bZGposzw+ySUrO3bS3DTTaL/OUYmOk4q/TnCq4dbuFzXy/GReCeq4Km4yXP+WsYTpLk1qz5gWxuuP03PKZ79jbPtVdHX8o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"
         style={{ display: 'inline-block', ...props.style }}
       />
-    </Link>
+    </a>
   );
 };
 
 export const Portrait = (props: any) => {
   return (
-    <Link href="https://portrait.gg/" target="_blank">
+    <a href="https://portrait.gg/" target="_blank">
       <svg fill="none" viewBox="0 0 332 72" {...props}>
         <g fill="#FFFFFF">
           <path
@@ -33,13 +31,13 @@ export const Portrait = (props: any) => {
           <path d="M100.172 61.67V11.103h18.708c4.045 0 7.392.674 10.04 2.023 2.649 1.348 4.623 3.202 5.923 5.562 1.301 2.36 1.951 5.009 1.951 7.946 0 2.794-.626 5.37-1.878 7.73-1.252 2.312-3.203 4.19-5.851 5.635-2.649 1.396-6.044 2.095-10.185 2.095h-9.462V61.67h-9.246Zm9.246-27.09h8.884c3.227 0 5.538-.698 6.934-2.094 1.445-1.445 2.167-3.395 2.167-5.852 0-2.504-.722-4.454-2.167-5.85-1.396-1.446-3.707-2.168-6.934-2.168h-8.884V34.58ZM155.243 62.537c-3.467 0-6.597-.794-9.39-2.384-2.745-1.589-4.936-3.78-6.573-6.573-1.589-2.842-2.384-6.117-2.384-9.825 0-3.708.819-6.959 2.456-9.752 1.637-2.842 3.829-5.057 6.573-6.646 2.793-1.59 5.923-2.384 9.391-2.384 3.419 0 6.5.795 9.245 2.384 2.793 1.59 4.984 3.804 6.573 6.646 1.638 2.793 2.456 6.044 2.456 9.752 0 3.708-.818 6.983-2.456 9.825a17.238 17.238 0 0 1-6.573 6.573c-2.793 1.59-5.899 2.384-9.318 2.384Zm0-8.018c2.408 0 4.503-.891 6.284-2.673 1.782-1.83 2.673-4.527 2.673-8.09 0-3.565-.891-6.237-2.673-8.02-1.781-1.83-3.852-2.744-6.211-2.744-2.456 0-4.575.915-6.357 2.745-1.733 1.782-2.6 4.454-2.6 8.018 0 3.564.867 6.26 2.6 8.09 1.782 1.783 3.877 2.674 6.284 2.674ZM177.523 61.67V25.84h8.234l.867 6.718c1.3-2.312 3.058-4.142 5.273-5.49 2.263-1.397 4.912-2.095 7.946-2.095v9.752h-2.601c-2.022 0-3.828.313-5.417.94-1.589.625-2.841 1.709-3.756 3.25-.867 1.541-1.3 3.684-1.3 6.43V61.67h-9.246ZM221.403 61.67c-3.756 0-6.766-.915-9.029-2.745s-3.395-5.08-3.395-9.752V33.569h-6.14v-7.73h6.14l1.083-9.607h8.163v9.608h9.679v7.73h-9.679v15.675c0 1.734.361 2.938 1.083 3.612.771.626 2.071.94 3.901.94h4.478v7.873h-6.284ZM232.23 61.67V25.84h8.235l.867 6.718c1.3-2.312 3.057-4.142 5.273-5.49 2.263-1.397 4.911-2.095 7.945-2.095v9.752h-2.6c-2.023 0-3.829.313-5.418.94-1.589.625-2.841 1.709-3.756 3.25-.866 1.541-1.3 3.684-1.3 6.43V61.67h-9.246ZM269.609 62.537c-3.081 0-5.61-.481-7.584-1.444-1.974-1.012-3.443-2.336-4.406-3.974-.963-1.637-1.445-3.443-1.445-5.418 0-3.323 1.3-6.02 3.901-8.09 2.6-2.071 6.501-3.107 11.701-3.107h9.102v-.866c0-2.457-.699-4.263-2.095-5.419-1.397-1.155-3.13-1.733-5.201-1.733-1.878 0-3.515.457-4.912 1.372-1.396.867-2.263 2.168-2.6 3.901h-9.029c.241-2.6 1.108-4.864 2.6-6.79 1.541-1.927 3.516-3.396 5.923-4.407 2.408-1.06 5.105-1.59 8.09-1.59 5.105 0 9.126 1.277 12.063 3.83 2.938 2.552 4.406 6.164 4.406 10.836V61.67h-7.873l-.867-5.779c-1.059 1.927-2.552 3.516-4.478 4.768-1.878 1.252-4.31 1.878-7.296 1.878Zm2.095-7.224c2.649 0 4.695-.867 6.14-2.6 1.493-1.734 2.432-3.877 2.817-6.43h-7.873c-2.456 0-4.214.458-5.273 1.373-1.06.867-1.589 1.95-1.589 3.25 0 1.397.529 2.481 1.589 3.252 1.059.77 2.456 1.155 4.189 1.155ZM298.874 20.277c-1.685 0-3.082-.505-4.189-1.517-1.06-1.011-1.589-2.287-1.589-3.828s.529-2.793 1.589-3.757c1.107-1.011 2.504-1.517 4.189-1.517 1.686 0 3.058.506 4.117 1.517 1.108.963 1.662 2.216 1.662 3.757 0 1.54-.554 2.817-1.662 3.828-1.059 1.012-2.431 1.517-4.117 1.517Zm-4.623 41.393V25.84h9.246v35.83h-9.246ZM325.499 61.67c-3.756 0-6.766-.915-9.029-2.745s-3.395-5.08-3.395-9.752V33.569h-6.14v-7.73h6.14l1.084-9.607h8.162v9.608H332v7.73h-9.679v15.675c0 1.734.361 2.938 1.083 3.612.771.626 2.071.94 3.901.94h4.478v7.873h-6.284Z"></path>
         </g>
       </svg>
-    </Link>
+    </a>
   );
 };
 
 export const IA = (props: any) => {
   return (
-    <Link href="https://archive.org/" target="_blank">
+    <a href="https://archive.org/" target="_blank">
       <span style={{ ...props.style }}>
         <svg height={props.height} viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg">
           <g stroke="none" strokeWidth="1" fill="#FFFFFF" fillRule="evenodd">
@@ -78,7 +76,7 @@ export const IA = (props: any) => {
           </g>
         </svg>
       </span>
-    </Link>
+    </a>
   );
 };
 
@@ -152,7 +150,7 @@ export const QRI = (props: any) => {
 
 export const Zora = (props: any) => {
   return (
-    <Link href="https://zora.co/" target="_blank">
+    <a href="https://zora.co/" target="_blank">
       <svg fill="none" viewBox="0 0 312 69" {...props} className={props.className}>
         <mask id="a" fill="none">
           <path
@@ -174,6 +172,6 @@ export const Zora = (props: any) => {
           />
         </g>
       </svg>
-    </Link>
+    </a>
   );
 };

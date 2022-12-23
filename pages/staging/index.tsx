@@ -85,7 +85,7 @@ function StagingPage(props) {
                   <tr className={tstyles.tr}>
                     <td className={tstyles.td}>
                       <Link href={zoneHref} className={tstyles.cta}>
-                        {zone.id}{' '}
+                        {zone.id}
                       </Link>
                     </td>
                     <td className={tstyles.td}>{U.toDate(zone.createdAt)}</td>

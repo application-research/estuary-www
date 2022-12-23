@@ -8,7 +8,6 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
-import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -78,9 +77,9 @@ function DealErrorPage(props: any) {
                     </td>
                     <td className={tstyles.td}>{log.content}</td>
                     <td className={tstyles.tdcta}>
-                      <Link className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
+                      <a className={tstyles.cta} href={`/providers/stats/${log.miner}`}>
                         {log.miner}
-                      </Link>
+                      </a>
                     </td>
                     <td className={tstyles.td}>{log.deal_uuid}</td>
                     <td className={tstyles.td}>{log.phase}</td>
