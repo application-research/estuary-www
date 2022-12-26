@@ -99,6 +99,26 @@ function EcosystemPage(props: any) {
         Name: 'Shuttle-8',
       },
       {
+        Uuid: '20e7cd76-c65c-48a1-871e-39b692f051b3',
+        Name: '(NSQ) Queue Server',
+      },
+      {
+        Uuid: 'a972ec78-d59a-47a4-b110-dd6c5dfc0e60',
+        Name: 'DB Load Balancer',
+      },
+      {
+        Uuid: 'ec7e5c3f-28e4-48ec-8df2-4630657bcc8e',
+        Name: 'DB Server # 1',
+      },
+      {
+        Uuid: '78e4e282-305f-4fde-9e89-3f58aed69c9c',
+        Name: 'DB Server # 2',
+      },
+      {
+        Uuid: 'fec7f5fb-a457-4d87-b334-c08584df1611',
+        Name: 'DB Server # 3',
+      },
+      {
         Uuid: '43cfdfa5-6037-4520-9e4c-c46f4d3686a1',
         Name: 'Autoretrieve Server',
       },
