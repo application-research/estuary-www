@@ -206,24 +206,40 @@ function IndexPage(props: any) {
 
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
-          Estuary.tech is a demonstration of what an Estuary node can do. Users of this Estuary node have pinned{' '}
-          <b>
-            {state.totalFilesStored.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) root level CIDs
-          </b>{' '}
-          to IPFS.{' '}
-          {state.totalObjectsRef ? (
+          Estuary.tech is a demonstration of what an Estuary node can do.
+          {state.totalFilesStored !== 0 ? (
+            <>
+              {' '}
+              Users of this Estuary node have pinned{' '}
+              <b>
+                {state.totalFilesStored.toLocaleString()} ({U.bytesToSize(state.totalStorage)}) root level CIDs
+              </b>{' '}
+              to IPFS.{' '}
+            </>
+          ) : null}
+          {state.totalObjectsRef !== 0 ? (
             <span>
               Within those root CIDs, there exists a total of <b>{state.totalObjectsRef.toLocaleString()} object references</b>.
             </span>
           ) : null}{' '}
-          To ensure the data is permanently available, our node automatically replicates the data <b>6 times</b> onto the Filecoin Network. So far&nbsp;
-          <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
+          To ensure the data is permanently available, our node automatically replicates the data <b>6 times</b> onto the Filecoin Network.
+          {state.dealsOnChain !== 0 ? (
+            <>
+              {' '}
+              So far&nbsp;
+              <b>{state.dealsOnChain.toLocaleString()}</b> storage deals were successful and that equates to <b>{U.bytesToSize(graph.dealsSealedBytes)}</b> of sealed data.
+            </>
+          ) : null}
         </h2>
 
-        <h2 className={styles.h2} style={{ marginTop: 48 }}>
-          This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing. Storage providers who are on our main Estuary Node's list
-          have graciously accepted all data as it comes their way, which really helps us test and improve the Filecoin network. When this node successfully stores data, any user of
-          this node can verify their{' '}
+        <h2 className={styles.h2} style={{ marginTop: 48, marginBottom: 20 }}>
+          {state.miners.length !== 0 ? (
+            <>
+              This node makes storage deals against <b>{state.miners.length} decentralized storage providers</b> and growing.
+            </>
+          ) : null}
+          Storage providers who are on our main Estuary Node's list have graciously accepted all data as it comes their way, which really helps us test and improve the Filecoin
+          network. When this node successfully stores data, any user of this node can verify their{' '}
           <a href="https://proto.school/anatomy-of-a-cid" className={styles.link} target="_blank">
             CID
           </a>{' '}
@@ -233,6 +249,13 @@ function IndexPage(props: any) {
           </a>
           .
         </h2>
+
+        {state.dealsOnChain == 0 && state.totalFilesStored == 0 ? (
+          <p style={{ fontSize: '18px', color: 'blue', maxWidth: '75ch', fontStyle: 'italic' }}>
+            {' '}
+            An error occured to load total pinned CIDs and storage deals at the moment. Please try again in a few minutes or contact us if the issue persists.
+          </p>
+        ) : null}
       </div>
 
       <div className={styles.boxes} style={{ marginTop: 64 }}>
