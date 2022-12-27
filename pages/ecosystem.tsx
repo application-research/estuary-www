@@ -49,6 +49,7 @@ function EcosystemPage(props: any) {
     totalStorageMiner: 0,
     totalObjectsRef: 0,
     environmentDevices: null,
+    successFailureRates: null,
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
@@ -135,16 +136,18 @@ function EcosystemPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
+      const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost)
       const miners = await R.get('/public/miners', props.api);
       const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const environment = await R.post('/api/v1/environment/equinix/list/usages', staticEnvironmentPayload, C.api.metricsHost);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, environmentDevices: environment });
+        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, environmentDevices: environment, successFailureRates: successFailRateStats });
       }
-      setState({ ...state, miners, ...stats, environmentDevices: environment });
+      setState({ ...state, miners, ...stats, environmentDevices: environment, successFailureRates: successFailRateStats });
     };
     console.log(state.environmentDevices);
+    console.log(state.successFailureRates);
     run();
   }, []);
 
@@ -407,7 +410,6 @@ function EcosystemPage(props: any) {
             </div>
           </div>
           <div className={S.ecosystemPerformance} style={{ marginTop: '40px' }}>
-            {/*{state.environmentDevices}*/}
             {state.environmentDevices != undefined && state.environmentDevices['device_usages'] != undefined
               ? state.environmentDevices['device_usages'].map((device) => {
                   return (
@@ -438,6 +440,16 @@ function EcosystemPage(props: any) {
             </div>
           </div>
         </div>
+
+        <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '0px' }}>
+          Deals Success and Failure rates
+        </h2>
+        {state.successFailureRates != undefined ? (
+          <div className={S.ecosystemStatValue}>
+            <div>{state.successFailureRates['dealSuccessRate']}</div>
+            <div>{state.successFailureRates['dealFailureRate']}</div>
+          </div>
+        ) : null }
 
         <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '0px' }}>
           Deals
