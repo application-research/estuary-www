@@ -442,12 +442,27 @@ function EcosystemPage(props: any) {
         </div>
 
         <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '0px' }}>
-          Deals Success and Failure rates
+          Deal rates
         </h2>
         {state.successFailureRates != undefined ? (
-          <div className={S.ecosystemStatValue}>
-            <div>{state.successFailureRates['dealSuccessRate']}</div>
-            <div>{state.successFailureRates['dealFailureRate']}</div>
+          <div className={S.ecosystemPerformance} style={{ marginTop: '0px' }}>
+            <div className={S.ecosystemShuttleData}>
+              <div className={S.ecosystemSection}>
+                <div className={S.ecosystemStatCard}>
+                  <div className={S.ecosystemStatValue} style={{fontSize: "30px", color: "#76ff01"}}>{state.successFailureRates['dealSuccessRate']}</div>
+                  <div className={S.ecosystemStatLabel}>Success Rate</div>
+                </div>
+              </div>
+            </div>
+            <div className={S.ecosystemShuttleData}>
+
+              <div className={S.ecosystemSection}>
+                <div className={S.ecosystemStatCard}>
+                  <div className={S.ecosystemStatValue} style={{ fontSize: "30px", color: "#cb1b3f"}}>{state.successFailureRates['dealFailureRate']}</div>
+                  <div className={S.ecosystemStatLabel} style={{ color: "#cb1b3f"}}>Failure Rate</div>
+                </div>
+              </div>
+            </div>
           </div>
         ) : null }
 
