@@ -1,0 +1,89 @@
+.heroContainer {
+  height: 60vh;
+  position: relative;
+  display: grid;
+
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
+}
+
+.gradient {
+  background: linear-gradient(321deg, #71e760, #d9e868, #7de9a0, #b6ec7d);
+  animation: gradient-animation 10s ease infinite;
+  background-size: 240% 240%;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.centeredContainer {
+  padding-left: var(--main-page-margin);
+  padding-right: var(--main-page-margin);
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  position: relative;
+  padding-bottom: var(--peekaboo);
+  display: grid;
+  grid-row: 1/2;
+
+  @media (max-width: 768px) {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+}
+
+.textContainer {
+  display: inline-grid;
+  row-gap: 4px;
+  text-align: left;
+  position: relative;
+}
+
+.text {
+  margin: 0;
+  min-width: 0;
+  display: inline-grid;
+  grid-auto-rows: min-content;
+  justify-items: start;
+  justify-self: start;
+  row-gap: 12px;
+  text-align: left;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  max-width: 75ch;
+  -webkit-font-smoothing: antialiased;
+
+  @media (max-width: 768px) {
+    row-gap: 8px;
+    max-width: 100ch;
+  }
+}
+
+.heading {
+  font-size: 40px;
+  font-family: 'Parabole';
+
+  @media (max-width: 768px) {
+    font-size: 40px;
+  }
+}
+
+.caption {
+  font-size: 16px;
+  font-family: Mono;
+  max-width: 75ch;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}

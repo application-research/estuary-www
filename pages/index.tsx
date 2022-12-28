@@ -203,7 +203,6 @@ function IndexPage(props: any) {
           </div>
         )}
       </div>
-
       <div className={styles.section} style={{ marginTop: 64 }}>
         <h2 className={styles.h2}>
           Estuary.tech is a demonstration of what an Estuary node can do.
@@ -257,7 +256,6 @@ function IndexPage(props: any) {
           </p>
         ) : null}
       </div>
-
       <div className={styles.boxes} style={{ marginTop: 64 }}>
         <div className={styles.slot}>
           <div className={styles.box}>
