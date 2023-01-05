@@ -11,6 +11,7 @@ import Page from '@components/Page';
 
 import Footer from '@root/components/Footer';
 import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
+import ProgressBar from '@root/components/ProgressBar';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -136,13 +137,21 @@ function EcosystemPage(props: any) {
 
   React.useEffect(() => {
     const run = async () => {
-      const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost)
+      const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost);
       const miners = await R.get('/public/miners', props.api);
       const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const environment = await R.post('/api/v1/environment/equinix/list/usages', staticEnvironmentPayload, C.api.metricsHost);
 
       if ((miners && miners.error) || (stats && stats.error)) {
-        return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, environmentDevices: environment, successFailureRates: successFailRateStats });
+        return setState({
+          ...state,
+          miners: [],
+          totalStorage: 0,
+          totalFilesStored: 0,
+          totalObjectsRef: 0,
+          environmentDevices: environment,
+          successFailureRates: successFailRateStats,
+        });
       }
       setState({ ...state, miners, ...stats, environmentDevices: environment, successFailureRates: successFailRateStats });
     };
@@ -326,7 +335,6 @@ function EcosystemPage(props: any) {
             </div>
           </div>
         </div>
-
         <div>
           <h2 id="performance" className={S.ecosystemH2}>
             Performance
@@ -441,30 +449,14 @@ function EcosystemPage(props: any) {
           </div>
         </div>
 
-        <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '0px' }}>
-          Deal rates
-        </h2>
-        {state.successFailureRates != undefined ? (
-          <div className={S.ecosystemPerformance} style={{ marginTop: '0px' }}>
-            <div className={S.ecosystemShuttleData}>
-              <div className={S.ecosystemSection}>
-                <div className={S.ecosystemStatCard}>
-                  <div className={S.ecosystemStatValue} style={{fontSize: "30px", color: "#76ff01"}}>{state.successFailureRates['dealSuccessRate']}</div>
-                  <div className={S.ecosystemStatLabel}>Success Rate</div>
-                </div>
-              </div>
-            </div>
-            <div className={S.ecosystemShuttleData}>
-
-              <div className={S.ecosystemSection}>
-                <div className={S.ecosystemStatCard}>
-                  <div className={S.ecosystemStatValue} style={{ fontSize: "30px", color: "#cb1b3f"}}>{state.successFailureRates['dealFailureRate']}</div>
-                  <div className={S.ecosystemStatLabel} style={{ color: "#cb1b3f"}}>Failure Rate</div>
-                </div>
-              </div>
-            </div>
+        {state.successFailureRates !== undefined ? (
+          <div>
+            <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '16px' }}>
+              Deal rates
+            </h2>
+            <ProgressBar completed={state.successFailureRates['dealSuccessRate']} />
           </div>
-        ) : null }
+        ) : null}
 
         <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '0px' }}>
           Deals
@@ -486,7 +478,6 @@ function EcosystemPage(props: any) {
             />
           </div>
         ) : null}
-
         <div className={S.ecosystemPerformanceTable}>
           <div>
             {graph.data ? (
