@@ -10,9 +10,10 @@ import Chart from '@components/Chart';
 import Page from '@components/Page';
 
 import Footer from '@root/components/Footer';
-import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
-import ProgressBar from '@root/components/ProgressBar';
 import Hero from '@root/components/Hero';
+import ProgressBar from '@root/components/ProgressBar';
+import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
+import StorageProvidersTable from './StorageProvidersTable';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -64,84 +65,13 @@ function EcosystemPage(props: any) {
   var after = priorDate.getDate() + '-' + (priorDate.getMonth() + 1) + '-' + priorDate.getFullYear();
 
   //  static payload
-  var staticEnvironmentPayload = {
-    createdBefore: before,
-    createdAfter: after,
-    uuids: [
-      {
-        Uuid: '766557e4-1c14-4bef-a5b2-d974bbb2d848',
-        Name: 'Estuary API',
-      },
-      {
-        Uuid: '60352064-7b2c-4597-baf6-9df128e9242b',
-        Name: 'Shuttle-1',
-      },
-      {
-        Uuid: 'ed16760d-ec36-4d71-b46f-378428c1d774',
-        Name: 'Shuttle-2',
-      },
-
-      {
-        Uuid: '266fbb9d-56a1-4dea-9b99-9f28054c5522',
-        Name: 'Shuttle-4',
-      },
-      {
-        Uuid: '20e7cd76-c65c-48a1-871e-39b692f051b3',
-        Name: 'Shuttle-5',
-      },
-      {
-        Uuid: '266fbb9d-56a1-4dea-9b99-9f28054c5522',
-        Name: 'Shuttle-6',
-      },
-      {
-        Uuid: '3c924716-f30e-4afd-a073-98204e4a96a7',
-        Name: 'Shuttle-7',
-      },
-      {
-        Uuid: '8ceea3cd-7608-4428-8d6b-99f2acc80ce3',
-        Name: 'Shuttle-8',
-      },
-      {
-        Uuid: '20e7cd76-c65c-48a1-871e-39b692f051b3',
-        Name: '(NSQ) Queue Server',
-      },
-      {
-        Uuid: 'a972ec78-d59a-47a4-b110-dd6c5dfc0e60',
-        Name: 'DB Load Balancer',
-      },
-      {
-        Uuid: 'ec7e5c3f-28e4-48ec-8df2-4630657bcc8e',
-        Name: 'DB Server # 1',
-      },
-      {
-        Uuid: '78e4e282-305f-4fde-9e89-3f58aed69c9c',
-        Name: 'DB Server # 2',
-      },
-      {
-        Uuid: 'fec7f5fb-a457-4d87-b334-c08584df1611',
-        Name: 'DB Server # 3',
-      },
-      {
-        Uuid: '43cfdfa5-6037-4520-9e4c-c46f4d3686a1',
-        Name: 'Autoretrieve Server',
-      },
-      {
-        Uuid: 'a8e5d22b-13ef-4dc9-adcf-a3b2bb4a8863',
-        Name: 'Upload Proxy Server',
-      },
-      {
-        Uuid: 'e4d0efb1-1b5b-4aaf-a6ed-37c4a6cc2c6f',
-        Name: 'Backup Server',
-      },
-    ],
-  };
 
   React.useEffect(() => {
     const run = async () => {
       const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost);
       const miners = await R.get('/public/miners', props.api);
       const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
-      const environment = await R.post('/api/v1/environment/equinix/list/usages', staticEnvironmentPayload, C.api.metricsHost);
+      const environment = await R.post('/api/v1/environment/equinix/list/usages', C.staticEnvironmentPayload, C.api.metricsHost);
 
       if ((miners && miners.error) || (stats && stats.error)) {
         return setState({
@@ -499,49 +429,9 @@ function EcosystemPage(props: any) {
             ) : null}
           </div>
 
-          <div className={S.fa}>
-            <div className={S.fcol4}>
-              <span className={S.flink} style={{ fontSize: '16px' }}>
-                Index
-              </span>
-            </div>
-            <div className={S.fcolfull}>
-              <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
-            </div>
-          </div>
+          <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
 
-          {state.miners.map((each, index) => {
-            if (each.suspended) {
-              return null;
-            }
-
-            const indexValue = U.pad(index, 4);
-
-            return (
-              <div className={S.fam} key={each.addr}>
-                <div className={S.fcol4}>
-                  <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                    {indexValue} {!U.isEmpty(each.name) ? `— ${each.name}` : null}
-                  </a>
-                </div>
-                <div className={S.fcol4}>
-                  <a className={S.flink} href={`/providers/stats/${each.addr}`}>
-                    ➝ {each.addr}/stats
-                  </a>
-                </div>
-                <div className={S.fcol4}>
-                  <a className={S.flink} href={`/providers/deals/${each.addr}`}>
-                    ➝ {each.addr}/deals
-                  </a>
-                </div>
-                <div className={S.fcol4}>
-                  <a className={S.flink} href={`/providers/errors/${each.addr}`}>
-                    ➝ {each.addr}/errors
-                  </a>
-                </div>
-              </div>
-            );
-          })}
+          <StorageProvidersTable />
         </div>
       </div>
       <Footer />
