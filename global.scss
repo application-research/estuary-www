@@ -1,16 +1,22 @@
 @font-face {
   font-family: 'Mono';
-  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/JetBrainsMono-Regular.woff2') format('woff');
+  src: url('./public/fonts/JetBrainsMono-Regular.woff2') format('woff2'), url('./public/fonts/JetBrainsMono-Regular.woff') format('woff');
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'MonoMedium';
-  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/JetBrainsMono-Medium.woff2') format('woff');
+  src: url('./public/fonts/JetBrainsMono-Medium.woff2') format('woff2'), url('./public/fonts/JetBrainsMono-Medium.woff') format('woff');
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Parabole';
-  src: url('https://next-s3-public.s3.us-west-2.amazonaws.com/Parabole-Regular.woff') format('woff');
+  src: url('./public/fonts/Parabole-Regular.woff') format('woff');
+  font-style: normal;
+  font-display: swap;
 }
 
 html,
@@ -117,13 +123,13 @@ img {
 }
 
 html,
-body { 
+body {
   --line-height: 1.5;
- 
-  --border-white:#ffffff;
+
+  --border-white: #ffffff;
   --border-fainted-white: rgba(255, 255, 255, 0.5);
 
-  --color-green:  #76FF01;
+  --color-green: #76ff01;
   --main-background: rgba(246, 246, 246, 1);
   --main-background-white: #ffffff;
   --main-background-foreground: rgba(240, 240, 240, 1);
