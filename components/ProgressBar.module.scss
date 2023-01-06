@@ -1,0 +1,38 @@
+.containerStyles {
+  height: 28px;
+  width: 100%;
+  background-color: var(--text-white);
+}
+
+.fillerStyles {
+  height: 100%;
+  background-color: var(--color-green);
+  border-radius: inherit;
+  text-align: right;
+  transition: width 1s ease-in-out;
+  height: 28px;
+  line-height: 28px;
+}
+
+.labelStyles {
+  padding: 5;
+  color: var(--color-green-shadow);
+  font-family: Mono;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  padding-right: 8px;
+  font-size: 16px;
+}
+
+.labelTitle {
+  color: var(--text-white);
+  margin-top: 12px;
+  font-family: Mono;
+  font-size: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
