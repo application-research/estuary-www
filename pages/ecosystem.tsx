@@ -449,7 +449,7 @@ function EcosystemPage(props: any) {
           </div>
         </div>
 
-        {state.successFailureRates !== undefined ? (
+        {state.successFailureRates !== null ? (
           <div>
             <h2 id="deals" className={S.ecosystemH2} style={{ paddingBottom: '16px' }}>
               Deal rates
