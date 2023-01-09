@@ -23,9 +23,6 @@ function MinerDealsPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/public/miners/deals/${props.id}`, props.api);
-
-      console.log(response);
-
       if (response && response.length) {
         return setState({ logs: response });
       }

@@ -106,8 +106,6 @@ function WatchProvidersPage(props: any) {
 
   const navigationElement = <Navigation isAuthenticated={props.viewer} isRenderingSidebar={sidebarElement} active="SECRET_PICKS_PAGE" />;
 
-  console.log(state.providers);
-
   return (
     <Page title="Estuary: Providers" description="This is a providers page." url={`${props.hostname}/providers/public/watch`}>
       <AuthenticatedLayout navigation={navigationElement} sidebar={sidebarElement}>

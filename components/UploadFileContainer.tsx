@@ -1,13 +1,13 @@
 import styles from '@components/UploadFileContainer.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import LoaderSpinner from '@components/LoaderSpinner';
-import Button from '@components/Button';
 import ActionRow from '@components/ActionRow';
+import Button from '@components/Button';
+import LoaderSpinner from '@components/LoaderSpinner';
 import Cookies from 'js-cookie';
 
 export default class UploadFileContainer extends React.Component<any> {
@@ -74,8 +74,6 @@ export default class UploadFileContainer extends React.Component<any> {
 
     formData.append('data', this.state.data.file, this.state.data.filename);
 
-    console.log(formData);
-
     this.setState({ mode: 4 });
     this.props.onUploadFile({ staging: this.state.staging });
 
@@ -119,7 +117,6 @@ export default class UploadFileContainer extends React.Component<any> {
     };
 
     xhr.onloadend = (event: any) => {
-      console.log(event);
       if (event.target && event.target.status === 200 && event.target.response) {
         let json = {};
         try {
@@ -140,7 +137,7 @@ export default class UploadFileContainer extends React.Component<any> {
 
   handleSelectFile = (e) => {
     e.persist();
-    console.log('select file: ', e.target);
+
     if (e.target.files.length == 0) {
       return;
     }
@@ -153,7 +150,6 @@ export default class UploadFileContainer extends React.Component<any> {
   handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('dropped a thing: ', e.dataTransfer.files);
 
     if (this.state.mode !== 3) {
       return;
@@ -171,7 +167,6 @@ export default class UploadFileContainer extends React.Component<any> {
     const file = e.dataTransfer.files[0];
 
     this.setState({ loading: true });
-
     this.doFileUpload(file, file.name);
   };
 

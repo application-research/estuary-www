@@ -10,9 +10,9 @@ import Chart from '@components/Chart';
 import Page from '@components/Page';
 
 import Footer from '@root/components/Footer';
-import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
-import ProgressBar from '@root/components/ProgressBar';
 import Hero from '@root/components/Hero';
+import ProgressBar from '@root/components/ProgressBar';
+import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -156,8 +156,6 @@ function EcosystemPage(props: any) {
       }
       setState({ ...state, miners, ...stats, environmentDevices: environment, successFailureRates: successFailRateStats });
     };
-    console.log(state.environmentDevices);
-    console.log(state.successFailureRates);
     run();
   }, []);
 

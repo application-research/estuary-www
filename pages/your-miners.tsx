@@ -48,7 +48,6 @@ const onGetMinerHex = async (e, state, setState, host) => {
   }
 
   setState({ ...state, hexmsg: response.hexmsg });
-  console.log(response);
 };
 
 const onClaimMiner = async (e, state, setState, host) => {
@@ -89,8 +88,6 @@ function YourMinerPage(props: any) {
   const [state, setState] = React.useState({ loading: false, miner: '', hexmsg: '', signature: '' });
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
-
-  console.log(viewer);
 
   return (
     <Page title="Estuary: Your miners (WIP)" description="Claim and manage your storage provider." url={`${props.hostname}/your-miners`}>

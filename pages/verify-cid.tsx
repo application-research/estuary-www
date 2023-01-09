@@ -62,11 +62,10 @@ const onCheckCID = async (state, setState, host) => {
   const response = await R.get(`/public/by-cid/${state.cid}`, host);
 
   if (response.error) {
-    return setState({ ...state, working: false, data: {error: response.error} });
+    return setState({ ...state, working: false, data: { error: response.error } });
   }
 
   if (history.pushState) {
-    console.log('Update search param.');
     let searchParams = new URLSearchParams(window.location.search);
     searchParams.set('cid', state.cid);
     let newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?' + searchParams.toString();
@@ -179,7 +178,9 @@ function VerifyCIDPage(props: any) {
       <div className={S.scustom} style={{ marginTop: 48 }}>
         <H3>Request Error</H3>
         <P style={{ marginTop: 8 }}>There was an error verifying this CID</P>
-        <CodeBlock style={{ marginTop: 8, fontSize: 10}}>{state.data.error.code}: {state.data.error.details}</CodeBlock>
+        <CodeBlock style={{ marginTop: 8, fontSize: 10 }}>
+          {state.data.error.code}: {state.data.error.details}
+        </CodeBlock>
       </div>
     );
   }

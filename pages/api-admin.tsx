@@ -40,7 +40,7 @@ const REDACTED_TOKEN_STRING = '•'.repeat(42);
 
 function APIPage(props: any) {
   const viewerToken = Cookie.get(C.auth);
-  console.log(viewerToken);
+
   const [state, setState] = React.useState({ keys: [], loading: false });
   const [showCreateKeyModal, setShowCreateKeyModal] = React.useState(false);
   const [showCreatePermanentKeyModal, setShowCreatePermanentKeyModal] = React.useState(false);
@@ -48,8 +48,6 @@ function APIPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get('/user/api-keys', props.api);
-      console.log(response);
-
       if (response && !response.error) {
         setState({ ...state, keys: response });
       }

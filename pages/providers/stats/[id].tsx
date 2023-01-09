@@ -63,8 +63,6 @@ function MinerStatsPage(props: any) {
     run();
   }, []);
 
-  console.log('state', state);
-
   const sidebarElement = props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null;
 
   return (

@@ -24,9 +24,9 @@ const sendEscrow = async (state, setState, host) => {
   }
 
   const response = await R.post(`/admin/add-escrow/${state.amount}`, {}, host);
-  console.log(response);
 
   if (response.error) {
+    console.log(response.error);
     alert('Something went wrong, please try again.');
     setState({ ...state, amount: 0, loading: false });
     return;

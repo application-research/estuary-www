@@ -1,14 +1,14 @@
 import styles from '@components/UploadItem.module.scss';
 
-import * as React from 'react';
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
+import * as React from 'react';
 
-import Cookies from 'js-cookie';
-import ProgressBlock from '@components/ProgressBlock';
 import ActionRow from '@components/ActionRow';
 import LoaderSpinner from '@components/LoaderSpinner';
+import ProgressBlock from '@components/ProgressBlock';
+import Cookies from 'js-cookie';
 
 export class PinStatusElement extends React.Component<any> {
   state = { pinned: false, delegates: ['none'] };
@@ -17,10 +17,8 @@ export class PinStatusElement extends React.Component<any> {
     const checkPinStatus = () => {
       window.setTimeout(async () => {
         const response = await R.get(`/pinning/pins/${this.props.id}`, this.props.host);
-        console.log(response);
 
         if (response.status === 'pinned') {
-          console.log('stop loop');
           this.setState({ pinned: true, ...response });
           this.forceUpdate();
           return;
@@ -38,7 +36,7 @@ export class PinStatusElement extends React.Component<any> {
       return (
         <React.Fragment>
           <ActionRow>This CID is pinned.</ActionRow>
-          <ActionRow>Delegate {this.state.delegates && this.state.delegates.length > 0 ? this.state.delegates[0] : ""}</ActionRow>
+          <ActionRow>Delegate {this.state.delegates && this.state.delegates.length > 0 ? this.state.delegates[0] : ''}</ActionRow>
         </React.Fragment>
       );
     }
@@ -64,7 +62,6 @@ export default class UploadItem extends React.Component<any> {
 
   upload = async () => {
     if (this.state.loaded > 0) {
-      console.log('already attempted', this.props.file.id);
       return;
     }
 

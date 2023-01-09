@@ -47,7 +47,6 @@ const onSubmit = async (event, state, setState) => {
     return null;
   }
 
-  console.log('Impersonating...');
   Cookies.set(C.auth, state.key);
   window.location.reload();
 };

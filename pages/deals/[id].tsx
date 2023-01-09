@@ -32,7 +32,7 @@ function DealPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/deals/status/${props.id}`, props.api);
-      console.log(response);
+
       if (response && !response.error) {
         setState({ ...response });
       }

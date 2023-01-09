@@ -62,7 +62,6 @@ export default class UploadPage extends React.Component<any> {
 
   _handleFile = async (file) => {
     if (!file) {
-      console.log('MISSING DATA');
       return;
     }
 
@@ -95,7 +94,6 @@ export default class UploadPage extends React.Component<any> {
   };
 
   render() {
-    console.log(this.state.files);
     const sidebarElement = <AuthenticatedSidebar active="UPLOAD" viewer={this.props.viewer} />;
 
     return (

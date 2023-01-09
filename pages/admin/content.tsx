@@ -45,7 +45,6 @@ function AdminContentPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get('/admin/cm/offload/candidates', props.api);
-      console.log(response);
 
       if (response && response.error) {
         return;
