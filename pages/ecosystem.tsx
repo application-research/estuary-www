@@ -12,6 +12,7 @@ import Page from '@components/Page';
 import Footer from '@root/components/Footer';
 import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
 import ProgressBar from '@root/components/ProgressBar';
+import Hero from '@root/components/Hero';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -226,11 +227,13 @@ function EcosystemPage(props: any) {
   return (
     <Page title={title} description={description} url={`${props.hostname}/ecosystem`}>
       <ResponsiveNavbar />
+      <Hero
+        gradient={true}
+        heading="Estuary's Ecosystem"
+        caption="Since April 2021, Estuary has made significant progress in expanding its ecosystem. We are excited to share our progress with you and strive to continue growing this community."
+      />
       <div className={S.ecosystem}>
         <div>
-          <h3 className={S.ecosystemH3} style={{ marginTop: '48px' }}>
-            Estuary's performance since April 2021
-          </h3>
           <h2 id="collaborators" className={S.ecosystemH2} style={{ paddingTop: '80px' }}>
             Collaborators
           </h2>
