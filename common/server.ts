@@ -14,6 +14,6 @@ export function initMiddleware(middleware) {
 
 export const cors = initMiddleware(
   Cors({
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   })
 );
