@@ -6,7 +6,9 @@
 
 .fillerStyles {
   height: 100%;
-  background-color: var(--color-green);
+  background: var(--linear-gradient-green);
+  animation: gradient-animation 10s ease infinite;
+  background-size: 240% 240%;
   border-radius: inherit;
   text-align: right;
   transition: width 1s ease-in-out;
@@ -34,5 +36,17 @@
 
   @media (max-width: 768px) {
     font-size: 16px;
+  }
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
