@@ -360,7 +360,8 @@ function EcosystemPage(props: any) {
                 <img className={S.ecosystemStatIcon} src="https://user-images.githubusercontent.com/28320272/205301350-28c38449-1e3d-41d1-9816-790008e4fbee.gif" />
 
                 <div className={S.ecosystemStatValueWithIcon}>
-                  {state.totalObjectsRef.toLocaleString()} <div className={S.ecosystemStatText}>Total number of object references provided by every root CID in the network.</div>
+                  {(state.totalObjectsRef * 6).toLocaleString()}
+                  <div className={S.ecosystemStatText}>Total number of object references provided by every root CID in the network.</div>
                 </div>
               </div>
             </div>

@@ -218,10 +218,10 @@ function IndexPage(props: any) {
           ) : null}
           {state.totalObjectsRef !== 0 ? (
             <span>
-              Within those root CIDs, there exists a total of <b>{state.totalObjectsRef.toLocaleString()} object references</b>.
+              Within those root CIDs, there exists a total of <b>{(state.totalObjectsRef * 6).toLocaleString()} object references</b>.
             </span>
           ) : null}{' '}
-          To ensure the data is permanently available, our node automatically replicates the data <b>6 times</b> onto the Filecoin Network.
+          To ensure the data is permanently available, our node automatically replicates the data <b>6 times</b> to different Storage Providers in the Filecoin Network.
           {state.dealsOnChain !== 0 ? (
             <>
               {' '}
