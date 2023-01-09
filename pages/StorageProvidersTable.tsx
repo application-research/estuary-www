@@ -8,6 +8,9 @@ import DealsIcon from '@root/components/icons/DealsIcon';
 import ErrorIcon from '@root/components/icons/ErrorIcon';
 import UserCheckedIcon from '@root/components/icons/UserCheckedIcon';
 import SignalIcon from '@root/components/icons/SignalIcon';
+import Link from 'next/link';
+import LoaderSpinner from '@components/LoaderSpinner';
+import { BreakpointEnum, useBreakpoint } from '@root/common/use-breakpoint';
 
 export interface MinerDataProps {
   miner: string;
@@ -15,8 +18,10 @@ export interface MinerDataProps {
   errorCount: number;
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ context, res }) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
 
   return {
     props: { viewer, ...context.params, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
@@ -25,14 +30,25 @@ export async function getServerSideProps(context) {
 
 function StorageProvidersTable(props: any) {
   const [state, setState] = React.useState([]);
+  const [displayIcon, setDisplayIcon] = React.useState(false);
+
+  const breakpoint = useBreakpoint();
 
   let minerNames = [];
   let eachMiner = [];
   let minerData: MinerDataProps[] = [];
 
   React.useEffect(() => {
+    const isMobile = breakpoint === BreakpointEnum.XS || breakpoint === BreakpointEnum.SM;
+
+    if (!isMobile) {
+      setDisplayIcon(true);
+    }
+  }, [breakpoint]);
+
+  React.useEffect(() => {
     const run = async () => {
-      const miners = await R.get('/public/miners/', process.env.NEXT_PUBLIC_ESTUARY_API);
+      const miners = await R.get('/public/miners/', props.api);
 
       for (let miner of miners) {
         minerNames.push(miner.addr);
@@ -43,7 +59,7 @@ function StorageProvidersTable(props: any) {
       });
 
       eachMiner.map(async (miner) => {
-        const response = await R.get(`/public/miners/stats/${miner}`, process.env.NEXT_PUBLIC_ESTUARY_API);
+        const response = await R.get(`/public/miners/stats/${miner}`, props.api);
 
         minerData.push(response);
         if (minerData.length == minerNames.length) {
@@ -56,40 +72,63 @@ function StorageProvidersTable(props: any) {
   }, []);
 
   return (
-    <table className={style.table}>
-      <div>{minerData}</div>
-      <tr>
-        <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
-          Index
-          <SignalIcon className={style.svgIcon} style={{ height: '20px' }} />
-        </th>
-        <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
-          <span className={style.thLabel}>Storage Provider's ID</span> <UserCheckedIcon className={style.svgIcon} style={{ height: '20px' }} />
-        </th>
-        <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
-          <span className={style.thLabel}> Deals</span>
-          <DealsIcon className={style.svgIcon} style={{ height: '20px' }} />
-        </th>
-        <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
-          <span className={style.thLabel}> Error Count</span>
-          <ErrorIcon className={style.svgIcon} style={{ height: '20px' }} />
-        </th>
-      </tr>
+    <>
+      {state.length == 0 ? (
+        <div className={style.loaderContainer}>
+          <LoaderSpinner />
+          <p style={{ color: 'white', fontFamily: 'Mono', marginTop: '8px' }}>Data is Loading </p>
+        </div>
+      ) : (
+        <table className={style.table} style={{ marginBottom: '80px' }}>
+          <tr>
+            <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
+              Index
+              <SignalIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+            </th>
+            <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
+              <span className={style.thLabel}> Provider ID</span>
+              <UserCheckedIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+            </th>
+            <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
+              <span className={style.thLabel}> Deals</span>
+              <DealsIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+            </th>
+            <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
+              <span className={style.thLabel}> Errors</span>
+              <ErrorIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+            </th>
+          </tr>
 
-      {state.length !== null
-        ? state.map((item, index) => {
+          {state.map((item, index) => {
             const { miner, dealCount, errorCount } = item;
             return (
               <tr className={style.tr}>
-                <td className={style.td}>{index}</td>
-                <td className={style.td}>{miner}</td>
-                <td className={style.td}>{dealCount}</td>
-                <td className={style.td}>{errorCount}</td>
+                <td className={style.td}>
+                  <a href={`/providers/stats/${miner}`} className={style.link}>
+                    {index}
+                  </a>
+                </td>
+                <td className={style.td}>
+                  <a href={`/providers/stats/${miner}`} className={style.link} style={{ color: 'white', textDecoration: 'none' }}>
+                    {miner}
+                  </a>
+                </td>
+                <td className={style.td}>
+                  <a href={`/providers/stats/${miner}`} className={style.link}>
+                    {dealCount}
+                  </a>
+                </td>
+                <td className={style.td}>
+                  <a href={`/providers/stats/${miner}`} className={style.link}>
+                    {errorCount}
+                  </a>
+                </td>
               </tr>
             );
-          })
-        : null}
-    </table>
+          })}
+        </table>
+      )}
+    </>
   );
 }
 

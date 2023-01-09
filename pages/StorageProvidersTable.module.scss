@@ -1,5 +1,5 @@
 .table {
-  color:var(--text-white);
+  color: var(--text-white);
   border: 1px dashed var(--text-space-gray);
   width: 100%;
   border-collapse: collapse;
@@ -22,14 +22,14 @@
   font-family: 'Mono';
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 0.5px solid var(--text-space-gray);
+  border-bottom: 1px dashed var(--text-space-gray);
   border-collapse: collapse;
   background: var(--text-white);
   color: 'black';
 }
 
 .td {
-  border-bottom: 0.5px solid var(--text-space-gray);
+  border-bottom: 1px dashed var(--text-space-gray);
   border-left: none;
   border-right: none;
   transition: 0.5s;
@@ -51,4 +51,22 @@
 
 .thLabel {
   margin-right: 4px;
+}
+
+.link {
+  color: var(--text-white);
+  text-decoration: none;
+
+  :hover {
+    color: var(--color-green);
+  }
+}
+
+.loaderContainer {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.displayNone {
+  display: none;
 }

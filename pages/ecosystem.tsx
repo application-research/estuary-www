@@ -413,7 +413,7 @@ function EcosystemPage(props: any) {
           </div>
         ) : null}
         <div className={S.ecosystemPerformanceTable}>
-          <div>
+          <div style={{ marginBottom: 'var(--main-page-row-gap)' }}>
             {graph.data ? (
               <div className={S.fa}>
                 {graph.data.map((each) => {
