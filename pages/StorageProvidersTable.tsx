@@ -4,19 +4,12 @@ import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as React from 'react';
 
-import DealsIcon from '@root/components/icons/DealsIcon';
-import ErrorIcon from '@root/components/icons/ErrorIcon';
-import UserCheckedIcon from '@root/components/icons/UserCheckedIcon';
-import SignalIcon from '@root/components/icons/SignalIcon';
-import Link from 'next/link';
 import LoaderSpinner from '@components/LoaderSpinner';
 import { BreakpointEnum, useBreakpoint } from '@root/common/use-breakpoint';
-
-export interface MinerDataProps {
-  miner: string;
-  dealCount: number;
-  errorCount: number;
-}
+import DealsIcon from '@root/components/icons/DealsIcon';
+import ErrorIcon from '@root/components/icons/ErrorIcon';
+import SignalIcon from '@root/components/icons/SignalIcon';
+import UserCheckedIcon from '@root/components/icons/UserCheckedIcon';
 
 export async function getServerSideProps({ context, res }) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -36,7 +29,7 @@ function StorageProvidersTable(props: any) {
 
   let minerNames = [];
   let eachMiner = [];
-  let minerData: MinerDataProps[] = [];
+  let minerData = [];
 
   React.useEffect(() => {
     const isMobile = breakpoint === BreakpointEnum.XS || breakpoint === BreakpointEnum.SM;
@@ -49,9 +42,12 @@ function StorageProvidersTable(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const miners = await R.get('/public/miners/', props.api);
+      let undefinedMiner = 0;
 
       for (let miner of miners) {
-        minerNames.push(miner.addr);
+        if (miner !== undefined && miner.status !== 500 && miner !== 'error') {
+          minerNames.push(miner.addr);
+        }
       }
 
       minerNames.map((miner) => {
@@ -61,8 +57,13 @@ function StorageProvidersTable(props: any) {
       eachMiner.map(async (miner) => {
         const response = await R.get(`/public/miners/stats/${miner}`, props.api);
 
-        minerData.push(response);
-        if (minerData.length == minerNames.length) {
+        if (response.miner !== undefined && response.status !== 500 && response !== 'error') {
+          minerData.push(response);
+        } else {
+          undefinedMiner += 1;
+        }
+
+        if (minerData.length == minerNames.length - undefinedMiner) {
           return setState(minerData);
         }
       });
@@ -70,6 +71,10 @@ function StorageProvidersTable(props: any) {
 
     run();
   }, []);
+
+  state.sort((b, a) => {
+    return a.dealCount - b.dealCount;
+  });
 
   return (
     <>
@@ -83,24 +88,25 @@ function StorageProvidersTable(props: any) {
           <tr>
             <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
               Index
-              <SignalIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+              <SignalIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} color={'black'} />
             </th>
             <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
               <span className={style.thLabel}> Provider ID</span>
-              <UserCheckedIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+              <UserCheckedIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} color={'black'} />
             </th>
             <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
               <span className={style.thLabel}> Deals</span>
-              <DealsIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+              <DealsIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} color={'black'} />
             </th>
             <th className={style.th} style={{ color: 'black', fontSize: '12px' }}>
               <span className={style.thLabel}> Errors</span>
-              <ErrorIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} />
+              <ErrorIcon className={displayIcon ? style.svgIcon : style.displayNone} style={{ height: '20px' }} color={'black'} />
             </th>
           </tr>
 
           {state.map((item, index) => {
             const { miner, dealCount, errorCount } = item;
+
             return (
               <tr className={style.tr}>
                 <td className={style.td}>
@@ -109,8 +115,8 @@ function StorageProvidersTable(props: any) {
                   </a>
                 </td>
                 <td className={style.td}>
-                  <a href={`/providers/stats/${miner}`} className={style.link} style={{ color: 'white', textDecoration: 'none' }}>
-                    {miner}
+                  <a href={`/providers/stats/${miner}`} className={style.link}>
+                    {miner !== undefined ? miner : 'EMPTYYYY'}
                   </a>
                 </td>
                 <td className={style.td}>

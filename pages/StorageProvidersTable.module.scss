@@ -57,7 +57,9 @@
   color: var(--text-white);
   text-decoration: none;
 
-  :hover {
+ &:hover{
+    cursor: pointer;
+    transition: 200ms ease all;
     color: var(--color-green);
   }
 }

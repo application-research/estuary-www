@@ -56,16 +56,6 @@ function EcosystemPage(props: any) {
   });
   const [graph, setGraph] = React.useState({ data: null, dealsSealedBytes: 0 });
 
-  // get current date and 30 days before
-  var today = new Date();
-  var priorDate = new Date(new Date().setDate(today.getDate() - 30));
-
-  // reformat date
-  var before = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-  var after = priorDate.getDate() + '-' + (priorDate.getMonth() + 1) + '-' + priorDate.getFullYear();
-
-  //  static payload
-
   React.useEffect(() => {
     const run = async () => {
       const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost);
@@ -429,8 +419,13 @@ function EcosystemPage(props: any) {
             ) : null}
           </div>
 
-          <span className={S.flink}>All of the storage providers that take storage from this Estuary node.</span>
-
+          <p className={S.flink} style={{ marginBottom: '8px' }}>
+            This table displays all of the&nbsp;
+            <a href="https://docs.estuary.tech/get-provider-added" className={S.link}>
+              Storage Providers
+            </a>
+            &nbsp;that take storage from this Estuary node.{' '}
+          </p>
           <StorageProvidersTable />
         </div>
       </div>
