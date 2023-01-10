@@ -375,6 +375,7 @@ a.flink {
   row-gap: var(--main-page-row-gap);
   position: relative;
   z-index: 3;
+  padding-bottom: 88px;
 
   @media (max-width: 768px) {
     padding-left: 5vw;
@@ -596,11 +597,11 @@ a.flink {
   text-transform: uppercase;
 }
 
-.link{
+.link {
   color: var(--text-white);
   text-decoration: none;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     transition: 200ms ease all;
     color: var(--color-green);
