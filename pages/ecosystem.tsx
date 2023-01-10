@@ -59,7 +59,7 @@ function EcosystemPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const successFailRateStats = await R.get('/api/v1/stats/storage-rates', C.api.metricsHost);
-      const miners = await R.get('/public/miners', props.api);
+      const miners = await R.get('/public/miners', props.api, true);
       const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const environment = await R.post('/api/v1/environment/equinix/list/usages', C.staticEnvironmentPayload, C.api.metricsHost);
 

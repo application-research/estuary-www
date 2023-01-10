@@ -2,10 +2,20 @@ import Cookies from 'js-cookie';
 
 import * as C from '@common/constants';
 
-export const get = async (route, host = C.api.host): Promise<any> => {
-  try {
-    const token = Cookies.get(C.auth);
+import ls from 'localstorage-slim';
 
+export const get = async (route, host = C.api.host, cache = false): Promise<any> => {
+  try {
+    if (cache) {
+      // check if the data is already cached in local storage
+      const cachedData = ls.get(route);
+      if (cachedData) {
+        //Data loaded from cache
+        return cachedData;
+      }
+    }
+
+    const token = Cookies.get(C.auth);
     let r = await fetch(`${host}${route}`, {
       method: 'GET',
       headers: {
@@ -29,6 +39,10 @@ export const get = async (route, host = C.api.host): Promise<any> => {
     }
 
     console.log(route, j);
+    if (cache) {
+      // cache the data in local storage for an hour
+      ls.set(route, j, { ttl: 3600 });
+    }
     return j;
   } catch (e) {
     console.log(route, e);
