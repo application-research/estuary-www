@@ -18,7 +18,7 @@
 }
 
 .footerHeading {
-  color: var(--color-green);
+  color: var(--text-white);
   font-family: 'Parabole';
   -webkit-font-smoothing: antialiased;
   font-size: 24px;
@@ -57,7 +57,9 @@
 }
 
 .footerBranding {
-  background: var(--color-green);
+  background: var(--linear-gradient-green);
+  animation: gradient-animation 10s ease infinite;
+  background-size: 240% 240%;
   border-top: 0.5px dashed var(--text-space-gray);
   display: flex;
   flex-direction: column;
@@ -141,5 +143,17 @@
   @media (max-width: 768px) {
     font-size: 12px;
     padding-left: 5vw;
+  }
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

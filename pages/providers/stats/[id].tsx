@@ -41,6 +41,7 @@ function MinerStatsPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/public/miners/stats/${props.id}`, props.api);
+
       let iex;
       try {
         const iexResponse = await fetch('https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d');
