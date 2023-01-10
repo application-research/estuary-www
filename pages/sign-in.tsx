@@ -79,12 +79,7 @@ async function handleSignIn(state: any, host) {
 }
 
 function SignInPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '', adminLogin: 'false' });
-
-  const authorise = null;
-  const authScenario = null;
-  const signIn = null;
-
+  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', adminLogin: 'false' });
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
