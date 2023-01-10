@@ -2,6 +2,7 @@ import styles from '@pages/app.module.scss';
 
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
+import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as React from 'react';
 
@@ -62,6 +63,48 @@ async function handleSignIn(state: any, host) {
       'Content-Type': 'application/json',
     },
   });
+
+  if (r.status !== 200) {
+    // NOTE(jim): We don't know the users password ever so we can't do anything on their
+    // behalf, but if they were authenticated using the old method, we can do one more retry.
+    const retryHash = await Crypto.attemptHash(state.password);
+
+    let retry = await fetch(`${host}/login`, {
+      method: 'POST',
+      body: JSON.stringify({ passwordHash: retryHash, username: state.username }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (retry.status !== 200) {
+      return { error: 'Failed to authenticate' };
+    }
+
+    const retryJSON = await retry.json();
+    if (retryJSON.error) {
+      return retryJSON;
+    }
+
+    if (!retryJSON.token) {
+      return { error: 'Failed to authenticate' };
+    }
+
+    console.log('Authenticated using legacy scheme.');
+
+    Cookies.set(C.auth, retryJSON.token);
+
+    console.log('Attempting legacy scheme revision on your behalf');
+
+    try {
+      const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
+    } catch (e) {
+      console.log('Failure:', e);
+    }
+
+    window.location.href = '/home';
+    return;
+  }
 
   const j = await r.json();
   if (j.error) {
