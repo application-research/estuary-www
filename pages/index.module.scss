@@ -279,7 +279,6 @@ a.flink {
   font-family: 'Mono';
   font-size: 16px;
   height: 56px;
-  padding: 0 15px 0 15px;
   text-decoration: none;
   transition: 200ms ease all;
 
@@ -448,7 +447,6 @@ a.flink {
 .ecosystemPerformance {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
 }
 
 .ecosystemSectionWithIcon {
@@ -596,4 +594,15 @@ a.flink {
   font-size: 12px;
   margin-top: 8px;
   text-transform: uppercase;
+}
+
+.link{
+  color: var(--text-white);
+  text-decoration: none;
+
+  &:hover{
+    cursor: pointer;
+    transition: 200ms ease all;
+    color: var(--color-green);
+  }
 }
