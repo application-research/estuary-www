@@ -1,3 +1,9 @@
+.env
+.env.local
+.env-custom-development
+.env-development
+.env-textile
+.env-production
 .next
 package-lock.json
 node_modules

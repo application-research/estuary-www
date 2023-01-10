@@ -72,15 +72,19 @@ export const api = {
 
 // get current date and 30 days before
 var today = new Date();
-var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+var priorDateMonthly = new Date(new Date().setDate(today.getDate() - 30));
+var priorDateWeekly = new Date(new Date().setDate(today.getDate() - 7));
 
 // reformat date
-var before = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-var after = priorDate.getDate() + '-' + (priorDate.getMonth() + 1) + '-' + priorDate.getFullYear();
+var beforeMonthly = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+var afterMonthly = priorDateMonthly.getDate() + '-' + (priorDateMonthly.getMonth() + 1) + '-' + priorDateMonthly.getFullYear();
+
+var beforeWeekly = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+var afterWeekly = priorDateWeekly.getDate() + '-' + (priorDateWeekly.getMonth() + 1) + '-' + priorDateMonthly.getFullYear();
 
 export const staticEnvironmentPayload = {
-  createdBefore: before,
-  createdAfter: after,
+  createdBefore: beforeWeekly,
+  createdAfter: afterWeekly,
   uuids: [
     {
       Uuid: '766557e4-1c14-4bef-a5b2-d974bbb2d848',
