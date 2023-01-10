@@ -114,7 +114,7 @@ function SignInPage(props: any) {
           }}
         />
 
-        <div className={styles.actions} style={{ marginTop: 10 }}>
+        <div className={styles.actions} style={{ marginTop: '16px' }}>
           <input
             type="checkbox"
             onClick={() => {
@@ -125,7 +125,7 @@ function SignInPage(props: any) {
               }
             }}
           />
-          <p style={{ fontSize: 12, marginTop: 1 }}>This user was created using estuary CLI</p>
+          <H4>This user was created using estuary CLI</H4>
         </div>
 
         <div className={styles.actions}>
