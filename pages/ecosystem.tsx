@@ -73,6 +73,11 @@ function EcosystemPage(props: any) {
                 </div>
               </div>
               <div className={S.column}>
+                <a className={S.ecosystemLogoBox} href="https://www.sendata.io/" target="_blank">
+                  <img height="50vh" src="https://user-images.githubusercontent.com/28320272/212118753-fed66bc4-2b7d-4682-ac99-f86ab2ea37f6.png" />
+                </a>
+              </div>
+              <div className={S.column}>
                 <div className={S.ecosystemLogoBox}>
                   <Logos.NBFS height="30px" width="160px" className={S.ecosystemImage} />
                 </div>
