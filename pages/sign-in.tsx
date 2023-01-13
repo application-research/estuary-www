@@ -104,16 +104,12 @@ async function handleSignIn(state: any, host) {
       return { error: 'Failed to authenticate' };
     }
 
-    console.log('Authenticated using legacy scheme.');
-
     Cookies.set(C.auth, retryJSON.token);
-
-    console.log('Attempting legacy scheme revision on your behalf');
 
     try {
       const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
     } catch (e) {
-      console.log('Failure:', e);
+      console.log(e);
     }
 
     window.location.href = '/home';
@@ -129,7 +125,6 @@ async function handleSignIn(state: any, host) {
     return { error: 'Failed to authenticate' };
   }
 
-  console.log('Authenticated using advanced scheme.');
   Cookies.set(C.auth, j.token);
   window.location.href = '/home';
   return;

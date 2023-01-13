@@ -1,0 +1,27 @@
+.body {
+  display: grid;
+  row-gap: 48px;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.column {
+  grid-column: 2 / 3;
+}
+
+.h2 {
+  font-family: 'Parabole';
+}
+
+.featuredProjectsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-gap: 16px;
+}
+
+.featuredProjectsGridColumn {
+  grid-column: span 2;
+}

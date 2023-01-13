@@ -48,7 +48,7 @@ function AdminInvitesPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get('/admin/invites', props.api);
-      console.log(response);
+
       setState({ ...state, invites: response && response.length ? response.reverse() : [] });
     };
 
@@ -75,7 +75,7 @@ function AdminInvitesPage(props: any) {
               setState({ ...state, loading: true });
               await R.post(`/admin/invite/${state.key}`, {}, props.api);
               const response = await R.get('/admin/invites', props.api);
-              console.log(response);
+
               setState({
                 ...state,
                 loading: false,
@@ -94,7 +94,7 @@ function AdminInvitesPage(props: any) {
                   setState({ ...state, loading: true });
                   await R.post(`/admin/invite/${generatedKey}`, {}, props.api);
                   const response = await R.get('/admin/invites', props.api);
-                  console.log(response);
+
                   return setState({
                     ...state,
                     loading: false,
@@ -106,7 +106,7 @@ function AdminInvitesPage(props: any) {
                 setState({ ...state, loading: true });
                 await R.post(`/admin/invite/${state.key}`, {}, props.api);
                 const response = await R.get('/admin/invites', props.api);
-                console.log(response);
+
                 setState({
                   ...state,
                   loading: false,

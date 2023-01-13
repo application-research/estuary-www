@@ -46,7 +46,7 @@ function AdminShuttlePage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get('/admin/shuttle/list', props.api);
-      console.log(response);
+
       setState({ ...state, shuttles: response && response.length ? response : [] });
     };
 
@@ -69,7 +69,7 @@ function AdminShuttlePage(props: any) {
                 setState({ ...state, loading: true });
                 await R.post(`/admin/shuttle/init`, {}, props.api);
                 const response = await R.get('/admin/shuttle/list', props.api);
-                console.log(response);
+
                 setState({ ...state, loading: false, shuttles: response && response.length ? response : [] });
               }}
             >

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
-import * as U from '@common/utilities';
 import * as C from '@common/constants';
+import * as U from '@common/utilities';
 
 export async function attemptHash(password) {
   if (U.isEmpty(password)) {

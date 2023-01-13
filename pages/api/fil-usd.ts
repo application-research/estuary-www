@@ -9,7 +9,6 @@ export default async function getPrice(req: any, res: any) {
       'https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d'
     );
     json = await response.json();
-    console.log(json);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ error: 'Network price issue.' });

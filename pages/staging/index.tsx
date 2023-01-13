@@ -38,7 +38,6 @@ function StagingPage(props) {
   React.useEffect(() => {
     const run = async () => {
       const zones = await R.get('/content/staging-zones', props.api);
-      console.log(zones);
 
       if (!zones || zones.error) {
         return;
@@ -49,8 +48,6 @@ function StagingPage(props) {
 
     run();
   }, []);
-
-  console.log(props.viewer);
 
   const sidebarElement = <AuthenticatedSidebar active="STAGING" viewer={props.viewer} />;
 

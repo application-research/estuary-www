@@ -1,11 +1,9 @@
 import styles from '@components/UploadZone.module.scss';
 
 import * as React from 'react';
-import * as U from '@common/utilities';
-import * as C from '@common/constants';
 
-import LoaderSpinner from '@components/LoaderSpinner';
 import Button from '@components/Button';
+import LoaderSpinner from '@components/LoaderSpinner';
 
 const MODES = {
   1: 'WAITING',
@@ -100,7 +98,6 @@ export default class UploadZone extends React.Component<any> {
   handlePushFiles = async (files) => {
     for await (const file of files) {
       if (!file.type && file.size % 4096 == 0) {
-        console.log('folder', file);
         window.alert(`Estuary does not support folder upload at the moment, skipping "${file.name}"`);
         continue;
       }
