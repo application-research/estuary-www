@@ -1,13 +1,12 @@
-export const send = ({ deviceValue, totalCost, webhook }) => {
-  //console.log('request is being sent to slack', deviceValue, deviceName, totalCost);
-  //console.log(`\n ${deviceValue} \n 🏦 *Total Cost (last 30 days):* ${totalCost}`);
-  // console.log(`\n* 🛠️${deviceName} *: ${deviceValue}\n 🏦 Total Cost (last 30 days):* ${totalCost}\n`);
-  console.log('this is a test', `\n${deviceValue} \n🏦 Total Cost (last 30 days): ${totalCost}`);
+export const send = ({ date, deviceValue, estimatedRenderCost, totalCost, thirdyDaysCost, webhook }) => {
+  // console.log(
+  //   `${date} \n${deviceValue} \n🌱 Estimated Render Cost (7 days): $${estimatedRenderCost} \n🏦 Total Cost (last 7 days): $${totalCost}, \nEstimated Total Cost for 30 days: $${thirdyDaysCost}`
+  // );
 
   try {
-    // webhook.send({
-    //   text: `\n${deviceValue} \n🏦 Total Cost (last 30 days): ${totalCost}`,
-    // });
+    webhook.send({
+      text: `${date} \n${deviceValue} \n🌱 Estimated Render Cost (7 days): $${estimatedRenderCost} \n🏦 Total Cost (last 7 days): $${totalCost}`,
+    });
     return true;
   } catch (e) {
     return false;

@@ -70,21 +70,16 @@ export const api = {
   metricsHost: getMetricsHost(),
 };
 
-// get current date and 30 days before
-var today = new Date();
-var priorDateMonthly = new Date(new Date().setDate(today.getDate() - 30));
-var priorDateWeekly = new Date(new Date().setDate(today.getDate() - 7));
-
-// reformat date
-var beforeMonthly = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-var afterMonthly = priorDateMonthly.getDate() + '-' + (priorDateMonthly.getMonth() + 1) + '-' + priorDateMonthly.getFullYear();
-
-var beforeWeekly = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-var afterWeekly = priorDateWeekly.getDate() + '-' + (priorDateWeekly.getMonth() + 1) + '-' + priorDateMonthly.getFullYear();
+export var today = new Date();
+export var priorDateMonthly = new Date(new Date().setDate(today.getDate() - 30));
+export var priorDateWeekly = new Date(new Date().setDate(today.getDate() - 7));
+export var before = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+export var afterMonthly = priorDateMonthly.getDate() + '-' + (priorDateMonthly.getMonth() + 1) + '-' + priorDateMonthly.getFullYear();
+export var afterWeekly = priorDateWeekly.getDate() + '-' + (priorDateWeekly.getMonth() + 1) + '-' + priorDateWeekly.getFullYear();
 
 export const staticEnvironmentPayload = {
-  createdBefore: beforeWeekly,
   createdAfter: afterWeekly,
+  createdBefore: before,
   uuids: [
     {
       Uuid: '766557e4-1c14-4bef-a5b2-d974bbb2d848',
@@ -120,12 +115,28 @@ export const staticEnvironmentPayload = {
       Name: 'Shuttle-8',
     },
     {
+      Uuid: 'd2962032-37e4-43f5-ad9b-15535c5555d6',
+      Name: 'Shuttle-9',
+    },
+    {
+      Uuid: '3561d9df-ce70-40fe-8486-a597443758b8',
+      Name: 'Shuttle-10',
+    },
+    {
       Uuid: '20e7cd76-c65c-48a1-871e-39b692f051b3',
       Name: '(NSQ) Queue Server',
     },
     {
+      Uuid: '9a8eed0d-b536-4836-8cfc-147eb165d432',
+      Name: 'DB Load Balancer (prod-bl01)',
+    },
+    {
       Uuid: 'a972ec78-d59a-47a4-b110-dd6c5dfc0e60',
-      Name: 'DB Load Balancer',
+      Name: 'DB Load Balancer (prod-bl02)',
+    },
+    {
+      Uuid: '549bf043-1fb9-4e09-ac27-f16a05b7c7d2',
+      Name: 'DB Load Balancer (prod-bl03)',
     },
     {
       Uuid: 'ec7e5c3f-28e4-48ec-8df2-4630657bcc8e',

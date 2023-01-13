@@ -1,30 +1,33 @@
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as U from '@common/utilities';
 import Button from '@root/components/Button';
 import React from 'react';
 
 function EquinixBot(props: any) {
   const [state, setState] = React.useState({
-    environmentDevices: null,
-    successFailureRates: null,
+    date: null,
     deviceValue: null,
-    deviceName: null,
-    totalCost: null,
+    environmentDevices: null,
     estimatedRenderCost: null,
-    success: false,
     loading: false,
+    success: false,
+    successFailureRates: null,
+    totalCost: null,
+    thirdyDaysCost: null,
   });
 
   React.useEffect(() => {
     const run = async () => {
       const environment = await R.post('/api/v1/environment/equinix/list/usages', C.staticEnvironmentPayload, C.api.metricsHost);
-      console.log('environment', environment);
 
       setState({ ...state, environmentDevices: environment });
     };
     console.log(state.environmentDevices, 'devicess');
     run();
   }, []);
+
+  const estimatedRenderCost = 2460 / 4;
 
   const deviceValues =
     state.environmentDevices != undefined && state.environmentDevices['total'] != undefined
@@ -38,24 +41,25 @@ function EquinixBot(props: any) {
 
   const totalCost =
     state.environmentDevices != undefined && (state.environmentDevices['total'] != undefined && state.environmentDevices['device_usages']) != undefined
-      ? Math.floor(state.environmentDevices['total']) + ' USD'
+      ? Math.floor(state.environmentDevices['total']) + estimatedRenderCost
       : null;
-
-  let estimatedRenderCost = 2460;
 
   let values = [];
 
   if (state.environmentDevices != undefined && state.environmentDevices['device_usages'] != undefined) {
     deviceName.forEach((name, index) => {
-      values.push(`\n🛠️ ${name}:  ${deviceValues[index]}`);
+      values.push(`\n🛠️ ${name}: $${deviceValues[index]}`);
     });
   }
 
   const deviceValue = values.map((item, index) => item);
-  console.log('values', values);
+  const date = `Cost from the last 7 days: ${C.afterWeekly} to ${C.before} `;
 
-  // console.log(`\n${deviceValue} \n🏦 Total Cost (last 30 days): ${totalCost}`);
+  let thirdyDaysCost = totalCost ? totalCost * 4 : 'undefined';
 
+  console.log(
+    `${date} \n${deviceValue} \n🌱 Estimated Render Cost (7 days): $${estimatedRenderCost} \n🏦 Total Cost (last 7 days): $${totalCost}, \nEstimated Total Cost for 30 days: $${thirdyDaysCost}`
+  );
   return (
     <div>
       {deviceName !== null && deviceValue !== null && totalCost !== null ? (
@@ -71,9 +75,11 @@ function EquinixBot(props: any) {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                  date: date,
                   deviceValue: deviceValue,
-                  totalCost: totalCost,
                   estimatedRenderCost: estimatedRenderCost,
+                  thirdyDaysCost: thirdyDaysCost,
+                  totalCost: totalCost,
                 }),
               });
             } catch (e) {
@@ -82,12 +88,13 @@ function EquinixBot(props: any) {
 
             setState({
               ...state,
+              date: date,
+              deviceValue: deviceValue,
+              estimatedRenderCost: estimatedRenderCost,
+              thirdyDaysCost: thirdyDaysCost,
               loading: true,
               success: true,
-              deviceValue: deviceValue,
-              deviceName: deviceName,
               totalCost: totalCost,
-              estimatedRenderCost: estimatedRenderCost,
             });
           }}
         >
@@ -101,8 +108,9 @@ function EquinixBot(props: any) {
 }
 
 export async function getServerSideProps(context) {
+  const viewer = await U.getViewerFromHeader(context.req.headers);
   return {
-    props: {},
+    props: { viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
   };
 }
 
