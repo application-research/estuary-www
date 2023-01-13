@@ -40,7 +40,9 @@ function IndexPage(props: any) {
       try {
         miners = await R.get('/public/miners', props.api);
         stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
 
       if ((miners && miners.error) || (stats && stats.error)) {
         return setState({ ...state, miners: [], totalStorage: 0, totalFilesStored: 0, totalObjectsRef: 0, ready: true });

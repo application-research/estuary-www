@@ -73,9 +73,6 @@ function HomePage(props: any) {
     run();
   }, []);
 
-  console.log(props.viewer);
-  console.log(state);
-
   const sidebarElement = <AuthenticatedSidebar active="FILES" viewer={props.viewer} />;
 
   return (

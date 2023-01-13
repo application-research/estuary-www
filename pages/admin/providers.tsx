@@ -49,8 +49,6 @@ const refresh = async (state, setState, host) => {
     map[m.miner] = m;
   }
 
-  console.log(map);
-
   const list = await R.get('/public/miners', host);
 
   const miners = list.map((each) => {

@@ -43,10 +43,7 @@ function AdminAnalyticsPage(props: any) {
         console.log(response.error);
         return;
       }
-
-      console.log(response);
     };
-
     run();
   }, []);
 

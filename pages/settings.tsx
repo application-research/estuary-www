@@ -87,8 +87,6 @@ function SettingsPage(props: any) {
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
 
-  console.log({ viewer });
-
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
   if (!viewer) {

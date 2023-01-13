@@ -1,8 +1,8 @@
-import { FilecoinNumber, Converter } from '@glif/filecoin-number';
+import { FilecoinNumber } from '@glif/filecoin-number';
 
-import * as Cookies from '@vendor/cookie-cutter';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
+import * as Cookies from '@vendor/cookie-cutter';
 
 export const formatEstuaryRetrievalUrl = (cid: string) => {
   return `${C.api.host}/gw/ipfs/${cid}`
@@ -33,7 +33,6 @@ export const pad = (num: number, size: number): any => {
 
 export const toDateSinceEpoch = (epoch) => {
   const d = new Date(1000 * (epoch * 30 + 1598306400));
-
   return toDate(d);
 };
 
@@ -103,7 +102,6 @@ export function inUSDPrice(number = 0, price = 0) {
 }
 
 export const getViewerFromFission = async ({ fs, path }) => {
-  console.log({ path });
   const maybePathExists = await fs.exists(path);
 
   if (!maybePathExists) {
@@ -114,12 +112,11 @@ export const getViewerFromFission = async ({ fs, path }) => {
 
   const token = await fs.read(path);
   if (!token) {
-    console.log('Failed to authenticate with Fission.');
     return null;
   }
 
   const viewer = await getViewerFromToken(token);
-  console.log({ fissionSourcedViewer: viewer });
+
   return viewer;
 };
 
@@ -133,7 +130,7 @@ export const getViewerFromToken = async (token) => {
     });
 
     const json = await response.json();
-    console.log(json);
+
     if (!json) {
       return null;
     }
@@ -160,7 +157,7 @@ export const getViewerFromHeader = async (headers) => {
     });
 
     const json = await response.json();
-    console.log(json);
+
     if (!json) {
       return null;
     }
@@ -171,7 +168,6 @@ export const getViewerFromHeader = async (headers) => {
 
     return json;
   } catch (e) {
-    console.log(e);
     return null;
   }
 };

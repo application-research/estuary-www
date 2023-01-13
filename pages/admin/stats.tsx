@@ -82,8 +82,6 @@ function AdminStatsPage(props) {
 
   const sidebarElement = <AuthenticatedSidebar active="ADMIN_STATS" viewer={props.viewer} />;
 
-  console.log(props.viewer);
-
   return (
     <Page title="Estuary: Admin: Stats" description="Estuary node performance and behavior." url={`${props.hostname}/stats`}>
       <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>

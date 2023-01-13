@@ -33,8 +33,6 @@ function LocalContentPage(props) {
     const run = async () => {
       const response = await R.get(`/content/status/${props.id}`, props.api);
 
-      console.log(response);
-
       if (response && !response.error) {
         return setState({ content: { ...response } });
       }

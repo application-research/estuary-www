@@ -32,7 +32,6 @@ function DealErrorPage(props: any) {
   React.useEffect(() => {
     const run = async () => {
       const response = await R.get(`/content/failures/${props.id}`, props.api);
-      console.log(response);
 
       if (response && response.length) {
         return setState({ logs: response });
