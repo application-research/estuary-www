@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Head from 'next/head';
+import PlausibleAnalyticsScript from './PlausibleAnalyticsScript';
 export default class IndexPage extends React.Component<any> {
   render() {
     const title = this.props.title;
@@ -30,6 +31,8 @@ export default class IndexPage extends React.Component<any> {
           <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
 
           <link rel="shortcut icon" href="/static/favicon.ico" />
+          <script defer data-domain="estuary.tech" src="https://plausible.io/js/script.js"></script>
+          <PlausibleAnalyticsScript />
         </Head>
         {this.props.children}
       </React.Fragment>
