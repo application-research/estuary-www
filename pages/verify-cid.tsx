@@ -290,36 +290,6 @@ function VerifyCIDPage(props: any) {
         </div>
       </SingleColumnLayout>
 
-      <div className={S.h}>
-        <div className={S.ht}>
-          <H2 style={{ maxWidth: '768px', fontWeight: 600 }}>https://estuary.tech stats</H2>
-          <P style={{ marginTop: 12, maxWidth: '768px', fontSize: '1.15rem', opacity: '0.7' }}>
-            This is the performance of our Estuary Node and how much data it has pinned and stored on the Filecoin Network.
-          </P>
-        </div>
-      </div>
-
-      <div className={S.stats}>
-        <div className={S.sc}>
-          <div className={S.scn}>{state.totalFilesStored ? state.totalFilesStored.toLocaleString() : '0'}</div>
-          <div className={S.scl}>Total files</div>
-        </div>
-        <div className={S.sc}>
-          <div className={S.scn}>{state.dealsOnChain}</div>
-          <div className={S.scl}>Deals on chain</div>
-        </div>
-        <div className={S.sc}>
-          <div className={S.scn}>{U.bytesToSize(state.totalStorage)}</div>
-          <div className={S.scl}>Total pinned data</div>
-        </div>
-      </div>
-
-      <div className={S.h}>
-        <div className={S.actions}>
-          <Button href="/">Add your data</Button>
-        </div>
-      </div>
-
       <div className={S.fb} style={{ marginTop: 188 }}>
         <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
           ➝ Built by ARG
