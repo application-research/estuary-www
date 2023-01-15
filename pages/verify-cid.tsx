@@ -289,12 +289,6 @@ function VerifyCIDPage(props: any) {
           ) : null}
         </div>
       </SingleColumnLayout>
-
-      <div className={S.fb} style={{ marginTop: 188 }}>
-        <a href="https://arg.protocol.ai" target="_blank" className={S.fcta}>
-          ➝ Built by ARG
-        </a>
-      </div>
     </Page>
   );
 }
