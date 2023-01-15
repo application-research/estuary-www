@@ -66,7 +66,7 @@ function IndexPage(props: any) {
                 window.location.href = '/ecosystem';
               }}
             >
-              View performance dashboard ➝
+              See who uses us ➝
             </button>
           </div>
         ) : (
