@@ -6,7 +6,6 @@ import * as Logos from '@components/PartnerLogoSVG';
 import * as React from 'react';
 
 import * as C from '@common/constants';
-import Chart from '@components/Chart';
 import Page from '@components/Page';
 
 import Footer from '@root/components/Footer';
