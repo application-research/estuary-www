@@ -101,7 +101,7 @@ export default class UploadPage extends React.Component<any> {
         <AuthenticatedLayout navigation={<Navigation isAuthenticated isRenderingSidebar={!!sidebarElement} />} sidebar={sidebarElement}>
           <SingleColumnLayout>
             <H2>Upload data</H2>
-            <P style={{ marginTop: 16 }}>Add your public data to Estuary so anyone can retrieve it anytime.</P>
+            <P style={{ marginTop: 16 }}>Add your public data to Estuary so anyone can retrieve it anytime. If you upload files under {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}, we will aggregate your files into a single deal once they total over {U.bytesToSize(this.props.viewer.settings.fileStagingThreshold)}.</P>
             <UploadZone onFile={this._handleFile} onFlush={this._handleFlush} host={this.props.api} />
 
             {this.state.files.length ? (
