@@ -139,7 +139,7 @@ function IndexPage(props: any) {
             </a>
             . Each Receipt has instructions of how to retrieve.
           </li>
-          <li className={styles.listItem}>We need to achive 99.99% uptime, we are working on it.</li>
+          <li className={styles.listItem}>We need to achieve 99.99% uptime; we are working on it.</li>
           <li className={styles.listItem}>Our goal is one hundred terabytes of data ingestion a week.</li>
           <li className={styles.listItem}>
             You can contribute to the development of our technology on{' '}
