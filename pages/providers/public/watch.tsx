@@ -30,7 +30,7 @@ function WatchProvidersPage(props: any) {
     const run = async () => {
       let iex;
       try {
-        const iexResponse = await fetch('https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d');
+        const iexResponse = await fetch('https://data.storage.market/api/market/filecoin');
         iex = await iexResponse.json();
       } catch (e) {
         console.log(e);

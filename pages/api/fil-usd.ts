@@ -5,9 +5,7 @@ export default async function getPrice(req: any, res: any) {
 
   let json;
   try {
-    const response = await fetch(
-      'https://cloud.iexapis.com/stable/crypto/filusdt/price?token=pk_aa330a89a4724944ae1a525879a19f2d'
-    );
+    const response = await fetch('https://data.storage.market/api/market/filecoin');
     json = await response.json();
   } catch (e) {
     console.log(e);
