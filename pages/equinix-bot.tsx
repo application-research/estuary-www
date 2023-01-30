@@ -1,7 +1,6 @@
 import * as C from '@common/constants';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
-import Button from '@root/components/Button';
 import React from 'react';
 
 function EquinixBot(props: any) {
@@ -18,13 +17,22 @@ function EquinixBot(props: any) {
   });
 
   React.useEffect(() => {
-    const run = async () => {
-      const environment = await R.post('/api/v1/environment/equinix/list/usages', C.staticEnvironmentPayload, C.api.metricsHost);
+    let interval = setInterval(() => {
+      const run = async () => {
+        const environment = await R.post('/api/v1/environment/equinix/list/usages', C.staticEnvironmentPayload, C.api.metricsHost);
 
-      setState({ ...state, environmentDevices: environment });
+        setState({ ...state, environmentDevices: environment });
+
+        if (deviceName !== null && deviceValue !== null && totalCost !== null) {
+          sendDataToSlack();
+        }
+      };
+      run();
+    }, 604800); //run every 7 days
+
+    return () => {
+      clearInterval(interval);
     };
-    console.log(state.environmentDevices, 'devicess');
-    run();
   }, []);
 
   const estimatedRenderCost = 2460 / 4;
@@ -57,52 +65,43 @@ function EquinixBot(props: any) {
 
   let thirdyDaysCost = totalCost ? totalCost * 4 : 'undefined';
 
-  console.log(
-    `${date} \n${deviceValue} \n🌱 Estimated Render Cost (7 days): $${estimatedRenderCost} \n🏦 Total Cost (last 7 days): $${totalCost}, \nEstimated Total Cost for 30 days: $${thirdyDaysCost}`
-  );
-  return (
-    <div>
-      {deviceName !== null && deviceValue !== null && totalCost !== null ? (
-        <Button
-          loading={state.loading}
-          onClick={async () => {
-            setState({ ...state, loading: true });
-            try {
-              fetch('/api/equinix-stats', {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  date: date,
-                  deviceValue: deviceValue,
-                  estimatedRenderCost: estimatedRenderCost,
-                  thirdyDaysCost: thirdyDaysCost,
-                  totalCost: totalCost,
-                }),
-              });
-            } catch (e) {
-              console.log(e);
-            }
+  let sendDataToSlack = async () => {
+    setState({ ...state, loading: true });
+    try {
+      fetch('/api/equinix-stats', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          date: date,
+          deviceValue: deviceValue,
+          estimatedRenderCost: estimatedRenderCost,
+          thirdyDaysCost: thirdyDaysCost,
+          totalCost: totalCost,
+        }),
+      });
+    } catch (e) {
+      console.log(e);
+    }
 
-            setState({
-              ...state,
-              date: date,
-              deviceValue: deviceValue,
-              estimatedRenderCost: estimatedRenderCost,
-              thirdyDaysCost: thirdyDaysCost,
-              loading: true,
-              success: true,
-              totalCost: totalCost,
-            });
-          }}
-        >
-          Send data to slack
-        </Button>
-      ) : (
-        <></>
-      )}
+    setState({
+      ...state,
+      date: date,
+      deviceValue: deviceValue,
+      estimatedRenderCost: estimatedRenderCost,
+      thirdyDaysCost: thirdyDaysCost,
+      loading: false,
+      success: true,
+      totalCost: totalCost,
+    });
+  };
+
+  return (
+    <div style={{ display: 'grid', rowGap: '24px', justifyContent: 'center', paddingTop: '80px' }}>
+      <h2>Infrastructure Bot</h2>
+      <p>This bot will send infrastructure costs to slack every 7 days</p>
     </div>
   );
 }
