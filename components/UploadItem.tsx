@@ -11,15 +11,15 @@ import ProgressBlock from '@components/ProgressBlock';
 import Cookies from 'js-cookie';
 
 export class PinStatusElement extends React.Component<any> {
-  state = { pinned: false, delegates: ['none'] };
+  state = { status: null, delegates: ['none'] };
 
   componentDidMount() {
     const checkPinStatus = () => {
       window.setTimeout(async () => {
         const response = await R.get(`/pinning/pins/${this.props.id}`, this.props.host);
 
-        if (response.status === 'pinned') {
-          this.setState({ pinned: true, ...response });
+        if (response.status != this.state.status) {
+          this.setState({ ...response });
           this.forceUpdate();
           return;
         }
@@ -32,18 +32,38 @@ export class PinStatusElement extends React.Component<any> {
   }
 
   render() {
-    if (this.state.pinned) {
+    if (this.state.status == 'pinned') {
       return (
         <React.Fragment>
-          <ActionRow>This CID is pinned.</ActionRow>
+          <ActionRow style={{ background: `var(--status-success-bright)` }}>This CID is pinned.</ActionRow>
           <ActionRow>Delegate {this.state.delegates && this.state.delegates.length > 0 ? this.state.delegates[0] : ''}</ActionRow>
         </React.Fragment>
       );
     }
 
+    if (this.state.status == 'pinning') {
+      return (
+        <ActionRow style={{ background: `#000`, color: `#fff` }}>
+          This CID is now being pinned to IPFS in the background, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+        </ActionRow>
+      );
+    }
+
+    if (this.state.status == 'queued') {
+      return (
+        <ActionRow style={{ background: `#000`, color: `#fff` }}>
+          This CID is waiting in queue to be pinned to IPFS, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+        </ActionRow>
+      );
+    }
+
+    if (this.state.status == 'failed') {
+      return <ActionRow style={{ background: `var(--status-error)`, color: `#fff` }}>This CID failed to be pinned to IPFS, please try again.</ActionRow>;
+    }
+
     return (
       <ActionRow style={{ background: `#000`, color: `#fff` }}>
-        This CID is now being pinned to IPFS in the background, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+        Fetching pinning status... <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
       </ActionRow>
     );
   }
