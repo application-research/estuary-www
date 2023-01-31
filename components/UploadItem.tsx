@@ -44,7 +44,7 @@ export class PinStatusElement extends React.Component<any> {
     if (this.state.status == 'pinning') {
       return (
         <ActionRow style={{ background: `#000`, color: `#fff` }}>
-          This CID is now being pinned to IPFS in the background, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+          This CID is now being pinned to IPFS in the background, it may take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
         </ActionRow>
       );
     }
@@ -52,7 +52,7 @@ export class PinStatusElement extends React.Component<any> {
     if (this.state.status == 'queued') {
       return (
         <ActionRow style={{ background: `#000`, color: `#fff` }}>
-          This CID is waiting in queue to be pinned to IPFS, it make take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
+          This CID is waiting in queue to be pinned to IPFS, it may take a few minutes. <LoaderSpinner style={{ marginLeft: 8, height: 10, width: 10 }} />
         </ActionRow>
       );
     }
