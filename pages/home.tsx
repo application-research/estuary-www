@@ -99,6 +99,11 @@ function HomePage(props: any) {
         ) : (
           <PageHeader>
             <H2>Files</H2>
+            <P style={{ marginTop: 16 }}>All files and CIDs you upload to Estuary will appear here, along with links to retrieve the content from your preferred gateway.</P>
+
+            <div className={styles.actions}>
+              <Button href="/upload">Upload data</Button>
+            </div>
           </PageHeader>
         )}
 

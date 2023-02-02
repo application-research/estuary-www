@@ -61,7 +61,7 @@ function UploadCIDPage(props: any) {
             <H2>Upload CID</H2>
             <P style={{ marginTop: 16 }}>
               Use an existing IPFS content address to make Filecoin storage deals. If you use any CID under {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}, we will
-              aggregate your files into a single deal.
+              aggregate your files into a single deal once they total over {U.bytesToSize(props.viewer.settings.fileStagingThreshold)}.
             </P>
 
             <H4 style={{ marginTop: 32 }}>CID</H4>
@@ -170,7 +170,7 @@ function UploadCIDPage(props: any) {
                 }}
                 href="/upload"
               >
-                Upload manually
+                Upload a file instead
               </Button>
             </div>
           </SingleColumnLayout>
@@ -197,7 +197,7 @@ function UploadCIDPage(props: any) {
                 }}
                 href="/upload"
               >
-                Upload manually
+                Upload a file instead
               </Button>
             </div>
           </SingleColumnLayout>
