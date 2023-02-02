@@ -13,7 +13,7 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 
-import { H2, H3, H4, P } from '@components/Typography';
+import { H2, H4, P } from '@components/Typography';
 
 const ENABLE_SIGN_IN_WITH_FISSION = false;
 
@@ -36,24 +36,6 @@ export async function getServerSideProps(context) {
   };
 }
 
-async function handleTokenAuthenticate(state: any, host) {
-  let response = await fetch(`${host}/user/stats`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${state.key}`,
-    },
-  });
-  if (response && response.status === 403) {
-    alert('Invalid API key');
-  } else if (response && response.status === 401) {
-    alert('Expired API key');
-  } else {
-    Cookies.set(C.auth, state.key);
-    window.location.reload();
-  }
-  return response;
-}
 async function handleSignIn(state: any, host) {
   if (U.isEmpty(state.username)) {
     return { error: 'Please provide a username.' };
@@ -67,8 +49,12 @@ async function handleSignIn(state: any, host) {
     return { error: 'Your username must be 1-48 characters or digits.' };
   }
 
-  // NOTE(jim) We've added a new scheme to keep things safe for users.
-  state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
+  if (state.adminLogin == 'true') {
+    state.passwordHash = state.password;
+  } else {
+    // NOTE(jim) We've added a new scheme to keep things safe for users.
+    state.passwordHash = await Crypto.attemptHashWithSalt(state.password);
+  }
 
   let r = await fetch(`${host}/login`, {
     method: 'POST',
@@ -131,12 +117,7 @@ async function handleSignIn(state: any, host) {
 }
 
 function SignInPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', key: '' });
-
-  const authorise = null;
-  const authScenario = null;
-  const signIn = null;
-
+  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', adminLogin: 'false' });
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
@@ -171,6 +152,20 @@ function SignInPage(props: any) {
           }}
         />
 
+        <div className={styles.actions} style={{ marginTop: '16px' }}>
+          <input
+            type="checkbox"
+            onClick={() => {
+              if (state.adminLogin === 'false') {
+                setState({ ...state, adminLogin: 'true' });
+              } else {
+                setState({ ...state, adminLogin: 'false' });
+              }
+            }}
+          />
+          <H4>This user was created using estuary CLI</H4>
+        </div>
+
         <div className={styles.actions}>
           <Button
             style={{ width: '100%' }}
@@ -196,40 +191,6 @@ function SignInPage(props: any) {
             href="/sign-up"
           >
             Create an account instead
-          </Button>
-        </div>
-
-        <H3 style={{ marginTop: 32 }}>Authenticate Using Key</H3>
-        <P style={{ marginTop: 8 }}>You can authenticate using an API key if you have one.</P>
-
-        <H4 style={{ marginTop: 32 }}>API key</H4>
-        <Input
-          style={{ marginTop: 8 }}
-          placeholder="ex: ESTxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxARY"
-          name="key"
-          value={state.key}
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.trim() })}
-        />
-
-        <div className={styles.actions}>
-          <Button
-            style={{ width: '100%' }}
-            loading={state.authLoading ? state.authLoading : undefined}
-            onClick={async () => {
-              setState({ ...state, authLoading: true });
-              if (U.isEmpty(state.key)) {
-                alert('Please enter an API key');
-                setState({ ...state, authLoading: false });
-                return;
-              }
-              await handleTokenAuthenticate(state, props.api).then((response) => {
-                if (response.status == 403) {
-                  setState({ ...state, authLoading: false });
-                }
-              });
-            }}
-          >
-            Authenticate
           </Button>
         </div>
       </SingleColumnLayout>
