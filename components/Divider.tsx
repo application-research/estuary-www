@@ -1,11 +1,11 @@
 import * as React from 'react';
-import styles from '@components/Separator.module.scss';
+import styles from '@components/Divider.module.scss';
 
 
-function Separator(props: any) {
+function Divider(props: any) {
   return (
     <div className={styles.divider}>Or</div>
   );
 }
 
-export default Separator;
+export default Divider;
