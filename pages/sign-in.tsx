@@ -15,7 +15,12 @@ import Cookies from 'js-cookie';
 
 import { H2, H4, P } from '@components/Typography';
 
+import { MetaMaskProvider } from "metamask-react";
+import Divider from '@components/Divider';
+
 const ENABLE_SIGN_IN_WITH_FISSION = false;
+
+declare var window: any
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,6 +39,57 @@ export async function getServerSideProps(context) {
   return {
     props: { host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
+}
+
+async function connect() {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  console.log(accounts[0])
+
+  return accounts[0]
+}
+
+async function handleSignInWithMetaMask(state: any, host) {
+  let user = await connect()
+
+  state.passwordHash = await Crypto.attemptHashWithSalt(user);
+
+  let retry = await fetch(`${host}/login`, {
+    method: 'POST',
+    body: JSON.stringify({ passwordHash: state.passwordHash, username: user }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (retry.status !== 200) {
+    return { error: 'Failed to authenticate' };
+  }
+
+  const retryJSON = await retry.json();
+  if (retryJSON.error) {
+    return retryJSON;
+  }
+
+  if (!retryJSON.token) {
+    return { error: 'Failed to authenticate' };
+  }
+
+  Cookies.set(C.auth, retryJSON.token);
+
+  try {
+    const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
+  } catch (e) {
+    console.log(e);
+  }
+
+  window.location.href = '/home';
+  return;
 }
 
 async function handleSignIn(state: any, host) {
@@ -117,9 +173,19 @@ async function handleSignIn(state: any, host) {
 }
 
 function SignInPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', adminLogin: 'false' });
+  const [state, setState] = React.useState({
+    loading: false,
+    authLoading: false,
+    fissionLoading: false,
+    username: '',
+    password: '',
+    adminLogin: 'false',
+    metaMaskLoading: false
+  });
+
   return (
-    <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
+    <MetaMaskProvider>
+      <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>
@@ -181,6 +247,23 @@ function SignInPage(props: any) {
           >
             Sign in
           </Button>
+          <Divider text="Or"></Divider>
+          <Button
+            style={{
+              width: '100%',
+            }}
+            loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+            onClick={async () => {
+              setState({ ...state, metaMaskLoading: true });
+              const response = await handleSignInWithMetaMask(state, props.api);
+              if (response && response.error) {
+                alert(response.error);
+                setState({ ...state, metaMaskLoading: false });
+              }
+            }}
+          >
+            Sign in with MetaMask
+          </Button>
           <Button
             style={{
               width: '100%',
@@ -195,6 +278,7 @@ function SignInPage(props: any) {
         </div>
       </SingleColumnLayout>
     </Page>
+    </MetaMaskProvider>
   );
 }
 
