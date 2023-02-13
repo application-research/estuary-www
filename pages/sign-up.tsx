@@ -13,6 +13,9 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 
 import { H2, H3, H4, P } from '@components/Typography';
+import Divider from '@components/Divider';
+
+declare var window: any
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -31,6 +34,59 @@ export async function getServerSideProps(context) {
   return {
     props: { viewer, host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
+}
+
+async function connect() {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  console.log(accounts[0])
+
+  return accounts[0]
+}
+
+async function handleRegisterWithMetaMask(state: any, host) {
+
+  if (U.isEmpty(state.inviteCode)) {
+    return { error: 'Please provide your invite code.' };
+  }
+  let user = await connect()
+  let passwordHash = await Crypto.attemptHashWithSalt(user);
+
+  let r = await fetch(`${host}/register`, {
+    method: 'POST',
+    body: JSON.stringify({
+      passwordHash: passwordHash,
+      username: user,
+      inviteCode: state.inviteCode,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (r.status !== 200) {
+    return { error: 'Our server failed to register your account. Please contact us.' };
+  }
+
+  const j = await r.json();
+  if (j.error) {
+    return j;
+  }
+
+  if (!j.token) {
+    return {
+      error: 'Our server failed to register your account and sign you in. Please contact us.',
+    };
+  }
+
+  Cookies.set(C.auth, j.token);
+  window.location.href = '/home';
+  return;
 }
 
 async function handleRegister(state: any, host) {
@@ -112,6 +168,7 @@ function SignUpPage(props: any) {
     confirmPassword: '',
     loading: false,
     fissionLoading: false,
+    metaMaskLoading: false,
   });
 
   const authorise = null;
@@ -128,86 +185,57 @@ function SignUpPage(props: any) {
   }, []);
 
   return (
-    <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url={`${props.hostname}/sign-up`}>
-      <Navigation active="SIGN_UP" />
-      <SingleColumnLayout style={{ maxWidth: 488 }}>
-        <H2>Sign up</H2>
-        <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P>
+      <Page title="Estuary: Sign up" description="Create an account on Estuary with an invite key." url={`${props.hostname}/sign-up`}>
+        <Navigation active="SIGN_UP" />
+        <SingleColumnLayout style={{ maxWidth: 488 }}>
+          <H2>Sign up</H2>
+          <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P>
 
-        <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside>
+          <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside>
 
-        <H3 style={{ marginTop: 32 }}>Create an account</H3>
-        <H4 style={{ marginTop: 16 }}>Username</H4>
-        <Input
-          style={{ marginTop: 8 }}
-          placeholder="Type in your desired username"
-          name="username"
-          pattern={C.regex.username}
-          value={state.username}
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
-        />
-        <aside className={styles.formAside}>Requirements: 1-32 characters or digits, no symbols allowed</aside>
+          <H3 style={{ marginTop: 32 }}>Create an account</H3>
+          <H4 style={{ marginTop: 16 }}>Username</H4>
+          <Input
+            style={{ marginTop: 8 }}
+            placeholder="Type in your desired username"
+            name="username"
+            // pattern={C.regex.username}
+            value={state.username}
+            onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
+          />
+          <aside className={styles.formAside}>Requirements: 1-32 characters or digits, no symbols allowed</aside>
 
-        <H4 style={{ marginTop: 24 }}>Password</H4>
-        <Input
-          style={{ marginTop: 8 }}
-          placeholder="Type in your password"
-          type="password"
-          value={state.password}
-          name="password"
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-        />
-        <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
+          <H4 style={{ marginTop: 24 }}>Password</H4>
+          <Input
+            style={{ marginTop: 8 }}
+            placeholder="Type in your password"
+            type="password"
+            value={state.password}
+            name="password"
+            onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+          />
+          <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
 
-        <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
-        <Input
-          style={{ marginTop: 8 }}
-          placeholder="Type in your password"
-          type="password"
-          value={state.confirmPassword}
-          name="confirmPassword"
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-        />
-        <aside className={styles.formAside}>Enter your password again</aside>
+          <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
+          <Input
+            style={{ marginTop: 8 }}
+            placeholder="Type in your password"
+            type="password"
+            value={state.confirmPassword}
+            name="confirmPassword"
+            onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+          />
+          <aside className={styles.formAside}>Enter your password again</aside>
 
-        <H4 style={{ marginTop: 24 }}>Invite code</H4>
-        <Input
-          style={{ marginTop: 8 }}
-          placeholder="Provide your invite code"
-          type="text"
-          value={state.inviteCode}
-          name="inviteCode"
-          onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-          onSubmit={async () => {
-            setState({ ...state, loading: true });
-            const response = await handleRegister(
-              {
-                password: state.password,
-                username: state.username,
-                confirmPassword: state.confirmPassword,
-                inviteCode: state.inviteCode,
-              },
-              props.api
-            );
-            if (response && response.error) {
-              alert(response.error);
-              setState({ ...state, loading: false });
-            }
-          }}
-        />
-        <aside className={styles.formAside}>
-          Need an invite key?{' '}
-          <a href="https://docs.estuary.tech" target="_blank">
-            Learn how to get one.
-          </a>
-          .
-        </aside>
-
-        <div className={styles.actions}>
-          <Button
-            style={{ width: '100%' }}
-            loading={state.loading ? state.loading : undefined}
-            onClick={async () => {
+          <H4 style={{ marginTop: 24 }}>Invite code</H4>
+          <Input
+            style={{ marginTop: 8 }}
+            placeholder="Provide your invite code"
+            type="text"
+            value={state.inviteCode}
+            name="inviteCode"
+            onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+            onSubmit={async () => {
               setState({ ...state, loading: true });
               const response = await handleRegister(
                 {
@@ -223,30 +251,82 @@ function SignUpPage(props: any) {
                 setState({ ...state, loading: false });
               }
             }}
-          >
-            Sign up
-          </Button>
-          <Button
-            style={{
-              width: '100%',
-              marginTop: 12,
-              background: 'var(--main-button-background-secondary)',
-              color: 'var(--main-button-text-secondary)',
-            }}
-            href="/sign-in"
-          >
-            Sign in instead
-          </Button>
-        </div>
-        <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
-          By creating an account or by using Estuary you unconditionally agree to our{' '}
-          <a href="https://docs.estuary.tech/terms" target="_blank">
-            Terms of Service
-          </a>
-          .
-        </aside>
-      </SingleColumnLayout>
-    </Page>
+          />
+          <aside className={styles.formAside}>
+            Need an invite key?{' '}
+            <a href="https://docs.estuary.tech" target="_blank">
+              Learn how to get one.
+            </a>
+            .
+          </aside>
+
+          <div className={styles.actions}>
+            <Button
+              style={{ width: '100%' }}
+              loading={state.loading ? state.loading : undefined}
+              onClick={async () => {
+                setState({ ...state, loading: true });
+                const response = await handleRegister(
+                  {
+                    password: state.password,
+                    username: state.username,
+                    confirmPassword: state.confirmPassword,
+                    inviteCode: state.inviteCode,
+                  },
+                  props.api
+                );
+                if (response && response.error) {
+                  alert(response.error);
+                  setState({ ...state, loading: false });
+                }
+              }}
+            >
+              Sign up
+            </Button>
+            <Divider text="Or"></Divider>
+            <Button
+              style={{
+                width: '100%',
+              }}
+              loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+              onClick={async () => {
+                setState({ ...state, metaMaskLoading: true });
+                const response = await handleRegisterWithMetaMask(
+                  {
+                    username: state.username,
+                    inviteCode: state.inviteCode,
+                  },
+                  props.api
+                );
+                if (response && response.error) {
+                  alert(response.error);
+                  setState({ ...state, metaMaskLoading: false });
+                }
+              }}
+            >
+              Sign up using MetaMask
+            </Button>
+            <Button
+              style={{
+                width: '100%',
+                marginTop: 12,
+                background: 'var(--main-button-background-secondary)',
+                color: 'var(--main-button-text-secondary)',
+              }}
+              href="/sign-in"
+            >
+              Sign in instead
+            </Button>
+          </div>
+          <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
+            By creating an account or by using Estuary you unconditionally agree to our{' '}
+            <a href="https://docs.estuary.tech/terms" target="_blank">
+              Terms of Service
+            </a>
+            .
+          </aside>
+        </SingleColumnLayout>
+      </Page>
   );
 }
 
