@@ -15,7 +15,6 @@ import Cookies from 'js-cookie';
 
 import { H2, H4, P } from '@components/Typography';
 
-import { MetaMaskProvider } from "metamask-react";
 import Divider from '@components/Divider';
 
 const ENABLE_SIGN_IN_WITH_FISSION = false;
@@ -41,54 +40,63 @@ export async function getServerSideProps(context) {
   };
 }
 
-async function connect() {
+async function handleSignInWithMetaMask(state: any, host) {
   if (!window.ethereum) {
     alert("You must have MetaMask installed!");
     return;
   }
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  let timestamp = new Date().toLocaleString()
 
-  console.log(accounts[0])
-
-  return accounts[0]
-}
-
-async function handleSignInWithMetaMask(state: any, host) {
-  let user = await connect()
-
-  state.passwordHash = await Crypto.attemptHashWithSalt(user);
-
-  let retry = await fetch(`${host}/login`, {
+  let response = await fetch(`${host}/v2/auth/nonce/${accounts[0]}`, {
     method: 'POST',
-    body: JSON.stringify({ passwordHash: state.passwordHash, username: user }),
+    body: JSON.stringify({ host, timestamp}),
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
-  if (retry.status !== 200) {
+  if (response.status !== 200) {
+    return { error: 'Failed to Generate Nonce Message' };
+  }
+
+  const respJson = await response.json();
+  if (respJson.error) {
+    return respJson;
+  }
+
+  if (!respJson.nonceMsg) {
+    return { error: 'No nonceMsg Generated' };
+  }
+
+  const from = accounts[0];
+  const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+  const sign = await window.ethereum.request({
+    method: 'personal_sign',
+    params: [msg, from, ''],
+  });
+
+  let r = await fetch(`${host}/v2/auth/verify-signature`, {
+    method: 'POST',
+    body: JSON.stringify({ address: from, signature: sign}),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const j = await r.json();
+  if (j.error) {
+    return j;
+  }
+
+  if (!j.token) {
     return { error: 'Failed to authenticate' };
   }
 
-  const retryJSON = await retry.json();
-  if (retryJSON.error) {
-    return retryJSON;
-  }
-
-  if (!retryJSON.token) {
-    return { error: 'Failed to authenticate' };
-  }
-
-  Cookies.set(C.auth, retryJSON.token);
-
-  try {
-    const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
-  } catch (e) {
-    console.log(e);
-  }
-
-  window.location.href = '/home';
+  console.log(C.auth, j.token)
+  Cookies.set(C.auth, j.token);
+  // window.location.href = '/home';
   return;
 }
 
@@ -184,7 +192,6 @@ function SignInPage(props: any) {
   });
 
   return (
-    <MetaMaskProvider>
       <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
       <SingleColumnLayout style={{ maxWidth: 488 }}>
@@ -278,7 +285,6 @@ function SignInPage(props: any) {
         </div>
       </SingleColumnLayout>
     </Page>
-    </MetaMaskProvider>
   );
 }
 

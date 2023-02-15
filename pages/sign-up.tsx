@@ -14,6 +14,8 @@ import Cookies from 'js-cookie';
 
 import { H2, H3, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
+import Nonce from 'nonce-generator';
+
 
 declare var window: any
 
@@ -43,10 +45,17 @@ async function connect() {
   }
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-
-  console.log(accounts[0])
-
-  return accounts[0]
+  const domain = window.location.host;
+  const from = accounts[0];
+  let nonce = Nonce(16)
+  const siweMessageMissing = `${domain} wants you to sign in with your Ethereum account:\ n${from}\n\nNonce: ${nonce}\nIssued At: ${Date.now()}`;
+  const msg = `0x${Buffer.from(siweMessageMissing, 'utf8').toString('hex')}`;
+  const sign = await window.ethereum.request({
+    method: 'personal_sign',
+    params: [msg, from, C.salt],
+  });
+  console.log(sign)
+  return from
 }
 
 async function handleRegisterWithMetaMask(state: any, host) {
@@ -69,24 +78,7 @@ async function handleRegisterWithMetaMask(state: any, host) {
     },
   });
 
-  if (r.status !== 200) {
-    return { error: 'Our server failed to register your account. Please contact us.' };
-  }
-
-  const j = await r.json();
-  if (j.error) {
-    return j;
-  }
-
-  if (!j.token) {
-    return {
-      error: 'Our server failed to register your account and sign you in. Please contact us.',
-    };
-  }
-
-  Cookies.set(C.auth, j.token);
-  window.location.href = '/home';
-  return;
+  await authRedirect(r)
 }
 
 async function handleRegister(state: any, host) {
@@ -140,11 +132,15 @@ async function handleRegister(state: any, host) {
     },
   });
 
-  if (r.status !== 200) {
+  await authRedirect(r)
+}
+
+async function authRedirect(resp) {
+  if (resp.status !== 200) {
     return { error: 'Our server failed to register your account. Please contact us.' };
   }
 
-  const j = await r.json();
+  const j = await resp.json();
   if (j.error) {
     return j;
   }
