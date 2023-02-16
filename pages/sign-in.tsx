@@ -19,7 +19,11 @@ import Divider from '@components/Divider';
 
 const ENABLE_SIGN_IN_WITH_FISSION = false;
 
-declare var window: any
+declare global {
+  interface Window {
+    ethereum: any
+  }
+}
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -94,9 +98,8 @@ async function handleSignInWithMetaMask(state: any, host) {
     return { error: 'Failed to authenticate' };
   }
 
-  console.log(C.auth, j.token)
   Cookies.set(C.auth, j.token);
-  // window.location.href = '/home';
+  window.location.href = '/home';
   return;
 }
 
