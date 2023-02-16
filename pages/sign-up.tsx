@@ -14,10 +14,12 @@ import Cookies from 'js-cookie';
 
 import { H2, H3, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
-import Nonce from 'nonce-generator';
 
-
-declare var window: any
+declare global {
+  interface Window {
+    ethereum: any
+  }
+}
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -38,41 +40,65 @@ export async function getServerSideProps(context) {
   };
 }
 
-async function connect() {
+async function handleRegisterWithMetaMask(state: any, host) {
   if (!window.ethereum) {
     alert("You must have MetaMask installed!");
     return;
   }
 
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-  const domain = window.location.host;
-  const from = accounts[0];
-  let nonce = Nonce(16)
-  const siweMessageMissing = `${domain} wants you to sign in with your Ethereum account:\ n${from}\n\nNonce: ${nonce}\nIssued At: ${Date.now()}`;
-  const msg = `0x${Buffer.from(siweMessageMissing, 'utf8').toString('hex')}`;
-  const sign = await window.ethereum.request({
-    method: 'personal_sign',
-    params: [msg, from, C.salt],
-  });
-  console.log(sign)
-  return from
-}
-
-async function handleRegisterWithMetaMask(state: any, host) {
-
   if (U.isEmpty(state.inviteCode)) {
     return { error: 'Please provide your invite code.' };
   }
-  let user = await connect()
-  let passwordHash = await Crypto.attemptHashWithSalt(user);
 
-  let r = await fetch(`${host}/register`, {
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  let userCreationResp = await fetch(`${host}/v2/auth/register-metamask-user`, {
     method: 'POST',
     body: JSON.stringify({
-      passwordHash: passwordHash,
-      username: user,
+      username: accounts[0],
       inviteCode: state.inviteCode,
     }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (userCreationResp.status !== 200) {
+    return { error: 'Failed to Create User' };
+  }
+
+  let timestamp = new Date().toLocaleString()
+  let response = await fetch(`${host}/v2/auth/nonce/${accounts[0]}`, {
+    method: 'POST',
+    body: JSON.stringify({ host, timestamp}),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status !== 200) {
+    return { error: 'Failed to Generate Nonce Message' };
+  }
+
+  const respJson = await response.json();
+  if (respJson.error) {
+    return respJson;
+  }
+
+  if (!respJson.nonceMsg) {
+    return { error: 'No nonceMsg Generated' };
+  }
+
+  const from = accounts[0];
+  const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+  const sign = await window.ethereum.request({
+    method: 'personal_sign',
+    params: [msg, from, ''],
+  });
+
+  let r = await fetch(`${host}/v2/auth/verify-signature`, {
+    method: 'POST',
+    body: JSON.stringify({ address: from, signature: sign}),
     headers: {
       'Content-Type': 'application/json',
     },
