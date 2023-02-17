@@ -170,3 +170,21 @@
   background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
 }
+
+.statsList {
+  padding-left: 16px;
+}
+
+.statsListItem {
+  font-size: 1.2rem;
+  margin-top: 16px;
+  line-height: 1.5;
+
+  strong {
+    font-family: 'Mono';
+    background: #000;
+    color: #fff;
+    padding: 0 8px 0 8px;
+    border-radius: 4px;
+  }
+}
