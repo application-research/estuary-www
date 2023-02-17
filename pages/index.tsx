@@ -294,7 +294,7 @@ function IndexPage(props: any) {
       </section>
 
       <section className={styles.section}>
-        <p className={styles.paragraph}>Okay, but how much data has been uploaded?</p>
+        <p className={styles.paragraph}>Okay, but how much data has been uploaded using your service?</p>
 
         <ul className={styles.statsList}>
           <li className={styles.statsListItem}>
@@ -331,31 +331,78 @@ function IndexPage(props: any) {
           <div className={styles.card}>
             <div className={styles.cardTitle}>Our Estuary IPFS node</div>
             <div className={styles.cardParagraph}>This is like a hot cache! You can retrieve your data from any public IPFS gateway.</div>
+            <div className={styles.cardParagraph}>
+              Pinning example:{' '}
+              <a target="_blank" href="https://shuttle-1.estuary.tech/gw/ipfs/QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw/">
+                https://shuttle-1.estuary.tech/gw/ipfs/QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw/
+              </a>
+            </div>
+            <div className={styles.cardParagraph}>
+              Receipt example:{' '}
+              <a target="_blank" href="https://estuary.tech/verify-cid?cid=QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw">
+                https://estuary.tech/verify-cid?cid=QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #1</div>
-            <div className={styles.cardParagraph}>Just like any cold storage or tape.</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f01345523">
+                https://estuary.tech/providers/stats/f01345523
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #2</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f01392893">
+                https://estuary.tech/providers/stats/f01392893
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #3</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f022352">
+                https://estuary.tech/providers/stats/f022352
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #4</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f01096124">
+                https://estuary.tech/providers/stats/f01096124
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #5</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f01199442">
+                https://estuary.tech/providers/stats/f01199442
+              </a>
+            </div>
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardTitle}>Filecoin Storage Provider #6</div>
+            <div className={styles.cardParagraph}>
+              Example:{' '}
+              <a target="_blank" href="https://estuary.tech/providers/stats/f0763337">
+                https://estuary.tech/providers/stats/f0763337
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -412,7 +459,7 @@ function IndexPage(props: any) {
 
         <Question query="Wait I need to prove that I used Filecoin for a grant I have, how do I do this with Estuary?">
           All deals have receipts before and after getting on chain. Every piece of data gets uploaded to Filecoin six times. See the example of a{' '}
-          <a href="https://estuary.tech/verify-cid?cid=QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9" target="_blank">
+          <a href="https://estuary.tech/verify-cid?cid=QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw" target="_blank">
             storage deal receipt
           </a>
           . Each Receipt has instructions of how to retrieve.
@@ -432,6 +479,18 @@ function IndexPage(props: any) {
             GitHub
           </a>
           . We also encourage you to run your own Estuary node and rename it to provide your own service.
+        </Question>
+
+        <Question query="Wait, I can run my own Estuary.tech?">
+          Yes you just need to fork{' '}
+          <a href="https://github.com/application-research/estuary" target="_blank">
+            Estuary
+          </a>{' '}
+          and{' '}
+          <a href="https://github.com/application-research/estuary-www" target="_blank">
+            Estuary-WWW
+          </a>{' '}
+          and rename everything and you're good to go! You can do everything we can do.
         </Question>
 
         <Question query="Can I talk to you or provide feedback?">

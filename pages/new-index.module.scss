@@ -79,6 +79,22 @@
   margin-top: 16px;
   font-size: 1.1rem;
   opacity: 0.6;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+
+  a {
+    color: #000;
+    opacity: 0.6;
+    transition: 200ms ease all;
+
+    &:visited {
+      color: #000;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .question {

@@ -16,8 +16,7 @@ import StatRow from '@components/StatRow';
 import { CodeBlock, H1, H2, H3, P } from '@components/Typography';
 
 // NOTE(jim): test CIDs
-// QmYNSTn2XrxDsF3qFdeYKSxjodsbswJV3mj1ffEJZa2jQL
-// QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9
+// QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw/
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -80,9 +79,6 @@ const onCheckCID = async (state, setState, host) => {
 function VerifyCIDPage(props: any) {
   const [width, height] = useWindowSize();
   const [state, setState] = React.useState({
-    totalStorage: 0,
-    totalFilesStored: 0,
-    dealsOnChain: 0,
     cid: '',
     data: null,
     working: true,
@@ -90,20 +86,19 @@ function VerifyCIDPage(props: any) {
 
   React.useEffect(() => {
     const load = async () => {
-      const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
 
       if (!params) {
-        return setState({ ...state, ...stats, working: false });
+        return setState({ ...state, working: false });
       }
 
       let cid = params.cid ? params.cid : '';
       if (U.isEmpty(cid)) {
-        return setState({ ...state, ...stats, working: false });
+        return setState({ ...state, working: false });
       }
 
-      setState({ ...state, ...stats, cid });
+      setState({ ...state, cid });
     };
 
     load();
@@ -189,6 +184,8 @@ function VerifyCIDPage(props: any) {
   const estuaryRetrievalUrl = U.formatEstuaryRetrievalUrl(cid);
   const dwebRetrievalUrl = U.formatDwebRetrievalUrl(cid);
 
+  console.log(state);
+
   return (
     <Page title="Estuary: Verify CID" description={description} url={props.hostname}>
       <Navigation active="INDEX" isAuthenticated={props.viewer} />
@@ -248,7 +245,7 @@ function VerifyCIDPage(props: any) {
             </React.Fragment>
           )}
 
-          {state.data && state.data.deals && state.data.deals.length > 0 ? (
+          {state.data && state.data && state.data.deals && state.data.deals.length > 0 ? (
             <React.Fragment>
               <div className={S.scustom} style={{ marginTop: 48 }}>
                 <H3>✅ This CID is sealed on Filecoin</H3>
@@ -278,7 +275,7 @@ function VerifyCIDPage(props: any) {
                         miner={d.miner}
                         dealId={d.dealId}
                         cid={state.data.content.cid}
-                        aggregatedIn={state.data.aggregatedIn?.cid}
+                        aggregatedIn={state.data.aggregatedIn ? state.data.aggregatedIn.cid : null}
                         selector={state.data.selector}
                       />
                     </StatRow>
@@ -286,7 +283,14 @@ function VerifyCIDPage(props: any) {
                 );
               })}
             </React.Fragment>
-          ) : null}
+          ) : (
+            <React.Fragment>
+              <div className={S.scustom} style={{ marginTop: 48 }}>
+                <H3>This data is not on Filecoin</H3>
+                <P style={{ marginTop: 8 }}>Check back later to see if we have successfully made deals for this data.</P>
+              </div>
+            </React.Fragment>
+          )}
         </div>
       </SingleColumnLayout>
     </Page>
