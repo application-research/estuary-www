@@ -149,3 +149,12 @@ export const staticEnvironmentPayload = {
     },
   ],
 };
+
+export const chainId = "0xc45"
+
+export const network = {
+  chainName: 'Filecoin - Hyperspace testnet',
+  chainId: chainId,
+  nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'tFIL' },
+  rpcUrls: ['https://api.hyperspace.node.glif.io/rpc/v1']
+}

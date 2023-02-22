@@ -52,26 +52,18 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-  const chainId = "0xc45"
-  if (window.ethereum.networkVersion !== chainId) {
+  if (window.ethereum.networkVersion !== C.chainId) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chainId }]
+        params: [{ chainId: C.chainId }]
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainName: 'Filecoin - Hyperspace testnet',
-              chainId: chainId,
-              nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'tFIL' },
-              rpcUrls: ['https://api.hyperspace.node.glif.io/rpc/v1']
-            }
-          ]
+          params: [ C.network ]
         });
       }
     }
