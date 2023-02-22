@@ -51,6 +51,32 @@ async function handleSignInWithMetaMask(state: any, host) {
   }
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  const chainId = "0xc45"
+  if (window.ethereum.networkVersion !== chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainName: 'Filecoin - Hyperspace testnet',
+              chainId: chainId,
+              nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'tFIL' },
+              rpcUrls: ['https://api.hyperspace.node.glif.io/rpc/v1']
+            }
+          ]
+        });
+      }
+    }
+  }
+
   let timestamp = new Date().toLocaleString()
 
   let response = await fetch(`${host}/v2/auth/nonce/${accounts[0]}`, {
@@ -76,6 +102,7 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const from = accounts[0];
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+
   const sign = await window.ethereum.request({
     method: 'personal_sign',
     params: [msg, from, ''],
@@ -157,7 +184,7 @@ async function handleSignIn(state: any, host) {
       return { error: 'Failed to authenticate' };
     }
 
-    Cookies.set(C.auth, retryJSON.token);
+    //Cookies.set(C.auth, retryJSON.token);
 
     try {
       const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);
