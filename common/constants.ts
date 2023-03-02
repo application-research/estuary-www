@@ -151,6 +151,7 @@ export const staticEnvironmentPayload = {
 };
 
 export const chainId = "0xc45"
+export const chainIdInt = 3141
 
 export const network = {
   chainName: 'Filecoin - Hyperspace testnet',

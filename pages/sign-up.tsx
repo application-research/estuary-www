@@ -69,10 +69,10 @@ async function handleRegisterWithMetaMask(state: any, host) {
     }
   }
 
-  let userCreationResp = await fetch(`${host}/v2/auth/register-metamask-user`, {
+  let userCreationResp = await fetch(`http://localhost:1313/register-with-metamask`, {
     method: 'POST',
     body: JSON.stringify({
-      username: accounts[0],
+      address: accounts[0],
       inviteCode: state.inviteCode,
     }),
     headers: {
@@ -84,10 +84,12 @@ async function handleRegisterWithMetaMask(state: any, host) {
     return { error: 'Failed to Create User' };
   }
 
+  let from = accounts[0];
   let timestamp = new Date().toLocaleString()
-  let response = await fetch(`${host}/v2/auth/nonce/${accounts[0]}`, {
+
+  let response = await fetch(`http://localhost:1313/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, timestamp}),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.chainIdInt, version: "1"  }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -106,16 +108,16 @@ async function handleRegisterWithMetaMask(state: any, host) {
     return { error: 'No nonceMsg Generated' };
   }
 
-  const from = accounts[0];
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+
   const sign = await window.ethereum.request({
     method: 'personal_sign',
     params: [msg, from, ''],
   });
 
-  let r = await fetch(`${host}/v2/auth/verify-signature`, {
+  let r = await fetch(`http://localhost:1313/login-with-metamask`, {
     method: 'POST',
-    body: JSON.stringify({ address: from, signature: sign}),
+    body: JSON.stringify({ address: from, signature: sign }),
     headers: {
       'Content-Type': 'application/json',
     },

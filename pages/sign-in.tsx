@@ -16,14 +16,9 @@ import Cookies from 'js-cookie';
 import { H2, H4, P } from '@components/Typography';
 
 import Divider from '@components/Divider';
+import { chainId } from '@common/constants';
 
 const ENABLE_SIGN_IN_WITH_FISSION = false;
-
-declare global {
-  interface Window {
-    ethereum: any
-  }
-}
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -69,11 +64,12 @@ async function handleSignInWithMetaMask(state: any, host) {
     }
   }
 
+  let from = accounts[0];
   let timestamp = new Date().toLocaleString()
 
-  let response = await fetch(`${host}/v2/auth/nonce/${accounts[0]}`, {
+  let response = await fetch(`http://localhost:1313/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, timestamp}),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.chainIdInt, version: "1"  }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -92,7 +88,6 @@ async function handleSignInWithMetaMask(state: any, host) {
     return { error: 'No nonceMsg Generated' };
   }
 
-  const from = accounts[0];
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
 
   const sign = await window.ethereum.request({
@@ -100,9 +95,9 @@ async function handleSignInWithMetaMask(state: any, host) {
     params: [msg, from, ''],
   });
 
-  let r = await fetch(`${host}/v2/auth/verify-signature`, {
+  let r = await fetch(`http://localhost:1313/login-with-metamask`, {
     method: 'POST',
-    body: JSON.stringify({ address: from, signature: sign}),
+    body: JSON.stringify({ address: from, signature: sign }),
     headers: {
       'Content-Type': 'application/json',
     },
