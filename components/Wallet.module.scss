@@ -1,0 +1,19 @@
+.item {
+  margin-left: 24px;
+  cursor: pointer;
+  transition: 200ms ease all;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+
+  color: var(--main-text);
+
+  &:visited {
+    color: var(--main-text);
+  }
+
+  &:hover {
+    color: var(--main-primary);
+  }
+}

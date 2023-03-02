@@ -5,6 +5,8 @@ import * as U from '@common/utilities';
 import * as C from '@common/constants';
 
 import Tag from '@components/Tag';
+import Wallet from '@components/Wallet';
+import { useState } from 'react';
 
 const Navigation = (props: any) => {
   return (
@@ -15,6 +17,11 @@ const Navigation = (props: any) => {
             Estuary <Tag>Alpha</Tag>
           </a>
         </div>
+        {props.isAuthenticated ? (
+        <div className={styles.wallet}>
+          <Wallet/>
+        </div>
+        ) : null}
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
             <a href="/sign-up" className={styles.item}>
