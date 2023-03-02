@@ -161,6 +161,16 @@ function EcosystemPage(props: any) {
                   <img height="50vh" src="https://user-images.githubusercontent.com/28320272/202938869-73f5fcc1-7d0c-4e4c-b2d0-bd1d62ceac39.png" />
                 </a>
               </div>
+              <div className={S.column}>
+                <a className={S.ecosystemLogoBox} href="https://www.clubnft.com/" target="_blank">
+                  <img height="45vh" src="https://user-images.githubusercontent.com/28320272/221002481-9c645e32-44c9-4676-bdd3-3a9a58de4743.svg" />
+                </a>
+              </div>
+              <div className={S.column}>
+                <a className={S.ecosystemLogoBox} href="https://encloud.tech/" target="_blank">
+                  <img height="100vh" src="https://user-images.githubusercontent.com/28320272/221002893-555c3532-77b0-4110-aed7-68acef95f03a.png" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
