@@ -17,7 +17,7 @@ const Navigation = (props: any) => {
             Estuary <Tag>Alpha</Tag>
           </a>
         </div>
-        {props.isAuthenticated ? (
+        {props.isAuthenticated && props.active !== 'INDEX'? (
         <div className={styles.wallet}>
           <Wallet/>
         </div>

@@ -1,4 +1,4 @@
-import styles from '@components/Wallet.module.scss';
+import style from '@components/Wallet.module.scss';
 import * as React from 'react';
 import * as R from '@common/requests';
 import Web3 from 'web3';
@@ -6,8 +6,7 @@ import Cookies from 'js-cookie';
 import * as C from '@common/constants';
 
 import Modal from '@components/Modal';
-import style from '@pages/StorageProvidersTable.module.scss';
-import balance from '@pages/admin/balance';
+import { network } from '@common/constants';
 
 function Wallet(props: any) {
 
@@ -17,9 +16,10 @@ function Wallet(props: any) {
   let web3: any;
 
   React.useEffect(() => {
-    if (window.ethereum) {
-      web3 = new Web3(window.ethereum);
+    if (!window.ethereum) {
+      return
     }
+    web3 = new Web3(window.ethereum);
     const run = async () => {
       window.ethereum.on('accountsChanged', function (accounts) {
         // Logout on wallet change
@@ -40,14 +40,12 @@ function Wallet(props: any) {
   }, []);
 
   React.useEffect(() => {
-    if (window.ethereum) {
-      web3 = new Web3(window.ethereum);
+    if (!window.ethereum) {
+      return
     }
-
+    web3 = new Web3(window.ethereum);
     const run = async () => {
       const fil = Web3.utils.fromWei(await web3.eth.getBalance(state.account))
-      const transaction = await web3.eth.get
-
       const url = `https://data.storage.market/api/market/filecoin?amount=${fil}`
       const response = await fetch(url, {
         method: 'GET',
@@ -74,35 +72,49 @@ function Wallet(props: any) {
   }, [showWalletModal, setShowWalletModal]);
 
   return state.account ? (
-    <div className={styles.item}>
+    <div className={style.item}>
       <a
-      onClick={() => {setShowWalletModal(true)}}>
+        onClick={() => {
+          setShowWalletModal(true);
+        }}>
         {state.account.slice(0, 6)}...{state.account.slice(state.account.length - 4, state.account.length)}
       </a>
       {showWalletModal && (
         <Modal
-          title="Wallet"
+          title='Wallet'
           onClose={() => {
-            setShowWalletModal(false)
+            setShowWalletModal(false);
           }}
         >
-          <table className={style.table} style={{ marginBottom: '80px', marginTop: '20px'}}>
+          <table className={style.table}>
             <tbody>
               <tr className={style.tr}>
-                <td className={style.td} style={{ color: 'black' }}>Address</td>
-                <td className={style.td} style={{ color: 'black' }}>{state.account}</td>
+                <td className={style.td}>Address</td>
+                <td className={style.td}>
+                  <a className={style.link} target="_blank" href={`${network.blockExplorer}/address/${state.account}`}>{state.account}</a>
+                  <button
+                    style={{ opacity: 0.5, outline: 'None', fontFamily: 'mono', marginLeft: '10px'}}
+                    onClick={(e) => {
+                      navigator.clipboard.writeText(state.account);
+                      e.currentTarget.textContent = 'Copied!';
+                      setTimeout((button) => (button.textContent = 'Copy'), 1000, e.currentTarget);
+                    }}
+                  >
+                    Copy
+                  </button>
+                </td>
               </tr>
               <tr className={style.tr}>
-                <td className={style.td} style={{ color: 'black' }}>Filecoin</td>
-                <td className={style.td} style={{ color: 'black' }}>{state.fil} FIL</td>
+                <td className={style.td}>Filecoin</td>
+                <td className={style.td}>{state.fil} {network.nativeCurrency.symbol}</td>
               </tr>
               <tr className={style.tr}>
-                <td className={style.td} style={{ color: 'black' }}>Price</td>
-                <td className={style.td} style={{ color: 'black' }}>{state.price} USD</td>
+                <td className={style.td}>Price</td>
+                <td className={style.td}>{state.price} USD</td>
               </tr>
               <tr className={style.tr}>
-                <td className={style.td} style={{ color: 'black' }}>Balance</td>
-                <td className={style.td} style={{ color: 'black' }}>{state.balance} USD</td>
+                <td className={style.td}>Balance</td>
+                <td className={style.td}>{state.balance} USD</td>
               </tr>
             </tbody>
           </table>
@@ -110,7 +122,7 @@ function Wallet(props: any) {
       )}
     </div>
 
-  ) : null
+  ) : null;
 }
 
 export default Wallet;
