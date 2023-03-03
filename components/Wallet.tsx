@@ -4,11 +4,49 @@ import * as R from '@common/requests';
 import Web3 from 'web3';
 import Cookies from 'js-cookie';
 import * as C from '@common/constants';
-
-import Modal from '@components/Modal';
 import { network } from '@common/constants';
+import {
+  useFloating,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  useDismiss,
+  useRole,
+  useClick,
+  useInteractions,
+  FloatingFocusManager,
+  useId
+} from "@floating-ui/react";
+import Button from '@components/Button';
+import Jazzicon from "@metamask/jazzicon";
+import styled from "@emotion/styled";
 
-function Wallet(props: any) {
+function Wallet(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const { x, y, refs, strategy, context } = useFloating({
+    open,
+    onOpenChange: setOpen,
+    middleware: [
+      offset(10),
+      flip({ fallbackAxisSideDirection: "end" }),
+      shift()
+    ],
+    whileElementsMounted: autoUpdate
+  });
+
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+    role
+  ]);
+
+  const headingId = useId();
 
   const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null});
   const [showWalletModal, setShowWalletModal] = React.useState(false);
@@ -72,57 +110,72 @@ function Wallet(props: any) {
   }, [showWalletModal, setShowWalletModal]);
 
   return state.account ? (
-    <div className={style.item}>
-      <a
-        onClick={() => {
-          setShowWalletModal(true);
-        }}>
-        {state.account.slice(0, 6)}...{state.account.slice(state.account.length - 4, state.account.length)}
-      </a>
-      {showWalletModal && (
-        <Modal
-          title='Wallet'
-          onClose={() => {
-            setShowWalletModal(false);
-          }}
-        >
-          <table className={style.table}>
-            <tbody>
-              <tr className={style.tr}>
-                <td className={style.td}>Address</td>
-                <td className={style.td}>
-                  <a className={style.link} target="_blank" href={`${network.blockExplorer}/address/${state.account}`}>{state.account}</a>
-                  <button
-                    style={{ opacity: 0.5, outline: 'None', fontFamily: 'mono', marginLeft: '10px'}}
-                    onClick={(e) => {
-                      navigator.clipboard.writeText(state.account);
-                      e.currentTarget.textContent = 'Copied!';
-                      setTimeout((button) => (button.textContent = 'Copy'), 1000, e.currentTarget);
-                    }}
-                  >
-                    Copy
-                  </button>
-                </td>
-              </tr>
-              <tr className={style.tr}>
-                <td className={style.td}>Filecoin</td>
-                <td className={style.td}>{state.fil} {network.nativeCurrency.symbol}</td>
-              </tr>
-              <tr className={style.tr}>
-                <td className={style.td}>Price</td>
-                <td className={style.td}>{state.price} USD</td>
-              </tr>
-              <tr className={style.tr}>
-                <td className={style.td}>Balance</td>
-                <td className={style.td}>{state.balance} USD</td>
-              </tr>
-            </tbody>
-          </table>
-        </Modal>
+    <div>
+      <div className={style.item} ref={refs.setReference} {...getReferenceProps()}>
+        <a className={style.item} >
+          {state.account.slice(0, 6)}...{state.account.slice(state.account.length - 4, state.account.length)}
+        </a>
+        <div className={style.toggle}>
+          { !open ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A1C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A1C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            )}
+        </div>
+      </div>
+      {open && (
+        <FloatingFocusManager context={context} modal={false}>
+          <div
+            className={style.Popover}
+            ref={refs.setFloating}
+            style={{
+              position: strategy,
+              top: y - 25 ?? 0,
+              left: x + 65 ?? 0
+            }}
+            aria-labelledby={headingId}
+          >
+            <div className={style.header}>
+              <div><Identicon account={state.account}/></div>
+              <div><h4>{state.account.slice(0, 6)}...{state.account.slice(state.account.length - 4, state.account.length)}</h4></div>
+            </div>
+            <div className={style.container}>
+              <div className={style.description}>Fil Balance</div>
+              <div className={style.fil}>{/*state.fil*/} 20 {network.nativeCurrency.symbol}</div>
+              <div className={style.balance}>${/*state.balance*/}120 USD @ ${/*state.price*/}6 USD</div>
+              <div className={style.divider} style={{ width: '100%'}}></div>
+              <Button style={{ width: '100%', }}
+                      onClick={() => window.open(`${network.blockExplorer}/address/${state.account}`, '_blank')}>
+                Explore
+              </Button>
+            </div>
+
+          </div>
+        </FloatingFocusManager>
       )}
     </div>
-
   ) : null;
 }
 
 export default Wallet;
+
+const StyledIdenticon = styled.div`
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 1.125rem;
+  background-color: black;
+  margin-right: 5px;
+`;
+
+function Identicon(props) {
+  const ref = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    if (props.account && ref.current) {
+      ref.current.innerHTML = "";
+      ref.current.appendChild(Jazzicon(16, parseInt(props.account.slice(2, 10), 16)));
+    }
+  }, [props.account]);
+
+  return <StyledIdenticon ref={ref as any} />;
+}

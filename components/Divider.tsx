@@ -3,9 +3,9 @@ import styles from '@components/Divider.module.scss';
 
 
 function Divider(props: any) {
-  return (
-    <div className={styles.divider}>Or</div>
-  );
+  return props.text != "" ? (
+    <div className={styles.divider}></div>
+  ) : <div></div>;
 }
 
 export default Divider;
