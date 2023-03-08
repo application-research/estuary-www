@@ -21,10 +21,10 @@ import {
 import Button from '@components/Button';
 import Jazzicon from "@metamask/jazzicon";
 import styled from "@emotion/styled";
+import LoaderSpinner from '@components/LoaderSpinner';
 
 function Wallet(props) {
   const [open, setOpen] = React.useState(false);
-
   const { x, y, refs, strategy, context } = useFloating({
     open,
     onOpenChange: setOpen,
@@ -48,8 +48,7 @@ function Wallet(props) {
 
   const headingId = useId();
 
-  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null});
-  const [showWalletModal, setShowWalletModal] = React.useState(false);
+  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true});
 
   let web3: any;
 
@@ -93,21 +92,24 @@ function Wallet(props) {
         },
       });
 
-      if (response.status !== 200) {
-        return "Error fetching filecoin price from https://data.storage.market"
+      let j;
+      try {
+        j = await response.json();
+      } catch (e) {
+        console.log("Error fetching filecoin price from https://data.storage.market")
       }
 
-      const j = await response.json();
-
-      if (fil) {
-        setState({ ...state, fil: fil, price: j.price, balance: j.amount_usd });
+      if (j != null) {
+        setState({ ...state, fil: parseFloat(fil).toFixed(2), price: j.price, balance: j.amount_usd, loading: false });
+      } else {
+        setState({ ...state, fil: parseFloat(fil).toFixed(2), loading: false });
       }
     };
 
     if (state.account != null) {
       run();
     }
-  }, [showWalletModal, setShowWalletModal]);
+  }, [open, setOpen]);
 
   return state.account ? (
     <div>
@@ -141,16 +143,19 @@ function Wallet(props) {
             </div>
             <div className={style.container}>
               <div className={style.description}>Fil Balance</div>
-              <div className={style.fil}>{/*state.fil*/} 20 {network.nativeCurrency.symbol}</div>
-              <div className={style.balance}>${/*state.balance*/}120 USD @ ${/*state.price*/}6 USD</div>
+              <div className={style.fil}>{ state.loading ? ( <LoaderSpinner /> ) : ( <span>{state.fil} {network.nativeCurrency.symbol}</span> )}</div>
+              { state.balance && state.price ? (
+                <div className={style.balance}>${state.balance} USD @ ${state.price} USD</div>
+                ) : (
+                <div className={style.balance}>Price discovery not available</div>
+                )}
               <div className={style.divider} style={{ width: '100%'}}></div>
               <Button style={{ width: '100%', }}
-                      onClick={() => window.open(`${network.blockExplorer}/address/${state.account}`, '_blank')}>
-                Explore
+              onClick={() => window.open(`${network.blockExplorer}/address/${state.account}`, '_blank')}>
+              Explore
               </Button>
             </div>
-
-          </div>
+        </div>
         </FloatingFocusManager>
       )}
     </div>
