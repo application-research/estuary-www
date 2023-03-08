@@ -82,8 +82,9 @@ function Wallet(props) {
     }
     web3 = new Web3(window.ethereum);
     const run = async () => {
-      const fil = Web3.utils.fromWei(await web3.eth.getBalance(state.account))
-      const url = `https://data.storage.market/api/market/filecoin?amount=${fil}`
+      const attofil = await web3.eth.getBalance(state.account)
+      const fil = Web3.utils.fromWei(attofil)
+      const url = `https://data.storage.market/api/market/filecoin?attofil=${attofil}`
       const response = await fetch(url, {
         method: 'GET',
         headers: {
