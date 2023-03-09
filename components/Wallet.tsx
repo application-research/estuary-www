@@ -66,6 +66,14 @@ function Wallet(props) {
         window.location.href = '/';
       })
 
+      window.ethereum.on('networkChanged', function (networkId) {
+        // Logout on wallet change
+        const token = Cookies.get(C.auth);
+        const response = R.del(`/user/api-keys/${token}`, props.api);
+        Cookies.remove(C.auth);
+        window.location.href = '/';
+      })
+
       // Check if User is already connected by retrieving the accounts
       const accounts = await web3.eth.getAccounts()
       if (accounts) {
