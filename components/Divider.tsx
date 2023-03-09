@@ -4,8 +4,8 @@ import styles from '@components/Divider.module.scss';
 
 function Divider(props: any) {
   return props.text != "" ? (
-    <div className={styles.divider}></div>
-  ) : <div></div>;
+    <div className={styles.divider}>{props.text}</div>
+  ) : null;
 }
 
 export default Divider;
