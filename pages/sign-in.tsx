@@ -1,24 +1,17 @@
 import styles from '@pages/app.module.scss';
-
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as React from 'react';
-
 import Button from '@components/Button';
 import Input from '@components/Input';
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
-
 import { H2, H4, P } from '@components/Typography';
-
 import Divider from '@components/Divider';
-import { chainId } from '@common/constants';
-
-const ENABLE_SIGN_IN_WITH_FISSION = false;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -47,11 +40,11 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-  if (window.ethereum.networkVersion !== C.chainId) {
+  if (window.ethereum.networkVersion !== C.network.chainIdHex) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: C.chainId }]
+        params: [{ chainId: C.network.chainIdHex }]
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
@@ -67,9 +60,10 @@ async function handleSignInWithMetaMask(state: any, host) {
   let from = accounts[0];
   let timestamp = new Date().toLocaleString()
 
-  let response = await fetch(`http://localhost:1313/generate-nonce`, {
+  const authSvcHost = C.api.authSvcHost
+  let response = await fetch(`${authSvcHost}/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.chainIdInt, version: "1"  }),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.network.chainIdNum, version: "1"  }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -95,7 +89,7 @@ async function handleSignInWithMetaMask(state: any, host) {
     params: [msg, from, ''],
   });
 
-  let r = await fetch(`http://localhost:1313/login-with-metamask`, {
+  let r = await fetch(`${authSvcHost}/login-with-metamask`, {
     method: 'POST',
     body: JSON.stringify({ address: from, signature: sign }),
     headers: {
@@ -171,7 +165,7 @@ async function handleSignIn(state: any, host) {
       return { error: 'Failed to authenticate' };
     }
 
-    //Cookies.set(C.auth, retryJSON.token);
+    Cookies.set(C.auth, retryJSON.token);
 
     try {
       const response = await R.put('/user/password', { newPasswordHash: state.passwordHash }, host);

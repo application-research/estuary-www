@@ -15,12 +15,6 @@ import Cookies from 'js-cookie';
 import { H2, H3, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
 
-declare global {
-  interface Window {
-    ethereum: any
-  }
-}
-
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
   const host = context.req.headers.host;
@@ -52,11 +46,11 @@ async function handleRegisterWithMetaMask(state: any, host) {
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-  if (window.ethereum.networkVersion !== C.chainId) {
+  if (window.ethereum.networkVersion !== C.network.chainIdHex) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: C.chainId }]
+        params: [{ chainId: C.network.chainIdHex }]
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
@@ -69,7 +63,8 @@ async function handleRegisterWithMetaMask(state: any, host) {
     }
   }
 
-  let userCreationResp = await fetch(`http://localhost:1313/register-with-metamask`, {
+  const authSvcHost = C.api.authSvcHost
+  let userCreationResp = await fetch(`${authSvcHost}/register-with-metamask`, {
     method: 'POST',
     body: JSON.stringify({
       address: accounts[0],
@@ -87,9 +82,9 @@ async function handleRegisterWithMetaMask(state: any, host) {
   let from = accounts[0];
   let timestamp = new Date().toLocaleString()
 
-  let response = await fetch(`http://localhost:1313/generate-nonce`, {
+  let response = await fetch(`${authSvcHost}/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.chainIdInt, version: "1"  }),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.network.chainIdNum, version: "1"  }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -115,7 +110,7 @@ async function handleRegisterWithMetaMask(state: any, host) {
     params: [msg, from, ''],
   });
 
-  let r = await fetch(`http://localhost:1313/login-with-metamask`, {
+  let r = await fetch(`${authSvcHost}/login-with-metamask`, {
     method: 'POST',
     body: JSON.stringify({ address: from, signature: sign }),
     headers: {
@@ -197,7 +192,7 @@ async function authRedirect(resp) {
   }
 
   Cookies.set(C.auth, j.token);
-  window.location.href = '/home';
+  //window.location.href = '/home';
   return;
 }
 

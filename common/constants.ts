@@ -65,9 +65,23 @@ function getAPIHost(): string {
   }
 }
 
+function getAuthSvcHost(): string {
+  if (process.env.NEXT_PUBLIC_ESTUARY_AUTH_API) {
+    return process.env.NEXT_PUBLIC_ESTUARY_AUTH_API;
+  }
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return 'https://auth-svc.onrender.com';
+    default:
+      return 'http://localhost:1313';
+  }
+}
+
 export const api = {
   host: getAPIHost(),
   metricsHost: getMetricsHost(),
+  authSvcHost: getAuthSvcHost(),
 };
 
 // get current date and 30 days before
@@ -150,12 +164,16 @@ export const staticEnvironmentPayload = {
   ],
 };
 
-export const chainId = "0xc45"
-export const chainIdInt = 3141
+declare global {
+  interface Window {
+    ethereum: any
+  }
+}
 
 export const network = {
   chainName: 'Filecoin - Hyperspace testnet',
-  chainId: chainId,
+  chainIdHex: "0xc45",
+  chainIdNum: 3141,
   nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'tFIL' },
   rpcUrls: ['https://api.hyperspace.node.glif.io/rpc/v1'],
   blockExplorer: "https://hyperspace.filfox.info",

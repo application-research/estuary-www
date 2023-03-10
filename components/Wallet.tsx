@@ -4,7 +4,6 @@ import * as R from '@common/requests';
 import Web3 from 'web3';
 import Cookies from 'js-cookie';
 import * as C from '@common/constants';
-import { network } from '@common/constants';
 import {
   useFloating,
   autoUpdate,
@@ -23,6 +22,12 @@ import Jazzicon from "@metamask/jazzicon";
 import styled from "@emotion/styled";
 import LoaderSpinner from '@components/LoaderSpinner';
 
+function logout(props) {
+  const token = Cookies.get(C.auth);
+  const response = R.del(`/user/api-keys/${token}`, props.api);
+  Cookies.remove(C.auth);
+  window.location.href = '/';
+}
 function Wallet(props) {
   const [open, setOpen] = React.useState(false);
   const { x, y, refs, strategy, context } = useFloating({
@@ -47,7 +52,6 @@ function Wallet(props) {
   ]);
 
   const headingId = useId();
-
   const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true});
 
   let web3: any;
@@ -59,19 +63,11 @@ function Wallet(props) {
     web3 = new Web3(window.ethereum);
     const run = async () => {
       window.ethereum.on('accountsChanged', function (accounts) {
-        // Logout on wallet change
-        const token = Cookies.get(C.auth);
-        const response = R.del(`/user/api-keys/${token}`, props.api);
-        Cookies.remove(C.auth);
-        window.location.href = '/';
+        logout(props)
       })
 
-      window.ethereum.on('networkChanged', function (networkId) {
-        // Logout on wallet change
-        const token = Cookies.get(C.auth);
-        const response = R.del(`/user/api-keys/${token}`, props.api);
-        Cookies.remove(C.auth);
-        window.location.href = '/';
+      window.ethereum.on('chainChanged', function (networkId) {
+        logout(props)
       })
 
       // Check if User is already connected by retrieving the accounts
@@ -152,7 +148,7 @@ function Wallet(props) {
             </div>
             <div className={style.container}>
               <div className={style.description}>Fil Balance</div>
-              <div className={style.fil}>{ state.loading ? ( <LoaderSpinner /> ) : ( <span>{state.fil} {network.nativeCurrency.symbol}</span> )}</div>
+              <div className={style.fil}>{ state.loading ? ( <LoaderSpinner /> ) : ( <span>{state.fil} {C.network.nativeCurrency.symbol}</span> )}</div>
               { state.balance && state.price ? (
                 <div className={style.balance}>${state.balance} USD @ ${state.price} USD</div>
                 ) : (
@@ -160,7 +156,7 @@ function Wallet(props) {
                 )}
               <div className={style.divider} style={{ width: '100%'}}></div>
               <Button style={{ width: '100%', }}
-              onClick={() => window.open(`${network.blockExplorer}/address/${state.account}`, '_blank')}>
+              onClick={() => window.open(`${C.network.blockExplorer}/address/${state.account}`, '_blank')}>
               Explore
               </Button>
             </div>
