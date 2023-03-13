@@ -107,9 +107,9 @@ function Wallet(props) {
       }
 
       if (j != null) {
-        setState({ ...state, fil: parseFloat(fil).toFixed(2), price: j.price, balance: j.amount_usd, loading: false });
+        setState({ ...state, fil: new Intl.NumberFormat().format(parseInt(fil)), price: j.price, balance: j.amount_usd, loading: false });
       } else {
-        setState({ ...state, fil: parseFloat(fil).toFixed(2), loading: false });
+        setState({ ...state, fil: new Intl.NumberFormat().format(parseInt(fil)), loading: false });
       }
     };
 
