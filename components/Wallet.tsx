@@ -150,12 +150,20 @@ function Wallet(props) {
             </div>
             <div className={style.container}>
               <div className={style.description}>Fil Balance</div>
-              <div className={style.fil}>{ state.loading ? ( <LoaderSpinner /> ) : ( <span>{state.fil} {C.network.nativeCurrency.symbol}</span> )}</div>
-              { state.balance && state.price ? (
-                <div className={style.balance}>${state.balance} USD @ ${state.price} USD</div>
+              <div className={style.container} style={{ padding: 0 }}>
+                { state.loading ? (
+                  <div><LoaderSpinner /></div>
                 ) : (
-                <div className={style.balance}>Price discovery not available</div>
+                  <div>
+                    <div className={style.fil}>{state.fil} {C.network.nativeCurrency.symbol}</div>
+                    { state.balance && state.price ? (
+                      <div className={style.balance}>${state.balance} USD @ ${state.price} USD</div>
+                    ) : (
+                      <div className={style.balance}>Price discovery not available</div>
+                    )}
+                  </div>
                 )}
+              </div>
               <div className={style.divider} style={{ width: '100%'}}></div>
               <Button style={{ width: '100%', }}
               onClick={() => window.open(`${C.network.blockExplorerUrls[0]}/address/${state.account}`, '_blank')}>
