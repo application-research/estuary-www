@@ -6,7 +6,6 @@ import * as C from '@common/constants';
 
 import Tag from '@components/Tag';
 import Wallet from '@components/Wallet';
-import { useState } from 'react';
 
 const Navigation = (props: any) => {
   return (
