@@ -197,7 +197,7 @@ async function authRedirect(resp) {
   }
 
   Cookies.set(C.auth, j.token);
-  //window.location.href = '/home';
+  window.location.href = '/home';
   return;
 }
 
@@ -240,7 +240,7 @@ function SignUpPage(props: any) {
           style={{ marginTop: 8 }}
           placeholder="Type in your desired username"
           name="username"
-          // pattern={C.regex.username}
+          pattern={C.regex.username}
           value={state.username}
           onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
         />
