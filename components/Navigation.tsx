@@ -18,9 +18,9 @@ const Navigation = (props: any) => {
           </a>
         </div>
         {props.isAuthenticated && props.active !== 'INDEX'? (
-        <div className={styles.wallet}>
-          <Wallet/>
-        </div>
+          <div className={styles.wallet}>
+            <Wallet/>
+          </div>
         ) : null}
         <div className={styles.right}>
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
