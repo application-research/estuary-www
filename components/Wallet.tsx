@@ -1,9 +1,15 @@
 import style from '@components/Wallet.module.scss';
+
 import * as React from 'react';
 import * as R from '@common/requests';
+import * as C from '@common/constants';
+
 import Web3 from 'web3';
 import Cookies from 'js-cookie';
-import * as C from '@common/constants';
+import Button from '@components/Button';
+import Jazzicon from "@metamask/jazzicon";
+import styled from "@emotion/styled";
+import LoaderSpinner from '@components/LoaderSpinner';
 import {
   useFloating,
   autoUpdate,
@@ -17,10 +23,6 @@ import {
   FloatingFocusManager,
   useId
 } from "@floating-ui/react";
-import Button from '@components/Button';
-import Jazzicon from "@metamask/jazzicon";
-import styled from "@emotion/styled";
-import LoaderSpinner from '@components/LoaderSpinner';
 
 function logout(props) {
   const token = Cookies.get(C.auth);
