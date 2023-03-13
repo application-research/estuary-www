@@ -156,7 +156,7 @@ function Wallet(props) {
                 )}
               <div className={style.divider} style={{ width: '100%'}}></div>
               <Button style={{ width: '100%', }}
-              onClick={() => window.open(`${C.network.blockExplorer}/address/${state.account}`, '_blank')}>
+              onClick={() => window.open(`${C.network.blockExplorerUrls[0]}/address/${state.account}`, '_blank')}>
               Explore
               </Button>
             </div>
