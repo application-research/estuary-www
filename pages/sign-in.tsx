@@ -40,11 +40,11 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-  if (window.ethereum.networkVersion !== C.network.chainIdHex) {
+  if (window.ethereum.networkVersion !== C.network.chainId) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: C.network.chainIdHex }]
+        params: [{ chainId: C.network.chainId }]
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
@@ -63,7 +63,7 @@ async function handleSignInWithMetaMask(state: any, host) {
   const authSvcHost = C.api.authSvcHost
   let response = await fetch(`${authSvcHost}/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: C.network.chainIdNum, version: "1"  }),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: "1"  }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -84,10 +84,15 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
 
-  const sign = await window.ethereum.request({
-    method: 'personal_sign',
-    params: [msg, from, ''],
-  });
+  let sign
+  try {
+    sign = await window.ethereum.request({
+      method: 'personal_sign',
+      params: [msg, from, ''],
+    });
+  } catch (err) {
+    return { error: err.message };
+  }
 
   let r = await fetch(`${authSvcHost}/login-with-metamask`, {
     method: 'POST',
