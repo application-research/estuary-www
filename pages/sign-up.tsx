@@ -107,7 +107,7 @@ async function handleRegisterWithMetaMask(state: any, host) {
 
   let sign
   try {
-    await window.ethereum.request({
+    sign = await window.ethereum.request({
       method: 'personal_sign',
       params: [msg, from, ''],
     });
