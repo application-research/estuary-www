@@ -13,6 +13,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 
 import { H2, H3, H4, P } from '@components/Typography';
+import Divider from '@components/Divider';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -31,6 +32,98 @@ export async function getServerSideProps(context) {
   return {
     props: { viewer, host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
+}
+
+async function handleRegisterWithMetaMask(state: any, host) {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  if (U.isEmpty(state.inviteCode)) {
+    return { error: 'Please provide your invite code.' };
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  if (window.ethereum.networkVersion !== C.network.chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: C.network.chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [ C.network ]
+        });
+      }
+    }
+  }
+
+  const authSvcHost = C.api.authSvcHost
+  let userCreationResp = await fetch(`${authSvcHost}/register-with-metamask`, {
+    method: 'POST',
+    body: JSON.stringify({
+      address: accounts[0],
+      inviteCode: state.inviteCode,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (userCreationResp.status !== 200) {
+    return { error: 'Failed to Create User' };
+  }
+
+  let from = accounts[0];
+  let timestamp = new Date().toLocaleString()
+
+  let response = await fetch(`${authSvcHost}/generate-nonce`, {
+    method: 'POST',
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: "1"  }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status !== 200) {
+    return { error: 'Failed to Generate Nonce Message' };
+  }
+
+  const respJson = await response.json();
+  if (respJson.error) {
+    return respJson;
+  }
+
+  if (!respJson.nonceMsg) {
+    return { error: 'No nonceMsg Generated' };
+  }
+
+  const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+
+  let sign
+  try {
+    sign = await window.ethereum.request({
+      method: 'personal_sign',
+      params: [msg, from, ''],
+    });
+  } catch (err) {
+    return { error: err.message };
+  }
+
+  let r = await fetch(`${authSvcHost}/login-with-metamask`, {
+    method: 'POST',
+    body: JSON.stringify({ address: from, signature: sign }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  await authRedirect(r)
 }
 
 async function handleRegister(state: any, host) {
@@ -84,11 +177,15 @@ async function handleRegister(state: any, host) {
     },
   });
 
-  if (r.status !== 200) {
+  await authRedirect(r)
+}
+
+async function authRedirect(resp) {
+  if (resp.status !== 200) {
     return { error: 'Our server failed to register your account. Please contact us.' };
   }
 
-  const j = await r.json();
+  const j = await resp.json();
   if (j.error) {
     return j;
   }
@@ -112,6 +209,7 @@ function SignUpPage(props: any) {
     confirmPassword: '',
     loading: false,
     fissionLoading: false,
+    metaMaskLoading: false,
   });
 
   const authorise = null;
@@ -225,6 +323,29 @@ function SignUpPage(props: any) {
             }}
           >
             Sign up
+          </Button>
+          <Divider text="Or"></Divider>
+          <Button
+            style={{
+              width: '100%',
+            }}
+            loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+            onClick={async () => {
+              setState({ ...state, metaMaskLoading: true });
+              const response = await handleRegisterWithMetaMask(
+                {
+                  username: state.username,
+                  inviteCode: state.inviteCode,
+                },
+                props.api
+              );
+              if (response && response.error) {
+                alert(response.error);
+                setState({ ...state, metaMaskLoading: false });
+              }
+            }}
+          >
+            Sign up using MetaMask
           </Button>
           <Button
             style={{

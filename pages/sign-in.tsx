@@ -12,10 +12,8 @@ import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
-
 import { H2, H4, P } from '@components/Typography';
-
-const ENABLE_SIGN_IN_WITH_FISSION = false;
+import Divider from '@components/Divider';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -34,6 +32,90 @@ export async function getServerSideProps(context) {
   return {
     props: { host, protocol, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${host}` },
   };
+}
+
+async function handleSignInWithMetaMask(state: any, host) {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  if (window.ethereum.networkVersion !== C.network.chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: C.network.chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [ C.network ]
+        });
+      }
+    }
+  }
+
+  let from = accounts[0];
+  let timestamp = new Date().toLocaleString()
+
+  const authSvcHost = C.api.authSvcHost
+  let response = await fetch(`${authSvcHost}/generate-nonce`, {
+    method: 'POST',
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: "1"  }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status !== 200) {
+    return { error: 'Failed to Generate Nonce Message' };
+  }
+
+  const respJson = await response.json();
+  if (respJson.error) {
+    return respJson;
+  }
+
+  if (!respJson.nonceMsg) {
+    return { error: 'No nonceMsg Generated' };
+  }
+
+  const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
+
+  let sign
+  try {
+    sign = await window.ethereum.request({
+      method: 'personal_sign',
+      params: [msg, from, ''],
+    });
+  } catch (err) {
+    return { error: err.message };
+  }
+
+  let r = await fetch(`${authSvcHost}/login-with-metamask`, {
+    method: 'POST',
+    body: JSON.stringify({ address: from, signature: sign }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const j = await r.json();
+  if (j.error) {
+    return j;
+  }
+
+  if (!j.token) {
+    return { error: 'Failed to authenticate' };
+  }
+
+  Cookies.set(C.auth, j.token);
+  window.location.href = '/home';
+  return;
 }
 
 async function handleSignIn(state: any, host) {
@@ -117,7 +199,16 @@ async function handleSignIn(state: any, host) {
 }
 
 function SignInPage(props: any) {
-  const [state, setState] = React.useState({ loading: false, authLoading: false, fissionLoading: false, username: '', password: '', adminLogin: 'false' });
+  const [state, setState] = React.useState({
+    loading: false,
+    authLoading: false,
+    fissionLoading: false,
+    username: '',
+    password: '',
+    adminLogin: 'false',
+    metaMaskLoading: false
+  });
+
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
@@ -180,6 +271,23 @@ function SignInPage(props: any) {
             }}
           >
             Sign in
+          </Button>
+          <Divider text="Or"></Divider>
+          <Button
+            style={{
+              width: '100%',
+            }}
+            loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+            onClick={async () => {
+              setState({ ...state, metaMaskLoading: true });
+              const response = await handleSignInWithMetaMask(state, props.api);
+              if (response && response.error) {
+                alert(response.error);
+                setState({ ...state, metaMaskLoading: false });
+              }
+            }}
+          >
+            Sign in with MetaMask
           </Button>
           <Button
             style={{

@@ -65,9 +65,23 @@ function getAPIHost(): string {
   }
 }
 
+function getAuthSvcHost(): string {
+  if (process.env.NEXT_PUBLIC_ESTUARY_AUTH_API) {
+    return process.env.NEXT_PUBLIC_ESTUARY_AUTH_API;
+  }
+
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return 'https://auth-svc.onrender.com';
+    default:
+      return 'http://localhost:1313';
+  }
+}
+
 export const api = {
   host: getAPIHost(),
   metricsHost: getMetricsHost(),
+  authSvcHost: getAuthSvcHost(),
 };
 
 // get current date and 30 days before
@@ -149,3 +163,17 @@ export const staticEnvironmentPayload = {
     },
   ],
 };
+
+declare global {
+  interface Window {
+    ethereum: any
+  }
+}
+
+export const network = {
+  chainName: 'Filecoin - Mainnet',
+  chainId: "0x13A",
+  nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'FIL' },
+  rpcUrls: ['https://api.node.glif.io'],
+  blockExplorerUrls: ["https://filfox.info"],
+}
