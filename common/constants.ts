@@ -171,9 +171,9 @@ declare global {
 }
 
 export const network = {
-  chainName: 'Filecoin - Hyperspace testnet',
-  chainId: "0xc45",
-  nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'tFIL' },
-  rpcUrls: ['https://api.hyperspace.node.glif.io/rpc/v1'],
-  blockExplorerUrls: ["https://hyperspace.filfox.info"],
+  chainName: 'Filecoin - Mainnet',
+  chainId: "0x13A",
+  nativeCurrency: { name: 'Filecoin', decimals: 18, symbol: 'FIL' },
+  rpcUrls: ['https://api.node.glif.io'],
+  blockExplorerUrls: ["https://filfox.info"],
 }
