@@ -1,15 +1,143 @@
 import styles from '@pages/new-index.module.scss';
 
 import * as React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as Logos from '@components/PartnerLogoSVG';
-import { Box, Container, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Container, Stack, Tabs, Typography, AppBar } from '@mui/material';
+import TabsUnstyled from '@mui/base/TabsUnstyled';
+import TabsListUnstyled from '@mui/base/TabsListUnstyled';
+import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
+import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+
+// import SwipeableViews from 'react-swipeable-views';
+import PropTypes from 'prop-types';
+
 import Navigation from '@components/Navigation';
 import Page from '@components/Page';
 import HomeHero from '@root/components/HomeHero';
 import { log } from 'console';
+import { styled } from '@mui/material/styles';
+import { codeStyle } from './utils/codeStyle';
+import { alpha } from '@mui/material/styles';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { monokaiSublime, dark, a11yDark, atelierEstuaryDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { monokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+const samples = [
+  {
+    lang: 'curl',
+    label: 'curl',
+    icon: '/assets/logo-solidity.svg',
+    code: `curl -L -X POST 'https://api.estuary.tech/content/add' 
+    \    
+    -H 'Accept: application/json' \
+    -H 'Authorization: Bearer YOUR_API_KEY' \
+    -F 'data=@"/path/to/file"'`,
+  },
+
+  {
+    lang: 'node',
+    label: 'node',
+    icon: '/assets/logo-solidity.svg',
+    code: `const https = require("https");
+    const fs = require("fs");
+    const FormData = require("form-data");
+    const fetch = require("node-fetch");
+    
+    const key = \`YOUR_API_KEY\`;
+    
+    var form = new FormData();
+    const path = \`\$\{__dirname\}/YOUR_FILE_ON_YOUR_COMPUTER.mp4\`;
+    form.append("data", fs.createReadStream(path));
+    
+    const headers = form.getHeaders();
+    console.log(headers);
+    
+    fetch("https://upload.estuary.tech/content/add", {
+      method: "POST",
+      body: form,
+      headers: {
+        Authorization: \`Bearer $\{key\}\`,
+        ...headers,
+      },
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(json) {
+        console.log(json);
+      });
+    `,
+  },
+
+  {
+    lang: 'browser',
+    label: 'browser',
+    icon: '/assets/logo-solidity.svg',
+    code: `const formData = new FormData();
+
+    const { data } = THE_SOURCE_OF_YOUR_FILE_FROM_INPUT;
+    
+    formData.append('data', data, data.filename);
+    
+    let xhr = new XMLHttpRequest();
+    
+    let targetURL = "https://upload.estuary.tech/content/add";
+    
+    xhr.open('POST', targetURL);
+    xhr.setRequestHeader('Authorization', \`Bearer \$\{YOUR_API_KEY\}\`);
+    xhr.send(formData);`,
+  },
+
+  {
+    lang: 'Go',
+    label: 'Go',
+    icon: '/assets/logo-solidity.svg',
+    code: `package main
+
+    import (
+      "fmt"
+      "net/http"
+      "io/ioutil"
+    )
+    
+    func main() {
+      url := "https://upload.estuary.tech/content/add"
+      method := "POST"
+    
+      client := &http.Client {
+      }
+      req, err := http.NewRequest(method, url, nil)
+      req.Header.Add("Authorization", "Bearer YOUR_API_KEY")
+      req.Header.Add("Accept", "application/json")
+      res, err := client.Do(req)
+      defer res.Body.Close()
+      body, err := ioutil.ReadAll(res.Body)
+      fmt.Println(string(body))
+    }`,
+  },
+
+  {
+    lang: 'python',
+    label: 'python',
+    icon: '/assets/logo-solidity.svg',
+    code: `import requests
+
+    url = "https://upload.estuary.tech/content/add"
+    
+    payload={}
+    headers = {
+      'Accept': 'application/json'
+      'Authorization': 'Bearer YOUR_API_KEY'
+    }
+    
+    response = requests.request("POST", url, headers=headers, data=payload)`,
+  },
+];
 
 const curl = `curl -L -X POST 'https://api.estuary.tech/content/add' \
 -H 'Accept: application/json' \
@@ -97,6 +225,68 @@ response = requests.request("POST", url, headers=headers, data=payload)`;
 
 const retrieve = `lotus client retrieve --miner MINER_ID DATA_CID OUTPUT_FILE_NAME`;
 
+const Tab = styled(TabUnstyled)`
+  font-family: IBM Plex Sans, sans-serif;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: bold;
+  background-color: transparent;
+  width: 100%;
+  padding: 12px;
+  margin: 6px 6px;
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #0c0b0b;
+  }
+
+  &:focus {
+    color: #fff;
+  }
+
+  &.${tabUnstyledClasses.selected} {
+    background-color: #fff;
+    color: #1a1919;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const TabPanel = styled(TabPanelUnstyled)`
+  width: 100%;
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  background-color: #1a1919;
+  padding: 16px;
+  border-radius: 12px;
+  color: #fff;
+`;
+
+// box-shadow: 0px 4px 8px grey;
+const TabsList = styled(TabsListUnstyled)(
+  ({ theme }) => `
+  min-width: 400px;
+  background-color: #1A1919;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: space-between;
+  box-shadow: 0px 4px 8px grey
+  `
+);
+
+// box-shadow: 0px 4px 8px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
 
@@ -117,6 +307,8 @@ function Question(props: any) {
 }
 
 function IndexPage(props: any) {
+  const [currentLang, setCurrentLang] = useState(samples[0].lang);
+
   const [selected, setSelected] = React.useState(1);
   const [stats, setStats] = React.useState({
     dealsOnChain: 137752,
@@ -144,7 +336,21 @@ function IndexPage(props: any) {
     load();
   }, []);
 
-  console.log('props.viewer: ', props.viewer);
+  const handleLangChange = useCallback((event, value) => {
+    setCurrentLang(value);
+  }, []);
+
+  const code = useMemo(() => {
+    return samples.find((sample) => sample.lang === currentLang)?.code.trim() || '';
+  }, [currentLang]);
+
+  // console.log('props.viewer: ', props.viewer);
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Box
@@ -162,11 +368,153 @@ function IndexPage(props: any) {
       >
         <Page title="Estuary" description={description} url={props.hostname}>
           <Navigation active="INDEX" isAuthenticated={props.viewer} />
-
-          <div className=" h-40 bg-emerald rounded-xl w-56 absolute top-80 right-0 -mr-24 blur-custom  z-10 opacity-100  "></div>
+          <div
+            className=" h-40 bg-emerald rounded-xl w-56 absolute 
+          top-80 right-0 -mr-24 blur-custom  z-10 opacity-100  "
+          ></div>
           <div className=" h-40 bg-neon rounded-xl w-56 absolute bottom-3/4 left-0 -mr-24 blur-custom z-10 opacity-100  "></div>
-
           <HomeHero />
+          {/* <Box sx={{ width: '100%', bgcolor: '#1A1919', color: '#62EEDD' }}>
+            <Tabs value={value} onChange={handleChange} centered sx={{}}>
+              <Tab label="Item One" />
+              <Tab label="Item Two" />
+              <Tab label="Item Three" />
+            </Tabs>
+          </Box> */}
+
+          <div className="flex justify-evenly items-center relative h-85 ">
+            <div className="w-1/2 absolute top-0 left-0 ">
+              <h1 className="text-4xl mb-8">Estuary is free with an invite</h1>
+              <h1 className="text-xl text-gray-400">Get an Api key first and get started</h1>
+            </div>
+
+            <div className="w-1/2 absolute top-0 right-0">
+              <TabsUnstyled defaultValue={0}>
+                <TabsList>
+                  <Tab>Python</Tab>
+                  <Tab>Node</Tab>
+                  <Tab>Browser</Tab>
+                  <Tab>Go</Tab>
+                  <Tab>Curl</Tab>
+                </TabsList>
+
+                <TabPanel value={0}>
+                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                    {python}
+                  </SyntaxHighlighter>
+                </TabPanel>
+                <TabPanel value={1}>
+                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                    {node}
+                  </SyntaxHighlighter>
+                </TabPanel>
+                <TabPanel value={2}>
+                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                    {browser}
+                  </SyntaxHighlighter>
+                </TabPanel>
+                <TabPanel value={3}>
+                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                    {go}
+                  </SyntaxHighlighter>
+                </TabPanel>
+                <TabPanel value={4}>
+                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                    {curl}
+                  </SyntaxHighlighter>
+                </TabPanel>
+              </TabsUnstyled>
+            </div>
+          </div>
+
+          {/*    <Stack
+            direction="row"
+            justifyContent="space-between"
+            spacing={2}
+            sx={{
+              backdropFilter: 'blur(6px)',
+              backgroundColor: '#1C2536',
+              // backgroundColor: '#1C2536',
+              borderBottomColor: '#1C2536',
+              borderBottomStyle: 'solid',
+              borderBottomWidth: 1,
+              // borderTopLeftRadius: (theme) => theme.shape.borderRadius,
+              // borderTopRightRadius: (theme) => theme.shape.borderRadius,
+              boxShadow: 24,
+              flex: '0 0 auto',
+              overflow: 'hidden',
+              color: 'white',
+              px: 2,
+            }}
+          >
+            <Tabs onChange={handleLangChange} value={currentLang}>
+              {samples.map((sample) => (
+                <Tab
+                  key={sample.lang}
+                  label={
+                    <Stack alignItems="center" direction="row" spacing={1}>
+                      <Box
+                        sx={{
+                          borderRadius: '4px',
+                          flex: '0 0 auto',
+                          height: 20,
+                          color: 'white',
+                          overflow: 'hidden',
+                          fill: 'contain',
+                          width: 20,
+                          '& img': {
+                            width: '60%',
+                          },
+                        }}
+                      >
+                        <img src={sample.icon} />
+                      </Box>
+                      <Typography sx={{ color: '#1C2536' }} variant="body2">
+                        {sample.label}
+                      </Typography>
+                    </Stack>
+                  }
+                  value={sample.lang}
+                />
+              ))}
+            </Tabs>
+          </Stack>{' '}
+          <Box
+            sx={{
+              backdropFilter: 'blur(6px)',
+              backgroundColor: alpha('#1C2536', 0.9),
+              // borderBottomLeftRadius: (theme) => theme.shape.borderRadius,
+              // borderBottomRightRadius: (theme) => theme.shape.borderRadius,
+              flex: '1 1 auto',
+              overflow: 'hidden',
+              p: 2,
+              '& pre': {
+                background: 'none !important',
+                borderRadius: '0 !important',
+                fontSize: '12px !important',
+                height: '100%',
+                m: '0 !important',
+                overflow: 'hidden !important',
+                p: '0 !important',
+              },
+              '& code': {
+                fontSize: '12px !important',
+              },
+            }}
+          >
+             <SyntaxHighlighter children={code} language={currentLang} style={dark} /> 
+          </Box>*/}
+          {/* <Stack spacing={5} justifyContent="space-between" alignItems="center" direction="row">
+            <Typography variant="h4" sx={{ color: 'white', width: '1/2', border: '2px solid red' }}>
+              How easy is it for developers to upload data to Filecoin?
+            </Typography>
+
+            <div className="border-2 border-red-400 w-1/2">
+              <SyntaxHighlighter language="javascript" style={alpha}>
+                {curl}
+              </SyntaxHighlighter>
+            </div>
+          </Stack> */}
           {/*    
       <section className={styles.section}>
         <p className={styles.paragraph}>
@@ -207,7 +555,6 @@ function IndexPage(props: any) {
           </a>
         </div>
       </section> */}
-
           <section className={styles.section}>
             <p className={styles.paragraph}>Who used Estuary to store their data on Filecoin?</p>
 
@@ -324,7 +671,6 @@ function IndexPage(props: any) {
               </div>
             </div>
           </section>
-
           <section className={styles.section}>
             <p className={styles.paragraph}>Okay, but how much data has been uploaded using your service?</p>
 
@@ -352,7 +698,6 @@ function IndexPage(props: any) {
               </li>
             </ul>
           </section>
-
           <section className={styles.section}>
             <p className={styles.paragraph}>
               So when you upload your data, it goes to 7 places for 540 days!{' '}
@@ -438,7 +783,6 @@ function IndexPage(props: any) {
               </div>
             </div>
           </section>
-
           <section className={styles.section}>
             <p className={styles.paragraph}>FAQ</p>
 

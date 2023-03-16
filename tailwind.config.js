@@ -25,6 +25,9 @@ module.exports = {
         128: '32rem',
         blur: '60rem',
       },
+      height: {
+        85: '85vh ',
+      },
     },
   },
   plugins: [],
