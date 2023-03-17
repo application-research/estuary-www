@@ -30,6 +30,37 @@ function logout(props) {
   Cookies.remove(C.auth);
   window.location.href = '/';
 }
+
+async function connectWallet(state, setState) {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  if (window.ethereum.networkVersion !== C.network.chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: C.network.chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [ C.network ]
+        });
+      }
+    }
+  }
+
+  if (accounts) {
+    setState({ ...state, account: accounts[0], loadingWallet: false });
+  }
+}
+
 function Wallet(props) {
   const [open, setOpen] = React.useState(false);
   const { x, y, refs, strategy, context } = useFloating({
@@ -54,7 +85,7 @@ function Wallet(props) {
   ]);
 
   const headingId = useId();
-  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true});
+  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true, loadingWallet: false});
 
   let web3: any;
 
@@ -64,9 +95,9 @@ function Wallet(props) {
     }
     web3 = new Web3(window.ethereum);
     const run = async () => {
-      window.ethereum.on('accountsChanged', function (accounts) {
-        logout(props)
-      })
+      // window.ethereum.on('accountsChanged', function (accounts) {
+      //   logout(props)
+      // })
 
       window.ethereum.on('chainChanged', function (networkId) {
         logout(props)
@@ -174,7 +205,15 @@ function Wallet(props) {
         </FloatingFocusManager>
       )}
     </div>
-  ) : null;
+  ) :
+    <div className={style.item}>
+      <Button
+        onClick={() => connectWallet(state, setState) } loading={state.loadingWallet ? state.loadingWallet : undefined}
+        style={{
+          background: 'var(--main-button-background-secondary)',
+          color: 'var(--main-button-text-secondary)',
+        }}>Connect Wallet</Button>
+    </div>;
 }
 
 export default Wallet;
