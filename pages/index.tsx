@@ -1,12 +1,14 @@
 import styles from '@pages/new-index.module.scss';
 
 import * as React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useRef, useEffect } from 'react';
+import anime from 'animejs';
+
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as Logos from '@components/PartnerLogoSVG';
-import { Box, Container, Stack, Tabs, Typography, AppBar } from '@mui/material';
+import { Box, Container, Stack, Tabs, Typography, AppBar, Grid, Paper } from '@mui/material';
 import TabsUnstyled from '@mui/base/TabsUnstyled';
 import TabsListUnstyled from '@mui/base/TabsListUnstyled';
 import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
@@ -24,8 +26,16 @@ import { styled } from '@mui/material/styles';
 import { codeStyle } from './utils/codeStyle';
 import { alpha } from '@mui/material/styles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { monokaiSublime, dark, a11yDark, atelierEstuaryDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { monokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { monokaiSublime, dark, a11yDark, atelierEstuaryDark, duotoneSea, nightOwl, lucario, okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+import { HomeFaqs } from '@root/components/home-faqs';
+import Link from 'next/link';
+import Footer from '../components/footer';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import DataStore from '@root/components/DataStore';
+import EstuaryData from '@root/components/estuaryData';
 
 const samples = [
   {
@@ -285,7 +295,120 @@ const TabsList = styled(TabsListUnstyled)(
   `
 );
 
-// box-shadow: 0px 4px 8px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
+const Protocols = [
+  { name: 'encloud', image: 'https://user-images.githubusercontent.com/28320272/221002893-555c3532-77b0-4110-aed7-68acef95f03a.png', link: 'https://encloud.tech/' },
+  { name: 'clubnft', image: 'https://user-images.githubusercontent.com/28320272/221002481-9c645e32-44c9-4676-bdd3-3a9a58de4743.svg', link: 'https://www.clubnft.com/' },
+  { name: 'bacalau', image: 'https://user-images.githubusercontent.com/28320272/202938869-73f5fcc1-7d0c-4e4c-b2d0-bd1d62ceac39.png', link: 'https://www.bacalhau.org/' },
+  { name: 'opsci', image: 'https://user-images.githubusercontent.com/28320272/202937956-0c12b60d-8a38-4e9b-9749-3420598276f8.png', link: 'https://opsci.io/' },
+  { name: 'cancer', image: 'https://user-images.githubusercontent.com/28320272/202939283-c78969dd-2f06-42dd-8823-cb6d23ff3818.png', link: 'https://www.cancerimagingarchive.net/' },
+  { name: 'GreenFilecoin', image: 'https://user-images.githubusercontent.com/28320272/202937974-6d191fae-264f-40b0-b18e-3071b8009802.png', link: 'https://green.filecoin.io/' },
+  { name: 'labDao', image: 'https://user-images.githubusercontent.com/28320272/202940852-dda0b5d6-7bb4-4ea3-9c86-ec6bc6286104.svg', link: 'https://www.labdao.xyz/' },
+  { name: 'HashAxis', image: 'https://user-images.githubusercontent.com/28320272/202942456-d921ed27-c0c1-4d9e-98ae-f0189e740bc1.svg', link: 'https://hashaxis.com/' },
+  { name: 'gitopia', image: 'https://user-images.githubusercontent.com/28320272/202940154-8c54b568-70cd-4063-b21d-38aee052a063.png', link: 'https://gitopia.com/' },
+  { name: 'sxxFuture', image: 'https://user-images.githubusercontent.com/28320272/204052332-56be823b-b058-4232-96a5-ef3d569dcc56.png', link: 'https://sxxfuture.com/' },
+  { name: 'web3Mint', image: 'https://user-images.githubusercontent.com/28320272/203404877-791e53c6-7ec6-48b6-960a-f65c4aa46e29.png', link: 'https://w3bmint.xyz/' },
+  { name: 'VividLabs', image: 'https://user-images.githubusercontent.com/310223/156037345-f93054de-d222-47e9-9653-cd957fc0fcc5.svg', link: 'https://www.vividlabs.com/' },
+  { name: 'appGala', image: 'https://user-images.githubusercontent.com/28320272/202942649-b7237e6a-4c38-487a-b167-07a3833917a5.png', link: 'https://app.gala.games/' },
+  { name: 'openData', image: 'https://user-images.githubusercontent.com/28320272/203404943-0d4d5e2f-195b-4b1e-ab2b-e88fae6a3aac.png', link: 'https://opendata.cityofnewyork.us/' },
+  { name: 'chainsafe', image: 'https://user-images.githubusercontent.com/28320272/202939033-a899fadf-5438-44d4-aa09-1c76e660072c.png', link: 'https://chainsafe.io/' },
+  { name: 'glif', image: 'https://user-images.githubusercontent.com/28320272/203406224-c17a8fd5-fae9-49a0-97c9-3ebf4e704d4f.png', link: 'https://wallet.glif.io/' },
+  { name: 'kodaot', image: 'https://user-images.githubusercontent.com/28320272/203411306-01912ea7-9503-4d6a-9501-e243c7123d89.png', link: 'https://kodadot.xyz/' },
+  { name: 'Archive', image: 'https://user-images.githubusercontent.com/28320272/203411654-adf169fb-0493-446a-8393-19d932d93618.png', link: 'https://archive.org/' },
+  { name: 'sendata', image: 'https://user-images.githubusercontent.com/28320272/212118753-fed66bc4-2b7d-4682-ac99-f86ab2ea37f6.png', link: 'https://www.sendata.io/' },
+  {
+    name: 'nbsPool',
+    image:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMUAAAA7CAMAAAD8fr6rAAACfFBMVEVHcEz///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////88FegUAAAA03RSTlMAEDDgIGDwgEDAcFCQoNABCQKwBCLuMv7XAzPW7X79Q1sYREeDiidUFAw4vDy2BynG6yHfiXdIFblF6sf68Z6W9lH86S6PdhuOQR7LPQtk92gWwW8GhDdc4av7yYdsxVXeWU8rE/inaW6lI5V9NTkOqBw7LZ8RbY0k7CYlmE2Byk7RtefkVqJYrYZrc0bZGposzw+ySUrO3bS3DTTaL/OUYmOk4q/TnCq4dbuFzXy/GReCeq4Km4yXP+WsYTpLk1qz5gWxuuP03PKZ79jbPtVdHX8odFDJSgAABmZJREFUaN7dmtVj20gQxj9ZssCYOMxpqGnTNmmTNCkzM3N7ZWa6wt2Vj5mZmZmZGb5/6B5WkiVZjt03q/MiazW7np92dmbHXsBfBo8bv3bdYARb1tduKC29rbY10BBNE/4DgLYJY4JMseZWcW25JcgUlaPFtfn3IFPc1CiuN58PMkXPcHHt/+nKrKAyTDdWjL2xGCjWxp5uGbWwL4gMo/YdWVxS3V1z8mTN6mqg6quy0YFjOL6t+90SAEWrYrFVRQCAPdt2LFseKIjGkVNGZLaGhs8cVBwUhGTjxPKtWR699GJzgVuvlB8EAL3UmJNdKbq5aRjQXn5XYTIMvZdcO/GxqtndTw6sOOX5eKqCNNoKMaxOJklePFQ6Ipdq+3UkyWkFmEKGU0g4t+qrpuqkwqPYbpp2NrfqK6bqnYVHMdU07cPcqq+Zqg8XHsVG07SPcqu+bqruLjyKMfUkyQp+NiqH5qwZI0mSk+8pwCC1uYxk19DdXLRiwYARuax1ZQ3JSw3OVKPrdoLXFXHRdV0POTUskQAAuqZpUbjHcPUAgFBE08KKSyusaRFbSbJGs2XIc7whCXwxj582JrMglGzoGjEXqDrBHldA1tLBzaAmLkLkuGJpWKID0GWSpBpxjSF6xCyzQwnRErctleKiJWFy6GI0tykKABR/Po1d+/2z+6aOcrN32NOVquRLQaqhTAqdJA2SjGdQWD0QJsmESjJhji0lSKqJdEbITgEcbB1fcWxQBkP1xg7row+FMN5BYQBA1KD4oJEOfZmMANATbgoAkh4330hIJTUJUAwyIVQSpKEAkkYylIsCOPMNf+l1b8PPbGl6tjg7hUpV8aEADGG+iyJE66kmeSjS7mnYXpoyX1GYTMGaJiM3BdBcyZ/PAcmGurqGJIBdpxwu7ENhyOZr9VJo4rW5KHQxFd6vNzUkUgNCtsmQVMpiBi23RUqMmosCJZHf2L+ygyQ73nnvzbYlGJgiTNHdhwI+FEZ2CpAaEDOdBrA+h8iYYzZj+VAAfWfrK8RyW/3+abeqDwVkYZmXIiHeo4tCUn0mw0NhUHVSa0DEabJKIz8K4EsralyP3BRhMaKLQokmyGjm6tZIytEsFGEyDLimi4wBMecQYrnlRXHOopiSBwVkJvwibdSy0RBi+QgphyUfiqhKVTINT1MYdpywnSxfijmWJQ35UOhk2C9fhN3ZwBzBIElZd1FommbIZjKwQ7c/hZY/RZHYMbF+Z3EeFDAoe9eFHpGFUcJGTdNs2/S4u56xOYWrOROiD0U8fwpsqifJilq+cSQPCp3UMla3JFPOWBfmViCVTvlpTt25fJ2xVyMlx7pQ86ZAUxc5bsyClkXccTgnBeJUJS8FNFLxp3BmtgwNZ4yKkhEgYq2xq4xRALBuKAAoazi5rigXhUJqGRTim/wpog7v92hoDpvjVr6IezrmTTGkxDTmPOXLOSgQo5pBESMlr42KKxH4UijpUKukc7eSnsTQ1VAYllrV4pFcGhqYQlKpeteFmrkuwqpuv+RsHgXDzoyW34XtbWEkz31UJgVwPDa1/te+gSjSm1uTIhRR7RjlfM2Mh4QxrtXtXvsqGVMAPUHHzjKhA0qM5qzoZMRVe/XtfYqVC5NZPQoA0NlPNfJdSe+PPLV+gR+FJNObL0T28swFScrpnOhHgZBKUqW3vqBKUo1aHumsvbBE/FT2dAbFI8Nctzf8wcpxJMl5RT4UCHso1JTuY6OSMlODjuwUCJmDxNK1Xky0GOlaz0Ux0byZ76W4/0H3/fKZi0zVOmfNbO8/dWfdna6KHZW5uI8662c/Davujroqaynqqbtd1XyZadrsjH9j7vO2XDBVHyq8n0CsiTnmfXD3Hd6Wt6ydQuFRVJqm9XofpKLelo9N1UcLj2KxsKxiuvdXg5Vve1WPjhe6DxQeRXIGSZY1l5fVebLIMO9Gd8XS7SSn3l6Qf8Psb5m0qx2Yu2VnryOGIu75L+CTzkOH586ctK8ThS2dLzxzIJ3q5rir1b3yHgREkv1P2MtjocOjqk70lH+A4Mj8o/MaAKBoVc0Pf1sO9vLjS7ciUFL89ewD1ajurvn+Ss3qagBAz7RSBE8Gf7tMnAP5d+wg4PKy0e0IogyZYZ7JudC65M+/5iOgYp+PulT7T1VQIdJn1S4qCK5cG+cGmya0AYE/w3ltnKcN2tnm/wGo0l3Rqsgq5gAAAABJRU5ErkJggg==',
+    link: 'https://nbfspool.com/#/',
+  },
+  // { name: 'GainForest', image: 'https://user-images.githubusercontent.com/28320272/202937959-1dfe1c3f-a409-4e69-8ea4-934f7203c3fa.png', link: 'https://www.gainforest.app/' },
+  // {
+  //   name: 'Zora',
+  //   image: (
+  //     <>
+  //       {' '}
+  //       <Logos.Zora />{' '}
+  //     </>
+  //   ),
+  //   link: 'https://zora.co/',
+  // },
+  // {
+  //   name: 'Portrait',
+  //   image: (
+  //     <>
+  //       {' '}
+  //       <Logos.Portrait />{' '}
+  //     </>
+  //   ),
+  //   link: 'https://portrait.gg/',
+  // },
+];
+
+// const Slider = () => {
+//   const containerRef = useRef(null);
+//   const imageRefs = useRef([]);
+
+//   useEffect(() => {
+//     const container = containerRef.current;
+//     const images = imageRefs.current;
+//     const imageCount = images.length;
+//     const duration = 5000; // Set the duration of the animation in milliseconds
+//     let currentIndex = 0; // Set the index of the current image
+
+//     // Set up the initial position of the images
+//     images.forEach((image, index) => {
+//       image.style.transform = `translateX(${100 * index}%)`;
+//     });
+
+//     // Define the animation timeline
+//     const timeline = anime.timeline({
+//       easing: 'easeInOutQuad',
+//       duration: duration / 2,
+//     });
+
+//     // Create the animation sequence for each image
+//     for (let i = 0; i < imageCount; i++) {
+//       timeline.add(
+//         {
+//           targets: images[i],
+//           translateX: ['-100%', '0%'],
+//           duration: duration,
+//           delay: duration * i,
+//           endDelay: duration * (imageCount - i - 1),
+//         },
+//         0
+//       );
+//     }
+
+//     // Set the initial state of the animation
+//     timeline.seek(duration * currentIndex);
+
+//     // Start the animation loop
+//     setInterval(() => {
+//       currentIndex = (currentIndex + 1) % imageCount;
+//       timeline.seek(duration * currentIndex);
+//     }, duration);
+
+//     // Clean up the animation loop
+//     return () => clearInterval(interval);
+//   }, [Protocols]);
+
+//   return (
+//     <div ref={containerRef} style={{ display: 'flex', overflow: 'hidden' }}>
+//       {Protocols.map((item, index) => (
+//         <img key={index} src={item.image} style={{ width: '150rem', height: 'auto' }} ref={(ref) => (imageRefs.current[index] = ref)} />
+//       ))}
+//     </div>
+//   );
+// };
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -308,6 +431,8 @@ function Question(props: any) {
 
 function IndexPage(props: any) {
   const [currentLang, setCurrentLang] = useState(samples[0].lang);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const imagesContainerRef = useRef(null);
 
   const [selected, setSelected] = React.useState(1);
   const [stats, setStats] = React.useState({
@@ -352,74 +477,77 @@ function IndexPage(props: any) {
     setValue(newValue);
   };
 
+  var settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 20,
+    autoplay: true,
+    speed: 25000,
+    autoplaySpeed: 25000,
+    pauseOnHover: false,
+    cssEase: 'linear',
+    nextArrow: <></>,
+    prevArrow: <></>,
+  };
+
   return (
     <Box
       sx={{
-        // border: "2px solid red",
         backgroundColor: '#0C0B0B',
         color: 'white',
         position: 'relative',
       }}
     >
-      <Container
-        maxWidth="lg"
-
-        // sx={{ border: "2px solid blue", height: "100vh" }}
-      >
+      <Container maxWidth="lg">
         <Page title="Estuary" description={description} url={props.hostname}>
           <Navigation active="INDEX" isAuthenticated={props.viewer} />
+
           <div
             className=" h-40 bg-emerald rounded-xl w-56 absolute 
-          top-80 right-0 -mr-24 blur-custom  z-10 opacity-100  "
+              top-[2%] right-0 -mr-24 blur-custom  z-10 opacity-100  "
           ></div>
-          <div className=" h-40 bg-neon rounded-xl w-56 absolute bottom-3/4 left-0 -mr-24 blur-custom z-10 opacity-100  "></div>
+          <div className=" h-40 bg-neon rounded-xl w-56 absolute top-[20%] left-0  blur-custom z-10 opacity-100  "></div>
           <HomeHero />
-          {/* <Box sx={{ width: '100%', bgcolor: '#1A1919', color: '#62EEDD' }}>
-            <Tabs value={value} onChange={handleChange} centered sx={{}}>
-              <Tab label="Item One" />
-              <Tab label="Item Two" />
-              <Tab label="Item Three" />
-            </Tabs>
-          </Box> */}
 
           <div className="flex justify-evenly items-center relative h-85 ">
             <div className="w-1/2 absolute top-0 left-0 ">
-              <h1 className="text-4xl mb-8">Estuary is free with an invite</h1>
+              <h1 className="text-4xl mb-8 font-semibold">Estuary is free with an invite</h1>
               <h1 className="text-xl text-gray-400">Get an Api key first and get started</h1>
             </div>
 
-            <div className="w-1/2 absolute top-0 right-0">
+            <div className="w-1/2 absolute top-0 right-0 ">
               <TabsUnstyled defaultValue={0}>
                 <TabsList>
-                  <Tab>Python</Tab>
                   <Tab>Node</Tab>
+                  <Tab>Python</Tab>
                   <Tab>Browser</Tab>
                   <Tab>Go</Tab>
                   <Tab>Curl</Tab>
                 </TabsList>
 
                 <TabPanel value={0}>
-                  <SyntaxHighlighter language="javascript" style={a11yDark}>
-                    {python}
-                  </SyntaxHighlighter>
-                </TabPanel>
-                <TabPanel value={1}>
-                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                  <SyntaxHighlighter language="javascript" style={nightOwl} className="bg-black">
                     {node}
                   </SyntaxHighlighter>
                 </TabPanel>
+                <TabPanel value={1}>
+                  <SyntaxHighlighter language="javascript" style={nightOwl}>
+                    {python}
+                  </SyntaxHighlighter>
+                </TabPanel>
                 <TabPanel value={2}>
-                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                  <SyntaxHighlighter language="javascript" style={nightOwl}>
                     {browser}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={3}>
-                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                  <SyntaxHighlighter language="javascript" style={nightOwl}>
                     {go}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={4}>
-                  <SyntaxHighlighter language="javascript" style={a11yDark}>
+                  <SyntaxHighlighter language="javascript" style={nightOwl}>
                     {curl}
                   </SyntaxHighlighter>
                 </TabPanel>
@@ -427,94 +555,6 @@ function IndexPage(props: any) {
             </div>
           </div>
 
-          {/*    <Stack
-            direction="row"
-            justifyContent="space-between"
-            spacing={2}
-            sx={{
-              backdropFilter: 'blur(6px)',
-              backgroundColor: '#1C2536',
-              // backgroundColor: '#1C2536',
-              borderBottomColor: '#1C2536',
-              borderBottomStyle: 'solid',
-              borderBottomWidth: 1,
-              // borderTopLeftRadius: (theme) => theme.shape.borderRadius,
-              // borderTopRightRadius: (theme) => theme.shape.borderRadius,
-              boxShadow: 24,
-              flex: '0 0 auto',
-              overflow: 'hidden',
-              color: 'white',
-              px: 2,
-            }}
-          >
-            <Tabs onChange={handleLangChange} value={currentLang}>
-              {samples.map((sample) => (
-                <Tab
-                  key={sample.lang}
-                  label={
-                    <Stack alignItems="center" direction="row" spacing={1}>
-                      <Box
-                        sx={{
-                          borderRadius: '4px',
-                          flex: '0 0 auto',
-                          height: 20,
-                          color: 'white',
-                          overflow: 'hidden',
-                          fill: 'contain',
-                          width: 20,
-                          '& img': {
-                            width: '60%',
-                          },
-                        }}
-                      >
-                        <img src={sample.icon} />
-                      </Box>
-                      <Typography sx={{ color: '#1C2536' }} variant="body2">
-                        {sample.label}
-                      </Typography>
-                    </Stack>
-                  }
-                  value={sample.lang}
-                />
-              ))}
-            </Tabs>
-          </Stack>{' '}
-          <Box
-            sx={{
-              backdropFilter: 'blur(6px)',
-              backgroundColor: alpha('#1C2536', 0.9),
-              // borderBottomLeftRadius: (theme) => theme.shape.borderRadius,
-              // borderBottomRightRadius: (theme) => theme.shape.borderRadius,
-              flex: '1 1 auto',
-              overflow: 'hidden',
-              p: 2,
-              '& pre': {
-                background: 'none !important',
-                borderRadius: '0 !important',
-                fontSize: '12px !important',
-                height: '100%',
-                m: '0 !important',
-                overflow: 'hidden !important',
-                p: '0 !important',
-              },
-              '& code': {
-                fontSize: '12px !important',
-              },
-            }}
-          >
-             <SyntaxHighlighter children={code} language={currentLang} style={dark} /> 
-          </Box>*/}
-          {/* <Stack spacing={5} justifyContent="space-between" alignItems="center" direction="row">
-            <Typography variant="h4" sx={{ color: 'white', width: '1/2', border: '2px solid red' }}>
-              How easy is it for developers to upload data to Filecoin?
-            </Typography>
-
-            <div className="border-2 border-red-400 w-1/2">
-              <SyntaxHighlighter language="javascript" style={alpha}>
-                {curl}
-              </SyntaxHighlighter>
-            </div>
-          </Stack> */}
           {/*    
       <section className={styles.section}>
         <p className={styles.paragraph}>
@@ -555,7 +595,39 @@ function IndexPage(props: any) {
           </a>
         </div>
       </section> */}
-          <section className={styles.section}>
+
+          <Typography variant="h4" component="h1" className="text-4xl mb-16 font-semibold mt-16 ">
+            Estuary is used By
+          </Typography>
+          <Slider {...settings}>
+            {Protocols.map((slide, index) => (
+              <div key={index}>
+                <Link href={slide.link} target="_blank">
+                  <img src={slide.image} width="200rem" height="7vh" style={{ objectFit: 'contain' }} />
+                </Link>
+              </div>
+            ))}
+          </Slider>
+
+          <DataStore />
+          {/* <div className="w-56">
+            <Slider autoplay={1000} infinity={true}>
+              {Protocols.map((slide, index) => (
+                <div key={index} className="flex flex-row border-2 border-red-500 h-40 w-64">
+                  <Link href={slide.link} target="_blank">
+                    <img src={slide.image} width="200rem" height="10vh" style={{ objectFit: 'contain' }} />
+                  </Link>
+                </div>
+              ))}
+            </Slider>
+          </div> */}
+
+          {/* <Link href={slide.link} target="_blank">
+                </Link> */}
+
+          {/* <Slider /> */}
+
+          {/* <section className={styles.section}>
             <p className={styles.paragraph}>Who used Estuary to store their data on Filecoin?</p>
 
             <div className={styles.logos}>
@@ -670,8 +742,113 @@ function IndexPage(props: any) {
                 </a>
               </div>
             </div>
-          </section>
-          <section className={styles.section}>
+          </section> */}
+
+          <Box
+            sx={{
+              // backgroundColor: '#0C0B0B',
+              color: 'white',
+
+              mt: 10,
+              mb: 10,
+            }}
+          >
+            <Container maxWidth="lg" sx={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '32px', fontWeight: 'bold' }}>
+                Okay , but how much data has been uploaded using your service ?
+              </Typography>
+
+              <Box
+                sx={{
+                  // background: 'linear-gradient(90deg, #000000 50%, rgba(98, 238, 221, 0.3) 100%)',
+                  // background: 'black',
+                  background: '#070707',
+                  px: 1,
+                  py: 4,
+                  mt: 5,
+                  position: 'relative',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '16px',
+                }}
+                className=" border-2 border-emerald  shadow-md shadow-emerald"
+              >
+                <Stack direction="column" spacing={3} sx={{ ml: 10 }}>
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      successful Filecoin storage deals
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className="   text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {stats.dealsOnChain.toLocaleString('en-US')}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      total objects retrievable through any IPFS gateway.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {stats.totalObjectsRef.toLocaleString('en-US')}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      total objects uploaded to Filecoin.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {Number(stats.totalObjectsRef * 6).toLocaleString('en-US')}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      total pinned data retrievable from any IPFS gateway.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {U.bytesToSize(stats.totalStorage)}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      total data backed up to Filecoin.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {U.bytesToSize(stats.totalStorage * 6)}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      storage providers work with us to achieve these goals.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {stats.totalStorageMiner}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
+                      products, including the ones above, use Filecoin through Estuary.
+                    </Typography>
+
+                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                      {stats.totalUsers}
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Box>
+            </Container>
+          </Box>
+
+          {/* <section className={styles.section}>
             <p className={styles.paragraph}>Okay, but how much data has been uploaded using your service?</p>
 
             <ul className={styles.statsList}>
@@ -697,8 +874,8 @@ function IndexPage(props: any) {
                 <strong>{stats.totalUsers}</strong> products, including the ones above, use Filecoin through Estuary.
               </li>
             </ul>
-          </section>
-          <section className={styles.section}>
+          </section> */}
+          {/* <section className={styles.section}>
             <p className={styles.paragraph}>
               So when you upload your data, it goes to 7 places for 540 days!{' '}
               <span>After those days our machine will renew again for another 540 days. It is like permanent storage.</span>
@@ -782,11 +959,14 @@ function IndexPage(props: any) {
                 </div>
               </div>
             </div>
-          </section>
-          <section className={styles.section}>
-            <p className={styles.paragraph}>FAQ</p>
+          </section> */}
 
-            <Question query="Will Estuary ever charge money?">
+          {/* <section className={styles.section}>
+            <p className={styles.paragraph}>FAQ</p> */}
+
+          <HomeFaqs />
+
+          {/* <Question query="Will Estuary ever charge money?">
               Estuary.tech is free while the service is in development. We will let the public know a year in advance before we charge money for anything you depend on. For now,
               there is no limit to uploads, but for each file there is a 32 GiB max size. Check out{' '}
               <a href="https://storage.market" target="_blank">
@@ -883,18 +1063,19 @@ function IndexPage(props: any) {
                 Twitter
               </a>
               !
-            </Question>
+            </Question> */}
 
-            <p className={styles.paragraph}>
-              If you choose to use Estuary you agree to our{' '}
-              <a href="https://docs.estuary.tech/terms" target="_blank">
-                Terms of Service
-              </a>
-              .
-            </p>
-          </section>
+          {/* <p className={styles.paragraph}>
+            If you choose to use Estuary you agree to our{' '}
+            <a href="https://docs.estuary.tech/terms" target="_blank">
+              Terms of Service
+            </a>
+            .
+          </p> */}
+          {/* </section> */}
         </Page>
       </Container>
+      <Footer />
     </Box>
   );
 }

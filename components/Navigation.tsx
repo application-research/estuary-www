@@ -27,7 +27,7 @@ const Navigation = (props: any) => {
           </div>
         ) : null}
 
-        <div className="flex justify-between items-center text-white text-sm opacity-95  space-x-8    ">
+        <div className="flex justify-between items-center text-white text-lg opacity-95  space-x-8    ">
           {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
             <a className=" hover:text-emerald  transition ease-in duration-150" href="/sign-up">
               Sign up

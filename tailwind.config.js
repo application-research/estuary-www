@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       blur: {
-        custom: '250px',
+        custom: '150px',
       },
       backdropBlur: {
         custom: '250px',
@@ -26,7 +26,7 @@ module.exports = {
         blur: '60rem',
       },
       height: {
-        85: '85vh ',
+        85: '70vh ',
       },
     },
   },

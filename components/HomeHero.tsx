@@ -17,7 +17,7 @@ const HomeHero = () => {
           zIndex: 1,
           mb: 10,
           mt: 20,
-          height: '70vh',
+          height: '50vh',
         }}
       >
         <Container
