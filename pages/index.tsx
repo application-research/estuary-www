@@ -499,10 +499,9 @@ function IndexPage(props: any) {
         position: 'relative',
       }}
     >
+      <Navigation active="INDEX" isAuthenticated={props.viewer} />
       <Container maxWidth="lg">
         <Page title="Estuary" description={description} url={props.hostname}>
-          <Navigation active="INDEX" isAuthenticated={props.viewer} />
-
           <div
             className=" h-40 bg-emerald rounded-xl w-56 absolute 
               top-[2%] right-0 -mr-24 blur-custom  z-10 opacity-100  "
@@ -526,7 +525,7 @@ function IndexPage(props: any) {
                   <Tab>Curl</Tab>
                 </TabsList>
 
-                <TabPanel value={0}>
+                {/* <TabPanel value={0}>
                   <SyntaxHighlighter language="javascript" style={nightOwl} className="bg-black">
                     {node}
                   </SyntaxHighlighter>
@@ -550,7 +549,7 @@ function IndexPage(props: any) {
                   <SyntaxHighlighter language="javascript" style={nightOwl}>
                     {curl}
                   </SyntaxHighlighter>
-                </TabPanel>
+                </TabPanel> */}
               </TabsUnstyled>
             </div>
           </div>
