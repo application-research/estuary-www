@@ -8,7 +8,7 @@ import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as C from '@common/constants';
 import * as Logos from '@components/PartnerLogoSVG';
-import { Box, Container, Stack, Tabs, Typography, AppBar, Grid, Paper } from '@mui/material';
+import { Link, Box, Container, Stack, Tabs, Typography, AppBar, Grid, Paper } from '@mui/material';
 import TabsUnstyled from '@mui/base/TabsUnstyled';
 import TabsListUnstyled from '@mui/base/TabsListUnstyled';
 import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
@@ -26,10 +26,11 @@ import { styled } from '@mui/material/styles';
 import { codeStyle } from './utils/codeStyle';
 import { alpha } from '@mui/material/styles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// const { SyntaxHighlighter } = require('react-syntax-highlighter');
 import { monokaiSublime, dark, a11yDark, atelierEstuaryDark, duotoneSea, nightOwl, lucario, okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { HomeFaqs } from '@root/components/home-faqs';
-import Link from 'next/link';
+
 import Footer from '../components/footer';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -235,6 +236,10 @@ response = requests.request("POST", url, headers=headers, data=payload)`;
 
 const retrieve = `lotus client retrieve --miner MINER_ID DATA_CID OUTPUT_FILE_NAME`;
 
+const mainPrimary = `#0BFF48`;
+const darkGreen = `#0A7225`;
+const lightBlack = `#0C0B0B`;
+
 const Tab = styled(TabUnstyled)`
   font-family: IBM Plex Sans, sans-serif;
   color: white;
@@ -260,7 +265,8 @@ const Tab = styled(TabUnstyled)`
   }
 
   &.${tabUnstyledClasses.selected} {
-    background-color: #fff;
+    background-color: ${mainPrimary};
+
     color: #1a1919;
   }
 
@@ -275,7 +281,7 @@ const TabPanel = styled(TabPanelUnstyled)`
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   background-color: #1a1919;
-  padding: 16px;
+
   border-radius: 12px;
   color: #fff;
 `;
@@ -291,7 +297,7 @@ const TabsList = styled(TabsListUnstyled)(
   align-items: center;
   justify-content: center;
   align-content: space-between;
-  box-shadow: 0px 4px 8px grey
+  box-shadow: 0px 4px 4px #0BFF48;
   `
 );
 
@@ -477,14 +483,14 @@ function IndexPage(props: any) {
     setValue(newValue);
   };
 
-  var settings = {
-    dots: false,
+  let settings = {
     infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 20,
+    dots: false,
     autoplay: true,
-    speed: 25000,
-    autoplaySpeed: 25000,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    speed: 5000,
+    autoplaySpeed: 5000,
     pauseOnHover: false,
     cssEase: 'linear',
     nextArrow: <></>,
@@ -494,8 +500,7 @@ function IndexPage(props: any) {
   return (
     <Box
       sx={{
-        backgroundColor: '#0C0B0B',
-        color: 'white',
+        backgroundColor: lightBlack,
         position: 'relative',
       }}
     >
@@ -503,10 +508,10 @@ function IndexPage(props: any) {
       <Container maxWidth="lg">
         <Page title="Estuary" description={description} url={props.hostname}>
           <div
-            className=" h-40 bg-emerald rounded-xl w-56 absolute 
+            className=" h-40 bg-secondary rounded-xl w-56 absolute 
               top-[2%] right-0 -mr-24 blur-custom  z-10 opacity-100  "
           ></div>
-          <div className=" h-40 bg-neon rounded-xl w-56 absolute top-[20%] left-0  blur-custom z-10 opacity-100  "></div>
+          <div className=" h-40  bg-darkGreen rounded-xl w-56 absolute top-[20%] left-0  blur-custom z-10 opacity-100  "></div>
           <HomeHero />
 
           <div className="flex justify-evenly items-center relative h-85 ">
@@ -525,31 +530,31 @@ function IndexPage(props: any) {
                   <Tab>Curl</Tab>
                 </TabsList>
 
-                {/* <TabPanel value={0}>
-                  <SyntaxHighlighter language="javascript" style={nightOwl} className="bg-black">
+                <TabPanel value={0}>
+                  <SyntaxHighlighter language="javascript" style={codeStyle} className="">
                     {node}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={1}>
-                  <SyntaxHighlighter language="javascript" style={nightOwl}>
+                  <SyntaxHighlighter language="javascript" style={codeStyle}>
                     {python}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={2}>
-                  <SyntaxHighlighter language="javascript" style={nightOwl}>
+                  <SyntaxHighlighter language="javascript" style={codeStyle}>
                     {browser}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={3}>
-                  <SyntaxHighlighter language="javascript" style={nightOwl}>
+                  <SyntaxHighlighter language="javascript" style={codeStyle}>
                     {go}
                   </SyntaxHighlighter>
                 </TabPanel>
                 <TabPanel value={4}>
-                  <SyntaxHighlighter language="javascript" style={nightOwl}>
+                  <SyntaxHighlighter language="javascript" style={codeStyle}>
                     {curl}
                   </SyntaxHighlighter>
-                </TabPanel> */}
+                </TabPanel>
               </TabsUnstyled>
             </div>
           </div>
@@ -595,7 +600,7 @@ function IndexPage(props: any) {
         </div>
       </section> */}
 
-          <Typography variant="h4" component="h1" className="text-4xl mb-16 font-semibold mt-16 ">
+          <Typography variant="h4" component="h1" className="text-4xl mb-16 font-semibold mt-28 ">
             Estuary is used By
           </Typography>
           <Slider {...settings}>
@@ -745,7 +750,7 @@ function IndexPage(props: any) {
 
           <Box
             sx={{
-              // backgroundColor: '#0C0B0B',
+              // backgroundColor: lightBlack,
               color: 'white',
 
               mt: 10,
@@ -769,8 +774,9 @@ function IndexPage(props: any) {
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: '16px',
+                  boxShadow: `0px 4px 4px ${mainPrimary}`,
                 }}
-                className=" border-2 border-emerald  shadow-md shadow-emerald"
+                className=" border-2 border-secondary "
               >
                 <Stack direction="column" spacing={3} sx={{ ml: 10 }}>
                   <Stack direction="row" spacing={6} sx={{}}>
@@ -778,7 +784,11 @@ function IndexPage(props: any) {
                       successful Filecoin storage deals
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className="   text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className="   text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {stats.dealsOnChain.toLocaleString('en-US')}
                     </Typography>
                   </Stack>
@@ -788,7 +798,11 @@ function IndexPage(props: any) {
                       total objects retrievable through any IPFS gateway.
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {stats.totalObjectsRef.toLocaleString('en-US')}
                     </Typography>
                   </Stack>
@@ -798,7 +812,11 @@ function IndexPage(props: any) {
                       total objects uploaded to Filecoin.
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {Number(stats.totalObjectsRef * 6).toLocaleString('en-US')}
                     </Typography>
                   </Stack>
@@ -807,8 +825,11 @@ function IndexPage(props: any) {
                     <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
                       total pinned data retrievable from any IPFS gateway.
                     </Typography>
-
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {U.bytesToSize(stats.totalStorage)}
                     </Typography>
                   </Stack>
@@ -818,7 +839,11 @@ function IndexPage(props: any) {
                       total data backed up to Filecoin.
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {U.bytesToSize(stats.totalStorage * 6)}
                     </Typography>
                   </Stack>
@@ -828,7 +853,11 @@ function IndexPage(props: any) {
                       storage providers work with us to achieve these goals.
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {stats.totalStorageMiner}
                     </Typography>
                   </Stack>
@@ -838,7 +867,11 @@ function IndexPage(props: any) {
                       products, including the ones above, use Filecoin through Estuary.
                     </Typography>
 
-                    <Typography variant="body2" sx={{}} className=" text-white border-2 rounded-sm border-emerald bg-black shadow-md shadow-emerald  px-6 py-1 text-lg font-bold">
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
                       {stats.totalUsers}
                     </Typography>
                   </Stack>

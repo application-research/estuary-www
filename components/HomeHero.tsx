@@ -6,6 +6,8 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 const HomeHero = () => {
+  const mainPrimary = `#0BFF48`;
+  const darkGreen = `#0A7225`;
   return (
     <>
       <Box
@@ -32,10 +34,10 @@ const HomeHero = () => {
             mt: 15,
           }}
         >
-          <Stack direction="column" justifyContent="center" alignItems="center" spacing={7} sx={{ maxWidth: '70%' }}>
+          <Stack direction="column" justifyContent="center" alignItems="center" spacing={4} sx={{ maxWidth: '70%' }}>
             <h2 className="text-5xl text-white items-center font-bold leading-snug">A reliable way to upload public data onto Filecoin and pin it to IPFS</h2>
 
-            <p className="text-3xl text-white items-center opacity-95 leading-relaxed">
+            <p className="text-2xl text-white items-center opacity-95 leading-relaxed">
               Store your public data and guarantee that it is available to everyone around the world. Our technology will restore lost data and guarantee data replication
             </p>
 
@@ -45,8 +47,8 @@ const HomeHero = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    border: '2px solid #40B1D4',
-                    color: '#62EEDD',
+                    border: `2px solid ${darkGreen}`,
+                    color: mainPrimary,
                     px: 4,
                     py: 1,
 
@@ -59,9 +61,9 @@ const HomeHero = () => {
                       transition: 'ease-in-out',
                       transitionDuration: '300ms',
 
-                      backgroundColor: '#62EEDD',
+                      backgroundColor: mainPrimary,
                       color: 'black',
-                      border: '2px solid #62EEDD',
+                      border: `2px solid ${mainPrimary}`,
                     },
                   }}
                 >
@@ -73,8 +75,8 @@ const HomeHero = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    border: '2px solid #40B1D4',
-                    color: '#62EEDD',
+                    border: `2px solid ${darkGreen}`,
+                    color: '#0BFF48',
                     px: 4,
                     py: 1,
 
@@ -86,9 +88,9 @@ const HomeHero = () => {
                       transition: 'ease-in-out',
                       transitionDuration: '300ms',
 
-                      backgroundColor: '#62EEDD',
+                      backgroundColor: '#0BFF48',
                       color: 'black',
-                      border: '2px solid #62EEDD',
+                      border: `2px solid ${mainPrimary}`,
                     },
                   }}
                 >

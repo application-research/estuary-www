@@ -1,11 +1,14 @@
 import styles from '@pages/app.module.scss';
 
+import TextField from '@mui/material/TextField';
+
 import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
 import * as React from 'react';
-
+import { alpha, styled } from '@mui/material/styles';
+import { Alert, FormGroup, Link, Stack, Typography, Box, Container } from '@mui/material';
 import Button from '@components/Button';
 import Input from '@components/Input';
 import Navigation from '@components/Navigation';
@@ -14,6 +17,10 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 import { H2, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
+
+const mainPrimary = `#0BFF48`;
+const darkGreen = `#0A7225`;
+const blue = `#01BAE1`;
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -36,36 +43,36 @@ export async function getServerSideProps(context) {
 
 async function handleSignInWithMetaMask(state: any, host) {
   if (!window.ethereum) {
-    alert("You must have MetaMask installed!");
+    alert('You must have MetaMask installed!');
     return;
   }
 
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
   if (window.ethereum.networkVersion !== C.network.chainId) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: C.network.chainId }]
+        params: [{ chainId: C.network.chainId }],
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [ C.network ]
+          params: [C.network],
         });
       }
     }
   }
 
   let from = accounts[0];
-  let timestamp = new Date().toLocaleString()
+  let timestamp = new Date().toLocaleString();
 
-  const authSvcHost = C.api.authSvcHost
+  const authSvcHost = C.api.authSvcHost;
   let response = await fetch(`${authSvcHost}/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: "1"  }),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: '1' }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -86,7 +93,7 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
 
-  let sign
+  let sign;
   try {
     sign = await window.ethereum.request({
       method: 'personal_sign',
@@ -198,6 +205,38 @@ async function handleSignIn(state: any, host) {
   return;
 }
 
+const CssTextField = styled(TextField)({
+  transition: 'all 0.3s ease-in-out',
+
+  '& label': { color: 'gray' },
+  '& helperText': { color: 'white' },
+  '& .MuiInputBase-input': { color: 'white' },
+
+  '& label.Mui-focused': {
+    transition: 'all 0.3s ease-in-out',
+    color: mainPrimary,
+  },
+  '& .MuiInput-underline:after': {
+    transition: 'all 0.3s ease-in-out',
+    borderBottomColor: mainPrimary,
+  },
+
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      transition: 'all 0.3s ease-in-out',
+      borderColor: mainPrimary,
+    },
+    '&:hover fieldset': {
+      transition: 'all 0.3s ease-in-out',
+      borderColor: darkGreen,
+    },
+    '&.Mui-focused fieldset': {
+      transition: 'all 0.3s ease-in-out',
+      borderColor: darkGreen,
+    },
+  },
+});
+
 function SignInPage(props: any) {
   const [state, setState] = React.useState({
     loading: false,
@@ -206,13 +245,132 @@ function SignInPage(props: any) {
     username: '',
     password: '',
     adminLogin: 'false',
-    metaMaskLoading: false
+    metaMaskLoading: false,
   });
 
   return (
     <Page title="Estuary: Sign in" description="Sign in to your Estuary account." url={`${props.hostname}/sign-in`}>
       <Navigation active="SIGN_IN" />
-      <SingleColumnLayout style={{ maxWidth: 488 }}>
+
+      <Container maxWidth="lg" sx={{}}>
+        <Stack justifyContent="center" alignItems="center" sx={{ p: 4 }}>
+          {/* <SingleColumnLayout style={{ maxWidth: 600 }}> */}
+          {/* <Box className="mt-16 border-2 border-emerald rounded-xl" sx={{ px: 10, py: 4, boxShadow: '0px 4px 4px #40B1D4', width: '50rem' }}> */}
+          <Box className="mt-16   rounded-xl" sx={{ px: 10, py: 4, width: '50rem' }}>
+            {/* <H2>Sign up</H2> */}
+
+            <Typography className="text-5xl font-bold">Sign in</Typography>
+            <Typography className="text-xl opacity-90 mt-8 leading-relaxed">
+              If you have created an account with Estuary before, you can use your username and password to sign in.
+            </Typography>
+
+            {/* <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside> */}
+
+            <Stack sx={{ mt: 5 }}>
+              <FormGroup>
+                <CssTextField
+                  label="UserName"
+                  id="username"
+                  style={{ marginTop: 8 }}
+                  name="username"
+                  value={state.username}
+                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                />
+                <Typography className="text-md text-gray-400 mt-2 mb-8">your account's username</Typography>
+
+                <CssTextField
+                  label="Password"
+                  id="password"
+                  type="password"
+                  value={state.password}
+                  name="password"
+                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                  onSubmit={async () => {
+                    setState({ ...state, loading: true });
+                    const response = await handleSignIn(state, props.api);
+                    if (response && response.error) {
+                      alert(response.error);
+
+                      setState({ ...state, loading: false });
+                    }
+                  }}
+                />
+                <Typography className="text-md text-gray-400 mt-2 mb-8">your account's password</Typography>
+
+                <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5 text-gray-600"
+                    onClick={() => {
+                      if (state.adminLogin === 'false') {
+                        setState({ ...state, adminLogin: 'true' });
+                      } else {
+                        setState({ ...state, adminLogin: 'false' });
+                      }
+                    }}
+                  />
+                  <Typography className="text-md text-gray-200 ml-2 ">This user was created using estuary CLI</Typography>
+                </Stack>
+              </FormGroup>
+            </Stack>
+
+            <div className="space-y-6">
+              <Button
+                style={{ width: '100%' }}
+                loading={state.loading ? state.loading : undefined}
+                onClick={async () => {
+                  setState({ ...state, loading: true });
+                  const response = await handleSignIn(state, props.api);
+                  if (response && response.error) {
+                    alert(response.error);
+
+                    setState({ ...state, loading: false });
+                    return (
+                      <>
+                        <Alert severity="error">{response.error}</Alert>
+                      </>
+                    );
+                  }
+                }}
+              >
+                Sign in
+              </Button>
+              {/* <Divider text="Or"></Divider> */}
+              <Button
+                style={{
+                  width: '100%',
+                }}
+                loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+                onClick={async () => {
+                  setState({ ...state, metaMaskLoading: true });
+                  const response = await handleSignInWithMetaMask(state, props.api);
+                  if (response && response.error) {
+                    alert(response.error);
+
+                    setState({ ...state, metaMaskLoading: false });
+                    return (
+                      <>
+                        <Alert severity="error">{response.error}</Alert>
+                      </>
+                    );
+                  }
+                }}
+              >
+                Sign in with MetaMask
+              </Button>
+
+              <Typography className="text-lg text-gray-400 mt-2 mb-8">
+                Don't have an account ?
+                <Link href="/sign-up" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
+                  {' '}
+                  Create Account{' '}
+                </Link>
+              </Typography>
+            </div>
+          </Box>
+        </Stack>
+      </Container>
+      {/* <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>
 
         <P style={{ marginTop: 16 }}>If you have created an account with Estuary before, you can use your username and password to sign in.</P>
@@ -301,7 +459,7 @@ function SignInPage(props: any) {
             Create an account instead
           </Button>
         </div>
-      </SingleColumnLayout>
+      </SingleColumnLayout> */}
     </Page>
   );
 }

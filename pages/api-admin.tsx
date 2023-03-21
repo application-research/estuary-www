@@ -93,8 +93,8 @@ function APIPage(props: any) {
               style={{
                 marginBottom: 24,
                 marginRight: 24,
-                background: 'var(--main-button-background-secondary)',
-                color: 'var(--main-button-text-secondary)',
+                background: 'var(--lightBlack)',
+                color: 'var(--text-white)',
               }}
               loading={state.loading ? state.loading : undefined}
               onClick={() => {
@@ -118,8 +118,8 @@ function APIPage(props: any) {
               style={{
                 marginBottom: 24,
                 marginRight: 24,
-                background: 'var(--main-button-background-secondary)',
-                color: 'var(--main-button-text-secondary)',
+                background: 'var(--lightBlack)',
+                color: 'var(--text-white)',
               }}
               loading={state.loading ? state.loading : undefined}
               onClick={async () => {

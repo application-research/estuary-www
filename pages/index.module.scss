@@ -341,6 +341,17 @@ a.flink {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
+.scustomBlack {
+background: var(--lightBlack);
+  color:white;
+  display: block;
+  padding: 24px 24px 22px 24px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  width : 83%;
+}
+
 .sc {
   background: var(--text-white);
   height: 128px;

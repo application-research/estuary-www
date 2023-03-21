@@ -17,7 +17,7 @@ const faqs = [
           href="https://storage.market"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           storage.market
         </Link>{' '}
@@ -42,7 +42,7 @@ const faqs = [
           href="https://fw.services/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           roadmap
         </Link>{' '}
@@ -58,7 +58,7 @@ const faqs = [
           href="https://fvm.filecoin.io/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           FVM
         </Link>{' '}
@@ -69,7 +69,7 @@ const faqs = [
           href="https://fw.services/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           roadmap
         </Link>{' '}
@@ -86,7 +86,7 @@ const faqs = [
           href="https://proto.school/content-addressing"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           immutable content address pinning
         </Link>{' '}
@@ -95,7 +95,7 @@ const faqs = [
           href="https://github.com/ipfs/kubo"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           IPFS Node
         </Link>{' '}
@@ -104,7 +104,7 @@ const faqs = [
           href="https://www.pinata.cloud/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           pinata
         </Link>{' '}
@@ -113,7 +113,7 @@ const faqs = [
           href="https://web3.storage/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           web3.storage
         </Link>{' '}
@@ -131,7 +131,7 @@ const faqs = [
           href="https://estuary.tech/verify-cid?cid=QmPBHAjRLZqvJwcBUTiVxNtvugToAnTyJxpzTCgKZVHsvw"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           storage data receipt
         </Link>{' '}
@@ -149,7 +149,7 @@ const faqs = [
           href="https://status.estuary.tech/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           BetterUptime
         </Link>{' '}
@@ -167,7 +167,7 @@ const faqs = [
           href="https://github.com/application-research"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           GitHub
         </Link>{' '}
@@ -185,7 +185,7 @@ const faqs = [
           href="https://github.com/application-research/estuary"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           Estuary
         </Link>{' '}
@@ -194,7 +194,7 @@ const faqs = [
           href="https://github.com/application-research/estuary-www"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           Estuary-WWW
         </Link>{' '}
@@ -212,7 +212,7 @@ const faqs = [
           href="https://filecoin.io/slack"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           Filecoin Slack
         </Link>{' '}
@@ -221,7 +221,7 @@ const faqs = [
           href="https://docs.estuary.tech/give-feedback/"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           form
         </Link>{' '}
@@ -239,7 +239,7 @@ const faqs = [
           href="https://twitter.com/estuary_tech"
           underline="none"
           target="_blank"
-          sx={{ color: '#40B1D4', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
+          sx={{ color: '#ECE42B', transition: 'ease-in-out', transitionDuration: '200ms', '&:hover': { color: 'white' } }}
         >
           Twitter
         </Link>{' '}
@@ -261,7 +261,7 @@ const Faq = (props) => {
         <SvgIcon>{expanded ? <ExpandMoreIcon /> : <ChevronRightIcon />}</SvgIcon>
       </Stack>
       <Collapse in={expanded}>
-        <Typography variant="h2" sx={{ color: '#62EEDD', fontSize: '20px', lineHeight: '2.25rem' }}>
+        <Typography variant="h2" sx={{ color: '#0BFF48', fontSize: '20px', lineHeight: '2.25rem' }}>
           {answer}
         </Typography>
       </Collapse>

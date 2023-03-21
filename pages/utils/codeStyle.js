@@ -21,7 +21,9 @@ export const codeStyle = {
   },
   'pre[class*="language-"]': {
     color: '#F8F9FA',
-    background: '#1C2536',
+    background: '#0C0B0B',
+    border: '1px solid #0bff48',
+    boxShadow: '0px 4px 8px #0bff48',
     textShadow: '0 1px rgba(0, 0, 0, 0.3)',
     fontFamily: "'Roboto Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
     fontSize: '14px',
@@ -44,7 +46,7 @@ export const codeStyle = {
     borderRadius: '8px',
   },
   ':not(pre) > code[class*="language-"]': {
-    background: '#1C2536',
+    background: '#0C0B0B',
     padding: '.1em',
     borderRadius: '.3em',
     whiteSpace: 'normal',
@@ -68,19 +70,19 @@ export const codeStyle = {
     Opacity: '.7',
   },
   property: {
-    color: '#ff79c6',
+    color: '#5FCC09',
   },
   tag: {
-    color: '#ff79c6',
+    color: '#5FCC09',
   },
   constant: {
-    color: '#ff79c6',
+    color: '#5FCC09',
   },
   symbol: {
-    color: '#ff79c6',
+    color: '#5FCC09',
   },
   deleted: {
-    color: '#ff79c6',
+    color: '#5FCC09',
   },
   boolean: {
     color: '#bd93f9',
@@ -89,22 +91,22 @@ export const codeStyle = {
     color: '#bd93f9',
   },
   selector: {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   'attr-name': {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   string: {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   char: {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   builtin: {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   inserted: {
-    color: '#50fa7b',
+    color: '#ECE42B',
   },
   operator: {
     color: '#f8f8f2',
@@ -126,19 +128,19 @@ export const codeStyle = {
     color: '#f8f8f2',
   },
   atrule: {
-    color: '#f1fa8c',
+    color: '#65FFB5',
   },
   'attr-value': {
-    color: '#f1fa8c',
+    color: '#65FFB5',
   },
   function: {
-    color: '#f1fa8c',
+    color: '#65FFB5',
   },
   'class-name': {
-    color: '#f1fa8c',
+    color: '#65FFB5',
   },
   keyword: {
-    color: '#8be9fd',
+    color: '#0bff48',
   },
   regex: {
     color: '#ffb86c',

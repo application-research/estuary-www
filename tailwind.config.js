@@ -18,6 +18,9 @@ module.exports = {
       },
       colors: {
         primary: '#0C0B0B',
+        secondary: '#0BFF48',
+        darkGreen: '#0A7225',
+        lightBlack: '#1A1919',
         neon: '#40B1D4',
         emerald: '#62EEDD',
       },

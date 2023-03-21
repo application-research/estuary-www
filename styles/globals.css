@@ -3,26 +3,14 @@
 @tailwind utilities;
 
 
-:root {
+ :root {
  
   --primary : #0C0B0B
 }
 
 
  
-html,
-body {
  
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    max-width: 100vw;
-    overflow-x: hidden;
-    background-color: var(--primary);
-    color: #fff;
-
-  
-}
-
  
 * {
   box-sizing: border-box;
@@ -30,6 +18,5 @@ body {
   margin: 0;
   font-family: 'Work Sans', sans-serif;
  
-}
-
+} 
  
