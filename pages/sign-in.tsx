@@ -17,6 +17,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 import Cookies from 'js-cookie';
 import { H2, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
+import { Fade, Slide } from 'react-awesome-reveal';
 
 const mainPrimary = `#0BFF48`;
 const darkGreen = `#0A7225`;
@@ -258,119 +259,127 @@ function SignInPage(props: any) {
           {/* <Box className="mt-16 border-2 border-emerald rounded-xl" sx={{ px: 10, py: 4, boxShadow: '0px 4px 4px #40B1D4', width: '50rem' }}> */}
           <Box className="mt-16   rounded-xl" sx={{ px: 10, py: 4, maxWidth: '50rem' }}>
             {/* <H2>Sign up</H2> */}
+            <Fade cascade damping={0.3} triggerOnce={true}>
+              <Typography className="text-5xl font-bold">Sign in</Typography>
+              <Typography className="text-xl opacity-90 mt-8 leading-relaxed">
+                If you have created an account with Estuary before, you can use your username and password to sign in.
+              </Typography>
 
-            <Typography className="text-5xl font-bold">Sign in</Typography>
-            <Typography className="text-xl opacity-90 mt-8 leading-relaxed">
-              If you have created an account with Estuary before, you can use your username and password to sign in.
-            </Typography>
+              {/* <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside> */}
 
-            {/* <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside> */}
+              <Stack sx={{ mt: 5 }}>
+                <FormGroup>
+                  <CssTextField
+                    label="UserName"
+                    id="username"
+                    style={{ marginTop: 8 }}
+                    name="username"
+                    value={state.username}
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                  />
+                  <Typography className="text-md text-gray-400 mt-2 mb-8">your account's username</Typography>
 
-            <Stack sx={{ mt: 5 }}>
-              <FormGroup>
-                <CssTextField
-                  label="UserName"
-                  id="username"
-                  style={{ marginTop: 8 }}
-                  name="username"
-                  value={state.username}
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-                />
-                <Typography className="text-md text-gray-400 mt-2 mb-8">your account's username</Typography>
+                  <CssTextField
+                    label="Password"
+                    id="password"
+                    type="password"
+                    value={state.password}
+                    name="password"
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                    onSubmit={async () => {
+                      setState({ ...state, loading: true });
+                      const response = await handleSignIn(state, props.api);
+                      if (response && response.error) {
+                        alert(response.error);
 
-                <CssTextField
-                  label="Password"
-                  id="password"
-                  type="password"
-                  value={state.password}
-                  name="password"
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-                  onSubmit={async () => {
+                        setState({ ...state, loading: false });
+                      }
+                    }}
+                  />
+                  <Typography className="text-md text-gray-400 mt-2 mb-8">your account's password</Typography>
+
+                  <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-gray-600"
+                      onClick={() => {
+                        if (state.adminLogin === 'false') {
+                          setState({ ...state, adminLogin: 'true' });
+                        } else {
+                          setState({ ...state, adminLogin: 'false' });
+                        }
+                      }}
+                    />
+                    <Typography className="text-md text-gray-200 ml-2 ">This user was created using estuary CLI</Typography>
+                  </Stack>
+                </FormGroup>
+              </Stack>
+
+              <div className="space-y-6">
+                <Button
+                  style={{ width: '100%' }}
+                  loading={state.loading ? state.loading : undefined}
+                  onClick={async () => {
                     setState({ ...state, loading: true });
                     const response = await handleSignIn(state, props.api);
                     if (response && response.error) {
                       alert(response.error);
 
                       setState({ ...state, loading: false });
+                      return (
+                        <>
+                          <Alert severity="error">{response.error}</Alert>
+                        </>
+                      );
                     }
                   }}
-                />
-                <Typography className="text-md text-gray-400 mt-2 mb-8">your account's password</Typography>
+                >
+                  Sign in
+                </Button>
+                {/* <Divider text="Or"></Divider> */}
+                <Button
+                  style={{
+                    width: '100%',
+                  }}
+                  loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+                  onClick={async () => {
+                    setState({ ...state, metaMaskLoading: true });
+                    const response = await handleSignInWithMetaMask(state, props.api);
+                    if (response && response.error) {
+                      alert(response.error);
 
-                <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-5 w-5 text-gray-600"
-                    onClick={() => {
-                      if (state.adminLogin === 'false') {
-                        setState({ ...state, adminLogin: 'true' });
-                      } else {
-                        setState({ ...state, adminLogin: 'false' });
-                      }
-                    }}
-                  />
-                  <Typography className="text-md text-gray-200 ml-2 ">This user was created using estuary CLI</Typography>
-                </Stack>
-              </FormGroup>
-            </Stack>
+                      setState({ ...state, metaMaskLoading: false });
+                      return (
+                        <>
+                          <Alert severity="error">{response.error}</Alert>
+                        </>
+                      );
+                    }
+                  }}
+                >
+                  Sign in with MetaMask
+                </Button>
 
-            <div className="space-y-6">
-              <Button
-                style={{ width: '100%' }}
-                loading={state.loading ? state.loading : undefined}
-                onClick={async () => {
-                  setState({ ...state, loading: true });
-                  const response = await handleSignIn(state, props.api);
-                  if (response && response.error) {
-                    alert(response.error);
-
-                    setState({ ...state, loading: false });
-                    return (
-                      <>
-                        <Alert severity="error">{response.error}</Alert>
-                      </>
-                    );
-                  }
-                }}
-              >
-                Sign in
-              </Button>
-              {/* <Divider text="Or"></Divider> */}
-              <Button
-                style={{
-                  width: '100%',
-                }}
-                loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
-                onClick={async () => {
-                  setState({ ...state, metaMaskLoading: true });
-                  const response = await handleSignInWithMetaMask(state, props.api);
-                  if (response && response.error) {
-                    alert(response.error);
-
-                    setState({ ...state, metaMaskLoading: false });
-                    return (
-                      <>
-                        <Alert severity="error">{response.error}</Alert>
-                      </>
-                    );
-                  }
-                }}
-              >
-                Sign in with MetaMask
-              </Button>
-
-              <Typography className="text-lg text-gray-400 mt-2 mb-8">
-                Don't have an account ?
-                <Link href="/sign-up" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
-                  {' '}
-                  Create Account{' '}
-                </Link>
-              </Typography>
-            </div>
+                <Typography className="text-lg text-gray-400 mt-2 mb-8">
+                  Don't have an account ?
+                  <Link href="/sign-up" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
+                    {' '}
+                    Create Account{' '}
+                  </Link>
+                </Typography>
+              </div>
+            </Fade>
           </Box>
         </Stack>
       </Container>
-      {/* <SingleColumnLayout style={{ maxWidth: 488 }}>
+    </Page>
+  );
+}
+
+export default SignInPage;
+
+{
+  /* <SingleColumnLayout style={{ maxWidth: 488 }}>
         <H2>Sign in</H2>
 
         <P style={{ marginTop: 16 }}>If you have created an account with Estuary before, you can use your username and password to sign in.</P>
@@ -459,9 +468,5 @@ function SignInPage(props: any) {
             Create an account instead
           </Button>
         </div>
-      </SingleColumnLayout> */}
-    </Page>
-  );
+      </SingleColumnLayout> */
 }
-
-export default SignInPage;

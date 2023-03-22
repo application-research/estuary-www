@@ -1,10 +1,8 @@
 import React from 'react';
 import { Box, Container, duration, Stack, Tab, Tabs, Typography, Link } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+ 
+
 const HomeHero = () => {
   const mainPrimary = `#0BFF48`;
   const darkGreen = `#0A7225`;

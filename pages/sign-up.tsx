@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles';
 import { H2, H3, H4, P } from '@components/Typography';
 import Divider from '@components/Divider';
+import { Fade, Slide } from 'react-awesome-reveal';
 
 const mainPrimary = `#0BFF48`;
 const darkGreen = `#0A7225`;
@@ -269,237 +270,152 @@ function SignUpPage(props: any) {
 
       <Container maxWidth="lg" sx={{}}>
         <Stack justifyContent="center" alignItems="center" sx={{}}>
-          {/* <SingleColumnLayout style={{ maxWidth: 600 }}> */}
-          {/* <Box className=" border-2 border-emerald rounded-xl" sx={{ px: 10, py: 4, boxShadow: '0px 4px 4px #40B1D4' }}> */}
           <Box className="  rounded-xl" sx={{ px: 10 }}>
-            {/* <H2>Sign up</H2> */}
+            <Fade cascade damping={0.2} triggerOnce={true}>
+              <Typography className="text-2xl mt-11 font-bold lg:text-4xl lg:mt-2 ">Sign up</Typography>
+              <Typography className="text-xl opacity-90 mt-5">You can create an account to use Estuary if you have an invite key.</Typography>
 
-            <Typography className="text-2xl mt-11 font-bold lg:text-4xl lg:mt-2 ">Sign up</Typography>
-            <Typography className="text-xl opacity-90 mt-5">You can create an account to use Estuary if you have an invite key.</Typography>
+              <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside>
 
-            {/* <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P> */}
+              <Typography className="text-2xl mt-5">Create an account</Typography>
 
-            <aside className={styles.formAside}>{state.fissionLoading ? 'We found an existing Estuary account. Signing you in now.' : ''}</aside>
+              <Stack sx={{ mt: 3 }}>
+                <FormGroup>
+                  <CssTextField
+                    label="UserName"
+                    id="username"
+                    name="username"
+                    inputProps={{ pattern: C.regex.username }}
+                    value={state.username}
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
+                  />
+                  <Typography className="text-md text-gray-400 mt-2 mb-6">Requirements: 1-32 characters or digits, no symbols allowed</Typography>
 
-            <Typography className="text-2xl mt-5">Create an account</Typography>
-            {/* <Typography className="text-lg mt-5">UserName</Typography> */}
-            {/* <H3 style={{ marginTop: 32 }}>Create an account</H3> */}
-            {/* <H4 style={{ marginTop: 16 }}>Username</H4> */}
+                  <CssTextField
+                    label="Password"
+                    id="password"
+                    type="password"
+                    value={state.password}
+                    inputProps={{ pattern: C.regex.password }}
+                    name="password"
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                  />
 
-            {/* <Stack sx={{}} justifyContent="center" alignContent="center" alignItems="center"> */}
+                  <Typography className="text-md text-gray-400 mt-2 mb-6">Requirements: at least 8 characters, must use at least one letter and number.</Typography>
 
-            <Stack sx={{ mt: 3 }}>
-              <FormGroup>
-                <CssTextField
-                  label="UserName"
-                  id="username"
-                  name="username"
-                  inputProps={{ pattern: C.regex.username }}
-                  value={state.username}
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
-                />
-                <Typography className="text-md text-gray-400 mt-2 mb-6">Requirements: 1-32 characters or digits, no symbols allowed</Typography>
+                  <CssTextField
+                    label="Confirm"
+                    id="confirmPassword"
+                    type="password"
+                    value={state.confirmPassword}
+                    name="confirmPassword"
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                  />
+                  <Typography className="text-md text-gray-400 mt-2 mb-6">Enter Password to again</Typography>
 
-                <CssTextField
-                  label="Password"
-                  id="password"
-                  type="password"
-                  value={state.password}
-                  inputProps={{ pattern: C.regex.password }}
-                  name="password"
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-                />
+                  <CssTextField
+                    label="invite code"
+                    id="inviteCode"
+                    type="text"
+                    value={state.inviteCode}
+                    name="inviteCode"
+                    onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
+                    onSubmit={async () => {
+                      setState({ ...state, loading: true });
+                      const response = await handleRegister(
+                        {
+                          password: state.password,
+                          username: state.username,
+                          confirmPassword: state.confirmPassword,
+                          inviteCode: state.inviteCode,
+                        },
+                        props.api
+                      );
+                      if (response && response.error) {
+                        alert(response.error);
+                        setState({ ...state, loading: false });
+                      }
+                    }}
+                  />
+                  <Typography className="text-md text-gray-400 mt-2 mb-6">
+                    Need an invite Key ?
+                    <Link href="https://docs.estuary.tech/" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
+                      {' '}
+                      Learn How to get One{' '}
+                    </Link>
+                  </Typography>
+                </FormGroup>
+              </Stack>
 
-                <Typography className="text-md text-gray-400 mt-2 mb-6">Requirements: at least 8 characters, must use at least one letter and number.</Typography>
+              <Stack sx={{}}>
+                <div className="">
+                  <Button
+                    style={{ width: '100%' }}
+                    loading={state.loading ? state.loading : undefined}
+                    onClick={async () => {
+                      setState({ ...state, loading: true });
+                      const response = await handleRegister(
+                        {
+                          password: state.password,
+                          username: state.username,
+                          confirmPassword: state.confirmPassword,
+                          inviteCode: state.inviteCode,
+                        },
+                        props.api
+                      );
+                      if (response && response.error) {
+                        alert(response.error);
+                        setState({ ...state, loading: false });
+                      }
+                    }}
+                  >
+                    sign up
+                  </Button>
 
-                <CssTextField
-                  label="Confirm"
-                  id="confirmPassword"
-                  type="password"
-                  value={state.confirmPassword}
-                  name="confirmPassword"
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-                />
-                <Typography className="text-md text-gray-400 mt-2 mb-6">Enter Password to again</Typography>
+                  <Button
+                    style={{
+                      width: '100%',
+                      marginTop: 24,
+                    }}
+                    href="/sign-in"
+                  >
+                    Sign in instead
+                  </Button>
 
-                <CssTextField
-                  label="invite code"
-                  id="inviteCode"
-                  type="text"
-                  value={state.inviteCode}
-                  name="inviteCode"
-                  onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-                  onSubmit={async () => {
-                    setState({ ...state, loading: true });
-                    const response = await handleRegister(
-                      {
-                        password: state.password,
-                        username: state.username,
-                        confirmPassword: state.confirmPassword,
-                        inviteCode: state.inviteCode,
-                      },
-                      props.api
-                    );
-                    if (response && response.error) {
-                      alert(response.error);
-                      setState({ ...state, loading: false });
-                    }
-                  }}
-                />
-                <Typography className="text-md text-gray-400 mt-2 mb-6">
-                  Need an invite Key ?
-                  <Link href="https://docs.estuary.tech/" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
-                    {' '}
-                    Learn How to get One{' '}
+                  <Divider text="Or"></Divider>
+                  <Button
+                    style={{
+                      width: '100%',
+                    }}
+                    loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
+                    onClick={async () => {
+                      setState({ ...state, metaMaskLoading: true });
+                      const response = await handleRegisterWithMetaMask(
+                        {
+                          username: state.username,
+                          inviteCode: state.inviteCode,
+                        },
+                        props.api
+                      );
+                      if (response && response.error) {
+                        alert(response.error);
+                        setState({ ...state, metaMaskLoading: false });
+                      }
+                    }}
+                  >
+                    Sign up using MetaMask
+                  </Button>
+                </div>
+
+                <Typography className="text-md text-gray-400 mt-8 mb-8">
+                  By creating an account or by using Estuary you unconditionally agree to our{' '}
+                  <Link href="https://docs.estuary.tech/terms" target="_blank" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
+                    Terms of Service
                   </Link>
                 </Typography>
-              </FormGroup>
-            </Stack>
-
-            {/* 
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="Type in your desired username"
-              name="username"
-              pattern={C.regex.username}
-              value={state.username}
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })}
-            />
-            <aside className={styles.formAside}>Requirements: 1-32 characters or digits, no symbols allowed</aside>
-
-            <H4 style={{ marginTop: 24 }}>Password</H4>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="Type in your password"
-              type="password"
-              value={state.password}
-              name="password"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            />
-            <aside className={styles.formAside}>Requirements: at least 8 characters, must use at least one letter and number.</aside>
-
-            <H4 style={{ marginTop: 24 }}>Confirm Password</H4>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="Type in your password"
-              type="password"
-              value={state.confirmPassword}
-              name="confirmPassword"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-            />
-            <aside className={styles.formAside}>Enter your password again</aside>
-
-            <H4 style={{ marginTop: 24 }}>Invite code</H4>
-            <Input
-              style={{ marginTop: 8 }}
-              placeholder="Provide your invite code"
-              type="text"
-              value={state.inviteCode}
-              name="inviteCode"
-              onChange={(e) => setState({ ...state, [e.target.name]: e.target.value })}
-              onSubmit={async () => {
-                setState({ ...state, loading: true });
-                const response = await handleRegister(
-                  {
-                    password: state.password,
-                    username: state.username,
-                    confirmPassword: state.confirmPassword,
-                    inviteCode: state.inviteCode,
-                  },
-                  props.api
-                );
-                if (response && response.error) {
-                  alert(response.error);
-                  setState({ ...state, loading: false });
-                }
-              }}
-            />
-            <aside className={styles.formAside}>
-              Need an invite key?{' '}
-              <a href="https://docs.estuary.tech" target="_blank">
-                Learn how to get one.
-              </a>
-              .
-            </aside> */}
-
-            <Stack sx={{}}>
-              <div className="">
-                <Button
-                  style={{ width: '100%' }}
-                  loading={state.loading ? state.loading : undefined}
-                  onClick={async () => {
-                    setState({ ...state, loading: true });
-                    const response = await handleRegister(
-                      {
-                        password: state.password,
-                        username: state.username,
-                        confirmPassword: state.confirmPassword,
-                        inviteCode: state.inviteCode,
-                      },
-                      props.api
-                    );
-                    if (response && response.error) {
-                      alert(response.error);
-                      setState({ ...state, loading: false });
-                    }
-                  }}
-                >
-                  sign up
-                </Button>
-
-                <Button
-                  style={{
-                    width: '100%',
-                    marginTop: 24,
-                  }}
-                  href="/sign-in"
-                >
-                  Sign in instead
-                </Button>
-
-                <Divider text="Or"></Divider>
-                <Button
-                  style={{
-                    width: '100%',
-                  }}
-                  loading={state.metaMaskLoading ? state.metaMaskLoading : undefined}
-                  onClick={async () => {
-                    setState({ ...state, metaMaskLoading: true });
-                    const response = await handleRegisterWithMetaMask(
-                      {
-                        username: state.username,
-                        inviteCode: state.inviteCode,
-                      },
-                      props.api
-                    );
-                    if (response && response.error) {
-                      alert(response.error);
-                      setState({ ...state, metaMaskLoading: false });
-                    }
-                  }}
-                >
-                  Sign up using MetaMask
-                </Button>
-              </div>
-              {/* <aside className={styles.formAside} style={{ marginTop: 8, display: 'block' }}>
-                By creating an account or by using Estuary you unconditionally agree to our{' '}
-                <a >
-                  Terms of Service
-                </a>
-
-
-                .
-              </aside> */}
-
-              <Typography className="text-md text-gray-400 mt-8 mb-8">
-                By creating an account or by using Estuary you unconditionally agree to our{' '}
-                <Link href="https://docs.estuary.tech/terms" target="_blank" underline="none" sx={{ color: blue, ':hover': { color: 'white' }, transition: '300ms ease-in-out' }}>
-                  Terms of Service
-                </Link>
-              </Typography>
-            </Stack>
+              </Stack>
+            </Fade>
           </Box>
-          {/* </SingleColumnLayout> */}
         </Stack>
       </Container>
     </Page>
