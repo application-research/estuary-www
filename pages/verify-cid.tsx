@@ -69,15 +69,15 @@ const CssTextField = styled(TextField)({
 
   '& label': { color: 'gray', fontSize: '2vh', paddingLeft: '16px' },
 
-  '& .MuiInputBase-input': { color: mainPrimary, height: '3vh' },
+  '& .MuiInputBase-input': { color: 'white', height: '3vh' },
 
   '& label.Mui-focused': {
     transition: 'all 0.3s ease-in-out',
-    color: '#62EEDD',
+    color: mainPrimary,
   },
   '& .MuiInput-underline:after': {
     transition: 'all 0.3s ease-in-out',
-    borderBottomColor: '#62EEDD',
+    borderBottomColor: darkGreen,
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
@@ -86,11 +86,11 @@ const CssTextField = styled(TextField)({
     },
     '&:hover fieldset': {
       transition: 'all 0.3s ease-in-out',
-      borderColor: '#40B1D4',
+      borderColor: darkGreen,
     },
     '&.Mui-focused fieldset': {
       transition: 'all 0.3s ease-in-out',
-      borderColor: '#40B1D4',
+      borderColor: darkGreen,
       fontSize: '2vh',
       paddingLeft: '16px',
     },

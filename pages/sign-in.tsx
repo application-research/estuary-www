@@ -256,7 +256,7 @@ function SignInPage(props: any) {
         <Stack justifyContent="center" alignItems="center" sx={{ p: 4 }}>
           {/* <SingleColumnLayout style={{ maxWidth: 600 }}> */}
           {/* <Box className="mt-16 border-2 border-emerald rounded-xl" sx={{ px: 10, py: 4, boxShadow: '0px 4px 4px #40B1D4', width: '50rem' }}> */}
-          <Box className="mt-16   rounded-xl" sx={{ px: 10, py: 4, width: '50rem' }}>
+          <Box className="mt-16   rounded-xl" sx={{ px: 10, py: 4, maxWidth: '50rem' }}>
             {/* <H2>Sign up</H2> */}
 
             <Typography className="text-5xl font-bold">Sign in</Typography>

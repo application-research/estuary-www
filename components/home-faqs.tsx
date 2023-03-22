@@ -253,7 +253,7 @@ const Faq = (props) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Stack onClick={() => setExpanded((prevState) => !prevState)} spacing={2} sx={{ cursor: 'pointer', width: '50rem' }}>
+    <Stack onClick={() => setExpanded((prevState) => !prevState)} spacing={2} sx={{ cursor: 'pointer' }} className=" lg:w-50rem   ">
       <Stack alignItems="center" direction="row" justifyContent="space-between" spacing={2} sx={{}}>
         <Typography variant="h2" sx={{ color: 'white', fontSize: '20px' }}>
           {question}

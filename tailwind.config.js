@@ -9,6 +9,11 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    // screens: {
+    //   mobile: '900px',
+    //   // => @media (min-width: 640px) { ... }
+    // },
+
     extend: {
       blur: {
         custom: '150px',
@@ -27,6 +32,7 @@ module.exports = {
       width: {
         128: '32rem',
         blur: '60rem',
+        '50rem': '50rem',
       },
       height: {
         85: '70vh ',

@@ -274,7 +274,7 @@ function SignUpPage(props: any) {
           <Box className="  rounded-xl" sx={{ px: 10 }}>
             {/* <H2>Sign up</H2> */}
 
-            <Typography className="text-4xl font-bold">Sign up</Typography>
+            <Typography className="text-2xl mt-11 font-bold lg:text-4xl lg:mt-2 ">Sign up</Typography>
             <Typography className="text-xl opacity-90 mt-5">You can create an account to use Estuary if you have an invite key.</Typography>
 
             {/* <P style={{ marginTop: 16 }}>You can create an account to use Estuary if you have an invite key.</P> */}

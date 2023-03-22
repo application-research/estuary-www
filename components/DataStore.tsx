@@ -17,24 +17,20 @@ const DataStore = () => {
           mb: 20,
         }}
       >
-        <Container maxWidth="lg" sx={{ height: '60vh' }}>
+        <Container maxWidth="lg" sx={{}}>
           <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '32px', fontWeight: 'bold' }}>
             Your uploaded data on estuary goes to 7 places for 540 days!{' '}
           </Typography>
 
-          <Stack direction="row" spacing={8} sx={{ position: 'relative' }} justifyContent="center" alignItems="center">
+          <Stack direction="row" spacing={8} sx={{ position: 'relative', mt: 10 }} className=" lg:flex-row flex-col space-y-20" justifyContent="center" alignItems="center">
             <Box
               sx={{
                 boxShadow: `0px 4px 4px ${mainPrimary}`,
                 border: `1px solid ${mainPrimary}`,
                 background: '#070707',
-                p: 5,
-                mt: 5,
-                width: '25rem',
-                position: 'absolute',
-                top: 20,
-                left: 0,
               }}
+              // className="absolute top-20 left-0 w-96 p-5 mt-5"
+              className=" w-96 pt-5 pb-10 px-4 lg:mt-24 m-4"
             >
               <Stack direction="column" spacing={3} justifyContent="center" alignItems="center">
                 <Typography variant="body2" sx={{ color: 'white', mt: '0px', fontSize: '28px', fontWeight: 'bold' }}>
@@ -73,14 +69,14 @@ const DataStore = () => {
                 boxShadow: `0px 4px 4px ${mainPrimary}`,
                 border: `1px solid ${mainPrimary}`,
                 background: '#070707',
-                p: 2,
-                mt: 5,
-                width: '40rem',
-                height: '38vh',
-                position: 'absolute',
-                top: '3.8rem',
-                right: 0,
+
+                // width: '40rem',
+
+                // top: '3.8rem',
+                // right: 0,
               }}
+              // className="absolute top-20 right-0 w-128 p-2 mt-5"
+              className=" py-8 px-8 mt-12"
             >
               <Stack direction="column" spacing={5} justifyContent="center" alignItems="center">
                 <Typography variant="body2" sx={{ color: 'white', mt: '16px', fontSize: '28px', fontWeight: 'bold' }}>

@@ -778,7 +778,98 @@ function IndexPage(props: any) {
                 }}
                 className=" border-2 border-secondary "
               >
-                <Stack direction="column" spacing={3} sx={{ ml: 10 }}>
+                <Stack direction="column" spacing={3} sx={{ ml: 10 }} className=" lg:ml-24 ml-4">
+                  {/* <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className="   text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {stats.dealsOnChain.toLocaleString('en-US')}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      successful Filecoin storage deals
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {stats.totalObjectsRef.toLocaleString('en-US')}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      total objects retrievable through any IPFS gateway.
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {Number(stats.totalObjectsRef * 6).toLocaleString('en-US')}
+                    </Typography>
+
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      total objects uploaded to Filecoin.
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {U.bytesToSize(stats.totalStorage)}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      total pinned data retrievable from any IPFS gateway.
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {U.bytesToSize(stats.totalStorage * 6)}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      total data backed up to Filecoin.
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {stats.totalStorageMiner}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      storage providers work with us to achieve these goals.
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={6} sx={{}}>
+                    <Typography
+                      variant="body2"
+                      sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
+                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                    >
+                      {stats.totalUsers}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium' }}>
+                      products, including the ones above, use Filecoin through Estuary.
+                    </Typography>
+                  </Stack> */}
                   <Stack direction="row" spacing={6} sx={{}}>
                     <Typography variant="body2" sx={{ color: 'white', px: 2, mt: '6px', fontSize: '20px', fontWeight: 'medium', width: '39rem' }}>
                       successful Filecoin storage deals
@@ -787,7 +878,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className="   text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="    h-10   text-white border-2 rounded-sm border-secondary bg-black  px-6 py-1 text-lg font-bold"
                     >
                       {stats.dealsOnChain.toLocaleString('en-US')}
                     </Typography>
@@ -801,7 +892,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="  h-10  text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {stats.totalObjectsRef.toLocaleString('en-US')}
                     </Typography>
@@ -815,7 +906,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="  h-10  text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {Number(stats.totalObjectsRef * 6).toLocaleString('en-US')}
                     </Typography>
@@ -828,7 +919,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="lg:h-12 h-16 text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {U.bytesToSize(stats.totalStorage)}
                     </Typography>
@@ -842,7 +933,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="lg:h-12 h-16   text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {U.bytesToSize(stats.totalStorage * 6)}
                     </Typography>
@@ -856,7 +947,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="  h-10  text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {stats.totalStorageMiner}
                     </Typography>
@@ -870,7 +961,7 @@ function IndexPage(props: any) {
                     <Typography
                       variant="body2"
                       sx={{ boxShadow: `0px 4px 4px ${mainPrimary}` }}
-                      className=" text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
+                      className="  h-10  text-white border-2 rounded-sm border-secondary bg-black   px-6 py-1 text-lg font-bold"
                     >
                       {stats.totalUsers}
                     </Typography>

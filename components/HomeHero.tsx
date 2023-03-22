@@ -35,9 +35,11 @@ const HomeHero = () => {
           }}
         >
           <Stack direction="column" justifyContent="center" alignItems="center" spacing={4} sx={{ maxWidth: '70%' }}>
-            <h2 className="text-5xl text-white items-center font-bold leading-snug">A reliable way to upload public data onto Filecoin and pin it to IPFS</h2>
+            <h2 className="text-3xl leading-snug text-white items-center font-bold lg:leading-snug lg:text-5xl  ">
+              A reliable way to upload public data onto Filecoin and pin it to IPFS
+            </h2>
 
-            <p className="text-2xl text-white items-center opacity-95 leading-relaxed">
+            <p className="text-xl lg:text-2xl lg:leading-relaxed text-white items-center opacity-95  leading-relaxed">
               Store your public data and guarantee that it is available to everyone around the world. Our technology will restore lost data and guarantee data replication
             </p>
 
