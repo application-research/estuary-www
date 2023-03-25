@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+ :root {
+ 
+  --primary : #0C0B0B
+}
+
+
+ 
+ 
+ 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+ 
+} 
+ 

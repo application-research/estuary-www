@@ -10,19 +10,27 @@ import AuthenticatedLayout from '@components/AuthenticatedLayout';
 import AuthenticatedSidebar from '@components/AuthenticatedSidebar';
 import EmptyStatePlaceholder from '@components/EmptyStatePlaceholder';
 import SingleColumnLayout from '@components/SingleColumnLayout';
+import { Stack, Box, Container, Typography } from '@mui/material';
 
 function ErrorPage(props: any) {
   return (
-    <Page title="Estuary: 404" description="This page does not exist." url={props.hostname ?? ""}>
-      <AuthenticatedLayout
-        navigation={<Navigation isAuthenticated active="404" />}
-        sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}
-      >
-        <SingleColumnLayout>
+    <AuthenticatedLayout navigation={<Navigation isAuthenticated active="404" />} sidebar={props.viewer ? <AuthenticatedSidebar viewer={props.viewer} /> : null}>
+      <Page title="Estuary: 404" description="This page does not exist." url={props.hostname ?? ''}>
+        <Box className="bg-black" sx={{ height: '95vh', position: 'relative' }}>
+          {/* <SingleColumnLayout>
           <EmptyStatePlaceholder>404</EmptyStatePlaceholder>
-        </SingleColumnLayout>
-      </AuthenticatedLayout>
-    </Page>
+        </SingleColumnLayout> */}
+          <Container maxWidth="lg" sx={{}}>
+            {/* <div className="h-85 bg-primary"></div> */}
+            <Stack justifyContent="center" alignItems="center">
+              <Typography variant="h1" className="text-7xl font-bold text-secondary absolute top-1/4">
+                404 Page Not found
+              </Typography>
+            </Stack>
+          </Container>
+        </Box>
+      </Page>
+    </AuthenticatedLayout>
   );
 }
 

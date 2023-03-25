@@ -7,10 +7,10 @@
   "scripts": {
     "dev": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-http://localhost:3004} next dev -p 4444",
     "dev-docker": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-http://localhost:3004} next dev -p 4444",
-    "dev-production": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-https://api.estuary.tech} NEXT_PUBLIC_ESTUARY_METRICS_API=https://metrics-api.estuary.tech next dev -p 4444",
+    "dev-production": "cross-env NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-https://api.estuary.tech} NEXT_PUBLIC_ESTUARY_METRICS_API=https://metrics-api.estuary.tech next dev -p 4444",
     "build": "next build",
     "check-types": "tsc --noemit",
-    "start": "NODE_ENV=production next start",
+    "start": "set NODE_ENV=production next start",
     "test": "jest"
   },
   "pre-commit": [
@@ -20,29 +20,41 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.18.9",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@floating-ui/react": "^0.20.1",
+    "@fontsource/roboto": "^4.5.8",
     "@glif/filecoin-number": "^1.1.0-beta.17",
     "@metamask/jazzicon": "^2.0.0",
-    "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.0",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.13",
     "@types/node": "^17.0.13",
+    "animejs": "^3.2.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "js-cookie": "^3.0.1",
     "next": "^13.1.2",
     "react": "^18.2.0",
+    "react-animated-slider": "^2.0.0",
+    "react-awesome-reveal": "^4.2.3",
     "react-dom": "^18.2.0",
+    "react-slick": "^0.29.0",
+    "react-syntax-highlighter": "^15.5.0",
     "react-table": "^7.8.0",
     "react-use": "^17.4.0",
+    "rxjs": "^7.8.0",
     "sass": "1.54.3",
+    "slick-carousel": "^1.8.1",
     "uuid": "^8.3.2",
     "web3": "^1.8.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
+    "autoprefixer": "^10.4.14",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.21",
     "pre-commit": "^1.2.2",
+    "tailwindcss": "^3.2.7",
     "typescript": "^4.5.2"
   }
 }

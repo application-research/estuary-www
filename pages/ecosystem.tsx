@@ -8,7 +8,7 @@ import * as React from 'react';
 import * as C from '@common/constants';
 import Page from '@components/Page';
 
-import Footer from '@root/components/Footer';
+import Footer from '@root/components/OldFooter';
 import Hero from '@root/components/Hero';
 import ProgressBar from '@root/components/ProgressBar';
 import ResponsiveNavbar from '@root/components/ResponsiveNavbar';
