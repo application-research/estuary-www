@@ -15,6 +15,8 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H3, H4, P } from '@components/Typography';
+import * as C from '@common/constants';
+import { isEmpty } from '@common/utilities';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -80,12 +82,58 @@ const onSubmit = async (event, state, setState, host) => {
   return setState({ ...state, new: '', confirm: '', loading: false });
 };
 
+const connectWallet = async (e, metamask, setMetamask, host) =>  {
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  if (window.ethereum.networkVersion !== C.network.chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: C.network.chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [ C.network ]
+        });
+      }
+    }
+  }
+
+  return updateAuthAddress(accounts[0], metamask, setMetamask, host)
+}
+
+async function updateAuthAddress(address, metamask, setMetamask, host) {
+  let response;
+  try {
+    response = await R.put('/user/auth-address', { authAddress: address }, host);
+    await U.delay(1000);
+
+    if (response.error) {
+      alert(response.error);
+    }
+  } catch (e) {
+    console.log(e);
+    alert('Something went wrong');
+  }
+
+  return setMetamask(address);
+}
+
 function SettingsPage(props: any) {
   const { viewer } = props;
   const [fissionUser, setFissionUser] = React.useState(null);
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
+  const [metamask, setMetamask] = React.useState(viewer.authAddress);
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
@@ -141,6 +189,18 @@ function SettingsPage(props: any) {
             </Button>
           </div>
 
+          <H3 style={{ marginTop: 64 }}>Link Metamask</H3>
+          <P style={{ marginTop: 16 }}>Enable authenticating with your Metamask account.</P>
+
+          { metamask ? (
+              <div>
+                { metamask }
+                <Button style={{ marginTop: 14 }}  onClick={(e) => updateAuthAddress('', metamask, setMetamask, props.api)}>Unlink Account</Button>
+              </div>
+            ) : (
+              <Button style={{ marginTop: 14 }} onClick={(e) => connectWallet(e, metamask, setMetamask, props.api)}>Connect Wallet</Button>
+            )
+          }
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
 
