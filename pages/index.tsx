@@ -132,7 +132,7 @@ function IndexPage(props: any) {
   React.useEffect(() => {
     const load = async () => {
       try {
-        const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
+        // const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
         setStats({ ...stats });
       } catch (e) {
         console.log(e);
