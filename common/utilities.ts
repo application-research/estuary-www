@@ -3,6 +3,7 @@ import { FilecoinNumber } from '@glif/filecoin-number';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
 import * as Cookies from '@vendor/cookie-cutter';
+import { headers } from 'next/headers';
 
 export const formatEstuaryRetrievalUrl = (cid: string) => {
   return `${C.api.host}/gw/ipfs/${cid}`
@@ -145,6 +146,32 @@ export const getViewerFromToken = async (token) => {
     return null;
   }
 };
+
+export const getAuthAddress = async (headers) => {
+  try {
+    const token = Cookies.get(headers, C.auth);
+    const url = `${C.api.authSvcHost}/user/auth-address`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await response.json();
+
+    if (!json) {
+      return null;
+    }
+
+    if (json.error) {
+      return null;
+    }
+
+    return json;
+  } catch (e) {
+    return null;
+  }
+}
 
 export const getViewerFromHeader = async (headers) => {
   try {
