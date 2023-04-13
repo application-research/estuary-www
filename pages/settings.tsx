@@ -222,7 +222,10 @@ function SettingsPage(props: any) {
           { metamask.address ? (
               <div>
                 <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
-                <Button style={{ marginTop: 14 }} loading={metamask.loading} onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
+                <Button style={{ marginTop: 14 }}
+                        loading={metamask.loading}
+                        disabled={metamask.address == viewer.username}
+                        onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
               </div>
             ) : (
               <Button style={{ marginTop: 14 }} loading={metamask.loading} onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
