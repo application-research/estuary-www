@@ -123,12 +123,12 @@ async function addAuthAddress(address, metamask, setMetamask) {
 
     if (!response.success) {
       alert(response.details);
-      return
+      return setMetamask({ ...metamask, loading: false});
     }
   } catch (e) {
     console.log(e);
     alert('Something went wrong');
-    return
+    return setMetamask({ ...metamask, loading: false});
   }
 
   return setMetamask({ ...metamask, address, loading: false});
@@ -143,12 +143,12 @@ async function removeAuthAddress(metamask, setMetamask) {
 
     if (!response.success) {
       alert(response.details);
-      return
+      return setMetamask({ ...metamask, loading: false});
     }
   } catch (e) {
     console.log(e);
     alert('Something went wrong');
-    return
+    return setMetamask({ ...metamask, loading: false});
   }
 
   return setMetamask({ ...metamask, address: "", loading: false});
@@ -222,13 +222,13 @@ function SettingsPage(props: any) {
           { metamask.address ? (
               <div>
                 <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
-                <Button style={{ marginTop: 14 }}
+                <Button style={{ marginTop: 14, width: 175}}
                         loading={metamask.loading}
                         disabled={metamask.address == viewer.username}
                         onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
               </div>
             ) : (
-              <Button style={{ marginTop: 14 }} loading={metamask.loading} onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
+              <Button style={{ marginTop: 14, width: 175}} loading={metamask.loading} onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
             )
           }
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
