@@ -1,11 +1,9 @@
 import style from '@components/Wallet.module.scss';
 
 import * as React from 'react';
-import * as R from '@common/requests';
 import * as C from '@common/constants';
 
 import Web3 from 'web3';
-import Cookies from 'js-cookie';
 import Button from '@components/Button';
 import Jazzicon from "@metamask/jazzicon";
 import styled from "@emotion/styled";
@@ -48,7 +46,7 @@ function Wallet(props) {
   ]);
 
   const headingId = useId();
-  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true, loadingWallet: false});
+  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true });
 
   let web3: any;
 
