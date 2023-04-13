@@ -20,6 +20,7 @@ import { isEmpty } from '@common/utilities';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const wallet = await U.getAuthAddress(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
@@ -31,6 +32,8 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  viewer.wallet = wallet;
 
   return {
     props: { host, protocol, viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
@@ -82,7 +85,8 @@ const onSubmit = async (event, state, setState, host) => {
   return setState({ ...state, new: '', confirm: '', loading: false });
 };
 
-const connectWallet = async (e, metamask, setMetamask, host) =>  {
+const connectWallet = async (e, metamask, setMetamask) =>  {
+  setMetamask({ ...metamask, loading: true});
   if (!window.ethereum) {
     alert("You must have MetaMask installed!");
     return;
@@ -107,24 +111,47 @@ const connectWallet = async (e, metamask, setMetamask, host) =>  {
     }
   }
 
-  return updateAuthAddress(accounts[0], metamask, setMetamask, host)
+  return addAuthAddress(accounts[0], metamask, setMetamask)
 }
 
-async function updateAuthAddress(address, metamask, setMetamask, host) {
+async function addAuthAddress(address, metamask, setMetamask) {
+  setMetamask({ ...metamask, loading: true});
   let response;
   try {
-    response = await R.put('/user/auth-address', { authAddress: address }, host);
+    response = await R.post('/user/auth-address', { address }, C.api.authSvcHost);
     await U.delay(1000);
 
-    if (response.error) {
-      alert(response.error);
+    if (!response.success) {
+      alert(response.details);
+      return
     }
   } catch (e) {
     console.log(e);
     alert('Something went wrong');
+    return
   }
 
-  return setMetamask(address);
+  return setMetamask({ ...metamask, address, loading: false});
+}
+
+async function removeAuthAddress(metamask, setMetamask) {
+  setMetamask({ ...metamask, loading: true});
+  let response;
+  try {
+    response = await R.del('/user/auth-address', { address: metamask.address }, C.api.authSvcHost);
+    await U.delay(1000);
+
+    if (!response.success) {
+      alert(response.details);
+      return
+    }
+  } catch (e) {
+    console.log(e);
+    alert('Something went wrong');
+    return
+  }
+
+  return setMetamask({ ...metamask, address: "", loading: false});
 }
 
 function SettingsPage(props: any) {
@@ -133,7 +160,7 @@ function SettingsPage(props: any) {
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
-  const [metamask, setMetamask] = React.useState(viewer.authAddress);
+  const [metamask, setMetamask] = React.useState({ address: viewer.wallet ? viewer.wallet.address : null, loading: false });
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
@@ -192,13 +219,13 @@ function SettingsPage(props: any) {
           <H3 style={{ marginTop: 64 }}>Link Metamask</H3>
           <P style={{ marginTop: 16 }}>Enable authenticating with your Metamask account.</P>
 
-          { metamask ? (
+          { metamask.address ? (
               <div>
-                { metamask }
-                <Button style={{ marginTop: 14 }}  onClick={(e) => updateAuthAddress('', metamask, setMetamask, props.api)}>Unlink Account</Button>
+                <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
+                <Button style={{ marginTop: 14 }} loading={metamask.loading} onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
               </div>
             ) : (
-              <Button style={{ marginTop: 14 }} onClick={(e) => connectWallet(e, metamask, setMetamask, props.api)}>Connect Wallet</Button>
+              <Button style={{ marginTop: 14 }} loading={metamask.loading} onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
             )
           }
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
