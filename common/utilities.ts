@@ -3,7 +3,6 @@ import { FilecoinNumber } from '@glif/filecoin-number';
 import * as C from '@common/constants';
 import * as R from '@common/requests';
 import * as Cookies from '@vendor/cookie-cutter';
-import { headers } from 'next/headers';
 
 export const formatEstuaryRetrievalUrl = (cid: string) => {
   return `${C.api.host}/gw/ipfs/${cid}`
