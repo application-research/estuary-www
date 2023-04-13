@@ -7,7 +7,7 @@ import LoaderSpinner from '@components/LoaderSpinner';
 
 const Button = (props: any) => {
   if (props.disabled) {
-    return <button style={props.style} className={styles.disabledButton} children={props.children} disabled={props.disabled}/>;
+    return <button style={props.style} className={U.classNames(styles.button, styles.disabledButton)} children={props.children} disabled={props.disabled}/>;
   }
   if (props.loading) {
     return (
