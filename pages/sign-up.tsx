@@ -76,7 +76,11 @@ async function handleRegisterWithMetaMask(state: any, host) {
   });
 
   if (userCreationResp.status !== 200) {
-    return { error: 'Failed to Create User' };
+    const userCreationRespJson = await userCreationResp.json();
+    if (!userCreationRespJson.details) {
+      return { error: 'Our server failed to register your account. Please contact us.' };
+    }
+    return { error: userCreationRespJson.details };
   }
 
   let from = accounts[0];
@@ -90,11 +94,11 @@ async function handleRegisterWithMetaMask(state: any, host) {
     },
   });
 
+  const respJson = await response.json();
   if (response.status !== 200) {
-    return { error: 'Failed to Generate Nonce Message' };
+    return { error: respJson.details };
   }
 
-  const respJson = await response.json();
   if (respJson.error) {
     return respJson;
   }
