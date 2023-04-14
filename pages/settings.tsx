@@ -16,7 +16,7 @@ import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H3, H4, P } from '@components/Typography';
 import * as C from '@common/constants';
-import { isEmpty } from '@common/utilities';
+import Modal from '@components/Modal';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
@@ -161,6 +161,7 @@ function SettingsPage(props: any) {
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
   const [metamask, setMetamask] = React.useState({ address: viewer.wallet ? viewer.wallet.address : null, loading: false });
+  const [showUnlinkAddressModal, setShowUnlinkAddressModal] = React.useState(false);
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
@@ -221,18 +222,40 @@ function SettingsPage(props: any) {
 
           { metamask.address ? (
             <div>
-                <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
-                <Button style={{ marginTop: 14, width: 175}}
-                        loading={metamask.loading}
-                        disabled={metamask.address == viewer.username}
-                        onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
+              <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
+              <Button style={{ marginTop: 14, width: 175}}
+                      loading={metamask.loading}
+                      disabled={metamask.address == viewer.username}
+                      onClick={() => setShowUnlinkAddressModal(true) }>Unlink Account</Button>
+              {showUnlinkAddressModal && (
+                <Modal
+                  title="Unlink Account"
+                  onClose={() => {
+                    setShowUnlinkAddressModal(false);
+                  }}
+                  show={showUnlinkAddressModal}
+                >
+                  <div className={styles.group} style={{ paddingTop: '16px' }}>
+                    <P style={{ maxWidth: '620px' }}>
+                      By unlinking your metamask account, you will no longer be able to log into your account using this authentication method. Are you sure you want to unlink?
+                    </P>
+                    <H4 style={{ marginTop: '16px', width: '488px', display: 'inline-block' }}></H4>
+                    <Button style={{ marginTop: 14, width: 175}}
+                            loading={metamask.loading}
+                            disabled={metamask.address == viewer.username}
+                            onClick={async () => {
+                              setShowUnlinkAddressModal(false);
+                              await removeAuthAddress(metamask, setMetamask)
+                            }}>Unlink Account</Button>
+                  </div>
+                </Modal>
+              )}
               </div>
             ) : (
               <Button style={{ marginTop: 14, width: 175 }}
                       loading={metamask.loading}
                       onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
-              )
-          }
+          )}
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
 
