@@ -1,5 +1,6 @@
 import styles from '@pages/app.module.scss';
 
+import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
@@ -15,7 +16,6 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H3, H4, P } from '@components/Typography';
-import * as C from '@common/constants';
 import Modal from '@components/Modal';
 
 export async function getServerSideProps(context) {
