@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-http://localhost:3004} next dev -p 4444",
     "dev-docker": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-http://localhost:3004} next dev -p 4444",
-    "dev-production": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-https://api.estuary.tech} NEXT_PUBLIC_ESTUARY_METRICS_API=https://metrics-api.estuary.tech next dev -p 4444",
+    "dev-production": "NEXT_PUBLIC_ESTUARY_API=${ESTUARY_API:-https://api.estuary.tech} NEXT_PUBLIC_ESTUARY_METRICS_API=https://metrics-api.estuary.tech NEXT_PUBLIC_ESTUARY_AUTH_API=https://auth-svc.onrender.com next dev -p 4444",
     "build": "next build",
     "check-types": "tsc --noemit",
     "start": "NODE_ENV=production next start",
