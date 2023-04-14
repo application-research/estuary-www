@@ -220,7 +220,7 @@ function SettingsPage(props: any) {
           <P style={{ marginTop: 16 }}>Enable authenticating with your Metamask account.</P>
 
           { metamask.address ? (
-              <div>
+            <div>
                 <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
                 <Button style={{ marginTop: 14, width: 175}}
                         loading={metamask.loading}
@@ -228,8 +228,10 @@ function SettingsPage(props: any) {
                         onClick={(e) => removeAuthAddress(metamask, setMetamask)}>Unlink Account</Button>
               </div>
             ) : (
-              <Button style={{ marginTop: 14, width: 175}} loading={metamask.loading} onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
-            )
+              <Button style={{ marginTop: 14, width: 175 }}
+                      loading={metamask.loading}
+                      onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
+              )
           }
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
