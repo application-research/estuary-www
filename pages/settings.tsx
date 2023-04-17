@@ -1,5 +1,6 @@
 import styles from '@pages/app.module.scss';
 
+import * as C from '@common/constants';
 import * as Crypto from '@common/crypto';
 import * as R from '@common/requests';
 import * as U from '@common/utilities';
@@ -15,9 +16,11 @@ import Page from '@components/Page';
 import SingleColumnLayout from '@components/SingleColumnLayout';
 
 import { H2, H3, H4, P } from '@components/Typography';
+import Modal from '@components/Modal';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const wallet = await U.getAuthAddress(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
 
@@ -29,6 +32,8 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
+  viewer.wallet = wallet;
 
   return {
     props: { host, protocol, viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
@@ -80,12 +85,83 @@ const onSubmit = async (event, state, setState, host) => {
   return setState({ ...state, new: '', confirm: '', loading: false });
 };
 
+const connectWallet = async (e, metamask, setMetamask) =>  {
+  setMetamask({ ...metamask, loading: true});
+  if (!window.ethereum) {
+    alert("You must have MetaMask installed!");
+    return;
+  }
+
+  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+
+  if (window.ethereum.networkVersion !== C.network.chainId) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: C.network.chainId }]
+      });
+    } catch (err) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [ C.network ]
+        });
+      }
+    }
+  }
+
+  return addAuthAddress(accounts[0], metamask, setMetamask)
+}
+
+async function addAuthAddress(address, metamask, setMetamask) {
+  setMetamask({ ...metamask, loading: true});
+  let response;
+  try {
+    response = await R.post('/user/auth-address', { address }, C.api.authSvcHost);
+    await U.delay(1000);
+
+    if (!response.success) {
+      alert(response.details);
+      return setMetamask({ ...metamask, loading: false});
+    }
+  } catch (e) {
+    console.log(e);
+    alert('Something went wrong');
+    return setMetamask({ ...metamask, loading: false});
+  }
+
+  return setMetamask({ ...metamask, address, loading: false});
+}
+
+async function removeAuthAddress(metamask, setMetamask) {
+  setMetamask({ ...metamask, loading: true});
+  let response;
+  try {
+    response = await R.del('/user/auth-address', { address: metamask.address }, C.api.authSvcHost);
+    await U.delay(1000);
+
+    if (!response.success) {
+      alert(response.details);
+      return setMetamask({ ...metamask, loading: false});
+    }
+  } catch (e) {
+    console.log(e);
+    alert('Something went wrong');
+    return setMetamask({ ...metamask, loading: false});
+  }
+
+  return setMetamask({ ...metamask, address: "", loading: false});
+}
+
 function SettingsPage(props: any) {
   const { viewer } = props;
   const [fissionUser, setFissionUser] = React.useState(null);
   const [state, setState] = React.useState({ loading: false, old: '', new: '', confirm: '' });
   const [address, setAddress] = React.useState('');
   const [balance, setBalance] = React.useState(0);
+  const [metamask, setMetamask] = React.useState({ address: viewer.wallet ? viewer.wallet.address : null, loading: false });
+  const [showUnlinkAddressModal, setShowUnlinkAddressModal] = React.useState(false);
 
   const sidebarElement = <AuthenticatedSidebar active="SETTINGS" viewer={viewer} />;
 
@@ -141,6 +217,45 @@ function SettingsPage(props: any) {
             </Button>
           </div>
 
+          <H3 style={{ marginTop: 64 }}>Link Metamask</H3>
+          <P style={{ marginTop: 16 }}>Enable authenticating with your Metamask account.</P>
+
+          { metamask.address ? (
+            <div>
+              <Input style={{ marginTop: 8 }} readOnly value={metamask.address} />
+              <Button style={{ marginTop: 14, width: 175}}
+                      loading={metamask.loading}
+                      disabled={metamask.address == viewer.username}
+                      onClick={() => setShowUnlinkAddressModal(true) }>Unlink Account</Button>
+              {showUnlinkAddressModal && (
+                <Modal
+                  title="Unlink Account"
+                  onClose={() => {
+                    setShowUnlinkAddressModal(false);
+                  }}
+                  show={showUnlinkAddressModal}
+                >
+                  <div className={styles.group} style={{ paddingTop: '16px' }}>
+                    <P style={{ maxWidth: '620px' }}>
+                      By unlinking your metamask account, you will no longer be able to log into your account using this authentication method. Are you sure you want to unlink?
+                    </P>
+                    <H4 style={{ marginTop: '16px', width: '488px', display: 'inline-block' }}></H4>
+                    <Button style={{ marginTop: 14, width: 175}}
+                            loading={metamask.loading}
+                            disabled={metamask.address == viewer.username}
+                            onClick={async () => {
+                              setShowUnlinkAddressModal(false);
+                              await removeAuthAddress(metamask, setMetamask)
+                            }}>Unlink Account</Button>
+                  </div>
+                </Modal>
+              )}
+              </div>
+            ) : (
+              <Button style={{ marginTop: 14, width: 175 }}
+                      loading={metamask.loading}
+                      onClick={(e) => connectWallet(e, metamask, setMetamask)}>Connect Wallet</Button>
+          )}
           <H3 style={{ marginTop: 64 }}>Default settings (read only)</H3>
           <P style={{ marginTop: 16 }}>Estuary is configured to default settings for deals. You can not change these values, yet.</P>
 

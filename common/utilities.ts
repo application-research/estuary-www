@@ -146,6 +146,32 @@ export const getViewerFromToken = async (token) => {
   }
 };
 
+export const getAuthAddress = async (headers) => {
+  try {
+    const token = Cookies.get(headers, C.auth);
+    const url = `${C.api.authSvcHost}/user/auth-address`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await response.json();
+
+    if (!json) {
+      return null;
+    }
+
+    if (json.error) {
+      return null;
+    }
+
+    return json;
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getViewerFromHeader = async (headers) => {
   try {
     const token = Cookies.get(headers, C.auth);

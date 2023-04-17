@@ -71,11 +71,12 @@ async function handleSignInWithMetaMask(state: any, host) {
     },
   });
 
+  const respJson = await response.json();
+
   if (response.status !== 200) {
-    return { error: 'Failed to Generate Nonce Message' };
+    return { error: respJson.details };
   }
 
-  const respJson = await response.json();
   if (respJson.error) {
     return respJson;
   }

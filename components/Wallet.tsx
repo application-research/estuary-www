@@ -1,11 +1,9 @@
 import style from '@components/Wallet.module.scss';
 
 import * as React from 'react';
-import * as R from '@common/requests';
 import * as C from '@common/constants';
 
 import Web3 from 'web3';
-import Cookies from 'js-cookie';
 import Button from '@components/Button';
 import Jazzicon from "@metamask/jazzicon";
 import styled from "@emotion/styled";
@@ -24,12 +22,6 @@ import {
   useId
 } from "@floating-ui/react";
 
-function logout(props) {
-  const token = Cookies.get(C.auth);
-  const response = R.del(`/user/api-keys/${token}`, props.api);
-  Cookies.remove(C.auth);
-  window.location.href = '/';
-}
 function Wallet(props) {
   const [open, setOpen] = React.useState(false);
   const { x, y, refs, strategy, context } = useFloating({
@@ -54,7 +46,7 @@ function Wallet(props) {
   ]);
 
   const headingId = useId();
-  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true});
+  const [state, setState] = React.useState({ account: null, fil: null, price: null, balance: null, loading: true });
 
   let web3: any;
 
@@ -64,14 +56,6 @@ function Wallet(props) {
     }
     web3 = new Web3(window.ethereum);
     const run = async () => {
-      window.ethereum.on('accountsChanged', function (accounts) {
-        logout(props)
-      })
-
-      window.ethereum.on('chainChanged', function (networkId) {
-        logout(props)
-      })
-
       // Check if User is already connected by retrieving the accounts
       const accounts = await web3.eth.getAccounts()
       if (accounts) {
@@ -174,7 +158,7 @@ function Wallet(props) {
         </FloatingFocusManager>
       )}
     </div>
-  ) : null;
+  ) : null
 }
 
 export default Wallet;

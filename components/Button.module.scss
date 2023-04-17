@@ -31,3 +31,8 @@
   cursor: wait;
   padding: 4px 48px 4px 48px;
 }
+
+.disabledButton {
+  background-color: var(--main-button-background-secondary);
+  cursor: not-allowed;
+}
