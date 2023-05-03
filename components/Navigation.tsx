@@ -42,6 +42,10 @@ const Navigation = (props: any) => {
             Verify
           </a>
 
+          <a href="/inclusion-proofs" className={styles.webItem}>
+            Proofs
+          </a>
+
           <a href="https://docs.estuary.tech" className={styles.webItem}>
             Documentation
           </a>
