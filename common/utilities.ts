@@ -172,6 +172,32 @@ export const getAuthAddress = async (headers) => {
   }
 }
 
+export const getUserStorageThreshold = async (headers) => {
+  try {
+    const token = Cookies.get(headers, C.auth);
+    const url = `${C.api.host}/user/utilization`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await response.json();
+
+    if (!json) {
+      return null;
+    }
+
+    if (json.error) {
+      return null;
+    }
+
+    return json;
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getViewerFromHeader = async (headers) => {
   try {
     const token = Cookies.get(headers, C.auth);
