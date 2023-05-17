@@ -15,6 +15,7 @@ import PageHeader from '@components/PageHeader';
 
 import { H2, P } from '@components/Typography';
 import FilesTable from '@root/components/FilesTable';
+import AlertPanel from '@components/AlertPanel';
 
 const INCREMENT = 1000;
 
@@ -108,6 +109,25 @@ function HomePage(props: any) {
             </div>
           </PageHeader>
         )}
+
+        { state.stats && state.threshold ? (
+          <div className={ styles.group }>
+            { state.stats.totalSize >= state.threshold.soft_limit && state.stats.totalSize < state.threshold.hard_limit ? (
+              <AlertPanel title='Soft Limit Threshold Reached'>
+                You are currently at { U.formatNumber((state.stats.totalSize / state.threshold.hard_limit) * 100) }% of
+                storage utilization. Once your hard limit threshold is reached
+                ({ U.bytesToSize(state.threshold.hard_limit) }), you will no longer be able to upload files. Please get
+                in touch with the Estuary Team if you require additional storage.
+              </AlertPanel>
+            ) : null }
+            { state.stats.totalSize >= state.threshold.hard_limit ? (
+              <AlertPanel title='Hard Limit Threshold Reached'>
+                You have reached your hard limit threshold { U.bytesToSize(state.threshold.hard_limit) }. Please get in touch
+                with the Estuary Team if you require additional storage.
+              </AlertPanel>
+            ) : null }
+          </div>
+        ) : null }
 
         {state.stats ? (
           <div className={styles.group}>
