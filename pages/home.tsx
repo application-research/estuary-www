@@ -56,6 +56,7 @@ function HomePage(props: any) {
   const [state, setState] = React.useState({
     files: null,
     stats: null,
+    threshold: null,
     offset: 0,
     limit: INCREMENT,
   });
@@ -64,9 +65,10 @@ function HomePage(props: any) {
     const run = async () => {
       const files = await R.get(`/content/contents?offset=${state.offset}&limit=${state.limit}`, props.api);
       const stats = await R.get('/user/stats', props.api);
+      const threshold = await R.get('/user/utilization', props.api);
 
       if (files && !files.error) {
-        setState({ ...state, files, stats });
+        setState({ ...state, files, stats, threshold });
       }
     };
 
