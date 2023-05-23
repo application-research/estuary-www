@@ -303,10 +303,10 @@ function SettingsPage(props: any) {
 
           <H4 style={ { marginTop: 24 } }>User soft limit threshold (%)</H4>
           <Input style={ { marginTop: 8 } } readOnly
-                 value={ U.formatNumber((viewer.threshold.soft_limit / viewer.threshold.hard_limit) * 100) } />
+                 value={ U.formatNumber((viewer.threshold.soft_limit_bytes / viewer.threshold.hard_limit_bytes) * 100) } />
 
           <H4 style={ { marginTop: 24 } }>User hard limit threshold</H4>
-          <Input style={ { marginTop: 8 } } readOnly value={ U.bytesToSize(viewer.threshold.hard_limit) } />
+          <Input style={ { marginTop: 8 } } readOnly value={ U.bytesToSize(viewer.threshold.hard_limit_bytes) } />
 
         </SingleColumnLayout>
       </AuthenticatedLayout>
