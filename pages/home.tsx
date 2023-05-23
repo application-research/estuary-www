@@ -123,7 +123,8 @@ function HomePage(props: any) {
             { state.stats.totalSize >= state.threshold.hard_limit_bytes ? (
               <AlertPanel title='Hard Limit Threshold Reached'>
                 You have reached your hard limit threshold { U.bytesToSize(state.threshold.hard_limit_bytes) }. Please get in touch
-                with the Estuary Team if you require additional storage.
+                with the Estuary Team if you require additional storage. You can find us in the Filecoin slack under the
+                #ecosystem-dev channel.
               </AlertPanel>
             ) : null }
           </div>
