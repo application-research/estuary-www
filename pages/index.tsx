@@ -63,22 +63,20 @@ const go = `package main
 import (
   "fmt"
   "net/http"
-  "io/ioutil"
 )
 
 func main() {
-  url := "https://upload.estuary.tech/content/add"
-  method := "POST"
+  const url = "https://upload.estuary.tech/content/add"
 
-  client := &http.Client {
-  }
-  req, err := http.NewRequest(method, url, nil)
+  req, err := http.NewRequest(http.MethodPost, url, nil)
+  if err != nil { panic(err) }
   req.Header.Add("Authorization", "Bearer YOUR_API_KEY")
   req.Header.Add("Accept", "application/json")
-  res, err := client.Do(req)
+  res, err := http.DefaultClient.Do(req)
+  if err != nil { panic(err) }
   defer res.Body.Close()
-  body, err := ioutil.ReadAll(res.Body)
-  fmt.Println(string(body))
+  _, err = io.Copy(os.Stdout, res.Body)
+  if err != nil { panic(err) }
 }`;
 
 const python = `import requests
