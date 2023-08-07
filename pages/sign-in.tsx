@@ -36,36 +36,36 @@ export async function getServerSideProps(context) {
 
 async function handleSignInWithMetaMask(state: any, host) {
   if (!window.ethereum) {
-    alert("You must have MetaMask installed!");
+    alert('You must have MetaMask installed!');
     return;
   }
 
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
   if (window.ethereum.networkVersion !== C.network.chainId) {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: C.network.chainId }]
+        params: [{ chainId: C.network.chainId }],
       });
     } catch (err) {
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [ C.network ]
+          params: [C.network],
         });
       }
     }
   }
 
   let from = accounts[0];
-  let timestamp = new Date().toLocaleString()
+  let timestamp = new Date().toLocaleString();
 
-  const authSvcHost = C.api.authSvcHost
+  const authSvcHost = C.api.authSvcHost;
   let response = await fetch(`${authSvcHost}/generate-nonce`, {
     method: 'POST',
-    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: "1"  }),
+    body: JSON.stringify({ host, address: from, issuedAt: timestamp, chainId: parseInt(C.network.chainId), version: '1' }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -87,7 +87,7 @@ async function handleSignInWithMetaMask(state: any, host) {
 
   const msg = `0x${Buffer.from(respJson.nonceMsg, 'utf8').toString('hex')}`;
 
-  let sign
+  let sign;
   try {
     sign = await window.ethereum.request({
       method: 'personal_sign',
@@ -207,7 +207,7 @@ function SignInPage(props: any) {
     username: '',
     password: '',
     adminLogin: 'false',
-    metaMaskLoading: false
+    metaMaskLoading: false,
   });
 
   return (
@@ -273,7 +273,7 @@ function SignInPage(props: any) {
           >
             Sign in
           </Button>
-          <Divider text="Or"></Divider>
+          <Divider text="Or" />
           <Button
             style={{
               width: '100%',
@@ -289,17 +289,6 @@ function SignInPage(props: any) {
             }}
           >
             Sign in with MetaMask
-          </Button>
-          <Button
-            style={{
-              width: '100%',
-              marginTop: 12,
-              background: 'var(--main-button-background-secondary)',
-              color: 'var(--main-button-text-secondary)',
-            }}
-            href="/sign-up"
-          >
-            Create an account instead
           </Button>
         </div>
       </SingleColumnLayout>

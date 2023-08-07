@@ -171,19 +171,9 @@ function IndexPage(props: any) {
 
         <pre className={styles.code}>{codeText}</pre>
 
-        <p className={styles.paragraph}>
-          Do you have public domain data? Want to try it yourself? <span>Estuary is free with an invite. Get an invite, and then you can get an API key.</span>
+        <p className={styles.paragraph} style={{ fontSize: 16 }}>
+          If you have an account you can use Estuary until you hit your size limit, otherwise the service is closed off to sign ups. Thanks for using us.
         </p>
-
-        <div className={styles.action}>
-          <a className={styles.actionButton} href="https://docs.estuary.tech/get-invite-key">
-            Get an invite
-          </a>
-
-          <a className={styles.actionButton} href="https://docs.estuary.tech">
-            Learn more
-          </a>
-        </div>
       </section>
 
       <section className={styles.section}>

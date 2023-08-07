@@ -13,20 +13,15 @@ const Navigation = (props: any) => {
       <nav className={styles.container} style={props.style}>
         <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
           <a className={styles.logo} href="/">
-            Estuary <Tag>Alpha</Tag>
+            <Tag style={{ marginLeft: `-4px` }}>Discontinued 8/7/26</Tag>
           </a>
         </div>
-        {props.isAuthenticated && props.active !== 'INDEX'? (
+        {props.isAuthenticated && props.active !== 'INDEX' ? (
           <div className={styles.wallet}>
-            <Wallet/>
+            <Wallet />
           </div>
         ) : null}
         <div className={styles.right}>
-          {!props.isAuthenticated && props.active !== 'SIGN_UP' ? (
-            <a href="/sign-up" className={styles.item}>
-              Sign up
-            </a>
-          ) : null}
           {!props.isAuthenticated && props.active !== 'SIGN_IN' ? (
             <a href="/sign-in" className={styles.item}>
               Sign in
