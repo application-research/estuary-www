@@ -31,7 +31,6 @@ export default class IndexPage extends React.Component<any> {
           <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
 
           <link rel="shortcut icon" href="/static/favicon.ico" />
-          <PlausibleAnalyticsScript />
         </Head>
         {this.props.children}
       </React.Fragment>
