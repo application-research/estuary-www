@@ -116,31 +116,9 @@ function Question(props: any) {
 
 function IndexPage(props: any) {
   const [selected, setSelected] = React.useState(1);
-  const [stats, setStats] = React.useState({
-    dealsOnChain: 137752,
-    totalBytesUploaded: 87817919,
-    totalFilesStored: 87817919,
-    totalObjectsRef: 2835708131,
-    totalStorage: 456545754350356,
-    totalStorageMiner: 215,
-    totalUsers: 778,
-  });
 
   const codeMap = { 1: curl, 2: node, 3: browser, 4: go, 5: python };
   const codeText = codeMap[`${selected}`];
-
-  React.useEffect(() => {
-    const load = async () => {
-      try {
-        const stats = await R.get('/api/v1/stats/info', C.api.metricsHost);
-        setStats({ ...stats });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    load();
-  }, []);
 
   return (
     <Page title="Estuary" description={description} url={props.hostname}>
@@ -291,34 +269,6 @@ function IndexPage(props: any) {
             </a>
           </div>
         </div>
-      </section>
-
-      <section className={styles.section}>
-        <p className={styles.paragraph}>Okay, but how much data has been uploaded using your service?</p>
-
-        <ul className={styles.statsList}>
-          <li className={styles.statsListItem}>
-            <strong>{stats.dealsOnChain.toLocaleString('en-US')}</strong> successful Filecoin storage deals.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{stats.totalObjectsRef.toLocaleString('en-US')}</strong> total objects retrievable through any IPFS gateway.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{Number(stats.totalObjectsRef * 6).toLocaleString('en-US')}</strong> total objects uploaded to Filecoin.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{U.bytesToSize(stats.totalStorage)}</strong> total pinned data retrievable from any IPFS gateway.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{U.bytesToSize(stats.totalStorage * 6)}</strong> total data backed up to Filecoin.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{stats.totalStorageMiner}</strong> storage providers work with us to achieve these goals.
-          </li>
-          <li className={styles.statsListItem}>
-            <strong>{stats.totalUsers}</strong> products, including the ones above, use Filecoin through Estuary.
-          </li>
-        </ul>
       </section>
 
       <section className={styles.section}>
