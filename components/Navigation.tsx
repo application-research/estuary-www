@@ -13,7 +13,7 @@ const Navigation = (props: any) => {
       <nav className={styles.container} style={props.style}>
         <div className={styles.left} style={{ backgroundColor: !props.isRenderingSidebar ? `#fff` : null }}>
           <a className={styles.logo} href="/">
-            <Tag style={{ marginLeft: `-4px` }}>Discontinued 8/7/26</Tag>
+            <Tag style={{ marginLeft: `-4px` }}>Discontinued 8/7/23</Tag>
           </a>
         </div>
         {props.isAuthenticated && props.active !== 'INDEX' ? (
