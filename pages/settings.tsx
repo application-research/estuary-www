@@ -20,6 +20,7 @@ import Modal from '@components/Modal';
 
 export async function getServerSideProps(context) {
   const viewer = await U.getViewerFromHeader(context.req.headers);
+  const threshold = await U.getUserStorageThreshold(context.req.headers)
   const wallet = await U.getAuthAddress(context.req.headers);
   const host = context.req.headers.host;
   const protocol = host.split(':')[0] === 'localhost' ? 'http' : 'https';
@@ -34,6 +35,7 @@ export async function getServerSideProps(context) {
   }
 
   viewer.wallet = wallet;
+  viewer.threshold = threshold;
 
   return {
     props: { host, protocol, viewer, api: process.env.NEXT_PUBLIC_ESTUARY_API, hostname: `https://${context.req.headers.host}` },
@@ -298,6 +300,14 @@ function SettingsPage(props: any) {
           <aside className={styles.formAside}>
             If you upload anything under {U.bytesToSize(viewer.settings.fileStagingThreshold)}, Estuary will initialize a staging area for those files.
           </aside>
+
+          <H4 style={ { marginTop: 24 } }>User soft limit threshold (%)</H4>
+          <Input style={ { marginTop: 8 } } readOnly
+                 value={ U.formatNumber((viewer.threshold.soft_limit_bytes / viewer.threshold.hard_limit_bytes) * 100) } />
+
+          <H4 style={ { marginTop: 24 } }>User hard limit threshold</H4>
+          <Input style={ { marginTop: 8 } } readOnly value={ U.bytesToSize(viewer.threshold.hard_limit_bytes) } />
+
         </SingleColumnLayout>
       </AuthenticatedLayout>
     </Page>
