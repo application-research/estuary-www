@@ -1,3 +1,12 @@
+> [!WARNING]
+>  # Project Discontinued
+> 
+> The instance and its related API endpoints hosted at <https://estuary.tech> are discontinued and no longer maintained.
+> 
+> The codebase is provided as-is for anyone interested in forking or learning.
+
+---- 
+
 ![Post](https://next-s3-public.s3.us-west-2.amazonaws.com/social/estuary.hero.large.png)
 
 # Estuary WWW
